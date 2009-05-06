@@ -207,17 +207,34 @@ class TransmageddonUI (gtk.glade.XML):
        devices = presets.get()
        device = devices[devicename]
        preset = device.presets["Normal"]
-       if preset.container == "video/quicktime,variant=apple":
-           self.containerchoice.set_active(6)
-       else:
+       if preset.container == "application/ogg":
+           self.containerchoice.set_active(0)
+       elif preset.container == "video/x-matroska":
            self.containerchoice.set_active(1)
+       elif preset.container == "video/x-msvideo":
+           self.containerchoice.set_active(2)
+       elif preset.container == "video/mpegts":
+           self.containerchoice.set_active(3)
+       elif preset.container == "video/x-flv":
+           self.containerchoice.set_active(4)
+       elif preset.container == "video/quicktime,variant=apple":
+           self.containerchoice.set_active(5)
+       elif preset.container == "video/quicktime,variant=iso":
+           self.containerchoice.set_active(6)
+       elif preset.container == "video/quicktime,variant=3gpp":
+           self.containerchoice.set_active(7)
+       elif preset.container == "video/quicktime,variant=3gpp":
+           self.containerchoice.set_active(8)
+       else:
+            print "failed to set container format"
+
        self.codec_buttons[self.reverse_lookup(str(preset.acodec.name))].set_active(True)
        self.codec_buttons[self.reverse_lookup(str(preset.vcodec.name))].set_active(True)
        # containerchoice = preset.container,
-       videowidth =  preset.vcodec.width,
-       videoheight = preset.vcodec.height
+       # videowidth =  preset.vcodec.width,
+       # videoheight = preset.vcodec.height
        # print videocodec + containerchoice + videowidth
- 
+
    # Create query on uridecoder to get values to populate progressbar 
    # Notes:
    # Query interface only available on uridecoder, not decodebin2)

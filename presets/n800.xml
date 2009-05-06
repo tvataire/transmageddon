@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+
+<device>
+    <make>Nokia</make>
+    <model>N800</model>
+    <description>Profile for Nokia 800</description>
+    <author>
+        <name>Christian Schaller</name>
+        <email>uraeus@gnome.org</email>
+    </author>
+    <version>1.0</version>
+    <icon>file://psp.svg</icon>
+    <default>Normal</default>
+    
+    <preset>
+        <name>Low</name> # This is a low quality output setting
+        <container>video/quicktime,variant=iso</container>
+        <extension>mp4</extension>
+        <audio>
+            <name>audio/mpeg,mpegversion=1,layer=3</name>
+            <passes>
+                <pass>
+                    quality_low,profile_low_complexity
+                </pass>
+            </passes>
+            <channels>1, 2</channels>
+        </audio>
+        <video>
+            <name>video/mpeg,mpegversion=4</name>
+            <passes>
+                <pass>
+                    quality_low,profile_baseline
+                </pass>
+            </passes>
+            <width>320, 640</width>
+            <height>240, 480</height>
+            <rate>1, 25</rate>
+        </video>
+    </preset>
+    <preset>
+        <name>Normal</name>
+        <container>video/quicktime,variant=iso</container>
+        <extension>mp4</extension>
+        <audio>
+            <name>audio/mpeg,mpegversion=1,layer=3</name>
+            <passes>
+                <pass>
+                    quality_normal,profile_low_complexity
+                </pass>
+            </passes>
+            <channels>1, 2</channels>
+        </audio>
+        <video>
+            <name>video/mpeg,mpegversion=4</name>
+            <passes>
+                <pass>
+                    quality_normal,profile_baseline
+                </pass>
+            </passes>
+            <width>320, 640</width>
+            <height>240, 480</height>
+            <rate>1, 30</rate>
+        </video>
+    </preset>
+</device>

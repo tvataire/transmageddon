@@ -41,6 +41,10 @@ Transmageddon Video Transcoding application.
 %{_libdir}/transmageddon/*
 %{_datadir}/pixmaps/transmageddon.png
 %{_datadir}/applications/transmageddon.desktop
+%{_datadir}/transmageddon/presets/ipod.xml
+%{_datadir}/transmageddon/presets/linux-computer.xml
+%{_datadir}/transmageddon/presets/n800.xml
+%{_datadir}/transmageddon/presets/ps3.xml
 %{_datadir}/locale
 
 %changelog

@@ -70,6 +70,7 @@ bin/Makefile
 common/Makefile
 common/m4/Makefile
 src/Makefile
+presets/Makefile
 debian/Makefile
 po/Makefile.in
 transmageddon.spec
