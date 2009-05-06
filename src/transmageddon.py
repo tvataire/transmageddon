@@ -49,8 +49,7 @@ except:
    sys.exit(1)
 
 start_time = time.time()
-
-       
+     
 supported_containers = [
         "Ogg",
         "Matroska",
@@ -179,16 +178,42 @@ class TransmageddonUI (gtk.glade.XML):
        for i in self.lst:
            self.containerchoice.append_text(i)
       
-       # Populate presets combobox
-       selected = 0
-       for x, (id, device) in enumerate(sorted(presets.get().items(),
+       # Populate Device Presets combobox
+       devicelist = []
+       shortname = []
+       for x, (name, device) in enumerate(sorted(presets.get().items(),
                                    lambda x, y: cmp(x[1].make + x[1].model,
                                                     y[1].make + y[1].model))):
            iter = self.presetchoice.append_text(str(device))
-           if id == "computer":
-               selected = x
+           devicelist.append(str(device))
+           shortname.append(str(name))
+
+       #for (name, device) in (presets.get().items()):
+       #    shortname.append(str(name))
+       self.presetchoices = dict(zip(devicelist, shortname))     
        self.presetchoice.prepend_text("No Presets")
 
+   # Get all preset values
+   def reverse_lookup(self,v):
+    for k in codecfinder.codecmap:
+        if codecfinder.codecmap[k] == v:
+            return k
+
+   def provide_presets(self,devicename): 
+       devices = presets.get()
+       device = devices[devicename]
+       preset = device.presets["Normal"]
+       if preset.container == "video/quicktime,variant=apple":
+           self.containerchoice.set_active(6)
+       else:
+           self.containerchoice.set_active(1)
+       self.codec_buttons[self.reverse_lookup(str(preset.acodec.name))].set_active(True)
+       self.codec_buttons[self.reverse_lookup(str(preset.vcodec.name))].set_active(True)
+       # containerchoice = preset.container,
+       videowidth =  preset.vcodec.width,
+       videoheight = preset.vcodec.height
+       # print videocodec + containerchoice + videowidth
+ 
    # Create query on uridecoder to get values to populate progressbar 
    # Notes:
    # Query interface only available on uridecoder, not decodebin2)
@@ -570,12 +595,12 @@ class TransmageddonUI (gtk.glade.XML):
 
    def on_presetchoice_changed(self, widget):
        presetchoice = self.get_widget ("presetchoice").get_active_text ()
-       # items = presets.load("/home/cschalle/.transmageddon/presets/ipod.xml")
-       # print items
        if presetchoice == "No Presets":
            self.containerchoice.set_sensitive(True)
        else:
-           self.containerchoice.set_sensitive(False)
+           devicename= self.presetchoices[presetchoice]
+           outcome = self.provide_presets(devicename) 
+           print "This is the preset device chosen: " + str(devicename)
 
    def audio_codec_changed (self, audio_codec):
        self.transcodebutton.set_sensitive(True)

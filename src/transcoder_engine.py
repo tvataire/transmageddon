@@ -22,6 +22,7 @@ import sys
 import os
 import datetime
 import codecfinder
+import presets
 
 try:
    import gobject; gobject.threads_init()
@@ -31,7 +32,6 @@ try:
    import gst
 except: 
    sys.exit(1)
-
 
 class Transcoder(gobject.GObject):
 
@@ -87,7 +87,7 @@ class Transcoder(gobject.GObject):
        self.pipeline.add(self.containermuxer)
 
        self.transcodefileoutput = gst.element_factory_make("filesink", "transcodefileoutput")
-       self.transcodefileoutput.set_property("location", (self.VideoDirectory+self.FileNameOnly+self.timestamp+self.ContainerFormatSuffix))
+       self.transcodefileoutput.set_property("location", (self.VideoDirectory+"/"+self.FileNameOnly+self.timestamp+self.ContainerFormatSuffix))
        self.pipeline.add(self.transcodefileoutput)
 
        self.containermuxer.link(self.transcodefileoutput)
