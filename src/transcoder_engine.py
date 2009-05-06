@@ -40,7 +40,7 @@ class Transcoder(gobject.GObject):
             'got-eos' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, [])
                     }
 
-   def __init__(self, FILECHOSEN, FILENAME, CONTAINERCHOICE, AUDIOCODECVALUE, VIDEOCODECVALUE):
+   def __init__(self, FILECHOSEN, FILENAME, CONTAINERCHOICE, AUDIOCODECVALUE, VIDEOCODECVALUE, PRESET):
        gobject.GObject.__init__(self)
        # create a dictionay taking the Codec/Container values and mapping them with plugin names
        # No asfmux atm, hopefully Soc will solve that
@@ -68,7 +68,7 @@ class Transcoder(gobject.GObject):
        # elif CheckDir == (True):
        #   print "Videos directory exist"
        # print self.VideoDirectory
-
+       print "preset status reached engine " + str(PRESET)
        # create a variable with a timestamp code
        timeget = datetime.datetime.now()
        text = timeget.strftime("-%H%M%S-%d%m%Y") 

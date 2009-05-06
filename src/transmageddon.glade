@@ -905,16 +905,8 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkRadioButton" id="dnxhdbutton">
-                    <property name="label" translatable="yes">DNxHD</property>
+                  <widget class="GtkLabel" id="label4">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">False</property>
-                    <property name="active">True</property>
-                    <property name="draw_indicator">True</property>
-                    <property name="group">theorabutton</property>
-                    <signal name="pressed" handler="on_dnxhdbutton_pressed"/>
-                    <signal name="activate" handler="on_dnxhdbutton_pressed"/>
                   </widget>
                   <packing>
                     <property name="left_attach">2</property>

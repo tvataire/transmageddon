@@ -81,7 +81,7 @@ supported_video_codecs = [
        "mpeg2",
        "mpeg4",
        "xvid",
-       "dnxhd"
+#      "dnxhd"
 ]
 
 # Maps containers to the codecs they support.  The first two elements are
@@ -168,6 +168,7 @@ class TransmageddonUI (gtk.glade.XML):
        self.transcodebutton.set_sensitive(False)
        self.cancelbutton.set_sensitive(False)
        self.presetchoice.set_sensitive(False)
+       self.containerchoice.set_sensitive(False)
 
        # set default values for various variables
        self.AudioCodec = "vorbis"
@@ -227,7 +228,6 @@ class TransmageddonUI (gtk.glade.XML):
            self.containerchoice.set_active(8)
        else:
             print "failed to set container format"
-
        self.codec_buttons[self.reverse_lookup(str(preset.acodec.name))].set_active(True)
        self.codec_buttons[self.reverse_lookup(str(preset.vcodec.name))].set_active(True)
        # containerchoice = preset.container,
@@ -328,7 +328,8 @@ class TransmageddonUI (gtk.glade.XML):
        FileChoice = self.get_widget ("FileChooser").get_uri()
        FileName = self.get_widget ("FileChooser").get_filename()
        containerchoice = self.get_widget ("containerchoice").get_active_text ()
-       self._transcoder = transcoder_engine.Transcoder(FileChoice, FileName, containerchoice, self.AudioCodec, self.VideoCodec)
+       self._transcoder = transcoder_engine.Transcoder(FileChoice, FileName, containerchoice, 
+                                                       self.AudioCodec, self.VideoCodec, self.devicename)
        self._transcoder.connect("ready-for-querying", self.ProgressBarUpdate)
        self._transcoder.connect("got-eos", self._on_eos)
        return True
@@ -441,11 +442,11 @@ class TransmageddonUI (gtk.glade.XML):
    def on_presetchoice_changed(self, widget):
        presetchoice = self.get_widget ("presetchoice").get_active_text ()
        if presetchoice == "No Presets":
+           self.devicename = "nopreset"
            self.containerchoice.set_sensitive(True)
        else:
-           devicename= self.presetchoices[presetchoice]
-           outcome = self.provide_presets(devicename) 
-           print "This is the preset device chosen: " + str(devicename)
+           self.devicename= self.presetchoices[presetchoice]
+           outcome = self.provide_presets(self.devicename) 
 
    def audio_codec_changed (self, audio_codec):
        self.transcodebutton.set_sensitive(True)
