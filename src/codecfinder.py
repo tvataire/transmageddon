@@ -137,45 +137,60 @@ def get_audio_encoder_element(audioencodercaps):
 # strings to concrete element names.
 #######
 
-def available_video_encoders():
-   """ returns all available video encoders """
-   flist = gst.registry_get_default().get_feature_list(gst.ElementFactory)
-   res = []
-   for fact in flist:
-       if list_compat(["Codec", "Encoder", "Video"], fact.get_klass().split('/')):
-           if fact.get_name() != 'ffenc_libtheora':
-               res.append(fact.get_name())
-           elif 'theoraenc' in res:
-               print "adding nothing"
-           else:
-               res.append(fact.get_name()) 
-       elif list_compat(["Codec", "Encoder", "Image"], fact.get_klass().split('/')):
-           res.append(fact.get_name())
-   return res 
-
 def get_video_encoder_element(videoencodercaps):
    """
    Check all video encoders for their caps and create a dictionary 
    mapping caps to element names. Then return elementname.
    """
-   encoders = available_video_encoders()
    videocaps = []
+   videocoderchoice = {}
    # blacklist all caps information we do not need to create a unique identifier
    blacklist = ['height','width','framerate','systemstream','depth']
+   flist = gst.registry_get_default().get_feature_list(gst.ElementFactory)
+   encoders = []
+   features = []
+   for fact in flist:
+       # print "fact is " + str(fact)
+       if list_compat(["Codec", "Encoder", "Video"], fact.get_klass().split('/')):
+           encoders.append(fact.get_name())
+           features.append(fact) 
+       elif list_compat(["Codec", "Encoder", "Image"], fact.get_klass().split('/')):
+           encoders.append(fact.get_name())
+           features.append(fact)
+   encoderfeature = dict(zip(encoders, features))
+   # print encoderfeature
    for x in encoders:
-       factory = gst.registry_get_default().lookup_feature(str(x))
-       sinkcaps = [x.get_caps() for x in factory.get_static_pad_templates() if x.direction == gst.PAD_SRC]
-       for caps in sinkcaps:
-           result = caps[0].get_name();
-           for attr in caps[0].keys():
-               if attr not in blacklist:
-                   result += ","+attr+"="+str(caps[0][attr])
-           videocaps.append(result)
-   # print videocaps
-   videoencoderchoice = dict(zip(videocaps, encoders))
+           codec = x
+           # print "encoder is " + str(codec)
+           factory = gst.registry_get_default().lookup_feature(str(x))
+           sinkcaps = [x.get_caps() for x in factory.get_static_pad_templates() if x.direction == gst.PAD_SRC]
+           for caps in sinkcaps:
+               # print "caps is "+ str(caps)
+               result = caps[0].get_name();
+               for attr in caps[0].keys():
+                   if attr not in blacklist:
+                       result += ","+attr+"="+str(caps[0][attr])
+               # print "result is " + str(result)
+               # print "videocodechoice before if statement"
+               # print videocoderchoice
+           if videocoderchoice.has_key(result):
+                   mostrecent = gst.PluginFeature.get_rank(encoderfeature[codec])
+                   # print "fact is " + str(value)
+                   # print str(codec) + " has rank " + str(mostrecent)
+                   original = gst.PluginFeature.get_rank(encoderfeature[videocoderchoice[result]])
+                   # print str(videocoderchoice[result]) + " has rank " + str(original)
+                   # print "original value " + videocoderchoice[result]
+                   if mostrecent >= original:
+                       videocoderchoice[result] = codec
+                       # print "new value " + videocoderchoice[result]
+
+           else:
+                   videocoderchoice[result] = codec
+                   # print videocoderchoice
+
    # print videoencoderchoice
-   if videoencoderchoice.has_key(videoencodercaps):
-       elementname = videoencoderchoice[videoencodercaps]
+   if videocoderchoice.has_key(videoencodercaps):
+       elementname = videocoderchoice[videoencodercaps]
    else:
        elementname = False
    return elementname
