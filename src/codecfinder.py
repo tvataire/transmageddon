@@ -21,6 +21,10 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
+# THIS CODE CAN PROBABLY BE REDUCED A LOT IN SIZE SINCE ITS 3 BIG FUNCTIONS DOING ESSENTIALLY THE SAME,
+# ESPECIALLY NOW THAT THE ONLY SPECIAL CASING REMAINING IS FFMUXERS AND WAVPACK
+
+
 import pygst
 pygst.require("0.10")
 import gst
@@ -51,24 +55,27 @@ codecmap = {     'vorbis' : "audio/x-vorbis", 'flac' : "audio/x-flac", 'mp3' : "
 #to concrete element names. 
 #####
 
-def available_muxers():
-   """ return all available muxers except the broken ffmpeg ones """
-   flist = gst.registry_get_default().get_feature_list(gst.ElementFactory)
-   res = []
-   for fact in flist:
-       if list_compat(["Codec", "Muxer"], fact.get_klass().split('/')) and not fact.get_name().startswith('ffmux'):
-           res.append(fact.get_name())
-   return res
-
 def get_muxer_element(containercaps): 
    """
    Check all muxers for their caps and create a dictionary mapping caps 
    to element names. Then return elementname
    """
-   muxers = available_muxers()
-   stringcaps = []
+
+   muxerchoice = {}
    blacklist = ['rate','systemstream','packetsize']
+   flist = gst.registry_get_default().get_feature_list(gst.ElementFactory)
+   muxers = []
+   features = []
+   for fact in flist:
+       # FIXME: the and not part of this line should be removed, but it has to stay in until Ranks have 
+       # been set on most muxers in GStreamer. If removed now we get lots of failures due to ending up 
+       # with broken muxers
+       if list_compat(["Codec", "Muxer"], fact.get_klass().split('/')) and not fact.get_name().startswith('ffmux'):
+           muxers.append(fact.get_name())
+           features.append(fact)
+   muxerfeature = dict(zip(muxers, features))
    for x in muxers:
+       muxer=x
        factory = gst.registry_get_default().lookup_feature(str(x))
        sinkcaps = [x.get_caps() for x in factory.get_static_pad_templates() if x.direction == gst.PAD_SRC]
        for caps in sinkcaps:
@@ -76,10 +83,14 @@ def get_muxer_element(containercaps):
            for attr in caps[0].keys():
                if attr not in blacklist:
                    result += ","+attr+"="+str(caps[0][attr])
-           stringcaps.append(result)
+       if muxerchoice.has_key(result):
+           mostrecent = gst.PluginFeature.get_rank(muxerfeature[muxer])
+           original = gst.PluginFeature.get_rank(muxerfeature[muxerchoice[result]])
+           if mostrecent >= original:
+               muxerchoice[result] = muxer
+       else:
+           muxerchoice[result] = muxer
 
-   # print stringcaps
-   muxerchoice = dict(zip(stringcaps, muxers))
    if muxerchoice.has_key(containercaps):
        elementname = muxerchoice[containercaps]
    else:
@@ -91,42 +102,49 @@ def get_muxer_element(containercaps):
 #   It also creates a python dictionary mapping the caps strings to concrete element
 #   names.
 #####
-def available_audio_encoders():
-   """ returns all available audio encoders """
+def get_audio_encoder_element(audioencodercaps):
+   """
+   Check all audio encoders for their caps and create a dictionary 
+   mapping caps to element names, only using the highest ranked element
+   for each unique caps value. The input of the function is the unique caps
+   and it returns the elementname. If the caps to not exist in dictionary it
+   will return False.
+   """
+
+   audiocoderchoice = {}
+   # blacklist all caps information we do not need to create a unique identifier
+   blacklist = ['rate','channels','bitrate','block_align','mode','subbands'
+               ,'allocation','framed','bitpool','blocks','width']
    flist = gst.registry_get_default().get_feature_list(gst.ElementFactory)
-   res = []
+   encoders = []
+   features = []
    for fact in flist:
        if list_compat(["Codec", "Encoder", "Audio"], fact.get_klass().split('/')):
            # excluding wavpackenc as the fact that it got two SRC pads mess up the logic of this code
            if fact.get_name() != 'wavpackenc':
-               res.append(fact.get_name())
+               encoders.append(fact.get_name())
+               features.append(fact)
+   encoderfeature = dict(zip(encoders, features))
+   for x in encoders:
+           codec = x
+           factory = gst.registry_get_default().lookup_feature(str(x))
+           sinkcaps = [x.get_caps() for x in factory.get_static_pad_templates() if x.direction == gst.PAD_SRC]
+           for caps in sinkcaps:
+               result = caps[0].get_name();
+               for attr in caps[0].keys():
+                   if attr not in blacklist:
+                       result += ","+attr+"="+str(caps[0][attr])
+           if audiocoderchoice.has_key(result):
+                   mostrecent = gst.PluginFeature.get_rank(encoderfeature[codec])
+                   original = gst.PluginFeature.get_rank(encoderfeature[audiocoderchoice[result]])
+                   if mostrecent >= original:
+                       audiocoderchoice[result] = codec
            else:
-               print ""
-   return res
+                   audiocoderchoice[result] = codec
 
-def get_audio_encoder_element(audioencodercaps):
-   """
-   Check all audio encoders for their caps and create a dictionary 
-   mapping caps to element names. Then return elementname.
-   """
-   audioencoders = available_audio_encoders()
-   audiocaps = []
-   # blacklist all caps information we do not need to create a unique identifier
-   blacklist = ['rate','channels','bitrate','block_align','mode','subbands'
-               ,'allocation','framed','bitpool','blocks','width']
-   for x in audioencoders:
-       factory = gst.registry_get_default().lookup_feature(str(x))
-       sinkcaps = [x.get_caps() for x in factory.get_static_pad_templates() if x.direction == gst.PAD_SRC]
-       for caps in sinkcaps:
-           result = caps[0].get_name();
-           for attr in caps[0].keys():
-               if attr not in blacklist:
-                   result += ","+attr+"="+str(caps[0][attr])
-           audiocaps.append(result)
-   # print audiocaps 
-   audioencoderchoice = dict(zip(audiocaps, audioencoders))
-   if audioencoderchoice.has_key(audioencodercaps):
-       elementname = audioencoderchoice[audioencodercaps]
+   # print videoencoderchoice
+   if audiocoderchoice.has_key(audioencodercaps):
+       elementname = audiocoderchoice[audioencodercaps]
    else:
        elementname = False
    return elementname
@@ -140,9 +158,12 @@ def get_audio_encoder_element(audioencodercaps):
 def get_video_encoder_element(videoencodercaps):
    """
    Check all video encoders for their caps and create a dictionary 
-   mapping caps to element names. Then return elementname.
+   mapping caps to element names, only using the highest ranked element
+   for each unique caps value. The input of the function is the unique caps
+   and it returns the elementname. If the caps to not exist in dictionary it
+   will return False.
    """
-   videocaps = []
+
    videocoderchoice = {}
    # blacklist all caps information we do not need to create a unique identifier
    blacklist = ['height','width','framerate','systemstream','depth']
