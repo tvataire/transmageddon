@@ -17,7 +17,7 @@
         <container>video/quicktime,variant=apple</container>
         <extension>m4v</extension>
         <audio>
-            <name>audio/mpeg,mpegversion=4</name>
+            <name>audio/mpeg,mpegversion=[4, 2]</name>
             <passes>
                 <pass>
                     quality_low,profile_low_complexity
@@ -42,7 +42,7 @@
         <container>video/quicktime,variant=apple</container>
         <extension>m4v</extension>
         <audio>
-            <name>audio/mpeg,mpegversion=4</name>
+            <name>audio/mpeg,mpegversion=[4, 2]</name>
             <passes>
                 <pass>
                     quality_normal,profile_low_complexity

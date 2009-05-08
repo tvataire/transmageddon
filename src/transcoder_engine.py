@@ -40,10 +40,9 @@ class Transcoder(gobject.GObject):
             'got-eos' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, [])
                     }
 
-   def __init__(self, FILECHOSEN, FILENAME, CONTAINERCHOICE, AUDIOCODECVALUE, VIDEOCODECVALUE, PRESET):
+   def __init__(self, FILECHOSEN, FILENAME, CONTAINERCHOICE, AUDIOCODECVALUE, VIDEOCODECVALUE, PRESET, OHEIGHT, OWIDTH):
        gobject.GObject.__init__(self)
-       # create a dictionay taking the Codec/Container values and mapping them with plugin names
-       # No asfmux atm, hopefully Soc will solve that
+
 
        # Choose plugin based on Codec Name
        audiocaps = codecfinder.codecmap[AUDIOCODECVALUE]
@@ -52,6 +51,11 @@ class Transcoder(gobject.GObject):
        self.VideoEncoderPlugin = codecfinder.get_video_encoder_element(videocaps)
        # print "Audio encoder plugin is " + self.AudioEncoderPlugin
        # print "Video encoder plugin is " + self.VideoEncoderPlugin
+
+       self.preset = PRESET
+       self.oheight = OHEIGHT
+       self.owidth = OWIDTH
+
 
        # Choose plugin and file suffix based on Container name
        containercaps = codecfinder.containermap[CONTAINERCHOICE]
@@ -66,9 +70,9 @@ class Transcoder(gobject.GObject):
        if CheckDir == (False):
            os.mkdir(self.VideoDirectory)
        # elif CheckDir == (True):
-       #   print "Videos directory exist"
-       # print self.VideoDirectory
-       print "preset status reached engine " + str(PRESET)
+       # print "Videos directory exist"
+       # print self.VideoDirectory     
+
        # create a variable with a timestamp code
        timeget = datetime.datetime.now()
        text = timeget.strftime("-%H%M%S-%d%m%Y") 
@@ -79,7 +83,6 @@ class Transcoder(gobject.GObject):
 
        self.uridecoder = gst.element_factory_make("uridecodebin", "uridecoder")
        self.uridecoder.set_property("uri", FILECHOSEN)
-       # print "File loaded " + FILECHOSEN
        self.uridecoder.connect("pad-added", self.OnDynamicPad)
        self.pipeline.add(self.uridecoder)
 
@@ -98,6 +101,33 @@ class Transcoder(gobject.GObject):
 
        self.uridecoder.connect("no-more-pads", self.noMorePads) # we need to wait on this one before going further
 
+   # Check if rescaling is needed and calculate
+   # new video width/height keeping aspect ratio 
+   def provide_presets(self):
+       print "preset " + str(self.preset) 
+       devices = presets.get()
+       device = devices[self.preset]
+       preset = device.presets["Normal"]
+
+       wmin, wmax  =  preset.vcodec.width
+       print "wmax " + str(wmax)
+       print "wmin " + str(wmin)
+       hmin, hmax = preset.vcodec.height
+       print "hmax " + str(hmax)
+       width, height = self.owidth, self.oheight
+            
+       # Scale width / height down
+       if self.owidth > wmax:
+           print "output video smaller than input video, scaling"
+           width = wmax
+           height = int((float(wmax) / self.owidth) * self.oheight)
+           print "starting with height " + str(width) + " " + str(height)
+       if height > hmax:
+           height = hmax
+           width = int((float(hmax) / self.oheight) * self.owidth)
+           print "width if needed " + str(width) + " " + str(height)
+       return height, width
+
    def noMorePads(self, dbin):
        self.transcodefileoutput.set_state(gst.STATE_PAUSED)
        self.containermuxer.set_state(gst.STATE_PAUSED)
@@ -113,7 +143,7 @@ class Transcoder(gobject.GObject):
        bus = self.pipeline.get_bus()
        bus.add_watch(self.on_message)
        # print bus
-
+   
    def on_message(self, bus, message):
        mtype = message.type
        #print mtype
@@ -157,6 +187,26 @@ class Transcoder(gobject.GObject):
            # print "Got an video cap"
            self.colorspaceconverter = gst.element_factory_make("ffmpegcolorspace")
            self.pipeline.add(self.colorspaceconverter)
+           
+           if self.preset != "nopreset":
+               self.colorspaceconvert2 = gst.element_factory_make("ffmpegcolorspace")
+               self.pipeline.add(self.colorspaceconvert2)
+           
+               self.vcaps = gst.Caps()
+               self.vcaps.append_structure(gst.Structure("video/x-raw-rgb"))
+               height, width = self.provide_presets()
+               for vcap in self.vcaps:
+                   vcap["width"] = width
+                   vcap["height"] = height
+               print self.vcaps
+
+               self.vcapsfilter = gst.element_factory_make("capsfilter")
+               self.vcapsfilter.set_property("caps", self.vcaps)
+               self.pipeline.add(self.vcapsfilter)
+
+               self.videoscaler = gst.element_factory_make("videoscale", "videoscaler")
+               self.videoscaler.set_property("method", int(2))
+               self.pipeline.add(self.videoscaler)
 
            self.videoencoder = gst.element_factory_make(self.VideoEncoderPlugin)
            self.pipeline.add(self.videoencoder)
@@ -165,9 +215,20 @@ class Transcoder(gobject.GObject):
            self.pipeline.add(self.gstvideoqueue)
 
            sink_pad.link(self.colorspaceconverter.get_pad("sink"))
-           self.colorspaceconverter.link(self.videoencoder)
+           if self.preset != "nopreset":
+               self.colorspaceconverter.link(self.videoscaler)
+               self.videoscaler.link(self.vcapsfilter)
+               self.vcapsfilter.link(self.colorspaceconvert2)
+               self.colorspaceconvert2.link(self.videoencoder)
+           else:
+               self.colorspaceconverter.link(self.videoencoder)
+
            self.videoencoder.link(self.gstvideoqueue)
            self.colorspaceconverter.set_state(gst.STATE_PAUSED)
+           if self.preset != "nopreset":
+               self.videoscaler.set_state(gst.STATE_PAUSED)
+               self.vcapsfilter.set_state(gst.STATE_PAUSED)
+               self.colorspaceconvert2.set_state(gst.STATE_PAUSED)
            self.videoencoder.set_state(gst.STATE_PAUSED)
            self.gstvideoqueue.set_state(gst.STATE_PAUSED)
 

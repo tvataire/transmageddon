@@ -89,9 +89,9 @@ supported_video_codecs = [
 # container.
 supported_container_map = {
     'Ogg':        [ 'vorbis', 'theora', 'flac', 'speex', 'celt', 'dirac' ],
-    'MXF':        [ 'mp3', 'dirac', 'aac', 'ac3', 'h264', 'mpeg2', 'mpeg4' ],
+    'MXF':        [ 'mp3', 'h264', 'aac', 'ac3', 'mpeg2', 'mpeg4' ],
     'Matroska':   [ 'flac', 'dirac', 'aac', 'ac3', 'theora', 'mp3', 'h264',
-        'mpeg4', 'mpeg2', 'xvid', 'vorbis' ],
+    'mpeg4', 'mpeg2', 'xvid', 'vorbis' ],
     'AVI':        [ 'mp3', 'h264', 'dirac', 'ac3', 'mpeg2', 'mpeg4', 'xvid' ],
     'Quicktime':  [ 'aac', 'h264', 'ac3', 'dirac', 'mp3', 'mpeg2', 'mpeg4' ],
     'MPEG4':      [ 'aac', 'h264', 'mp3', 'mpeg2', 'mpeg4' ],
@@ -226,14 +226,13 @@ class TransmageddonUI (gtk.glade.XML):
            self.containerchoice.set_active(7)
        elif preset.container == "video/quicktime,variant=3gpp":
            self.containerchoice.set_active(8)
+       elif preset.container == "application/mxf":
+           self.containerchoice.set_active(9) 
        else:
             print "failed to set container format"
+       # print preset.acodec.name
        self.codec_buttons[self.reverse_lookup(str(preset.acodec.name))].set_active(True)
        self.codec_buttons[self.reverse_lookup(str(preset.vcodec.name))].set_active(True)
-       # containerchoice = preset.container,
-       # videowidth =  preset.vcodec.width,
-       # videoheight = preset.vcodec.height
-       # print videocodec + containerchoice + videowidth
 
    # Create query on uridecoder to get values to populate progressbar 
    # Notes:
@@ -283,7 +282,7 @@ class TransmageddonUI (gtk.glade.XML):
        # print "ProgressBar timeout_add startet"
 
    # Use the pygst extension 'discoverer' to get information about the incoming media. Probably need to get codec data in another way.
-   # this code is probably more complex than it needs to be currently       
+   # this code is probably more complex than it needs to be currently
    def succeed(self, d):
        if d.is_video:
            self.videodata = { 'videowidth' : d.videowidth, 'videoheight' : d.videoheight, 
@@ -321,15 +320,18 @@ class TransmageddonUI (gtk.glade.XML):
        self.FileChooser.set_sensitive(True)
        self.containerchoice.set_sensitive(True)
        self.CodecBox.set_sensitive(True)
+       self.presetchoice.set_sensitive(True)
        self.cancelbutton.set_sensitive(False)
        self.transcodebutton.set_sensitive(False)
+       self.ProgressBar.set_text(_("Done Transcoding"))
 
    def _start_transcoding(self):
        FileChoice = self.get_widget ("FileChooser").get_uri()
        FileName = self.get_widget ("FileChooser").get_filename()
        containerchoice = self.get_widget ("containerchoice").get_active_text ()
        self._transcoder = transcoder_engine.Transcoder(FileChoice, FileName, containerchoice, 
-                                                       self.AudioCodec, self.VideoCodec, self.devicename)
+                                                       self.AudioCodec, self.VideoCodec, self.devicename,
+                                                       self.videodata['videoheight'], self.videodata['videowidth'])
        self._transcoder.connect("ready-for-querying", self.ProgressBarUpdate)
        self._transcoder.connect("got-eos", self._on_eos)
        return True
@@ -392,6 +394,7 @@ class TransmageddonUI (gtk.glade.XML):
    def on_transcodebutton_clicked(self, widget):
        self.FileChooser.set_sensitive(False)
        self.containerchoice.set_sensitive(False)
+       self.presetchoice.set_sensitive(False)
        self.CodecBox.set_sensitive(False)
        self.transcodebutton.set_sensitive(False)
        self.cancelbutton.set_sensitive(True)
@@ -444,9 +447,13 @@ class TransmageddonUI (gtk.glade.XML):
        if presetchoice == "No Presets":
            self.devicename = "nopreset"
            self.containerchoice.set_sensitive(True)
+           if self.get_widget("containerchoice").get_active_text():
+               self.CodecBox.set_sensitive(True)
        else:
            self.devicename= self.presetchoices[presetchoice]
-           outcome = self.provide_presets(self.devicename) 
+           outcome = self.provide_presets(self.devicename)
+           self.containerchoice.set_sensitive(False)
+           self.CodecBox.set_sensitive(False)
 
    def audio_codec_changed (self, audio_codec):
        self.transcodebutton.set_sensitive(True)
