@@ -256,18 +256,16 @@ class TransmageddonUI (gtk.glade.XML):
                percent = (value*100)
                timespent = time.time() - start_time
                percent_remain = (100-percent)
+               # print percent_remain
                rem = (timespent / percent) * percent_remain
                min = rem / 60
                sec = rem % 60
-               try:
-                   time_rem = _("%(min)d:%(sec)02d") % {
+               time_rem = _("%(min)d:%(sec)02d") % {
                    "min": min,
                    "sec": sec,
                    }
-               except TypeError:
-                   raise TranscoderStatusException(_("Problem calculating time " \
-                                              "remaining!"))
-               self.ProgressBar.set_text(_("Estimated time remaining: ") + str(time_rem))
+               if percent_remain > 1:
+                   self.ProgressBar.set_text(_("Estimated time remaining: ") + str(time_rem))
                return True
            else:
                self.ProgressBar.set_fraction(0.0)
@@ -281,10 +279,29 @@ class TransmageddonUI (gtk.glade.XML):
        gobject.timeout_add(500, self.Increment_Progressbar)
        # print "ProgressBar timeout_add startet"
 
+
+   # Set up function to start listening on the GStreamer bus
+   # We need this so we know when the pipeline has started and when the pipeline has stopped
+   # listening for ASYNC_DONE is sorta ok way to listen for when the pipeline is running
+   # You need to listen on the GStreamer bus to know when EOS is hit for instance.
+
+   def _on_eos(self, source):
+       context_id = self.StatusBar.get_context_id("EOS")
+       self.StatusBar.push(context_id, (_("File saved to ") + self.VideoDirectory))
+       self.FileChooser.set_sensitive(True)
+       self.containerchoice.set_sensitive(True)
+       self.CodecBox.set_sensitive(True)
+       self.presetchoice.set_sensitive(True)
+       self.cancelbutton.set_sensitive(False)
+       self.transcodebutton.set_sensitive(False)
+       self.ProgressBar.set_text(_("Done Transcoding"))
+
    # Use the pygst extension 'discoverer' to get information about the incoming media. Probably need to get codec data in another way.
    # this code is probably more complex than it needs to be currently
+
    def succeed(self, d):
        if d.is_video:
+           print "there is videodata"
            self.videodata = { 'videowidth' : d.videowidth, 'videoheight' : d.videoheight, 
                               'videolenght' : d.videolength }
            self.videoinformation.set_markup(''.join(('<small>', 'Video height&#47;width: ', str(self.videodata['videoheight']), 
@@ -297,7 +314,6 @@ class TransmageddonUI (gtk.glade.XML):
        def discovered(d, is_media):
            if is_media:
                self.succeed(d)
-
        d = discoverer.Discoverer(path)
        d.connect('discovered', discovered)
        d.discover()
@@ -308,30 +324,24 @@ class TransmageddonUI (gtk.glade.XML):
        # print path
        return self.discover(path)
 
-   # Set up function to start listening on the GStreamer bus
-   # We need this so we know when the pipeline has started and when the pipeline has stopped
-   # listening for ASYNC_DONE is sorta ok way to listen for when the pipeline is running
-   # You need to listen on the GStreamer bus to know when EOS is hit for instance.
-
-   def _on_eos(self, source):
-       self.ProgressBar.set_text(_("Done Transcoding"))
-       context_id = self.StatusBar.get_context_id("EOS")
-       self.StatusBar.push(context_id, (_("File saved to ") + self.VideoDirectory))
-       self.FileChooser.set_sensitive(True)
+   # define the behaviour of the other buttons
+   def on_FileChooser_file_set(self, widget):
+       FileName = self.get_widget ("FileChooser").get_filename()
+       codecinfo = self.mediacheck(FileName)
        self.containerchoice.set_sensitive(True)
-       self.CodecBox.set_sensitive(True)
        self.presetchoice.set_sensitive(True)
-       self.cancelbutton.set_sensitive(False)
-       self.transcodebutton.set_sensitive(False)
-       self.ProgressBar.set_text(_("Done Transcoding"))
+       self.presetchoice.set_active(0)
+       self.ProgressBar.set_fraction(0.0)
+       self.ProgressBar.set_text(_("Transcoding Progress"))
 
    def _start_transcoding(self):
        FileChoice = self.get_widget ("FileChooser").get_uri()
        FileName = self.get_widget ("FileChooser").get_filename()
+       vheight = self.videodata['videoheight']
+       vwidth = self.videodata['videowidth']
        containerchoice = self.get_widget ("containerchoice").get_active_text ()
        self._transcoder = transcoder_engine.Transcoder(FileChoice, FileName, containerchoice, 
-                                                       self.AudioCodec, self.VideoCodec, self.devicename,
-                                                       self.videodata['videoheight'], self.videodata['videowidth'])
+                                                       self.AudioCodec, self.VideoCodec, self.devicename, vheight, vwidth)
        self._transcoder.connect("ready-for-querying", self.ProgressBarUpdate)
        self._transcoder.connect("got-eos", self._on_eos)
        return True
@@ -413,16 +423,6 @@ class TransmageddonUI (gtk.glade.XML):
        context_id = self.StatusBar.get_context_id("EOS")
        self.StatusBar.pop(context_id)
 
-   # define the behaviour of the other buttons
-   def on_FileChooser_file_set(self, widget):
-       FileName = self.get_widget ("FileChooser").get_filename()
-       codecinfo = self.mediacheck(FileName)
-       self.containerchoice.set_sensitive(True)
-       self.presetchoice.set_sensitive(True)
-       self.presetchoice.set_active(0)
-       self.ProgressBar.set_fraction(0.0)
-       self.ProgressBar.set_text(_("Transcoding Progress"))
-
    def on_containerchoice_changed(self, widget):
        self.CodecBox.set_sensitive(True)
        self.transcodebutton.set_sensitive(True)
@@ -444,16 +444,21 @@ class TransmageddonUI (gtk.glade.XML):
 
    def on_presetchoice_changed(self, widget):
        presetchoice = self.get_widget ("presetchoice").get_active_text ()
+       self.ProgressBar.set_fraction(0.0)
        if presetchoice == "No Presets":
            self.devicename = "nopreset"
            self.containerchoice.set_sensitive(True)
            if self.get_widget("containerchoice").get_active_text():
                self.CodecBox.set_sensitive(True)
+               self.transcodebutton.set_sensitive(True)
        else:
+           self.ProgressBar.set_fraction(0.0)
            self.devicename= self.presetchoices[presetchoice]
-           outcome = self.provide_presets(self.devicename)
+           self.provide_presets(self.devicename)
            self.containerchoice.set_sensitive(False)
            self.CodecBox.set_sensitive(False)
+           if self.get_widget("containerchoice").get_active_text():
+               self.transcodebutton.set_sensitive(True)
 
    def audio_codec_changed (self, audio_codec):
        self.transcodebutton.set_sensitive(True)

@@ -49,13 +49,10 @@ class Transcoder(gobject.GObject):
        videocaps = codecfinder.codecmap[VIDEOCODECVALUE]
        self.AudioEncoderPlugin = codecfinder.get_audio_encoder_element(audiocaps)
        self.VideoEncoderPlugin = codecfinder.get_video_encoder_element(videocaps)
-       # print "Audio encoder plugin is " + self.AudioEncoderPlugin
-       # print "Video encoder plugin is " + self.VideoEncoderPlugin
 
        self.preset = PRESET
        self.oheight = OHEIGHT
        self.owidth = OWIDTH
-
 
        # Choose plugin and file suffix based on Container name
        containercaps = codecfinder.containermap[CONTAINERCHOICE]
@@ -104,18 +101,21 @@ class Transcoder(gobject.GObject):
    # Check if rescaling is needed and calculate
    # new video width/height keeping aspect ratio 
    def provide_presets(self):
-       print "preset " + str(self.preset) 
        devices = presets.get()
        device = devices[self.preset]
        preset = device.presets["Normal"]
-
        wmin, wmax  =  preset.vcodec.width
-       print "wmax " + str(wmax)
-       print "wmin " + str(wmin)
        hmin, hmax = preset.vcodec.height
-       print "hmax " + str(hmax)
        width, height = self.owidth, self.oheight
-            
+       self.vpreset = []       
+       voutput = preset.acodec.passes[0].split(", ")
+       for x in voutput:
+           self.vpreset.append(x)
+       self.apreset = []
+       aoutput = preset.acodec.passes[0].split(", ")
+       for x in aoutput:
+           self.apreset.append(x)
+ 
        # Scale width / height down
        if self.owidth > wmax:
            print "output video smaller than input video, scaling"
@@ -146,18 +146,17 @@ class Transcoder(gobject.GObject):
    
    def on_message(self, bus, message):
        mtype = message.type
-       #print mtype
+       # print mtype
        if mtype == gst.MESSAGE_ERROR:
            err, debug = message.parse_error()
            print err 
            print debug
        elif mtype == gst.MESSAGE_ASYNC_DONE:
            self.emit('ready-for-querying')
-           # print "Got ASYNC_DONE, setting pipeline to playing"
            # print "emiting 'ready' signal"
        elif mtype == gst.MESSAGE_EOS:
            self.emit('got-eos')
-           # print "Emiting 'got-eos' signal"
+           print "Emiting 'got-eos' signal"
        return True
 
    def OnDynamicPad(self, dbin, sink_pad):
@@ -171,6 +170,10 @@ class Transcoder(gobject.GObject):
 
            self.audioencoder = gst.element_factory_make(self.AudioEncoderPlugin)
            self.pipeline.add(self.audioencoder)
+           if self.preset != "nopreset":
+               for x in self.apreset:
+                   self.audioencoder.load_preset=(x)
+                   print "audio preset applied " + str(x)
 
            self.gstaudioqueue = gst.element_factory_make("queue")
            self.pipeline.add(self.gstaudioqueue)
@@ -210,7 +213,10 @@ class Transcoder(gobject.GObject):
 
            self.videoencoder = gst.element_factory_make(self.VideoEncoderPlugin)
            self.pipeline.add(self.videoencoder)
-
+           if self.preset != "nopreset":
+               for x in self.vpreset:
+                   self.videoencoder.load_preset=(x)
+                   print "video preset applied " + str(x)
            self.gstvideoqueue = gst.element_factory_make("queue")
            self.pipeline.add(self.gstvideoqueue)
 
