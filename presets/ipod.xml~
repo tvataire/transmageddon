@@ -20,7 +20,7 @@
             <name>audio/mpeg,mpegversion=[4, 2]</name>
             <passes>
                 <pass>
-                    Quality Low, Profile Low Complexity
+                    quality_low,profile_low_complexity
                 </pass>
             </passes>
             <channels>1, 2</channels>
@@ -29,7 +29,7 @@
             <name>video/x-h264</name>
             <passes>
                 <pass>
-                    Quality Low, Profile Baseline
+                    quality_low,profile_baseline
                 </pass>
             </passes>
             <width>320, 640</width>
@@ -45,7 +45,7 @@
             <name>audio/mpeg,mpegversion=[4, 2]</name>
             <passes>
                 <pass>
-                    Quality Normal, Profile Low Complexity
+                    quality_normal,profile_low_complexity
                 </pass>
             </passes>
             <channels>1, 2</channels>
@@ -54,7 +54,7 @@
             <name>video/x-h264</name>
             <passes>
                 <pass>
-                    Quality Normal, Profile Baseline
+                    quality_normal,profile_baseline
                 </pass>
             </passes>
             <width>320, 640</width>

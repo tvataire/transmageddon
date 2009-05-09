@@ -40,7 +40,7 @@
         <audio>
             <name>audio/x-ac3</name>
             <passes>
-                <pass>bitrate=196000</pass>
+                <pass>bitrate=196000 profile=LC</pass>
             </passes>
             <channels>1, 2</channels>
         </audio>

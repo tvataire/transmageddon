@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+
+<device>
+    <make>Motorola</make>
+    <model>KRZR K1v</model>
+    <description>Profile for Motorola KRZR K1v</description>
+    <author>
+        <name>Christian Schaller</name>
+        <email>uraeus@gnome.org</email>
+    </author>
+    <version>1.0</version>
+    <icon>file://phone.svg</icon>
+    <default>Normal</default>
+    
+    <preset>
+        <name>Low</name> # This is a low quality output setting
+        <container>video/quicktime,variant=3gp</container>
+        <extension>3gpp</extension>
+        <audio>
+            <name>audio/mpeg,mpegversion=1,layer=3</name>
+            <passes>
+                <pass>
+                    Quality Low
+                </pass>
+            </passes>
+            <channels>1, 2</channels>
+        </audio>
+        <video>
+            <name>video/mpeg,mpegversion=4</name>
+            <passes>
+                <pass>
+                    Quality Low, Profile Simple
+                </pass>
+            </passes>
+            <width>40, 165</width>
+            <height>40, 200</height>
+            <rate>1, 25</rate>
+        </video>
+    </preset>
+    <preset>
+        <name>Normal</name>
+        <container>video/quicktime,variant=3gp</container>
+        <extension>3gpp</extension>
+        <audio>
+            <name>audio/mpeg,mpegversion=1,layer=3</name>
+            <passes>
+                <pass>
+                    Quality Normal
+                </pass>
+            </passes>
+            <channels>1, 2</channels>
+        </audio>
+        <video>
+            <name>video/mpeg,mpegversion=4</name>
+            <passes>
+                <pass>
+                    Quality Normal,Profile Simple
+                </pass>
+            </passes>
+            <width>40, 165</width>
+            <height>40, 200</height>
+            <rate>1, 30</rate>
+        </video>
+    </preset>
+</device>
