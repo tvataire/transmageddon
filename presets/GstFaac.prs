@@ -1,0 +1,29 @@
+[_presets_]
+version=0.10
+element-name=GstFaac
+
+[Profile Low Complexity]
+_meta/comment=Low Complexity Profile
+profile=LC
+
+[Profile Main]
+_meta/comment=Main Profile
+profile=MAIN
+
+[Profile Sample Rate Scalable]
+_meta/comment=Sample Rate Scalable Profile
+profile=SSR
+
+[Profile Long Term Prediction]
+_meta/comment=Long Term Prediction Profile
+profile=LTP
+
+[Quality Low]
+_meta/comment=Low quality
+bitrate=96000
+
+[Quality Normal]
+bitrate=128000
+
+[Quality High]
+bitrate=200000

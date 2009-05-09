@@ -3,38 +3,38 @@
 <device>
     <make>Nokia</make>
     <model>N800</model>
-    <description>Profile for Nokia 800</description>
+    <description>Profile for Nokia N800</description>
     <author>
         <name>Christian Schaller</name>
-        <email>uraeus@gnome.org</email>
+        <email>christian.schaller@collabora.co.uk</email>
     </author>
     <version>1.0</version>
-    <icon>file://psp.svg</icon>
+    <icon>file://ipod.svg</icon>
     <default>Normal</default>
     
     <preset>
-        <name>Low</name> # This is a low quality output setting
+        <name>Low</name> 
         <container>video/quicktime,variant=iso</container>
         <extension>mp4</extension>
         <audio>
-            <name>audio/mpeg,mpegversion=1,layer=3</name>
+            <name>audio/mpeg,mpegversion=[4, 2]</name>
             <passes>
                 <pass>
-                    Quality Low,Profile Low Complexity
+                    Quality Low, Profile Low Complexity
                 </pass>
             </passes>
             <channels>1, 2</channels>
         </audio>
         <video>
-            <name>video/mpeg,mpegversion=4</name>
+            <name>video/x-h264</name>
             <passes>
                 <pass>
-                    Quality Low,Profile Baseline
+                    Quality Low, Profile Baseline
                 </pass>
             </passes>
-            <width>320, 640</width>
-            <height>240, 480</height>
-            <rate>1, 25</rate>
+            <width>320, 400</width>
+            <height>240, 240</height>
+            <rate>1, 22</rate>
         </video>
     </preset>
     <preset>
@@ -42,10 +42,10 @@
         <container>video/quicktime,variant=iso</container>
         <extension>mp4</extension>
         <audio>
-            <name>audio/mpeg,mpegversion=1,layer=3</name>
+            <name>audio/mpeg,mpegversion=[4, 2]</name>
             <passes>
                 <pass>
-                    Quality Normal,Profile Low Complexity
+                    Quality Normal, Profile Low Complexity
                 </pass>
             </passes>
             <channels>1, 2</channels>
@@ -54,12 +54,12 @@
             <name>video/mpeg,mpegversion=4</name>
             <passes>
                 <pass>
-                    Quality Normal,Profile Baseline
+                    Quality Normal, Profile Simple
                 </pass>
             </passes>
-            <width>320, 640</width>
-            <height>240, 480</height>
-            <rate>1, 30</rate>
+            <width>320, 400</width>
+            <height>240, 240</height>
+            <rate>1, 23</rate>
         </video>
     </preset>
 </device>

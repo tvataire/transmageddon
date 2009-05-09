@@ -264,7 +264,7 @@ class TransmageddonUI (gtk.glade.XML):
                    "min": min,
                    "sec": sec,
                    }
-               if percent_remain > 1:
+               if percent_remain > 0.5:
                    self.ProgressBar.set_text(_("Estimated time remaining: ") + str(time_rem))
                return True
            else:
@@ -303,7 +303,7 @@ class TransmageddonUI (gtk.glade.XML):
        if d.is_video:
            print "there is videodata"
            self.videodata = { 'videowidth' : d.videowidth, 'videoheight' : d.videoheight, 
-                              'videolenght' : d.videolength }
+                              'videolenght' : d.videolength, 'fratenum' : d.videorate.num, 'frateden' :  d.videorate.denom }
            self.videoinformation.set_markup(''.join(('<small>', 'Video height&#47;width: ', str(self.videodata['videoheight']), 
                                             "x", str(self.videodata['videowidth']), '</small>')))   
        if d.is_audio:
@@ -311,6 +311,7 @@ class TransmageddonUI (gtk.glade.XML):
            self.audioinformation.set_markup(''.join(('<small>', 'Audio channels: ', str(self.audiodata['audiochannels']), '</small>')))
 
    def discover(self, path):
+       self.videodata ={}
        def discovered(d, is_media):
            if is_media:
                self.succeed(d)
@@ -339,12 +340,16 @@ class TransmageddonUI (gtk.glade.XML):
        FileName = self.get_widget ("FileChooser").get_filename()
        vheight = self.videodata['videoheight']
        vwidth = self.videodata['videowidth']
+       ratenum = self.videodata['fratenum']
+       ratednom = self.videodata['frateden']
        containerchoice = self.get_widget ("containerchoice").get_active_text ()
        self._transcoder = transcoder_engine.Transcoder(FileChoice, FileName, containerchoice, 
-                                                       self.AudioCodec, self.VideoCodec, self.devicename, vheight, vwidth)
+                                                       self.AudioCodec, self.VideoCodec, self.devicename, 
+                                                       vheight, vwidth, ratenum, ratednom)
        self._transcoder.connect("ready-for-querying", self.ProgressBarUpdate)
        self._transcoder.connect("got-eos", self._on_eos)
        return True
+
 
    def donemessage(self, donemessage, null):
        if donemessage == gst.pbutils.INSTALL_PLUGINS_SUCCESS:
@@ -425,20 +430,17 @@ class TransmageddonUI (gtk.glade.XML):
 
    def on_containerchoice_changed(self, widget):
        self.CodecBox.set_sensitive(True)
-       self.transcodebutton.set_sensitive(True)
        self.ProgressBar.set_fraction(0.0)
        self.ProgressBar.set_text(_("Transcoding Progress"))
        containerchoice = self.get_widget ("containerchoice").get_active_text ()
        codecs = supported_container_map[containerchoice]
        self.AudioCodec = codecs[0]
        self.VideoCodec = codecs[1]
-
+       self.transcodebutton.set_sensitive(True)
        for b in self.codec_buttons.values():
            b.set_sensitive(False)
-
        for c in codecs:
            self.codec_buttons[c].set_sensitive(True)
-
        self.codec_buttons[self.AudioCodec].set_active(True)
        self.codec_buttons[self.VideoCodec].set_active(True)
 

@@ -40,7 +40,8 @@ class Transcoder(gobject.GObject):
             'got-eos' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, [])
                     }
 
-   def __init__(self, FILECHOSEN, FILENAME, CONTAINERCHOICE, AUDIOCODECVALUE, VIDEOCODECVALUE, PRESET, OHEIGHT, OWIDTH):
+   def __init__(self, FILECHOSEN, FILENAME, CONTAINERCHOICE, AUDIOCODECVALUE, VIDEOCODECVALUE, PRESET, 
+                      OHEIGHT, OWIDTH, FRATENUM, FRATEDEN):
        gobject.GObject.__init__(self)
 
 
@@ -53,6 +54,8 @@ class Transcoder(gobject.GObject):
        self.preset = PRESET
        self.oheight = OHEIGHT
        self.owidth = OWIDTH
+       self.fratenum = FRATENUM
+       self.frateden = FRATEDEN
 
        # Choose plugin and file suffix based on Container name
        containercaps = codecfinder.containermap[CONTAINERCHOICE]
@@ -108,25 +111,51 @@ class Transcoder(gobject.GObject):
        hmin, hmax = preset.vcodec.height
        width, height = self.owidth, self.oheight
        self.vpreset = []       
-       voutput = preset.acodec.passes[0].split(", ")
+       voutput = preset.vcodec.passes[0].split(", ")
        for x in voutput:
            self.vpreset.append(x)
        self.apreset = []
        aoutput = preset.acodec.passes[0].split(", ")
        for x in aoutput:
            self.apreset.append(x)
- 
        # Scale width / height down
        if self.owidth > wmax:
-           print "output video smaller than input video, scaling"
+           # print "output video smaller than input video, scaling"
            width = wmax
            height = int((float(wmax) / self.owidth) * self.oheight)
-           print "starting with height " + str(width) + " " + str(height)
        if height > hmax:
            height = hmax
            width = int((float(hmax) / self.oheight) * self.owidth)
-           print "width if needed " + str(width) + " " + str(height)
-       return height, width
+       # Some encoders like x264enc are not able to handle odd height or widths
+       if width % 2:
+           width += 1
+       if height % 2:
+           height += 1
+       print "scaled output size " + str(height) + " " + str(width)
+
+       # Setup video framerate and add to caps - 
+       # FIXME: Is minimum framerate really worthwhile checking for?
+       # =================================================================
+       rmin = preset.vcodec.rate[0].num / \
+           float(preset.vcodec.rate[0].denom)
+       print "rmin er " + str(rmin)
+       rmax = preset.vcodec.rate[1].num / \
+           float(preset.vcodec.rate[1].denom)
+       print "rmax er " + str(rmax)
+       orate = self.fratenum / self.frateden
+            
+       if orate > rmax:
+           num = preset.vcodec.rate[1].num
+           denom = preset.vcodec.rate[1].denom
+       elif orate < rmin:
+           num = preset.vcodec.rate[0].num
+           denom = preset.vcodec.rate[0].denom
+       else:
+           num = self.fratenum
+           denom = self.frateden
+
+
+       return height, width, num, denom
 
    def noMorePads(self, dbin):
        self.transcodefileoutput.set_state(gst.STATE_PAUSED)
@@ -172,9 +201,8 @@ class Transcoder(gobject.GObject):
            self.pipeline.add(self.audioencoder)
            if self.preset != "nopreset":
                for x in self.apreset:
-                   self.audioencoder.load_preset=(x)
-                   print "audio preset applied " + str(x)
-
+                   self.audioencoder.load_preset(x)
+                   
            self.gstaudioqueue = gst.element_factory_make("queue")
            self.pipeline.add(self.gstaudioqueue)
 
@@ -197,15 +225,20 @@ class Transcoder(gobject.GObject):
            
                self.vcaps = gst.Caps()
                self.vcaps.append_structure(gst.Structure("video/x-raw-rgb"))
-               height, width = self.provide_presets()
+               height, width, num, denom = self.provide_presets()
                for vcap in self.vcaps:
                    vcap["width"] = width
                    vcap["height"] = height
-               print self.vcaps
+                   vcap["framerate"] = gst.Fraction(num, denom)
 
+
+               print self.vcaps
                self.vcapsfilter = gst.element_factory_make("capsfilter")
                self.vcapsfilter.set_property("caps", self.vcaps)
                self.pipeline.add(self.vcapsfilter)
+
+               self.videorate = gst.element_factory_make("videorate", "videorate")
+               self.pipeline.add(self.videorate)
 
                self.videoscaler = gst.element_factory_make("videoscale", "videoscaler")
                self.videoscaler.set_property("method", int(2))
@@ -215,15 +248,17 @@ class Transcoder(gobject.GObject):
            self.pipeline.add(self.videoencoder)
            if self.preset != "nopreset":
                for x in self.vpreset:
-                   self.videoencoder.load_preset=(x)
-                   print "video preset applied " + str(x)
+                   bob = self.videoencoder.load_preset(x)
+                   print "preset is getting set " + str(bob)
+                   print "and the name of preset is " + str(x)
            self.gstvideoqueue = gst.element_factory_make("queue")
            self.pipeline.add(self.gstvideoqueue)
 
            sink_pad.link(self.colorspaceconverter.get_pad("sink"))
            if self.preset != "nopreset":
                self.colorspaceconverter.link(self.videoscaler)
-               self.videoscaler.link(self.vcapsfilter)
+               self.videoscaler.link(self.videorate)
+               self.videorate.link(self.vcapsfilter)
                self.vcapsfilter.link(self.colorspaceconvert2)
                self.colorspaceconvert2.link(self.videoencoder)
            else:
@@ -233,6 +268,7 @@ class Transcoder(gobject.GObject):
            self.colorspaceconverter.set_state(gst.STATE_PAUSED)
            if self.preset != "nopreset":
                self.videoscaler.set_state(gst.STATE_PAUSED)
+               self.videorate.set_state(gst.STATE_PAUSED)
                self.vcapsfilter.set_state(gst.STATE_PAUSED)
                self.colorspaceconvert2.set_state(gst.STATE_PAUSED)
            self.videoencoder.set_state(gst.STATE_PAUSED)

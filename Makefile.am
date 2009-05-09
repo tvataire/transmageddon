@@ -1,6 +1,6 @@
 AUTOMAKE_OPTIONS = dist-bzip2
 
-SUBDIRS	= bin src common po debian presets
+SUBDIRS	= bin src common po debian presets profiles
 
 @INTLTOOL_DESKTOP_RULE@
 

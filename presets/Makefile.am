@@ -1,5 +1,5 @@
 
-presetdir = $(datadir)/transmageddon/presets
-preset_DATA = ipod.xml ps3.xml linux-computer.xml n800.xml
+presetdir = $(datadir)/gstreamer-0.10/presets
+preset_DATA = ffenc_mpeg4.prs GstFaac.prs
+EXTRA_DIST = ffenc_mpeg4.prs GstFaac.prs
 
-EXTRA_DIST = ipod.xml ps3.xml linux-computer.xml n800.xml

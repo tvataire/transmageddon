@@ -1,0 +1,31 @@
+[_presets_]
+version=0.10
+element-name=ffenc_mpeg4
+
+[Profile Simple]
+_meta/comment=Simple Profile
+max-bframes=0
+pass=cbr
+
+[Profile Advanced Simple]
+_meta/comment=Advanced Simple Profile
+max-bframes=8
+flags=0x00000030
+pass=quant
+
+[Profile Main]
+_meta/comment=Main Profile
+
+
+[Profile Core]
+_meta/comment=Core Profile
+
+[Quality Low]
+_meta/comment=Low quality
+
+[Quality Normal]
+_meta/comment=Normal quality
+bitrate=12000
+
+[Quality High]
+_meta/comment=High quality
