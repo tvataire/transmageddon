@@ -1,17 +1,6 @@
-* Support setting attributes on the encoders
-  This will allow us to choose Dirac Pro as a codec for instance as that is an attribute on the 
-  normal Dirac encoder. This is also needed for good Apple support as the AAC decoder needs to be
-  set to LC profile instead of Main for iPods etc.
-
 * ASF support. Summer of code will hopefully provide us with a ASF muxer. This would enable all Windows
   media formats.
 
-* Add profiles
-  I want to have profiles for things like N810, iPhone, PSP etc. which automatically choose a 
-  container format and codecs for you. This would ideally be combined with a videoscaling.
-  Design under development here:
-  http://gstreamer.freedesktop.org/wiki/DeviceProfile
-  
 * Add better error handling
   Make sure the application runs even if directory names etc. are different. Enable reporting when
   no plugin is found which allows allows muxing or encoding. Verify that Easy Codec install works.
@@ -28,10 +17,11 @@
   this application for.
 
 * More advanced features
-  There are many things people might want to do. We want to avoid this application becoming like a lot of
-  other transcoder tools though, which got more buttons and options that you can throw a stick at. 
-  Never expose an option which a 'normal' user is unlikely to understand and want to tweak. 
-  One example of something we *might* want to add is downmixing of audio channels.
+  There are many things people might want to do. We want to avoid this application becoming 
+  like a lot of other transcoder tools though, which got more buttons and options that you 
+  can throw a stick at. Never expose an option which a 'normal' user is unlikely to 
+  understand and want to tweak. One example of something we *might* want to add is 
+  downmixing of audio channels.
 
 * Move more logic out of UI file
   The gstreamer buswatch stuff is moved into the engine, but the query code still requrie a import 
@@ -43,12 +33,12 @@
 
 * The UI do not offer AMR support atm, which could be useful for 3GPP files. Problem is that there is 
   no proper AMR plugin for GStreamer, the one in 'ugly' is never built as it requires some code 
-  which there is a lot of uncertainty about whether can be distributed. Added GSoC proposal for 
-  AMR plugins.
+  which there is a lot of uncertainty about whether can be distributed. AMR encoder in Android
+  that could be a good starting point.
 
 * DVD input support
-  Maybe it would be nice to allow DVDs to be the input. Could probably look at Thoggen for how to do that. 
-  Not sure we can do it without a lot of extra UI though.
+  Maybe it would be nice to allow DVDs to be the input. Could probably look at Thoggen for how to 
+  do that. Not sure we can do it without a lot of extra UI though.
 
 * Add an audio denoise filter
   Audio can be filtered with an audio filter to remove noise.
@@ -61,3 +51,11 @@
 * Add some checking on input, making sure its valid and a audio+video file
 
 * remove status message when people choose new codec combo if codec download fails
+
+* Add a lot of testing for the data coming from the XML profiles. People can currently hang the
+  application quite easily by feeding it non-valid data through the XML profiles.
+
+* Profiles
+  These work now, but it is clear that unless we want a 1 million item drop down list we 
+  need to set up some kind of online repository where people can search and download the
+  profiles they need. Should be done in collaboration with Arista.
