@@ -44,24 +44,29 @@ class Transcoder(gobject.GObject):
                       OHEIGHT, OWIDTH, FRATENUM, FRATEDEN):
        gobject.GObject.__init__(self)
 
+       # Choose plugin and file suffix based on Container name
+       containercaps = codecfinder.containermap[CONTAINERCHOICE]
+       self.ContainerFormatPlugin = codecfinder.get_muxer_element(containercaps)
+       # print "Container muxer is " + self.ContainerFormatPlugin
+       self.ContainerFormatSuffix = codecfinder.csuffixmap[CONTAINERCHOICE]
 
        # Choose plugin based on Codec Name
-       audiocaps = codecfinder.codecmap[AUDIOCODECVALUE]
-       videocaps = codecfinder.codecmap[VIDEOCODECVALUE]
-       self.AudioEncoderPlugin = codecfinder.get_audio_encoder_element(audiocaps)
-       self.VideoEncoderPlugin = codecfinder.get_video_encoder_element(videocaps)
+       self.audiocaps = codecfinder.codecmap[AUDIOCODECVALUE]
+       videocodecvalue = VIDEOCODECVALUE
+       if CONTAINERCHOICE == "AVI" and VIDEOCODECVALUE == "mpeg4":
+           videocodecvalue = "divx4"
+           self.videocaps = codecfinder.codecmap[videocodecvalue]
+           print "videocaps ended up as " + str(self.videocaps)
+       else:    
+           self.videocaps = codecfinder.codecmap[videocodecvalue]
+       self.AudioEncoderPlugin = codecfinder.get_audio_encoder_element(self.audiocaps)
+       self.VideoEncoderPlugin = codecfinder.get_video_encoder_element(self.videocaps)
 
        self.preset = PRESET
        self.oheight = OHEIGHT
        self.owidth = OWIDTH
        self.fratenum = FRATENUM
        self.frateden = FRATEDEN
-
-       # Choose plugin and file suffix based on Container name
-       containercaps = codecfinder.containermap[CONTAINERCHOICE]
-       self.ContainerFormatPlugin = codecfinder.get_muxer_element(containercaps)
-       # print "Container muxer is " + self.ContainerFormatPlugin
-       self.ContainerFormatSuffix = codecfinder.csuffixmap[CONTAINERCHOICE]
 
        # Remove suffix from inbound filename so we can reuse it together with suffix to create outbound filename
        self.FileNameOnly = os.path.splitext(os.path.basename(FILENAME))[0]
@@ -201,15 +206,38 @@ class Transcoder(gobject.GObject):
            self.pipeline.add(self.audioencoder)
            if self.preset != "nopreset":
                for x in self.apreset:
-                   self.audioencoder.load_preset(x)
+                   mandy = self.audioencoder.load_preset(x)
+                   print "preset is getting set " + str(mandy)
+                   print "and the name of preset is " + str(x)
+
+               self.audioresampler = gst.element_factory_make("audioresample")
+               self.pipeline.add(self.audioresampler)
+
+               self.acaps = gst.Caps()
+               self.acaps.append_structure(gst.Structure("audio/x-raw-int"))
+               for acap in self.acaps:
+                   acap["rate"] = int(44100)
+               
+               print self.acaps
+               self.acapsfilter = gst.element_factory_make("capsfilter")
+               self.acapsfilter.set_property("caps", self.acaps)
+               self.pipeline.add(self.acapsfilter)
                    
            self.gstaudioqueue = gst.element_factory_make("queue")
            self.pipeline.add(self.gstaudioqueue)
 
            sink_pad.link(self.audioconverter.get_pad("sink"))
-           self.audioconverter.link(self.audioencoder)
+           if self.preset != "nopreset":
+               self.audioconverter.link(self.audioresampler)
+               self.audioresampler.link(self.acapsfilter)
+               self.acapsfilter.link(self.audioencoder)
+           else:
+               self.audioconverter.link(self.audioencoder) 
            self.audioencoder.link(self.gstaudioqueue)
            self.audioconverter.set_state(gst.STATE_PAUSED)
+           if self.preset != "nopreset":
+               self.audioresampler.set_state(gst.STATE_PAUSED)
+               self.acapsfilter.set_state(gst.STATE_PAUSED)
            self.audioencoder.set_state(gst.STATE_PAUSED)
            self.gstaudioqueue.set_state(gst.STATE_PAUSED)
            self.gstaudioqueue.link(self.containermuxer)
@@ -230,19 +258,28 @@ class Transcoder(gobject.GObject):
                    vcap["width"] = width
                    vcap["height"] = height
                    vcap["framerate"] = gst.Fraction(num, denom)
-
-
                print self.vcaps
+
                self.vcapsfilter = gst.element_factory_make("capsfilter")
                self.vcapsfilter.set_property("caps", self.vcaps)
                self.pipeline.add(self.vcapsfilter)
 
+               
                self.videorate = gst.element_factory_make("videorate", "videorate")
                self.pipeline.add(self.videorate)
 
                self.videoscaler = gst.element_factory_make("videoscale", "videoscaler")
                self.videoscaler.set_property("method", int(2))
                self.pipeline.add(self.videoscaler)
+
+           print self.videocaps
+           self.vcapsfilter2 = gst.element_factory_make("capsfilter")
+           caps = gst.caps_from_string(self.videocaps)
+           printcaps = gst.Caps.to_string(caps)
+           print "generated caps from string " + str(printcaps)
+           self.vcapsfilter2.set_property("caps", caps)
+           print self.vcapsfilter2
+           self.pipeline.add(self.vcapsfilter2)
 
            self.videoencoder = gst.element_factory_make(self.VideoEncoderPlugin)
            self.pipeline.add(self.videoencoder)
@@ -262,15 +299,18 @@ class Transcoder(gobject.GObject):
                self.vcapsfilter.link(self.colorspaceconvert2)
                self.colorspaceconvert2.link(self.videoencoder)
            else:
-               self.colorspaceconverter.link(self.videoencoder)
-
-           self.videoencoder.link(self.gstvideoqueue)
+               self.colorspaceconverter.link(self.vcapsfilter2)
+               
+               
+           self.videoencoder.link(self.vcapsfilter2)
+           self.vcapsfilter2.link(self.gstvideoqueue)
            self.colorspaceconverter.set_state(gst.STATE_PAUSED)
            if self.preset != "nopreset":
                self.videoscaler.set_state(gst.STATE_PAUSED)
                self.videorate.set_state(gst.STATE_PAUSED)
                self.vcapsfilter.set_state(gst.STATE_PAUSED)
                self.colorspaceconvert2.set_state(gst.STATE_PAUSED)
+           self.vcapsfilter2.set_state(gst.STATE_PAUSED)
            self.videoencoder.set_state(gst.STATE_PAUSED)
            self.gstvideoqueue.set_state(gst.STATE_PAUSED)
 

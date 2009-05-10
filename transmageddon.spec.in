@@ -48,6 +48,9 @@ Transmageddon Video Transcoding application.
 %{_datadir}/gstreamer-0.10/presets/GstFaac.prs
 %{_datadir}/gstreamer-0.10/presets/ffenc_mpeg4.prs
 %{_datadir}/transmageddon/presets/krzr-k1v.xml
+%{_datadir}/gstreamer-0.10/presets/GstLame.prs
+%{_datadir}/gstreamer-0.10/presets/GstLameMP3Enc.prs
+%{_datadir}/transmageddon/presets/n770.xml
 %{_datadir}/locale
 
 %changelog

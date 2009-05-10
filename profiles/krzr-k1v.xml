@@ -14,7 +14,7 @@
     
     <preset>
         <name>Low</name> # This is a low quality output setting
-        <container>video/quicktime,variant=3gpp</container>
+        <container>video/quicktime,variant=iso</container>
         <extension>3gp</extension>
         <audio>
             <name>audio/mpeg,mpegversion=1,layer=3</name>
@@ -39,7 +39,7 @@
     </preset>
     <preset>
         <name>Normal</name>
-        <container>video/quicktime,variant=3gpp</container>
+        <container>video/quicktime,variant=iso</container>
         <extension>3gp</extension>
         <audio>
             <name>audio/mpeg,mpegversion=1,layer=3</name>

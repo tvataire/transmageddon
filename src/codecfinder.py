@@ -48,7 +48,7 @@ codecmap = {     'vorbis' : "audio/x-vorbis", 'flac' : "audio/x-flac", 'mp3' : "
                         'theora' : "video/x-theora", 'dirac' : "video/x-dirac", 'h264' : "video/x-h264", 
                         'mpeg2' : "video/mpeg,mpegversion=2", 'mpeg4' : "video/mpeg,mpegversion=4",
                         'xvid' : "video/x-xvid", 'dnxhd' : "video/x-dnxhd", 'wmv2' : "video/x-wmv,wmvversion=2",
-                        'dnxhd' : "video/x-dnxhd" }
+                        'dnxhd' : "video/x-dnxhd", 'divx5' : "video/x-divx,divxversion=5", 'divx4' : "video/x-divx,divxversion=4"}
 #####
 #This code checks for available muxers and return a unique caps string
 #for each. It also creates a python dictionary mapping the caps strings 
@@ -181,7 +181,7 @@ def get_video_encoder_element(videoencodercaps):
    encoderfeature = dict(zip(encoders, features))
    # print encoderfeature
    for x in encoders:
-           codec = x
+           element = x
            # print "encoder is " + str(codec)
            factory = gst.registry_get_default().lookup_feature(str(x))
            sinkcaps = [x.get_caps() for x in factory.get_static_pad_templates() if x.direction == gst.PAD_SRC]
@@ -195,21 +195,21 @@ def get_video_encoder_element(videoencodercaps):
                # print "videocodechoice before if statement"
                # print videocoderchoice
            if videocoderchoice.has_key(result):
-                   mostrecent = gst.PluginFeature.get_rank(encoderfeature[codec])
+                   mostrecent = gst.PluginFeature.get_rank(encoderfeature[element])
                    # print "fact is " + str(value)
                    # print str(codec) + " has rank " + str(mostrecent)
                    original = gst.PluginFeature.get_rank(encoderfeature[videocoderchoice[result]])
                    # print str(videocoderchoice[result]) + " has rank " + str(original)
                    # print "original value " + videocoderchoice[result]
                    if mostrecent >= original:
-                       videocoderchoice[result] = codec
+                       videocoderchoice[result] = element
                        # print "new value " + videocoderchoice[result]
 
            else:
-                   videocoderchoice[result] = codec
+                   videocoderchoice[result] = element
                    # print videocoderchoice
-
-   # print videoencoderchoice
+           videocoderchoice["video/x-divx,divxversion=4"] = "ffenc_mpeg4"
+   print videocoderchoice
    if videocoderchoice.has_key(videoencodercaps):
        elementname = videocoderchoice[videoencodercaps]
    else:

@@ -6,6 +6,7 @@ element-name=ffenc_mpeg4
 _meta/comment=Simple Profile
 max-bframes=0
 pass=cbr
+br=32
 
 [Profile Advanced Simple]
 _meta/comment=Advanced Simple Profile
@@ -22,10 +23,12 @@ _meta/comment=Core Profile
 
 [Quality Low]
 _meta/comment=Low quality
+bitrate=400000
 
 [Quality Normal]
 _meta/comment=Normal quality
-bitrate=12000
+bitrate=500000
 
 [Quality High]
 _meta/comment=High quality
+bitrate=700000

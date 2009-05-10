@@ -2,8 +2,8 @@
 
 <device>
     <make>Nokia</make>
-    <model>N800</model>
-    <description>Profile for Nokia N800</description>
+    <model>N770</model>
+    <description>Profile for Nokia N770</description>
     <author>
         <name>Christian Schaller</name>
         <email>christian.schaller@collabora.co.uk</email>
@@ -14,52 +14,54 @@
     
     <preset>
         <name>Low</name> 
-        <container>video/quicktime,variant=iso</container>
-        <extension>mp4</extension>
+        <container>video/x-msvideo</container>
+        <extension>avi</extension>
         <audio>
-            <name>audio/mpeg,mpegversion=[4, 2]</name>
+            <name>audio/mpeg,mpegversion=1,layer=3</name>
             <passes>
                 <pass>
-                    Quality Low, Profile Low Complexity
+                    CBR Quality Low, Profile Constant Bitrate
                 </pass>
             </passes>
             <channels>1, 2</channels>
+            <rate>44100</rate>
         </audio>
         <video>
-            <name>video/x-h264</name>
+            <name>video/mpeg,mpegversion=4</name>
             <passes>
                 <pass>
-                    Quality Low, Profile Baseline
+                    Quality Low, Profile Simple
                 </pass>
             </passes>
-            <width>320, 400</width>
-            <height>240, 240</height>
-            <rate>1, 22</rate>
+            <width>60, 240</width>
+            <height>60, 240</height>
+            <rate>1, 15</rate>
         </video>
     </preset>
     <preset>
         <name>Normal</name>
-        <container>video/quicktime,variant=iso</container>
-        <extension>mp4</extension>
+        <container>video/x-msvideo</container>
+        <extension>avi</extension>
         <audio>
-            <name>audio/mpeg,mpegversion=[4, 2]</name>
+            <name>audio/mpeg,mpegversion=1,layer=3</name>
             <passes>
                 <pass>
-                    Quality Normal, Profile Low Complexity
+                    CBR Quality Low, Profile Constant Bitrate
                 </pass>
             </passes>
             <channels>1, 2</channels>
+            <rate>44100</rate>
         </audio>
         <video>
-            <name>video/x-h264</name>
+            <name>video/mpeg,mpegversion=4</name>
             <passes>
                 <pass>
-                    Quality Normal, Profile Baseline
+                    Quality Normal, Profile Simple
                 </pass>
             </passes>
-            <width>320, 400</width>
-            <height>240, 240</height>
-            <rate>1, 23</rate>
+            <width>60, 240</width>
+            <height>60, 240</height>
+            <rate>1, 15</rate>
         </video>
     </preset>
 </device>

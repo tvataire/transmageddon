@@ -17,5 +17,7 @@ po/stamp-it
 py-compile
 src/*.pyc
 src/*.*~
+profiles/*.*~
+presets/*.*~
 *.spec
 transmageddon.desktop.in
