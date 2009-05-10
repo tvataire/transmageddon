@@ -1,0 +1,38 @@
+[_presets_]
+version=0.10
+element-name=GstLameMP3Enc
+
+[Profile Constant Bitrate]
+_meta/comment=Constant Bitrate Encoding
+target=1
+cbr=true
+
+[Profile Variable Bitrate]
+target=0
+cbr=false
+
+[CBR Quality Low]
+_meta/comment=Low quality CBR encoding
+bitrate=32
+
+[CBR Quality Normal]
+_meta/comment=Normal quality CBR encoding
+bitrate=128
+
+[CBR Quality High]
+_meta/comment=High quality CBR encoding
+bitrate=198
+
+[VBR Quality Low]
+_meta/comment=Low quality VBR encoding
+encoding-engine-quality=2
+
+[VBR Quality Normal]
+_meta/comment=Normal quality VBR encoding
+encoding-engine-quality=2
+
+[VBR Quality High]
+_meta/comment=High quality VBR encoding
+encoding-engine-quality=2
+
+

@@ -209,7 +209,7 @@ def get_video_encoder_element(videoencodercaps):
                    videocoderchoice[result] = element
                    # print videocoderchoice
            videocoderchoice["video/x-divx,divxversion=4"] = "ffenc_mpeg4"
-   print videocoderchoice
+   # print videocoderchoice
    if videocoderchoice.has_key(videoencodercaps):
        elementname = videocoderchoice[videoencodercaps]
    else:

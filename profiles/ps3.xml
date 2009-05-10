@@ -17,11 +17,11 @@
         <container>video/mpegts</container>
         <extension>ts</extension>
         <audio>
-            <name>audio/mpeg,mpegversion=[4, 2]</name>
+            <name>audio/x-ac3</name>
             <passes>
-                <pass>Quality Low, Profile Low Complexity</pass>
+                <pass>BD Quality Low</pass>
             </passes>
-            <channels>1, 2</channels>
+            <channels>1, 7</channels>
         </audio>
         <video>
             <name>video/x-h264</name>
@@ -36,13 +36,13 @@
     <preset>
         <name>Normal</name>
         <container>video/mpegts</container>
-        <extension>mp4</extension>
+        <extension>ts</extension>
         <audio>
             <name>audio/x-ac3</name>
             <passes>
-                <pass>bitrate=196000</pass>
+                <pass>BD Quality Low</pass>
             </passes>
-            <channels>1, 2</channels>
+            <channels>1, 7</channels>
         </audio>
         <video>
             <name>video/x-h264</name>

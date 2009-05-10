@@ -14,13 +14,13 @@
     
     <preset>
         <name>Low</name> # This is a low quality output setting
-        <container>video/quicktime,variant=iso</container>
+        <container>video/quicktime,variant=3gpp</container>
         <extension>3gp</extension>
         <audio>
-            <name>audio/mpeg,mpegversion=1,layer=3</name>
+            <name>audio/mpeg,mpegversion=[4, 2]</name>
             <passes>
                 <pass>
-                    Quality Low
+                    Quality Low, Profile Low Complexity
                 </pass>
             </passes>
             <channels>1, 2</channels>
@@ -39,13 +39,13 @@
     </preset>
     <preset>
         <name>Normal</name>
-        <container>video/quicktime,variant=iso</container>
+        <container>video/quicktime,variant=3gpp</container>
         <extension>3gp</extension>
         <audio>
-            <name>audio/mpeg,mpegversion=1,layer=3</name>
+            <name>audio/mpeg,mpegversion=[4, 2]</name>
             <passes>
                 <pass>
-                    Quality Normal
+                    Quality Normal, Profile Low Complexity
                 </pass>
             </passes>
             <channels>1, 2</channels>

@@ -53,12 +53,8 @@ class Transcoder(gobject.GObject):
        # Choose plugin based on Codec Name
        self.audiocaps = codecfinder.codecmap[AUDIOCODECVALUE]
        videocodecvalue = VIDEOCODECVALUE
-       if CONTAINERCHOICE == "AVI" and VIDEOCODECVALUE == "mpeg4":
-           videocodecvalue = "divx4"
-           self.videocaps = codecfinder.codecmap[videocodecvalue]
-           print "videocaps ended up as " + str(self.videocaps)
-       else:    
-           self.videocaps = codecfinder.codecmap[videocodecvalue]
+       self.videocaps = codecfinder.codecmap[videocodecvalue]
+       # print "videocaps ended up as " + str(self.videocaps)
        self.AudioEncoderPlugin = codecfinder.get_audio_encoder_element(self.audiocaps)
        self.VideoEncoderPlugin = codecfinder.get_video_encoder_element(self.videocaps)
 
@@ -207,7 +203,7 @@ class Transcoder(gobject.GObject):
            if self.preset != "nopreset":
                for x in self.apreset:
                    mandy = self.audioencoder.load_preset(x)
-                   print "preset is getting set " + str(mandy)
+                   print "Audio preset is getting set " + str(mandy)
                    print "and the name of preset is " + str(x)
 
                self.audioresampler = gst.element_factory_make("audioresample")
@@ -299,7 +295,7 @@ class Transcoder(gobject.GObject):
                self.vcapsfilter.link(self.colorspaceconvert2)
                self.colorspaceconvert2.link(self.videoencoder)
            else:
-               self.colorspaceconverter.link(self.vcapsfilter2)
+               self.colorspaceconverter.link(self.videoencoder)
                
                
            self.videoencoder.link(self.vcapsfilter2)
