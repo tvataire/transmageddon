@@ -1,4 +1,5 @@
-src/abouttransmageddon.glade
+src/presets.py
 src/transmageddon.glade
 src/transmageddon.py
+src/utils.py
 transmageddon.desktop.in.in
