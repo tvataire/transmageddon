@@ -3,7 +3,7 @@
 <device>
     <make>Sony</make>
     <model>Playstation 3</model>
-    <description>Profile for Playstation 3</description>
+    <_description>Profile for Playstation 3</_description>
     <author>
         <name>Daniel G. Taylor</name>
         <email>dan@programmer-art.org</email>
@@ -13,7 +13,7 @@
     <default>Normal</default>
     
     <preset>
-        <name>Low</name>
+        <_name>Low</_name>
         <container>video/mpegts</container>
         <extension>ts</extension>
         <audio>
@@ -34,7 +34,7 @@
         </video>
     </preset>
     <preset>
-        <name>Normal</name>
+        <_name>Normal</_name>
         <container>video/mpegts</container>
         <extension>ts</extension>
         <audio>

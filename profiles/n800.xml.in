@@ -3,7 +3,7 @@
 <device>
     <make>Nokia</make>
     <model>N800</model>
-    <description>Profile for Nokia N800</description>
+    <_description>Profile for Nokia N800</_description>
     <author>
         <name>Christian Schaller</name>
         <email>christian.schaller@collabora.co.uk</email>
@@ -13,7 +13,7 @@
     <default>Normal</default>
     
     <preset>
-        <name>Low</name> 
+        <_name>Low</_name> 
         <container>video/quicktime,variant=iso</container>
         <extension>mp4</extension>
         <audio>
@@ -38,7 +38,7 @@
         </video>
     </preset>
     <preset>
-        <name>Normal</name>
+        <_name>Normal</_name>
         <container>video/quicktime,variant=iso</container>
         <extension>mp4</extension>
         <audio>

@@ -3,7 +3,7 @@
 <device>
     <make>Motorola</make>
     <model>KRZR K1v</model>
-    <description>Profile for Motorola KRZR K1v</description>
+    <_description>Profile for Motorola KRZR K1v</_description>
     <author>
         <name>Christian Schaller</name>
         <email>uraeus@gnome.org</email>
@@ -13,7 +13,7 @@
     <default>Normal</default>
     
     <preset>
-        <name>Low</name> # This is a low quality output setting
+        <_name>Low</_name> # This is a low quality output setting
         <container>video/quicktime,variant=3gpp</container>
         <extension>3gp</extension>
         <audio>
@@ -38,7 +38,7 @@
         </video>
     </preset>
     <preset>
-        <name>Normal</name>
+        <_name>Normal</_name>
         <container>video/quicktime,variant=3gpp</container>
         <extension>3gp</extension>
         <audio>

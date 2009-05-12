@@ -3,7 +3,7 @@
 <device>
     <make>Apple</make>
     <model>iPod</model>
-    <description>Profile for Apple iPod / iPhone</description>
+    <_description>Profile for Apple iPod / iPhone</_description>
     <author>
         <name>Joe Example</name>
         <email>mr.example@example.org</email>
@@ -13,7 +13,7 @@
     <default>Normal</default>
     
     <preset>
-        <name>Low</name> # This is a low quality output setting
+        <_name>Low</_name> # This is a low quality output setting
         <container>video/quicktime,variant=apple</container>
         <extension>m4v</extension>
         <audio>
@@ -38,7 +38,7 @@
         </video>
     </preset>
     <preset>
-        <name>Normal</name>
+        <_name>Normal</_name>
         <container>video/quicktime,variant=apple</container>
         <extension>m4v</extension>
         <audio>
