@@ -1,3 +1,9 @@
+profiles/ipod.xml.in
+profiles/krzr-k1v.xml.in
+profiles/linux-computer.xml.in
+profiles/n770.xml.in
+profiles/n800.xml.in
+profiles/ps3.xml.in
 src/presets.py
 src/transmageddon.glade
 src/transmageddon.py

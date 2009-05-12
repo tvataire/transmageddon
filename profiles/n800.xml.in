@@ -1,21 +1,21 @@
 <?xml version="1.0"?>
 
 <device>
-    <make>Apple</make>
-    <model>iPod</model>
-    <description>Profile for Apple iPod / iPhone</description>
+    <make>Nokia</make>
+    <model>N800</model>
+    <_description>Profile for Nokia N800</_description>
     <author>
-        <name>Joe Example</name>
-        <email>mr.example@example.org</email>
+        <name>Christian Schaller</name>
+        <email>christian.schaller@collabora.co.uk</email>
     </author>
     <version>1.0</version>
     <icon>file://ipod.svg</icon>
     <default>Normal</default>
     
     <preset>
-        <name>Low</name> # This is a low quality output setting
-        <container>video/quicktime,variant=apple</container>
-        <extension>m4v</extension>
+        <_name>Low</_name> 
+        <container>video/quicktime,variant=iso</container>
+        <extension>mp4</extension>
         <audio>
             <name>audio/mpeg,mpegversion=[4, 2]</name>
             <passes>
@@ -32,15 +32,15 @@
                     Quality Low, Profile Baseline
                 </pass>
             </passes>
-            <width>320, 640</width>
-            <height>240, 480</height>
-            <rate>1, 25</rate>
+            <width>240, 352</width>
+            <height>140, 208</height>
+            <rate>1, 22</rate>
         </video>
     </preset>
     <preset>
-        <name>Normal</name>
-        <container>video/quicktime,variant=apple</container>
-        <extension>m4v</extension>
+        <_name>Normal</_name>
+        <container>video/quicktime,variant=iso</container>
+        <extension>mp4</extension>
         <audio>
             <name>audio/mpeg,mpegversion=[4, 2]</name>
             <passes>
@@ -57,9 +57,9 @@
                     Quality Normal, Profile Baseline
                 </pass>
             </passes>
-            <width>320, 640</width>
-            <height>240, 480</height>
-            <rate>1, 30</rate>
+            <width>240, 352</width>
+            <height>140, 208</height>
+            <rate>1, 23</rate>
         </video>
     </preset>
 </device>
