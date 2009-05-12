@@ -198,6 +198,8 @@ class TransmageddonUI (gtk.glade.XML):
        self.presetchoices = dict(zip(devicelist, shortname))     
        self.presetchoice.prepend_text("No Presets")
 
+       self.waiting_for_signal="False"
+
    # Get all preset values
    def reverse_lookup(self,v):
     for k in codecfinder.codecmap:
@@ -298,17 +300,18 @@ class TransmageddonUI (gtk.glade.XML):
 
    # Use the pygst extension 'discoverer' to get information about the incoming media. Probably need to get codec data in another way.
    # this code is probably more complex than it needs to be currently
-
+ 
    def succeed(self, d):
        if d.is_video:
-           print "there is videodata"
            self.videodata = { 'videowidth' : d.videowidth, 'videoheight' : d.videoheight, 
                               'videolenght' : d.videolength, 'fratenum' : d.videorate.num, 'frateden' :  d.videorate.denom }
            self.videoinformation.set_markup(''.join(('<small>', 'Video height&#47;width: ', str(self.videodata['videoheight']), 
-                                            "x", str(self.videodata['videowidth']), '</small>')))   
+                                            "x", str(self.videodata['videowidth']), '</small>')))  
        if d.is_audio:
            self.audiodata = { 'audiochannels' : d.audiochannels, 'samplerate' : d.audiorate }
            self.audioinformation.set_markup(''.join(('<small>', 'Audio channels: ', str(self.audiodata['audiochannels']), '</small>')))
+       if self.waiting_for_signal == "True":
+           self.check_for_elements()
 
    def discover(self, path):
        self.videodata ={}
@@ -328,7 +331,9 @@ class TransmageddonUI (gtk.glade.XML):
    # define the behaviour of the other buttons
    def on_FileChooser_file_set(self, widget):
        FileName = self.get_widget ("FileChooser").get_filename()
+       self.audiodata = {}
        codecinfo = self.mediacheck(FileName)
+       print "audiodata is first " + str(self.audiodata)
        self.containerchoice.set_sensitive(True)
        self.presetchoice.set_sensitive(True)
        self.presetchoice.set_active(0)
@@ -415,7 +420,10 @@ class TransmageddonUI (gtk.glade.XML):
        self.cancelbutton.set_sensitive(True)
        self.ProgressBar.set_fraction(0.0)
        self.ProgressBar.set_text(_("Transcoding Progress"))
-       self.check_for_elements()
+       if self.audiodata.has_key("samplerate"):
+           self.check_for_elements()
+       else:
+           self.waiting_for_signal="True"
 
    def on_cancelbutton_clicked(self, widget):
        self.FileChooser.set_sensitive(True)
