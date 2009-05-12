@@ -201,15 +201,19 @@ class Transcoder(gobject.GObject):
            self.audioencoder = gst.element_factory_make(self.AudioEncoderPlugin)
            self.pipeline.add(self.audioencoder)
            if self.preset != "nopreset":
-               for x in self.apreset:
-                   mandy = self.audioencoder.load_preset(x)
-                   print "Audio preset is getting set " + str(mandy)
-                   print "and the name of preset is " + str(x)
+               GstPresetType = gobject.type_from_name("GstPreset")
+               if GstPresetType in gobject.type_interfaces(self.audioencoder):
+                   print "testing for interface"
+                   for x in self.apreset:
+                       mandy = self.audioencoder.load_preset(x)
+                       print "Audio preset is getting set " + str(mandy)
+                       print "and the name of preset is " + str(x)
 
                self.audioresampler = gst.element_factory_make("audioresample")
                self.pipeline.add(self.audioresampler)
 
                self.acaps = gst.Caps()
+               self.acaps.append_structure(gst.Structure("audio/x-raw-float"))
                self.acaps.append_structure(gst.Structure("audio/x-raw-int"))
                for acap in self.acaps:
                    acap["rate"] = int(44100)
@@ -249,6 +253,7 @@ class Transcoder(gobject.GObject):
            
                self.vcaps = gst.Caps()
                self.vcaps.append_structure(gst.Structure("video/x-raw-rgb"))
+               self.vcaps.append_structure(gst.Structure("video/x-raw-yuv"))
                height, width, num, denom = self.provide_presets()
                for vcap in self.vcaps:
                    vcap["width"] = width
@@ -280,10 +285,13 @@ class Transcoder(gobject.GObject):
            self.videoencoder = gst.element_factory_make(self.VideoEncoderPlugin)
            self.pipeline.add(self.videoencoder)
            if self.preset != "nopreset":
-               for x in self.vpreset:
-                   bob = self.videoencoder.load_preset(x)
-                   print "preset is getting set " + str(bob)
-                   print "and the name of preset is " + str(x)
+               GstPresetType = gobject.type_from_name("GstPreset")
+               if GstPresetType in gobject.type_interfaces(self.videoencoder):
+                   print "testing for interface"
+                   for x in self.vpreset:
+                       bob = self.videoencoder.load_preset(x)
+                       print "preset is getting set " + str(bob)
+                       print "and the name of preset is " + str(x)
            self.gstvideoqueue = gst.element_factory_make("queue")
            self.pipeline.add(self.gstvideoqueue)
 

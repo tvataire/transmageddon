@@ -20,7 +20,7 @@
             <name>audio/mpeg,mpegversion=1,layer=3</name>
             <passes>
                 <pass>
-                    CBR Quality Low, Profile Constant Bitrate
+                    CBR Quality Normal, Profile Constant Bitrate
                 </pass>
             </passes>
             <channels>1, 2</channels>
@@ -30,11 +30,11 @@
             <name>video/mpeg,mpegversion=4</name>
             <passes>
                 <pass>
-                    Quality Low, Profile Simple
+                    Quality Low, Profile Advanced Simple
                 </pass>
             </passes>
-            <width>60, 240</width>
-            <height>60, 240</height>
+            <width>60, 352</width>
+            <height>60, 208</height>
             <rate>1, 15</rate>
         </video>
     </preset>
@@ -54,13 +54,14 @@
         </audio>
         <video>
             <name>video/mpeg,mpegversion=4</name>
+            <aspectratio>5:3</aspectratio>
             <passes>
                 <pass>
-                    Quality Normal, Profile Simple
+                    Quality Low, Profile Simple
                 </pass>
             </passes>
-            <width>60, 240</width>
-            <height>60, 240</height>
+            <width>60, 352</width>
+            <height>60, 208</height>
             <rate>1, 15</rate>
         </video>
     </preset>

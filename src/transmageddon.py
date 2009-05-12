@@ -333,7 +333,6 @@ class TransmageddonUI (gtk.glade.XML):
        FileName = self.get_widget ("FileChooser").get_filename()
        self.audiodata = {}
        codecinfo = self.mediacheck(FileName)
-       print "audiodata is first " + str(self.audiodata)
        self.containerchoice.set_sensitive(True)
        self.presetchoice.set_sensitive(True)
        self.presetchoice.set_active(0)

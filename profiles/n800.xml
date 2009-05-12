@@ -32,8 +32,8 @@
                     Quality Low, Profile Baseline
                 </pass>
             </passes>
-            <width>320, 400</width>
-            <height>240, 240</height>
+            <width>240, 352</width>
+            <height>140, 208</height>
             <rate>1, 22</rate>
         </video>
     </preset>
@@ -57,8 +57,8 @@
                     Quality Normal, Profile Baseline
                 </pass>
             </passes>
-            <width>320, 400</width>
-            <height>240, 240</height>
+            <width>240, 352</width>
+            <height>140, 208</height>
             <rate>1, 23</rate>
         </video>
     </preset>
