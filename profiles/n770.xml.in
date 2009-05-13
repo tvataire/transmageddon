@@ -24,10 +24,11 @@
                 </pass>
             </passes>
             <channels>1, 2</channels>
-            <rate>44100</rate>
+            <samplerate>44100</samplerate>
         </audio>
         <video>
             <name>video/mpeg,mpegversion=4</name>
+            <border>N</border>
             <passes>
                 <pass>
                     Quality Low, Profile Advanced Simple
@@ -40,6 +41,7 @@
     </preset>
     <preset>
         <_name>Normal</_name>
+        <border>N</border>
         <container>video/x-msvideo</container>
         <extension>avi</extension>
         <audio>
@@ -50,7 +52,7 @@
                 </pass>
             </passes>
             <channels>1, 2</channels>
-            <rate>44100</rate>
+            <samplerate>44100</samplerate>
         </audio>
         <video>
             <name>video/mpeg,mpegversion=4</name>

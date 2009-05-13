@@ -18,12 +18,14 @@
         <extension>mp4</extension>
         <audio>
             <name>audio/mpeg,mpegversion=[4, 2]</name>
+            <border>N</border>
             <passes>
                 <pass>
                     Quality Low, Profile Low Complexity
                 </pass>
             </passes>
             <channels>1, 2</channels>
+            <samplerate>44100</samplerate>
         </audio>
         <video>
             <name>video/x-h264</name>
@@ -39,6 +41,7 @@
     </preset>
     <preset>
         <_name>Normal</_name>
+        <border>N</border>
         <container>video/quicktime,variant=iso</container>
         <extension>mp4</extension>
         <audio>
@@ -49,6 +52,7 @@
                 </pass>
             </passes>
             <channels>1, 2</channels>
+            <samplerate>44100</samplerate>
         </audio>
         <video>
             <name>video/x-h264</name>
