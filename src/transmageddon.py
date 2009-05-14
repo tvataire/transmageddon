@@ -47,9 +47,7 @@ try:
    import gst.pbutils
 except:
    sys.exit(1)
-
-start_time = time.time()
-     
+   
 supported_containers = [
         "Ogg",
         "Matroska",
@@ -140,6 +138,8 @@ class TransmageddonUI (gtk.glade.XML):
 
        self.signal_autoconnect(self) # Initialize User Interface
 
+       self.start_time = False
+       
        # Set the Videos XDG UserDir as the default directory for the filechooser, 
        # also make sure directory exists
        if 'get_user_special_dir' in glib.__dict__:
@@ -241,7 +241,10 @@ class TransmageddonUI (gtk.glade.XML):
    # Query interface only available on uridecoder, not decodebin2)
    # FORMAT_TIME only value implemented by all plugins used
    # a lot of original code from gst-python synchronizer.py example
-   def Increment_Progressbar(self): 
+   def Increment_Progressbar(self):
+       if self.start_time == False:  
+           self.start_time = time.time()
+           print "start time " + str(self.start_time)  
        try:
            position, format = self._transcoder.uridecoder.query_position(gst.FORMAT_TIME)
        except:
@@ -256,7 +259,7 @@ class TransmageddonUI (gtk.glade.XML):
            if float(value) < (1.0) and float(value) >= 0:
                self.ProgressBar.set_fraction(value)
                percent = (value*100)
-               timespent = time.time() - start_time
+               timespent = time.time() - self.start_time
                percent_remain = (100-percent)
                # print percent_remain
                rem = (timespent / percent) * percent_remain
@@ -296,6 +299,7 @@ class TransmageddonUI (gtk.glade.XML):
        self.presetchoice.set_sensitive(True)
        self.cancelbutton.set_sensitive(False)
        self.transcodebutton.set_sensitive(False)
+       self.start_time = False
        self.ProgressBar.set_text(_("Done Transcoding"))
 
    # Use the pygst extension 'discoverer' to get information about the incoming media. Probably need to get codec data in another way.
@@ -339,7 +343,7 @@ class TransmageddonUI (gtk.glade.XML):
        self.ProgressBar.set_fraction(0.0)
        self.ProgressBar.set_text(_("Transcoding Progress"))
 
-   def _start_transcoding(self):
+   def _start_transcoding(self): 
        FileChoice = self.get_widget ("FileChooser").get_uri()
        FileName = self.get_widget ("FileChooser").get_filename()
        vheight = self.videodata['videoheight']
