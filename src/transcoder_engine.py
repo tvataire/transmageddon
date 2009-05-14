@@ -116,13 +116,13 @@ class Transcoder(gobject.GObject):
            self.blackborderflag = True
        else:
            self.blackborderflag = False
-           print "border flag set to False"
+
 
        # Check for audio samplerate
        self.samplerate = int(preset.acodec.samplerate)
        chanmin, chanmax = preset.acodec.channels
        self.channels = int(chanmax)
-       print "channels " + str(self.channels)
+       # print "channels " + str(self.channels)
        
        # Check if rescaling is needed and calculate new video width/height keeping aspect ratio
        # Also add black borders if needed
@@ -161,24 +161,24 @@ class Transcoder(gobject.GObject):
                print "both borders"
                wpx = (wmin - width) / 2
                hpx = (hmin - height) / 2
-               self.vbox['left'] = wpx
-               self.vbox['right'] = wpx
-               self.vbox['top'] = hpx
-               self.vbox['bottom'] = hpx
+               self.vbox['left'] = -wpx
+               self.vbox['right'] = -wpx
+               self.vbox['top'] = -hpx
+               self.vbox['bottom'] = -hpx
            elif width < wmin:
                print "side borders"
                px = (wmin - width) / 2
-               self.vbox['left'] = px
-               self.vbox['right'] = px
-               self.vbox['top'] = 0
-               self.vbox['bottom'] = 0
+               self.vbox['left'] = -px
+               self.vbox['right'] = -px
+               self.vbox['top'] = -0
+               self.vbox['bottom'] = -0
            elif height < hmin:
                print "top/bottom borders"
                px = (hmin - height) / 2
-               self.vbox['top'] = px
-               self.vbox['bottom'] = px
-               self.vbox['left'] = int(0)
-               self.vbox['right'] = int(0)
+               self.vbox['top'] = -px
+               self.vbox['bottom'] = -px
+               self.vbox['left'] = -int(0)
+               self.vbox['right'] = -int(0)
 
            print "vbox is " + str(self.vbox)
 
@@ -234,7 +234,7 @@ class Transcoder(gobject.GObject):
            # print "emiting 'ready' signal"
        elif mtype == gst.MESSAGE_EOS:
            self.emit('got-eos')
-           print "Emiting 'got-eos' signal"
+           # print "Emiting 'got-eos' signal"
        return True
 
    def OnDynamicPad(self, dbin, sink_pad):
@@ -267,7 +267,6 @@ class Transcoder(gobject.GObject):
                    acap["rate"] = self.samplerate
                    acap["channels"] = self.channels
                
-               print self.acaps
                self.acapsfilter = gst.element_factory_make("capsfilter")
                self.acapsfilter.set_property("caps", self.acaps)
                self.pipeline.add(self.acapsfilter)
@@ -308,11 +307,11 @@ class Transcoder(gobject.GObject):
                    vcap["width"] = width
                    vcap["height"] = height
                    vcap["framerate"] = gst.Fraction(num, denom)
-               print self.vcaps
 
                self.vcapsfilter = gst.element_factory_make("capsfilter")
                self.vcapsfilter.set_property("caps", self.vcaps)
                self.pipeline.add(self.vcapsfilter)
+               print "Capsfilter 1 is " + gst.Caps.to_string(self.vcaps)
 
                
                self.videorate = gst.element_factory_make("videorate", "videorate")
@@ -329,14 +328,14 @@ class Transcoder(gobject.GObject):
                    self.videoboxer.set_property("left", self.vbox["left"])
                    self.pipeline.add(self.videoboxer)
 
-           print self.videocaps
+                   self.colorspaceconvert3 = gst.element_factory_make("ffmpegcolorspace")
+                   self.pipeline.add(self.colorspaceconvert3)
+
            self.vcapsfilter2 = gst.element_factory_make("capsfilter")
-           caps = gst.caps_from_string(self.videocaps)
-           printcaps = gst.Caps.to_string(caps)
-           print "generated caps from string " + str(printcaps)
-           self.vcapsfilter2.set_property("caps", caps)
-           print self.vcapsfilter2
+           caps2 = gst.caps_from_string(self.videocaps)
+           self.vcapsfilter2.set_property("caps", caps2)
            self.pipeline.add(self.vcapsfilter2)
+           print "Capsfilter 2 is " + str(caps2)
 
            self.videoencoder = gst.element_factory_make(self.VideoEncoderPlugin)
            self.pipeline.add(self.videoencoder)
@@ -353,11 +352,12 @@ class Transcoder(gobject.GObject):
 
            sink_pad.link(self.colorspaceconverter.get_pad("sink"))
            if self.preset != "nopreset":
-               self.colorspaceconverter.link(self.videoscaler)
-               self.videoscaler.link(self.videorate)
-               self.videorate.link(self.vcapsfilter)
+               self.colorspaceconverter.link(self.videorate)
+               self.videorate.link(self.videoscaler)
+               self.videoscaler.link(self.vcapsfilter)
                if self.blackborderflag == True:
-                   self.vcapsfilter.link(self.videoboxer)
+                   self.vcapsfilter.link(self.colorspaceconvert3)
+                   self.colorspaceconvert3.link(self.videoboxer)
                    self.videoboxer.link(self.colorspaceconvert2)
                else:
                    self.vcapsfilter.link(self.colorspaceconvert2)
@@ -374,6 +374,7 @@ class Transcoder(gobject.GObject):
                self.videorate.set_state(gst.STATE_PAUSED)
                self.vcapsfilter.set_state(gst.STATE_PAUSED)
                if self.blackborderflag == True:
+                   self.colorspaceconvert3.set_state(gst.STATE_PAUSED)
                    self.videoboxer.set_state(gst.STATE_PAUSED)
                self.colorspaceconvert2.set_state(gst.STATE_PAUSED)
            self.vcapsfilter2.set_state(gst.STATE_PAUSED)

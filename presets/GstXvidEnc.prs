@@ -1,0 +1,31 @@
+[_presets_]
+version=0.10
+element-name=xvidenc
+
+[Profile Unrestricted]
+_meta/comment=Unrestricted Profile
+profile=0
+
+[Profile Simple]
+_meta/comment=Simple Profile
+profile=8
+
+[Profile Advanced Simple]
+_meta/comment=Advanced Simple Profile
+profile=240
+
+[Profile Advanced Real-Time Simple]
+_meta/comment=Main Profile
+profile=145
+
+[Quality Low]
+_meta/comment=Low quality
+bitrate=200000
+
+[Quality Normal]
+_meta/comment=Normal quality
+bitrate=400000
+
+[Quality High]
+_meta/comment=High quality
+bitrate=700000
