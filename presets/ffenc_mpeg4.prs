@@ -6,40 +6,9 @@ element-name=ffenc_mpeg4
 _meta/comment=Simple Profile
 flags=0x00000004
 
-[Profile Simple Level 1]
-# Up to a bitrate of 64 kbps
-_meta/comment=Simple Profile
-flags=0x00000004
-max-bframes=0
-pass=cbr
-br=32
-
-[Profile Simple Level 2]
-# 128 kbps
-_meta/comment=Simple Profile
-flags=0x00000004
-max-bframes=0
-pass=cbr
-br=32
-
-[Profile Simple Level 3]
-# Upt to a bitrate of 384 kbps
-_meta/comment=Simple Profile
-flags=0x00000004
-max-bframes=0
-pass=cbr
-br=32
-
 [Profile Advanced Simple]
 _meta/comment=Advanced Simple Profile
 flags=0x00000036
-
-[Profile Main]
-_meta/comment=Main Profile
-
-
-[Profile Core]
-_meta/comment=Core Profile
 
 [Quality Low]
 _meta/comment=Low quality
