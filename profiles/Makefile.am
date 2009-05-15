@@ -1,10 +1,5 @@
 
 presetdir = $(datadir)/transmageddon/presets
-xmldir = $(datadir)/transmageddon/presets
+preset_DATA = ipod.xml ps3.xml linux-computer.xml n800.xml krzr-k1v.xml n770.xml
 
-xml_in_files = ipod.xml.in ps3.xml linux-computer.xml.in n800.xml.in krzr-k1v.xml.in n770.xml.in
-xml_DATA = $(xml_in_files:.xml.in=.xml)
-
-@INTLTOOL_XML_RULE@
-
-EXTRA_DIST = $(xml_in_files) $(xml_DATA)
+EXTRA_DIST = ipod.xml ps3.xml linux-computer.xml n800.xml krzr-k1v.xml n770.xml

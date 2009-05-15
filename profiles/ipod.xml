@@ -1,21 +1,21 @@
 <?xml version="1.0"?>
 
 <device>
-    <make>Motorola</make>
-    <model>KRZR K1v</model>
-    <_description>Profile for Motorola KRZR K1v</_description>
+    <make>Apple</make>
+    <model>iPod</model>
+    <description>Profile for Apple iPod / iPhone</description>
     <author>
-        <name>Christian Schaller</name>
-        <email>uraeus@gnome.org</email>
+        <name>Joe Example</name>
+        <email>mr.example@example.org</email>
     </author>
     <version>1.0</version>
-    <icon>file://phone.svg</icon>
+    <icon>file://ipod.svg</icon>
     <default>Normal</default>
     
     <preset>
-        <_name>Low</_name> # This is a low quality output setting
-        <container>video/quicktime,variant=3gpp</container>
-        <extension>3gp</extension>
+        <name>Low</name> # This is a low quality output setting
+        <container>video/quicktime,variant=apple</container>
+        <extension>m4v</extension>
         <audio>
             <name>audio/mpeg,mpegversion=[4, 2]</name>
             <passes>
@@ -27,22 +27,22 @@
             <samplerate>44100</samplerate>
         </audio>
         <video>
-            <name>video/mpeg,mpegversion=4</name>
+            <name>video/x-h264</name>
             <border>N</border>
             <passes>
                 <pass>
-                    Quality Low, Profile Simple
+                    Quality Low, Profile Baseline
                 </pass>
             </passes>
-            <width>40, 165</width>
-            <height>40, 200</height>
+            <width>320, 640</width>
+            <height>240, 480</height>
             <rate>1, 25</rate>
         </video>
     </preset>
     <preset>
-        <_name>Normal</_name>
-        <container>video/quicktime,variant=3gpp</container>
-        <extension>3gp</extension>
+        <name>Normal</name>
+        <container>video/quicktime,variant=apple</container>
+        <extension>m4v</extension>
         <audio>
             <name>audio/mpeg,mpegversion=[4, 2]</name>
             <passes>
@@ -54,15 +54,15 @@
             <samplerate>44100</samplerate>
         </audio>
         <video>
-            <name>video/mpeg,mpegversion=4</name>
+            <name>video/x-h264</name>
             <border>N</border>
             <passes>
                 <pass>
-                    Quality Normal,Profile Simple
+                    Quality Normal, Profile Baseline
                 </pass>
             </passes>
-            <width>40, 165</width>
-            <height>40, 200</height>
+            <width>320, 640</width>
+            <height>240, 480</height>
             <rate>1, 30</rate>
         </video>
     </preset>

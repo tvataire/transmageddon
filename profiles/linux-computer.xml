@@ -3,7 +3,7 @@
 <device>
     <make>Generic</make>
     <model>Linux Computer</model>
-    <_description>Profile for Linux Computer</_description>
+    <description>Profile for Linux Computer</description>
     <author>
         <name>Christian Schaller</name>
         <email>christian.schaller@collabora.co.uk</email>
@@ -13,7 +13,7 @@
     <default>Normal</default>
     
     <preset>
-        <_name>Low</_name>
+        <name>Low</name>
         <container>application/ogg</container>
         <extension>ogg</extension>
         <audio>
@@ -33,7 +33,7 @@
         </video>
     </preset>
     <preset>
-        <_name>Normal</_name>
+        <name>Normal</name>
         <container>application/ogg</container>
         <extension>ogg</extension>
         <audio>
@@ -53,7 +53,7 @@
         </video>
     </preset>
     <preset>
-        <_name>Live Input</_name>
+        <name>Live Input</name>
         <container>application/ogg</container>
         <extension>ogg</extension>
         <audio>
@@ -73,7 +73,7 @@
         </video>
     </preset>
     <preset>
-        <_name>High</_name>
+        <name>High</name>
         <container>ffmux_mp4</container>
         <extension>mp4</extension>
         <audio>
