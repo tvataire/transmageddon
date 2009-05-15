@@ -68,3 +68,6 @@
   These work now, but it is clear that unless we want a 1 million item drop down list we 
   need to set up some kind of online repository where people can search and download the
   profiles they need. Should be done in collaboration with Arista.
+
+* Subtitles
+  Support muxing in Subtitles into AVI and MPEG4 files. Need GStreamer work for it to happen.
