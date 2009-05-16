@@ -1,4 +1,5 @@
 Summary:	Transmageddon Video Transcoder
+Summary(pl.UTF-8):	Narzędzie do transkodowania obrazu wideo Transmageddon
 Name:		@PACKAGE@
 Version:	@VERSION@
 Release:	2
@@ -25,6 +26,9 @@ BuildArch: 	noarch
 
 %description
 Transmageddon Video Transcoding application.
+
+%description -l pl.UTF-8
+Narzędzie do transkodowania obrazu wideo Transmageddon.
 
 %prep
 %setup -q
