@@ -63,6 +63,8 @@ class Transcoder(gobject.GObject):
        self.owidth = OWIDTH
        self.fratenum = FRATENUM
        self.frateden = FRATEDEN
+       self.blackborderflag = False
+       self.vbox = {}
 
        # Remove suffix from inbound filename so we can reuse it together with suffix to create outbound filename
        self.FileNameOnly = os.path.splitext(os.path.basename(FILENAME))[0]
@@ -102,12 +104,28 @@ class Transcoder(gobject.GObject):
 
        self.uridecoder.connect("no-more-pads", self.noMorePads) # we need to wait on this one before going further
 
-   # Check if rescaling is needed and calculate
-   # new video width/height keeping aspect ratio 
+   # Get hold of all needed data from the XML profile files. 
    def provide_presets(self):
        devices = presets.get()
        device = devices[self.preset]
        preset = device.presets["Normal"]
+       
+       # Check for black border boolean
+       border = preset.vcodec.border
+       if border == "Y":
+           self.blackborderflag = True
+       else:
+           self.blackborderflag = False
+
+
+       # Check for audio samplerate
+       self.samplerate = int(preset.acodec.samplerate)
+       chanmin, chanmax = preset.acodec.channels
+       self.channels = int(chanmax)
+       # print "channels " + str(self.channels)
+       
+       # Check if rescaling is needed and calculate new video width/height keeping aspect ratio
+       # Also add black borders if needed
        wmin, wmax  =  preset.vcodec.width
        hmin, hmax = preset.vcodec.height
        width, height = self.owidth, self.oheight
@@ -133,6 +151,36 @@ class Transcoder(gobject.GObject):
        if height % 2:
            height += 1
        print "scaled output size " + str(height) + " " + str(width)
+
+       # Add any required padding
+       if self.blackborderflag == True:
+           print "blackborderflag == True"
+           print "width: " + str(width) + " height: " + str(height)
+           print "wmin: " + str(wmin) + " hmin: " + str(hmin) 
+           if width < wmin and height < hmin:
+               print "both borders"
+               wpx = (wmin - width) / 2
+               hpx = (hmin - height) / 2
+               self.vbox['left'] = -wpx
+               self.vbox['right'] = -wpx
+               self.vbox['top'] = -hpx
+               self.vbox['bottom'] = -hpx
+           elif width < wmin:
+               print "side borders"
+               px = (wmin - width) / 2
+               self.vbox['left'] = -px
+               self.vbox['right'] = -px
+               self.vbox['top'] = -0
+               self.vbox['bottom'] = -0
+           elif height < hmin:
+               print "top/bottom borders"
+               px = (hmin - height) / 2
+               self.vbox['top'] = -px
+               self.vbox['bottom'] = -px
+               self.vbox['left'] = -int(0)
+               self.vbox['right'] = -int(0)
+
+           print "vbox is " + str(self.vbox)
 
        # Setup video framerate and add to caps - 
        # FIXME: Is minimum framerate really worthwhile checking for?
@@ -186,7 +234,7 @@ class Transcoder(gobject.GObject):
            # print "emiting 'ready' signal"
        elif mtype == gst.MESSAGE_EOS:
            self.emit('got-eos')
-           print "Emiting 'got-eos' signal"
+           # print "Emiting 'got-eos' signal"
        return True
 
    def OnDynamicPad(self, dbin, sink_pad):
@@ -201,20 +249,24 @@ class Transcoder(gobject.GObject):
            self.audioencoder = gst.element_factory_make(self.AudioEncoderPlugin)
            self.pipeline.add(self.audioencoder)
            if self.preset != "nopreset":
-               for x in self.apreset:
-                   mandy = self.audioencoder.load_preset(x)
-                   print "Audio preset is getting set " + str(mandy)
-                   print "and the name of preset is " + str(x)
+               GstPresetType = gobject.type_from_name("GstPreset")
+               if GstPresetType in gobject.type_interfaces(self.audioencoder):
+                   print "testing for interface"
+                   for x in self.apreset:
+                       mandy = self.audioencoder.load_preset(x)
+                       print "Audio preset is getting set " + str(mandy)
+                       print "and the name of preset is " + str(x)
 
                self.audioresampler = gst.element_factory_make("audioresample")
                self.pipeline.add(self.audioresampler)
 
                self.acaps = gst.Caps()
+               self.acaps.append_structure(gst.Structure("audio/x-raw-float"))
                self.acaps.append_structure(gst.Structure("audio/x-raw-int"))
                for acap in self.acaps:
-                   acap["rate"] = int(44100)
+                   acap["rate"] = self.samplerate
+                   acap["channels"] = self.channels
                
-               print self.acaps
                self.acapsfilter = gst.element_factory_make("capsfilter")
                self.acapsfilter.set_property("caps", self.acaps)
                self.pipeline.add(self.acapsfilter)
@@ -249,50 +301,66 @@ class Transcoder(gobject.GObject):
            
                self.vcaps = gst.Caps()
                self.vcaps.append_structure(gst.Structure("video/x-raw-rgb"))
+               self.vcaps.append_structure(gst.Structure("video/x-raw-yuv"))
                height, width, num, denom = self.provide_presets()
                for vcap in self.vcaps:
                    vcap["width"] = width
                    vcap["height"] = height
                    vcap["framerate"] = gst.Fraction(num, denom)
-               print self.vcaps
 
                self.vcapsfilter = gst.element_factory_make("capsfilter")
                self.vcapsfilter.set_property("caps", self.vcaps)
                self.pipeline.add(self.vcapsfilter)
+               print "Capsfilter 1 is " + gst.Caps.to_string(self.vcaps)
 
                
                self.videorate = gst.element_factory_make("videorate", "videorate")
                self.pipeline.add(self.videorate)
 
                self.videoscaler = gst.element_factory_make("videoscale", "videoscaler")
-               self.videoscaler.set_property("method", int(2))
+               self.videoscaler.set_property("method", int(1))
                self.pipeline.add(self.videoscaler)
+               if self.blackborderflag == True:
+                   self.videoboxer = gst.element_factory_make("videobox", "videoboxer")
+                   self.videoboxer.set_property("top", self.vbox["top"])
+                   self.videoboxer.set_property("bottom", self.vbox["bottom"])
+                   self.videoboxer.set_property("right", self.vbox["right"])
+                   self.videoboxer.set_property("left", self.vbox["left"])
+                   self.pipeline.add(self.videoboxer)
 
-           print self.videocaps
+                   self.colorspaceconvert3 = gst.element_factory_make("ffmpegcolorspace")
+                   self.pipeline.add(self.colorspaceconvert3)
+
            self.vcapsfilter2 = gst.element_factory_make("capsfilter")
-           caps = gst.caps_from_string(self.videocaps)
-           printcaps = gst.Caps.to_string(caps)
-           print "generated caps from string " + str(printcaps)
-           self.vcapsfilter2.set_property("caps", caps)
-           print self.vcapsfilter2
+           caps2 = gst.caps_from_string(self.videocaps)
+           self.vcapsfilter2.set_property("caps", caps2)
            self.pipeline.add(self.vcapsfilter2)
+           print "Capsfilter 2 is " + str(caps2)
 
            self.videoencoder = gst.element_factory_make(self.VideoEncoderPlugin)
            self.pipeline.add(self.videoencoder)
            if self.preset != "nopreset":
-               for x in self.vpreset:
-                   bob = self.videoencoder.load_preset(x)
-                   print "preset is getting set " + str(bob)
-                   print "and the name of preset is " + str(x)
+               GstPresetType = gobject.type_from_name("GstPreset")
+               if GstPresetType in gobject.type_interfaces(self.videoencoder):
+                   print "testing for interface"
+                   for x in self.vpreset:
+                       bob = self.videoencoder.load_preset(x)
+                       print "preset is getting set " + str(bob)
+                       print "and the name of preset is " + str(x)
            self.gstvideoqueue = gst.element_factory_make("queue")
            self.pipeline.add(self.gstvideoqueue)
 
            sink_pad.link(self.colorspaceconverter.get_pad("sink"))
            if self.preset != "nopreset":
-               self.colorspaceconverter.link(self.videoscaler)
-               self.videoscaler.link(self.videorate)
-               self.videorate.link(self.vcapsfilter)
-               self.vcapsfilter.link(self.colorspaceconvert2)
+               self.colorspaceconverter.link(self.videorate)
+               self.videorate.link(self.videoscaler)
+               self.videoscaler.link(self.vcapsfilter)
+               if self.blackborderflag == True:
+                   self.vcapsfilter.link(self.colorspaceconvert3)
+                   self.colorspaceconvert3.link(self.videoboxer)
+                   self.videoboxer.link(self.colorspaceconvert2)
+               else:
+                   self.vcapsfilter.link(self.colorspaceconvert2)
                self.colorspaceconvert2.link(self.videoencoder)
            else:
                self.colorspaceconverter.link(self.videoencoder)
@@ -305,6 +373,9 @@ class Transcoder(gobject.GObject):
                self.videoscaler.set_state(gst.STATE_PAUSED)
                self.videorate.set_state(gst.STATE_PAUSED)
                self.vcapsfilter.set_state(gst.STATE_PAUSED)
+               if self.blackborderflag == True:
+                   self.colorspaceconvert3.set_state(gst.STATE_PAUSED)
+                   self.videoboxer.set_state(gst.STATE_PAUSED)
                self.colorspaceconvert2.set_state(gst.STATE_PAUSED)
            self.vcapsfilter2.set_state(gst.STATE_PAUSED)
            self.videoencoder.set_state(gst.STATE_PAUSED)

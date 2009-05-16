@@ -216,7 +216,7 @@ class AudioCodec(Codec):
     """
     def __init__(self, *args):
         Codec.__init__(self, *args)
-        self.rate = (8000, 96000)
+        self.samplerate = (96000)
         self.width = (8, 24)
         self.depth = (8, 24)
         self.channels = (1, 6)
@@ -227,6 +227,7 @@ class VideoCodec(Codec):
     """
     def __init__(self, *args):
         Codec.__init__(self, *args)
+        self.border = "N"
         self.rate = (Fraction("1"), Fraction("60"))
         self.width = (2, 1920)
         self.height = (2, 1080)
@@ -299,8 +300,8 @@ def _load_audio_codec(root):
             codec.depth = _parse_range(child.text.strip())
         elif child.tag == "channels":
             codec.channels = _parse_range(child.text.strip())
-        elif child.tag == "rate":
-            codec.rate = _parse_range(child.text.strip())
+        elif child.tag == "samplerate":
+            codec.samplerate = child.text.strip()
         elif child.tag == "passes":
             for command in child.getchildren():
                 codec.passes.append(command.text.strip())
@@ -327,8 +328,10 @@ def _load_video_codec(root):
             codec.width = _parse_range(child.text.strip())
         elif child.tag == "height":
             codec.height = _parse_range(child.text.strip())
-        elif child.tag == "rate":
+        elif child.tag == "framerate":
             codec.rate = _parse_range(child.text.strip(), Fraction)
+        elif child.tag == "border":
+            codec.border = child.text.strip()
         elif child.tag == "passes":
             for command in child.getchildren():
                 codec.passes.append(command.text.strip())

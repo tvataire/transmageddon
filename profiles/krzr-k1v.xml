@@ -24,9 +24,11 @@
                 </pass>
             </passes>
             <channels>1, 2</channels>
+            <samplerate>44100</samplerate>
         </audio>
         <video>
             <name>video/mpeg,mpegversion=4</name>
+            <border>N</border>
             <passes>
                 <pass>
                     Quality Low, Profile Simple
@@ -49,9 +51,11 @@
                 </pass>
             </passes>
             <channels>1, 2</channels>
+            <samplerate>44100</samplerate>
         </audio>
         <video>
             <name>video/mpeg,mpegversion=4</name>
+            <border>N</border>
             <passes>
                 <pass>
                     Quality Normal,Profile Simple

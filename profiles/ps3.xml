@@ -22,9 +22,11 @@
                 <pass>BD Quality Low</pass>
             </passes>
             <channels>1, 7</channels>
+            <samplerate>44100</samplerate>
         </audio>
         <video>
             <name>video/x-h264</name>
+            <border>N</border>
             <passes>
                 <pass>Quality Low, Profile Baseline</pass>
             </passes> 
@@ -35,6 +37,7 @@
     </preset>
     <preset>
         <name>Normal</name>
+        <border>N</border>
         <container>video/mpegts</container>
         <extension>ts</extension>
         <audio>
@@ -43,6 +46,7 @@
                 <pass>BD Quality Low</pass>
             </passes>
             <channels>1, 7</channels>
+            <samplerate>44100</samplerate>
         </audio>
         <video>
             <name>video/x-h264</name>

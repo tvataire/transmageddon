@@ -20,26 +20,28 @@
             <name>audio/mpeg,mpegversion=1,layer=3</name>
             <passes>
                 <pass>
-                    CBR Quality Low, Profile Constant Bitrate
+                    CBR Quality Normal, Profile Constant Bitrate
                 </pass>
             </passes>
             <channels>1, 2</channels>
-            <rate>44100</rate>
+            <samplerate>44100</samplerate>
         </audio>
         <video>
             <name>video/mpeg,mpegversion=4</name>
+            <border>N</border>
             <passes>
                 <pass>
-                    Quality Low, Profile Simple
+                    Quality Low, Profile Advanced Simple
                 </pass>
             </passes>
-            <width>60, 240</width>
-            <height>60, 240</height>
+            <width>60, 352</width>
+            <height>60, 208</height>
             <rate>1, 15</rate>
         </video>
     </preset>
     <preset>
         <name>Normal</name>
+        <border>N</border>
         <container>video/x-msvideo</container>
         <extension>avi</extension>
         <audio>
@@ -50,17 +52,18 @@
                 </pass>
             </passes>
             <channels>1, 2</channels>
-            <rate>44100</rate>
+            <samplerate>44100</samplerate>
         </audio>
         <video>
             <name>video/mpeg,mpegversion=4</name>
+            <aspectratio>5:3</aspectratio>
             <passes>
                 <pass>
-                    Quality Normal, Profile Simple
+                    Quality Low, Profile Simple
                 </pass>
             </passes>
-            <width>60, 240</width>
-            <height>60, 240</height>
+            <width>60, 352</width>
+            <height>60, 208</height>
             <rate>1, 15</rate>
         </video>
     </preset>

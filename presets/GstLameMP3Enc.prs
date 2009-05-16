@@ -13,7 +13,7 @@ cbr=false
 
 [CBR Quality Low]
 _meta/comment=Low quality CBR encoding
-bitrate=32
+bitrate=64
 
 [CBR Quality Normal]
 _meta/comment=Normal quality CBR encoding

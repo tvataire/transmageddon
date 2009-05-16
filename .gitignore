@@ -14,6 +14,7 @@ missing
 po/*.gmo
 po/POTFILES
 po/stamp-it
+po/.intltool-merge-cache
 py-compile
 src/*.pyc
 src/*.*~

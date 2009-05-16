@@ -1,9 +1,20 @@
-* ASF support. Summer of code will hopefully provide us with a ASF muxer. This would enable all Windows
-  media formats.
+This list is completely unordered. Nothing about the ordering in this list should
+cause anyone to make any kind of assumptions about priorties.
+
+* ASF support. 
+  Summer of code will provide us with a ASF muxer. This would enable all Windows media 
+  formats.
+
+* MPEG PS support.
+  Summer of Code project looks to addres this.
+
+* AVC HD support.
+  Variation of MPEG TS with H264 and AC3 audio. Summer of code will look at it.
 
 * Add better error handling
-  Make sure the application runs even if directory names etc. are different. Enable reporting when
-  no plugin is found which allows allows muxing or encoding. Verify that Easy Codec install works.
+  Make sure the application runs even if directory names etc. are different. 
+  Enable reporting when no plugin is found which allows allows muxing or 
+  encoding.
 
 * Get application icon made
   Find a graphics artist to make nice Tango style icon
@@ -12,33 +23,34 @@
   Allow incoming codecs to be preserved and just remuxed into new file when possible
 
 * Support non-muxed audio codec 
-  Allow the outputting of non-muxed audio codecs (mp3 mostly). Not sure we really want this as 
-  it would add more options to the UI to do something which I doubt a lot of people care to use 
-  this application for.
+  Allow the outputting of non-muxed audio codecs (mp3 mostly). Not sure we really
+  want this as it would add more options to the UI to do something which I doubt 
+  a lot of people care to use this application for.
 
 * More advanced features
-  There are many things people might want to do. We want to avoid this application becoming 
-  like a lot of other transcoder tools though, which got more buttons and options that you 
-  can throw a stick at. Never expose an option which a 'normal' user is unlikely to 
-  understand and want to tweak. One example of something we *might* want to add is 
-  downmixing of audio channels.
+  There are many things people might want to do. We want to avoid this application 
+  becoming like a lot of other transcoder tools though, which got more buttons 
+  and options that you can throw a stick at. Never expose an option which a 
+  'normal' user is unlikely to understand and want to tweak. One example of 
+  something we *might* want to add is downmixing of audio channels.
 
 * Move more logic out of UI file
-  The gstreamer buswatch stuff is moved into the engine, but the query code still requrie a import 
-  gst in  the UI.
+  The gstreamer buswatch stuff is moved into the engine, but the query code still 
+  requrie a import gst in  the UI.
 
 * Windows port
-  Port application to windows and get a py2exe binary going with everything. The video directory stuff 
-  is only known current non-portable.
+  Port application to windows and get a py2exe binary going with everything. The video
+  directory stuff is only known current non-portable.
 
-* The UI do not offer AMR support atm, which could be useful for 3GPP files. Problem is that there is 
-  no proper AMR plugin for GStreamer, the one in 'ugly' is never built as it requires some code 
-  which there is a lot of uncertainty about whether can be distributed. AMR encoder in Android
-  that could be a good starting point.
+* AMR support 
+  Which would be useful for 3GPP files. Problem is that there is no proper AMR plugin 
+  for GStreamer yet, the one in 'ugly' is never built as it requires some code which 
+  there is a lot of uncertainty about whether can be  distributed. AMR encoder in 
+  Android that could be a good starting point.
 
 * DVD input support
-  Maybe it would be nice to allow DVDs to be the input. Could probably look at Thoggen for how to 
-  do that. Not sure we can do it without a lot of extra UI though.
+  Maybe it would be nice to allow DVDs to be the input. Could probably look at Thoggen 
+  for how to do that. Not sure we can do it without a lot of extra UI though.
 
 * Add an audio denoise filter
   Audio can be filtered with an audio filter to remove noise.
@@ -52,10 +64,16 @@
 
 * remove status message when people choose new codec combo if codec download fails
 
-* Add a lot of testing for the data coming from the XML profiles. People can currently hang the
-  application quite easily by feeding it non-valid data through the XML profiles.
+* Add a lot of testing for the data coming from the XML profiles. People can currently 
+  hang the application quite easily by feeding it non-valid data through the XML profiles.
 
 * Profiles
   These work now, but it is clear that unless we want a 1 million item drop down list we 
   need to set up some kind of online repository where people can search and download the
   profiles they need. Should be done in collaboration with Arista.
+
+* Subtitles
+  Support muxing in Subtitles into AVI and MPEG4 files. Need GStreamer work for it to happen.
+
+* Multipass encoding
+  Add multipass encoding to encoders that support it

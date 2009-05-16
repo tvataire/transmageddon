@@ -1,14 +1,22 @@
 [_presets_]
 version=0.10
-element-name=ffenc_mpeg4
+element-name=xvidenc
+
+[Profile Unrestricted]
+_meta/comment=Unrestricted Profile
+profile=0
 
 [Profile Simple]
 _meta/comment=Simple Profile
-flags=0x00000004
+profile=8
 
 [Profile Advanced Simple]
 _meta/comment=Advanced Simple Profile
-flags=0x00000036
+profile=240
+
+[Profile Advanced Real-Time Simple]
+_meta/comment=Main Profile
+profile=145
 
 [Quality Low]
 _meta/comment=Low quality

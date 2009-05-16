@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: transmageddon\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-04-27 22:56+0200\n"
+"POT-Creation-Date: 2009-05-12 18:04+0200\n"
 "PO-Revision-Date: 2009-03-29 13:29+0200\n"
 "Last-Translator: Łukasz Jernaś <deejay1@srem.org>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
@@ -17,8 +17,116 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 
-#: ../src/abouttransmageddon.glade.h:1
-msgid "About Glade"
+#: ../profiles/ipod.xml.in.h:1 ../profiles/krzr-k1v.xml.in.h:1
+#: ../profiles/linux-computer.xml.in.h:3 ../profiles/n770.xml.in.h:1
+#: ../profiles/n800.xml.in.h:1 ../profiles/ps3.xml.in.h:1
+msgid "Low"
+msgstr "Niska"
+
+#: ../profiles/ipod.xml.in.h:2 ../profiles/krzr-k1v.xml.in.h:2
+#: ../profiles/linux-computer.xml.in.h:4 ../profiles/n770.xml.in.h:2
+#: ../profiles/n800.xml.in.h:2 ../profiles/ps3.xml.in.h:2
+msgid "Normal"
+msgstr "Normalna"
+
+#: ../profiles/ipod.xml.in.h:3
+msgid "Profile for Apple iPod / iPhone"
+msgstr "Profil dla odtwarzaczy Apple iPod / iPhone"
+
+#: ../profiles/krzr-k1v.xml.in.h:3
+msgid "Profile for Motorola KRZR K1v"
+msgstr ""
+
+#: ../profiles/linux-computer.xml.in.h:1
+msgid "High"
+msgstr "Wysoka"
+
+#: ../profiles/linux-computer.xml.in.h:2
+msgid "Live Input"
+msgstr "Wejście bezpośrednie"
+
+#: ../profiles/linux-computer.xml.in.h:5
+msgid "Profile for Linux Computer"
+msgstr "Profil dla komputerów linuksowych"
+
+#: ../profiles/n770.xml.in.h:3
+msgid "Profile for Nokia N770"
+msgstr "Profil dla Nokii N770"
+
+#: ../profiles/n800.xml.in.h:3
+msgid "Profile for Nokia N800"
+msgstr "Profil dla Nokii N800"
+
+#: ../profiles/ps3.xml.in.h:3
+msgid "Profile for Playstation 3"
+msgstr "Profil dla konsoli Playstation 3"
+
+#: ../src/presets.py:79
+#, python-format
+msgid "Not a valid integer or fraction: %(value)s!"
+msgstr ""
+
+#: ../src/presets.py:257
+#, python-format
+msgid "Value may only contain one comma; got %(value)s"
+msgstr ""
+
+#: ../src/presets.py:403
+#, python-format
+msgid "Loaded device %(device)s (%(presets)d presets)"
+msgstr ""
+
+#: ../src/presets.py:470
+#, python-format
+msgid "Fetching %(location)s"
+msgstr ""
+
+#: ../src/presets.py:477
+#, python-format
+msgid "Writing to %(file)s"
+msgstr ""
+
+#: ../src/presets.py:482
+#, python-format
+msgid "There was an error fetching and installing %(location)s: %(error)s"
+msgstr ""
+
+#: ../src/presets.py:499
+msgid "Checking for device preset updates..."
+msgstr ""
+
+#: ../src/presets.py:519
+#, python-format
+msgid "Device preset %(name)s is up to date"
+msgstr ""
+
+#: ../src/presets.py:523
+#, python-format
+msgid "Found updated device preset %(name)s"
+msgstr ""
+
+#: ../src/presets.py:529 ../src/presets.py:542
+#, python-format
+msgid "Error installing preset %(name)s from %(location)s: %(error)s"
+msgstr ""
+
+#: ../src/presets.py:536
+#, python-format
+msgid "Found new device preset %(name)s"
+msgstr ""
+
+#: ../src/presets.py:549
+#, python-format
+msgid "Malformed plugin version line %(line)s"
+msgstr ""
+
+#: ../src/presets.py:553
+#, python-format
+msgid "There was a problem accessing %(location)spresets.txt!"
+msgstr ""
+
+#: ../src/presets.py:575
+msgid "All device presets are up to date!"
 msgstr ""
 
 #: ../src/transmageddon.glade.h:1
@@ -34,32 +142,33 @@ msgid "<b>Choose Video Codec</b>:"
 msgstr "<b>Wybierz kodek obrazu</b>"
 
 #: ../src/transmageddon.glade.h:4
-msgid "<b>Output Container Format:</b>"
+#, fuzzy
+msgid "<b>Output Format:</b>"
 msgstr "<b>Format kontenera wyjściowego:</b>"
 
 #: ../src/transmageddon.glade.h:5
+msgid "<b>Presets:</b>"
+msgstr ""
+
+#: ../src/transmageddon.glade.h:6
 msgid "<small>Audio Channels:</small>"
 msgstr "<small>Kanały dźwięku:</small>"
 
-#: ../src/transmageddon.glade.h:6
+#: ../src/transmageddon.glade.h:7
 msgid "<small>Video height&#47;width:</small>"
 msgstr "<small>Wysokość&#47;szerokość obrazu:</small>"
 
-#: ../src/transmageddon.glade.h:7
+#: ../src/transmageddon.glade.h:8
 msgid "AAC"
 msgstr "AAC"
 
-#: ../src/transmageddon.glade.h:8
+#: ../src/transmageddon.glade.h:9
 msgid "AC3"
 msgstr "AC3"
 
-#: ../src/transmageddon.glade.h:9
+#: ../src/transmageddon.glade.h:10
 msgid "Celt"
 msgstr "Celt"
-
-#: ../src/transmageddon.glade.h:10
-msgid "Choose your prefered container format"
-msgstr "Wybierz preferowany format kontenera"
 
 #: ../src/transmageddon.glade.h:11
 msgid "Dirac"
@@ -78,8 +187,8 @@ msgid "MPEG2"
 msgstr "MPEG2"
 
 #: ../src/transmageddon.glade.h:15
-msgid "MPEG4/DivX"
-msgstr "MPEG4/Divx"
+msgid "MPEG4/DivX5"
+msgstr "MPEG4/DivX5"
 
 #: ../src/transmageddon.glade.h:16
 msgid "Speex"
@@ -121,31 +230,49 @@ msgstr "_Widok"
 msgid "mp3"
 msgstr "mp3"
 
-#: ../src/transmageddon.py:116 ../src/transmageddon.py:275
-#: ../src/transmageddon.py:285 ../src/transmageddon.py:295
-#: ../src/transmageddon.py:301
+#: ../src/transmageddon.glade.h:26
+msgid "xvid"
+msgstr ""
+
+#: ../src/transmageddon.py:176 ../src/transmageddon.py:341
+#: ../src/transmageddon.py:422 ../src/transmageddon.py:435
+#: ../src/transmageddon.py:442
 msgid "Transcoding Progress"
 msgstr "Postęp transkodowania"
 
-#: ../src/transmageddon.py:191
-msgid "Done Transcoding"
-msgstr "Zakończono transkodowanie"
+#: ../src/transmageddon.py:265
+#, python-format
+msgid "%(min)d:%(sec)02d"
+msgstr ""
 
-#: ../src/transmageddon.py:193
+#: ../src/transmageddon.py:270
+msgid "Estimated time remaining: "
+msgstr ""
+
+#: ../src/transmageddon.py:292
 msgid "File saved to "
 msgstr "Plik zapisany jako "
 
-#: ../src/transmageddon.py:223
+#: ../src/transmageddon.py:299
+msgid "Done Transcoding"
+msgstr "Zakończono transkodowanie"
+
+#: ../src/transmageddon.py:373
 msgid "Plugins not found, choose different codecs."
 msgstr "Nie znaleziono wtyczek, proszę wybrać inne kodeki."
 
-#: ../src/transmageddon.py:231
+#: ../src/transmageddon.py:381
 msgid "Codec installation aborted."
 msgstr "Przerwano instalację kodeków."
 
-#: ../src/transmageddon.py:239
+#: ../src/transmageddon.py:389
 msgid "Missing plugin installation failed: "
 msgstr "Instalacja wtyczki zakończona niepowodzeniem: "
+
+#: ../src/utils.py:74
+#, python-format
+msgid "Can't find %(path)s in any known prefix!"
+msgstr ""
 
 #: ../transmageddon.desktop.in.in.h:1
 msgid "Transmageddon Video Transcoder"
@@ -154,3 +281,4 @@ msgstr "Transkoder obrazu wideo Transmageddon"
 #: ../transmageddon.desktop.in.in.h:2
 msgid "Video format conversion tool"
 msgstr "Narzędzie do transkodowania obrazu wideo"
+
