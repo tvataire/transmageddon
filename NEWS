@@ -1,3 +1,9 @@
+0.10 Profiles and presets:
+   Adding first stab at profiles and presets support
+   i18n support
+   Workaround for older pygobject versions (2.17.1 strongly recommended)
+   code in place now doing rescaling, black borders etc.
+
 0.9: Mostly UI polish:
    Add an about dialog
    Add time estimation before completion

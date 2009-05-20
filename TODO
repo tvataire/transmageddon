@@ -77,3 +77,6 @@ cause anyone to make any kind of assumptions about priorties.
 
 * Multipass encoding
   Add multipass encoding to encoders that support it
+
+* Add thumbnail support
+  Automatically create a jpeg thumbnail for devices such as the PSP

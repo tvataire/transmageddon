@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+
+<device>
+    <make>Sony</make>
+    <model>PSP</model>
+    <description>H.264/AAC for Playstation portable</description>
+    <author>
+        <name>Daniel G. Taylor</name>
+        <email>dan@programmer-art.org</email>
+    </author>
+    <version>1.0</version>
+    <icon>file://psp.svg</icon>
+    <default>Normal</default>
+    
+    <preset>
+        <name>Low</name>
+        <container>video/quicktime,variant=iso</container>
+        <extension>mp4</extension>
+        <audio>
+            <name>audio/mpeg,mpegversion=[4, 2]</name>
+            <passes>
+                <pass>Quality Low, Profile Low Complexity</pass>
+            </passes>
+            <rate>48000</rate>
+            <channels>1, 2</channels>
+        </audio>
+        <video>
+            <name>video/x-h264</name>
+            <passes>
+                <pass>Quality Low, Profile Baseline</pass>
+            </passes> 
+            <width>320</width>
+            <height>240</height>
+            <rate>1, 25</rate>
+        </video>
+    </preset>
+    <preset>
+        <name>Normal</name>
+        <container>video/quicktime,variant=iso</container>
+        <extension>mp4</extension>
+        <audio>
+            <name>audio/mpeg,mpegversion=[4, 2]</name>
+            <passes>
+                <pass>Quality Normal,Profile Low Complexity</pass>
+            </passes>
+            <rate>48000</rate>
+            <channels>1, 2</channels>
+        </audio>
+        <video>
+            <name>video/x-h264</name>
+            <passes>
+                <pass>Quality Normal, Profile Main</pass>
+            </passes>
+            <width>320	</width>
+            <height>240</height>
+            <rate>1, 25</rate>
+        </video>
+    </preset>
+</device>
+
