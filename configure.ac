@@ -3,7 +3,7 @@ AC_PREREQ(2.52)
 dnl initialize autoconf
 dnl when going to/from release please set the nano (fourth number) right !
 dnl releases only do Wall, cvs and prerelease does Werror too
-AC_INIT(transmageddon, 0.9,
+AC_INIT(transmageddon, 0.10,
     http://www.linuxrising.org/transmageddon,
     transmageddon)
 
