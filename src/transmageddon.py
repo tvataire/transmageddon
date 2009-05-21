@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 # Transmageddon
 # Copyright (C) 2009 Christian Schaller <uraeus@gnome.org>
 # 

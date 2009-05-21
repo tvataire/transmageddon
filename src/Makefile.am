@@ -1,6 +1,6 @@
 SUBDIRS = 
 
-transmageddondir = $(libdir)/transmageddon
+transmageddondir = $(datadir)/transmageddon
 
 transmageddon_PYTHON = \
 	transmageddon.py \

@@ -1,5 +1,3 @@
-#!/usr/bin/python
-
 # Transmageddon
 # Copyright (C) 2009 Christian Schaller <uraeus@gnome.org>
 # Copyright (C) 2009 Edward Hervey <edward.hervey@collabora.co.uk>

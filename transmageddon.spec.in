@@ -1,11 +1,11 @@
-Summary:	Transmageddon Video Transcoder
+Summary:	Video transcoder
 Name:		@PACKAGE@
 Version:	@VERSION@
-Release:	2
+Release:	3
 
-Source:		http://www.linuxrising.org/transmageddon/%{name}-%{version}.tar.gz
+Source:		http://www.linuxrising.org/transmageddon/files/%{name}-%{version}.tar.gz
 Packager:	uraeus@gnome.org
-License:	LGPL
+License:	LGPLv2+
 Group:		Applications/Multimedia
 URL:		http://www.linuxrising.org/transmageddon
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
@@ -21,6 +21,8 @@ BuildRequires:	gstreamer-devel >= @GST_REQ@
 BuildRequires:	gstreamer-python >= @PYGST_REQ@
 BuildRequires:	python-devel >= 2.3
 BuildRequires:	pygtk2-devel >= @PYGTK_REQ@
+BuildRequires:  gettext
+BuildRequires:  desktop-file-utils
 BuildArch: 	noarch
 
 %description
@@ -31,31 +33,29 @@ Transmageddon Video Transcoding application.
 
 %build
 %configure
+make %{?_smp_mflags}
 
-%makeinstall
+%install
+rm -rf %{buildroot}
+make install DESTDIR=%{buildroot}
+desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}.desktop
+%find_lang %{name}
 
-%files
+%clean
+rm -rf %{buildroot}
+
+%files -f %{name}.lang
 %defattr(-,root,root,-)
 %doc ChangeLog AUTHORS TODO COPYING NEWS
 %{_bindir}/transmageddon
-%{_libdir}/transmageddon/*
+%{_datadir}/transmageddon
 %{_datadir}/pixmaps/transmageddon.png
 %{_datadir}/applications/transmageddon.desktop
-%{_datadir}/transmageddon/presets/ipod.xml
-%{_datadir}/transmageddon/presets/linux-computer.xml
-%{_datadir}/transmageddon/presets/n800.xml
-%{_datadir}/transmageddon/presets/ps3.xml
-%{_datadir}/gstreamer-0.10/presets/GstFaac.prs
-%{_datadir}/gstreamer-0.10/presets/ffenc_mpeg4.prs
-%{_datadir}/transmageddon/presets/krzr-k1v.xml
-%{_datadir}/gstreamer-0.10/presets/GstLame.prs
-%{_datadir}/gstreamer-0.10/presets/GstLameMP3Enc.prs
-%{_datadir}//gstreamer-0.10/presets/GstXvidEnc.prs
-%{_datadir}//gstreamer-0.10/presets/ffenc_ac3.prs
-%{_datadir}/transmageddon/presets/n770.xml
-%{_datadir}/locale
+%{_datadir}/gstreamer-0.10/presets/*.prs
 
 %changelog
+* Wed May 20 2009 Michal Schmidt <mschmidt@redhat.com>
+- Modified for Fedora packaging guidelines.
 * Mon Mar 30 2009 Christian Schaller <uraeus@gnome.org>
 - Add i18n
 * Sat Mar 21 2009 Christian Schaller <uraeus@gnome.org>
