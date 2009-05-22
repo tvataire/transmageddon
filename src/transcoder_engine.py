@@ -39,7 +39,7 @@ class Transcoder(gobject.GObject):
                     }
 
    def __init__(self, FILECHOSEN, FILENAME, CONTAINERCHOICE, AUDIOCODECVALUE, VIDEOCODECVALUE, PRESET, 
-                      OHEIGHT, OWIDTH, FRATENUM, FRATEDEN):
+                      OHEIGHT, OWIDTH, FRATENUM, FRATEDEN, ACHANNELS):
        gobject.GObject.__init__(self)
 
        # Choose plugin and file suffix based on Container name
@@ -61,6 +61,7 @@ class Transcoder(gobject.GObject):
        self.owidth = OWIDTH
        self.fratenum = FRATENUM
        self.frateden = FRATEDEN
+       self.achannels = ACHANNELS
        self.blackborderflag = False
        self.vbox = {}
 
@@ -118,9 +119,17 @@ class Transcoder(gobject.GObject):
 
        # Check for audio samplerate
        self.samplerate = int(preset.acodec.samplerate)
+
+       # calculate number of channels
        chanmin, chanmax = preset.acodec.channels
-       self.channels = int(chanmax)
-       # print "channels " + str(self.channels)
+       if int(self.achannels) < int(chanmax):
+           if int(self.achannels) > int(chanmin): 
+               self.channels = int(self.achannels)
+           else:
+               self.channels = int(chanmin)
+       else:
+           self.channels = int(chanmax)
+       print "channels " + str(self.channels)
        
        # Check if rescaling is needed and calculate new video width/height keeping aspect ratio
        # Also add black borders if needed
@@ -128,11 +137,11 @@ class Transcoder(gobject.GObject):
        hmin, hmax = preset.vcodec.height
        width, height = self.owidth, self.oheight
        self.vpreset = []       
-       voutput = preset.vcodec.passes[0].split(", ")
+       voutput = preset.vcodec.presets[0].split(", ")
        for x in voutput:
            self.vpreset.append(x)
        self.apreset = []
-       aoutput = preset.acodec.passes[0].split(", ")
+       aoutput = preset.acodec.presets[0].split(", ")
        for x in aoutput:
            self.apreset.append(x)
        # Scale width / height down
@@ -264,7 +273,7 @@ class Transcoder(gobject.GObject):
                for acap in self.acaps:
                    acap["rate"] = self.samplerate
                    acap["channels"] = self.channels
-               
+               print "self.acaps = " + str(self.acaps)
                self.acapsfilter = gst.element_factory_make("capsfilter")
                self.acapsfilter.set_property("caps", self.acaps)
                self.pipeline.add(self.acapsfilter)
@@ -276,6 +285,7 @@ class Transcoder(gobject.GObject):
            if self.preset != "nopreset":
                self.audioconverter.link(self.audioresampler)
                self.audioresampler.link(self.acapsfilter)
+               print "acaps filter : " + str(self.acapsfilter)
                self.acapsfilter.link(self.audioencoder)
            else:
                self.audioconverter.link(self.audioencoder) 

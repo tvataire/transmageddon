@@ -203,7 +203,7 @@ class Codec(object):
         self.name = name
         self.container = container
         self.rate = (Fraction(), Fraction())
-        self.passes = []
+        self.presets = []
     
     def __repr__(self):
         return "%s %s" % (self.name, self.container)
@@ -226,6 +226,7 @@ class VideoCodec(Codec):
     def __init__(self, *args):
         Codec.__init__(self, *args)
         self.border = "N"
+        self.passes ="0"
         self.rate = (Fraction("1"), Fraction("60"))
         self.width = (2, 1920)
         self.height = (2, 1080)
@@ -300,9 +301,9 @@ def _load_audio_codec(root):
             codec.channels = _parse_range(child.text.strip())
         elif child.tag == "samplerate":
             codec.samplerate = child.text.strip()
-        elif child.tag == "passes":
+        elif child.tag == "presets":
             for command in child.getchildren():
-                codec.passes.append(command.text.strip())
+                codec.presets.append(command.text.strip())
     
     return codec
 
@@ -331,8 +332,10 @@ def _load_video_codec(root):
         elif child.tag == "border":
             codec.border = child.text.strip()
         elif child.tag == "passes":
+            codec.passes = child.text.strip()
+        elif child.tag == "presets":
             for command in child.getchildren():
-                codec.passes.append(command.text.strip())
+                codec.presets.append(command.text.strip())
     
     return codec
 

@@ -21,3 +21,11 @@ bitrate=400000
 [Quality High]
 _meta/comment=High quality
 bitrate=700000
+
+[Pass 1]
+_meta/comment=First pass
+pass=512
+
+[Pass 2]
+_meta/comment=Second pass
+pass=1024

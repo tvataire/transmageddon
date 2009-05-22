@@ -348,10 +348,11 @@ class TransmageddonUI (gtk.glade.XML):
        vwidth = self.videodata['videowidth']
        ratenum = self.videodata['fratenum']
        ratednom = self.videodata['frateden']
+       achannels = self.audiodata['audiochannels']
        containerchoice = self.get_widget ("containerchoice").get_active_text ()
        self._transcoder = transcoder_engine.Transcoder(FileChoice, FileName, containerchoice, 
                                                        self.AudioCodec, self.VideoCodec, self.devicename, 
-                                                       vheight, vwidth, ratenum, ratednom)
+                                                       vheight, vwidth, ratenum, ratednom, achannels)
        self._transcoder.connect("ready-for-querying", self.ProgressBarUpdate)
        self._transcoder.connect("got-eos", self._on_eos)
        return True
