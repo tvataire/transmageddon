@@ -28,6 +28,7 @@ import codecfinder
 import about
 import presets
 import utils
+import datetime
 
 from gettext import gettext as _
 import gettext
@@ -282,7 +283,10 @@ class TransmageddonUI (gtk.glade.XML):
                    "sec": sec,
                    }
                if percent_remain > 0.5:
-                   self.ProgressBar.set_text(_("Estimated time remaining: ") + str(time_rem))
+                   if self.passcounter == int(0):
+                       self.ProgressBar.set_text(_("Estimated time remaining: ") + str(time_rem))
+                   else:
+                       self.ProgressBar.set_text(_("Pass 1 time remaining: ") + str(time_rem))
                return True
            else:
                self.ProgressBar.set_fraction(0.0)
@@ -362,9 +366,9 @@ class TransmageddonUI (gtk.glade.XML):
 
    # define the behaviour of the other buttons
    def on_FileChooser_file_set(self, widget):
-       FileName = self.get_widget ("FileChooser").get_filename()
+       self.filename = self.get_widget ("FileChooser").get_filename()
        self.audiodata = {}
-       codecinfo = self.mediacheck(FileName)
+       codecinfo = self.mediacheck(self.filename)
        self.containerchoice.set_sensitive(True)
        self.presetchoice.set_sensitive(True)
        self.presetchoice.set_active(0)
@@ -372,18 +376,19 @@ class TransmageddonUI (gtk.glade.XML):
        self.ProgressBar.set_text(_("Transcoding Progress"))
 
    def _start_transcoding(self): 
-       FileChoice = self.get_widget ("FileChooser").get_uri()
-       FileName = self.get_widget ("FileChooser").get_filename()
+       filechoice = self.get_widget ("FileChooser").get_uri()
+       self.filename = self.get_widget ("FileChooser").get_filename()
        vheight = self.videodata['videoheight']
        vwidth = self.videodata['videowidth']
        ratenum = self.videodata['fratenum']
        ratednom = self.videodata['frateden']
        achannels = self.audiodata['audiochannels']
-       containerchoice = self.get_widget ("containerchoice").get_active_text ()
-       self._transcoder = transcoder_engine.Transcoder(FileChoice, FileName, containerchoice, 
+       container = self.get_widget ("containerchoice").get_active_text ()
+       self._transcoder = transcoder_engine.Transcoder(filechoice, self.filename, container, 
                                                        self.AudioCodec, self.VideoCodec, self.devicename, 
                                                        vheight, vwidth, ratenum, ratednom, achannels, 
-                                                       self.multipass, self.passcounter)
+                                                       self.multipass, self.passcounter, self.outputfilename,
+                                                       self.timestamp)
        
        self._transcoder.connect("ready-for-querying", self.ProgressBarUpdate)
        self._transcoder.connect("got-eos", self._on_eos)
@@ -453,6 +458,17 @@ class TransmageddonUI (gtk.glade.XML):
        self.transcodebutton.set_sensitive(False)
        self.cancelbutton.set_sensitive(True)
        self.ProgressBar.set_fraction(0.0)
+       # create a variable with a timestamp code
+       timeget = datetime.datetime.now()
+       self.timestamp = str(timeget.strftime("-%H%M%S-%d%m%Y"))
+       # Remove suffix from inbound filename so we can reuse it together with suffix to create outbound filename
+       self.nosuffix = os.path.splitext(os.path.basename(self.filename))[0]
+       # pick output suffix
+       container = self.get_widget ("containerchoice").get_active_text ()
+       self.ContainerFormatSuffix = codecfinder.csuffixmap[container]
+       self.outputfilename = str(self.nosuffix+self.timestamp+self.ContainerFormatSuffix)
+       context_id = self.StatusBar.get_context_id("EOS")
+       self.StatusBar.push(context_id, (_("Writing " + self.outputfilename)))
        if self.multipass == False:
            self.ProgressBar.set_text(_("Transcoding Progress"))
        else:
@@ -468,6 +484,8 @@ class TransmageddonUI (gtk.glade.XML):
        self.FileChooser.set_sensitive(True)
        self.containerchoice.set_sensitive(True)
        self.CodecBox.set_sensitive(True)
+       self.presetchoice.set_sensitive(True)
+       self.presetchoice.set_active(0)
        self.cancelbutton.set_sensitive(False)
        self._cancel_encoding = transcoder_engine.Transcoder.Pipeline(self._transcoder,"null")
        self.ProgressBar.set_fraction(0.0)

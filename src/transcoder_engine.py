@@ -18,7 +18,6 @@
 
 import sys
 import os
-import datetime
 import codecfinder
 import presets
 
@@ -39,14 +38,13 @@ class Transcoder(gobject.GObject):
                     }
 
    def __init__(self, FILECHOSEN, FILENAME, CONTAINERCHOICE, AUDIOCODECVALUE, VIDEOCODECVALUE, PRESET, 
-                      OHEIGHT, OWIDTH, FRATENUM, FRATEDEN, ACHANNELS, MULTIPASS, PASSCOUNTER):
+                      OHEIGHT, OWIDTH, FRATENUM, FRATEDEN, ACHANNELS, MULTIPASS, PASSCOUNTER, OUTPUTNAME, 
+                      TIMESTAMP):
        gobject.GObject.__init__(self)
 
-       # Choose plugin and file suffix based on Container name
+       # Choose plugin based on Container name
        containercaps = codecfinder.containermap[CONTAINERCHOICE]
        self.ContainerFormatPlugin = codecfinder.get_muxer_element(containercaps)
-       # print "Container muxer is " + self.ContainerFormatPlugin
-       self.ContainerFormatSuffix = codecfinder.csuffixmap[CONTAINERCHOICE]
 
        # Choose plugin based on Codec Name
        self.audiocaps = codecfinder.codecmap[AUDIOCODECVALUE]
@@ -65,10 +63,11 @@ class Transcoder(gobject.GObject):
        self.blackborderflag = False
        self.multipass = MULTIPASS
        self.passcounter = PASSCOUNTER
+       self.outputfilename = OUTPUTNAME
+       self.timestamp = TIMESTAMP
        self.vbox = {}
        print "Passcounter is " + str(self.passcounter)
-       # Remove suffix from inbound filename so we can reuse it together with suffix to create outbound filename
-       self.FileNameOnly = os.path.splitext(os.path.basename(FILENAME))[0]
+
        self.VideoDirectory = glib.get_user_special_dir(glib.USER_DIRECTORY_VIDEOS)
        CheckDir = os.path.isdir(self.VideoDirectory)
        if CheckDir == (False):
@@ -77,14 +76,9 @@ class Transcoder(gobject.GObject):
        # print "Videos directory exist"
        # print self.VideoDirectory     
 
-       # create a variable with a timestamp code
-       timeget = datetime.datetime.now()
-       text = timeget.strftime("-%H%M%S-%d%m%Y") 
-       self.timestamp = str(text)
-
        # if needed create a variable to store the filename of the multipass statistics file
        if self.multipass != False:
-           self.cachefilename = ("multipass-cache-file.log")
+           self.cachefilename = ("multipass-cache-file"+self.timestamp+".log")
            print self.cachefilename
 
        # Create transcoding pipeline
@@ -102,7 +96,7 @@ class Transcoder(gobject.GObject):
            self.pipeline.add(self.containermuxer)
 
            self.transcodefileoutput = gst.element_factory_make("filesink", "transcodefileoutput")
-           self.transcodefileoutput.set_property("location", (self.VideoDirectory+"/"+self.FileNameOnly+self.timestamp+self.ContainerFormatSuffix))
+           self.transcodefileoutput.set_property("location", (self.VideoDirectory+"/"+self.outputfilename))
            self.pipeline.add(self.transcodefileoutput)
 
            self.containermuxer.link(self.transcodefileoutput)
@@ -345,7 +339,8 @@ class Transcoder(gobject.GObject):
                if GstPresetType in gobject.type_interfaces(self.videoencoder):
                    for x in self.vpreset:
                        self.videoencoder.load_preset(x)
-                   cachefile =  (str(glib.get_user_cache_dir())+"/"+self.cachefilename)
+                   if self.multipass != False:
+                       cachefile =  (str(glib.get_user_cache_dir())+"/"+self.cachefilename)
                    if (self.multipass != False) and (self.passcounter == int(1)) :
                        self.videoencoder.load_preset("Pass 1")
                        self.videoencoder.set_property("statsfile", cachefile)
