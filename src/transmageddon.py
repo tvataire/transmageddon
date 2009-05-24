@@ -137,6 +137,8 @@ class TransmageddonUI (gtk.glade.XML):
        self.signal_autoconnect(self) # Initialize User Interface
 
        self.start_time = False
+       self.multipass = False
+       self.passcounter = False
        
        # Set the Videos XDG UserDir as the default directory for the filechooser, 
        # also make sure directory exists
@@ -234,6 +236,18 @@ class TransmageddonUI (gtk.glade.XML):
        self.codec_buttons[self.reverse_lookup(str(preset.acodec.name))].set_active(True)
        self.codec_buttons[self.reverse_lookup(str(preset.vcodec.name))].set_active(True)
 
+
+       # Check for number of passes
+       passes = preset.vcodec.passes
+       if passes == "0":
+          self.multipass = False
+       else:
+          self.multipass = int(passes)
+          self.passcounter = int(0)
+       print "number of passes " + str(self.multipass)
+       
+
+
    # Create query on uridecoder to get values to populate progressbar 
    # Notes:
    # Query interface only available on uridecoder, not decodebin2)
@@ -290,15 +304,31 @@ class TransmageddonUI (gtk.glade.XML):
 
    def _on_eos(self, source):
        context_id = self.StatusBar.get_context_id("EOS")
-       self.StatusBar.push(context_id, (_("File saved to ") + self.VideoDirectory))
-       self.FileChooser.set_sensitive(True)
-       self.containerchoice.set_sensitive(True)
-       self.CodecBox.set_sensitive(True)
-       self.presetchoice.set_sensitive(True)
-       self.cancelbutton.set_sensitive(False)
-       self.transcodebutton.set_sensitive(False)
-       self.start_time = False
-       self.ProgressBar.set_text(_("Done Transcoding"))
+       if (self.multipass ==  False) or (self.passcounter == int(0)):
+           print "EOS gotten, multipass is " + str(self.multipass)
+           print "EOS gotten, passcounter is " + str(self.passcounter)
+           self.StatusBar.push(context_id, (_("File saved to ") + self.VideoDirectory))
+           self.FileChooser.set_sensitive(True)
+           self.containerchoice.set_sensitive(True)
+           self.CodecBox.set_sensitive(True)
+           self.presetchoice.set_sensitive(True)
+           self.cancelbutton.set_sensitive(False)
+           self.transcodebutton.set_sensitive(False)
+           self.start_time = False
+           self.ProgressBar.set_text(_("Done Transcoding"))
+           self.start_time = False
+           self.multipass = False
+           self.passcounter = False
+       else:
+           print "EOS gotten, multipass is " + str(self.multipass)
+           print "EOS gotten, passcounter is " + str(self.passcounter)
+           self.StatusBar.push(context_id, (_("Pass 1 Complete")))
+           self.start_time = False
+           self.ProgressBar.set_text(_("Start Next pass"))
+           self.passcounter = int(0)
+           print "switching passcounter to 0 for second run"
+           self._start_transcoding()
+
 
    # Use the pygst extension 'discoverer' to get information about the incoming media. Probably need to get codec data in another way.
    # this code is probably more complex than it needs to be currently
@@ -352,7 +382,9 @@ class TransmageddonUI (gtk.glade.XML):
        containerchoice = self.get_widget ("containerchoice").get_active_text ()
        self._transcoder = transcoder_engine.Transcoder(FileChoice, FileName, containerchoice, 
                                                        self.AudioCodec, self.VideoCodec, self.devicename, 
-                                                       vheight, vwidth, ratenum, ratednom, achannels)
+                                                       vheight, vwidth, ratenum, ratednom, achannels, 
+                                                       self.multipass, self.passcounter)
+       
        self._transcoder.connect("ready-for-querying", self.ProgressBarUpdate)
        self._transcoder.connect("got-eos", self._on_eos)
        return True
@@ -421,7 +453,12 @@ class TransmageddonUI (gtk.glade.XML):
        self.transcodebutton.set_sensitive(False)
        self.cancelbutton.set_sensitive(True)
        self.ProgressBar.set_fraction(0.0)
-       self.ProgressBar.set_text(_("Transcoding Progress"))
+       if self.multipass == False:
+           self.ProgressBar.set_text(_("Transcoding Progress"))
+       else:
+           self.ProgressBar.set_text(_("Pass 1 Progress"))
+           self.passcounter=int(1)
+           print "setting passcounter to 1"
        if self.audiodata.has_key("samplerate"):
            self.check_for_elements()
        else:
@@ -460,6 +497,9 @@ class TransmageddonUI (gtk.glade.XML):
        if presetchoice == "No Presets":
            self.devicename = "nopreset"
            self.containerchoice.set_sensitive(True)
+           self.start_time = False
+           self.multipass = False
+           self.passcounter = False
            if self.get_widget("containerchoice").get_active_text():
                self.CodecBox.set_sensitive(True)
                self.transcodebutton.set_sensitive(True)

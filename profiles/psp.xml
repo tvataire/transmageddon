@@ -12,49 +12,53 @@
     <icon>file://psp.svg</icon>
     <default>Normal</default>
     
-    <preset>
+    <profile>
         <name>Low</name>
         <container>video/quicktime,variant=iso</container>
         <extension>mp4</extension>
         <audio>
             <name>audio/mpeg,mpegversion=[4, 2]</name>
-            <passes>
-                <pass>Quality Low, Profile Low Complexity</pass>
-            </passes>
+            <presets>
+                <preset>Quality Low, Profile Low Complexity</preset>
+            </presets>
             <rate>48000</rate>
             <channels>1, 2</channels>
         </audio>
         <video>
             <name>video/x-h264</name>
-            <passes>
-                <pass>Quality Low, Profile Baseline</pass>
-            </passes> 
+            <border>N</border>
+            <passes>0</passes>
+            <presets>
+                <preset>Quality Low, Profile Baseline</preset>
+            </presets> 
             <width>320</width>
             <height>240</height>
             <rate>1, 25</rate>
         </video>
-    </preset>
-    <preset>
+    </profile>
+    <profile>
         <name>Normal</name>
         <container>video/quicktime,variant=iso</container>
         <extension>mp4</extension>
         <audio>
             <name>audio/mpeg,mpegversion=[4, 2]</name>
-            <passes>
-                <pass>Quality Normal,Profile Low Complexity</pass>
-            </passes>
+            <presets>
+                <preset>Quality Normal,Profile Low Complexity</preset>
+            </presets>
             <rate>48000</rate>
             <channels>1, 2</channels>
         </audio>
         <video>
             <name>video/x-h264</name>
-            <passes>
-                <pass>Quality Normal, Profile Main</pass>
-            </passes>
+            <border>N</border>
+            <passes>0</passes>
+            <presets>
+                <preset>Quality Normal, Profile Main</preset>
+            </presets>
             <width>320	</width>
             <height>240</height>
             <rate>1, 25</rate>
         </video>
-    </preset>
+    </profile>
 </device>
 

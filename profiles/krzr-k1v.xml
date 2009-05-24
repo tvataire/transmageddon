@@ -12,58 +12,60 @@
     <icon>file://phone.svg</icon>
     <default>Normal</default>
     
-    <preset>
+    <profile>
         <name>Low</name> # This is a low quality output setting
         <container>video/quicktime,variant=3gpp</container>
         <extension>3gp</extension>
         <audio>
             <name>audio/mpeg,mpegversion=[4, 2]</name>
-            <passes>
-                <pass>
+            <presets>
+                <preset>
                     Quality Low, Profile Low Complexity
-                </pass>
-            </passes>
+                </preset>
+            </presets>
             <channels>1, 2</channels>
             <samplerate>44100</samplerate>
         </audio>
         <video>
             <name>video/mpeg,mpegversion=4</name>
             <border>N</border>
-            <passes>
-                <pass>
+            <passes>0</passes>
+            <presets>
+                <preset>
                     Quality Low, Profile Simple
-                </pass>
-            </passes>
+                </preset>
+            </presets>
             <width>40, 165</width>
             <height>40, 200</height>
             <rate>1, 25</rate>
         </video>
-    </preset>
-    <preset>
+    </profile>
+    <profile>
         <name>Normal</name>
         <container>video/quicktime,variant=3gpp</container>
         <extension>3gp</extension>
         <audio>
             <name>audio/mpeg,mpegversion=[4, 2]</name>
-            <passes>
-                <pass>
+            <presets>
+                <preset>
                     Quality Normal, Profile Low Complexity
-                </pass>
-            </passes>
+                </preset>
+            </presets>
             <channels>1, 2</channels>
             <samplerate>44100</samplerate>
         </audio>
         <video>
-            <name>video/mpeg,mpegversion=4</name>
+            <name>video/mpeg,mpegversion=4</name>  
             <border>N</border>
-            <passes>
-                <pass>
+            <passes>0</passes>
+            <presets>
+                <preset>
                     Quality Normal,Profile Simple
-                </pass>
-            </passes>
+                </preset>
+            </presets>
             <width>40, 165</width>
             <height>40, 200</height>
             <rate>1, 30</rate>
         </video>
-    </preset>
+    </profile>
 </device>

@@ -25,7 +25,10 @@ bitrate=700000
 [Pass 1]
 _meta/comment=First pass
 pass=512
+statsfile=stats.log
+
 
 [Pass 2]
 _meta/comment=Second pass
 pass=1024
+statsfile=stats.log

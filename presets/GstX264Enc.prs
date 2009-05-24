@@ -21,14 +21,14 @@ dct8x8=true
 
 [Quality Low]
 _meta/comment=Low quality
-pass=qual
+pass=5
 quantizer=27
 subme=4
 threads=0
 
 [Quality Normal]
 _meta/comment=Normal quality
-pass=qual
+pass=5
 quantizer=21
 me=umh
 subme=6
@@ -37,7 +37,7 @@ threads=0
 
 [Quality High]
 _meta/comment=High quality
-pass=qual
+pass=5
 quantizer=18
 me=umh
 subme=6
@@ -45,14 +45,13 @@ ref=3
 threads=0
 
 [Pass 1]
-_meta/comment=First pass
+_meta/comment=Second pass
 pass=17
 
 [Pass 2]
-_meta/comment=Second pass
+_meta/comment=Third pass
 pass=18
 
 [Pass 3]
 _meta/comment=Third pass
 pass=19
-

@@ -396,9 +396,9 @@ def load(filename):
             device.author = _load_author(child)
         elif child.tag == "version":
             device.version = child.text.strip()
-        elif child.tag == "preset":
-            preset = (_load_preset(child))
-            device.presets[preset.name] = preset
+        elif child.tag == "profile":
+            profile = (_load_preset(child))
+            device.presets[profile.name] = profile
         elif child.tag == "icon":
             device.icon = child.text.strip()
         elif child.tag == "default":
@@ -580,7 +580,7 @@ def check_and_install_updates(location = UPDATE_LOCATION):
 
 # Automatically load presets - system, home, current path
 for path in reversed(utils.get_search_paths()):
-    full = os.path.join(path, "presets")
+    full = os.path.join(path, "profiles")
     if os.path.exists(full):
         load_directory(full)
 
