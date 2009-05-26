@@ -145,14 +145,15 @@ class TransmageddonUI (gtk.glade.XML):
        # Set the Videos XDG UserDir as the default directory for the filechooser, 
        # also make sure directory exists
        if 'get_user_special_dir' in glib.__dict__:
-           self.VideoDirectory = glib.get_user_special_dir(glib.USER_DIRECTORY_VIDEOS)
+           self.videodirectory = glib.get_user_special_dir(glib.USER_DIRECTORY_VIDEOS)
        else:
-           self.VideoDirectory = os.getenv('HOME')
+            print "XDG video directory not available"
+            self.videodirectory = os.getenv('HOME')
 
-       CheckDir = os.path.isdir(self.VideoDirectory)
+       CheckDir = os.path.isdir(self.videodirectory)
        if CheckDir == (False):
-           os.mkdir(self.VideoDirectory)
-       self.FileChooser.set_current_folder(self.VideoDirectory)
+           os.mkdir(self.videodirectory)
+       self.FileChooser.set_current_folder(self.videodirectory)
 
        # Setting AppIcon
        FileExist = os.path.isfile("../../share/pixmaps/transmageddon.png")
@@ -306,7 +307,7 @@ class TransmageddonUI (gtk.glade.XML):
    def _on_eos(self, source):
        context_id = self.StatusBar.get_context_id("EOS")
        if (self.multipass ==  False) or (self.passcounter == int(0)):
-           self.StatusBar.push(context_id, (_("File saved to ") + self.VideoDirectory))
+           self.StatusBar.push(context_id, (_("File saved to ") + self.videodirectory))
            self.FileChooser.set_sensitive(True)
            self.containerchoice.set_sensitive(True)
            self.CodecBox.set_sensitive(True)
@@ -376,7 +377,7 @@ class TransmageddonUI (gtk.glade.XML):
        ratednom = self.videodata['frateden']
        achannels = self.audiodata['audiochannels']
        container = self.get_widget ("containerchoice").get_active_text ()
-       self._transcoder = transcoder_engine.Transcoder(filechoice, self.filename, container, 
+       self._transcoder = transcoder_engine.Transcoder(filechoice, self.filename, self.videodirectory, container, 
                                                        self.AudioCodec, self.VideoCodec, self.devicename, 
                                                        vheight, vwidth, ratenum, ratednom, achannels, 
                                                        self.multipass, self.passcounter, self.outputfilename,

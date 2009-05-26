@@ -37,7 +37,7 @@ class Transcoder(gobject.GObject):
             'got-eos' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, [])
                     }
 
-   def __init__(self, FILECHOSEN, FILENAME, CONTAINERCHOICE, AUDIOCODECVALUE, VIDEOCODECVALUE, PRESET, 
+   def __init__(self, FILECHOSEN, FILENAME, DESTDIR, CONTAINERCHOICE, AUDIOCODECVALUE, VIDEOCODECVALUE, PRESET, 
                       OHEIGHT, OWIDTH, FRATENUM, FRATEDEN, ACHANNELS, MULTIPASS, PASSCOUNTER, OUTPUTNAME, 
                       TIMESTAMP):
        gobject.GObject.__init__(self)
@@ -67,18 +67,6 @@ class Transcoder(gobject.GObject):
        self.timestamp = TIMESTAMP
        self.vbox = {}
 
-
-       if 'get_user_special_dir' in glib.__dict__:
-           self.VideoDirectory = glib.get_user_special_dir(glib.USER_DIRECTORY_VIDEOS)
-       else:
-           self.VideoDirectory = os.getenv('HOME')
-       CheckDir = os.path.isdir(self.VideoDirectory)
-       if CheckDir == (False):
-           os.mkdir(self.VideoDirectory)
-       # elif CheckDir == (True):
-       # print "Videos directory exist"
-       # print self.VideoDirectory     
-
        # if needed create a variable to store the filename of the multipass statistics file
        if self.multipass != False:
            self.cachefilename = ("multipass-cache-file"+self.timestamp+".log")
@@ -97,7 +85,7 @@ class Transcoder(gobject.GObject):
            self.pipeline.add(self.containermuxer)
 
            self.transcodefileoutput = gst.element_factory_make("filesink", "transcodefileoutput")
-           self.transcodefileoutput.set_property("location", (self.VideoDirectory+"/"+self.outputfilename))
+           self.transcodefileoutput.set_property("location", (DESTDIR+"/"+self.outputfilename))
            self.pipeline.add(self.transcodefileoutput)
 
            self.containermuxer.link(self.transcodefileoutput)
