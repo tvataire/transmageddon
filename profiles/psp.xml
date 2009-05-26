@@ -21,7 +21,7 @@
             <presets>
                 <preset>Quality Low, Profile Low Complexity</preset>
             </presets>
-            <rate>48000</rate>
+            <samplerate>48000</samplerate>
             <channels>1, 2</channels>
         </audio>
         <video>
@@ -33,7 +33,7 @@
             </presets> 
             <width>320</width>
             <height>240</height>
-            <rate>1, 25</rate>
+            <framerate>1, 25</framerate>
         </video>
     </profile>
     <profile>
@@ -45,7 +45,7 @@
             <presets>
                 <preset>Quality Normal,Profile Low Complexity</preset>
             </presets>
-            <rate>48000</rate>
+            <samplerate>48000</samplerate>
             <channels>1, 2</channels>
         </audio>
         <video>
@@ -57,7 +57,7 @@
             </presets>
             <width>320	</width>
             <height>240</height>
-            <rate>1, 25</rate>
+            <framerate>1, 25</framerate>
         </video>
     </profile>
 </device>

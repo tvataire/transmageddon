@@ -67,6 +67,7 @@ supported_audio_codecs = [
        "ac3",
        "speex",
        "celt",
+       "amrnb"
 #       "alac",
 #       "wma2",
 ]
@@ -92,7 +93,7 @@ supported_container_map = {
     'AVI':        [ 'mp3', 'h264', 'dirac', 'ac3', 'mpeg2', 'mpeg4', 'xvid' ],
     'Quicktime':  [ 'aac', 'h264', 'ac3', 'dirac', 'mp3', 'mpeg2', 'mpeg4' ],
     'MPEG4':      [ 'aac', 'h264', 'mp3', 'mpeg2', 'mpeg4' ],
-    '3GPP':       [ 'aac', 'h264', 'mp3', 'mpeg2', 'mpeg4' ],
+    '3GPP':       [ 'aac', 'h264', 'mp3', 'mpeg2', 'mpeg4','amrnb' ],
     'MPEG PS':    [ 'mp3', 'mpeg2', 'ac3', 'h264', 'aac', 'mpeg4' ],
     'MPEG TS':    [ 'mp3', 'h264', 'ac3', 'mpeg2', 'aac', 'mpeg4', 'dirac' ],
     'FLV':        [ 'mp3', 'h264' ],
@@ -245,9 +246,6 @@ class TransmageddonUI (gtk.glade.XML):
        else:
           self.multipass = int(passes)
           self.passcounter = int(0)
-       print "number of passes " + str(self.multipass)
-       
-
 
    # Create query on uridecoder to get values to populate progressbar 
    # Notes:
@@ -257,7 +255,6 @@ class TransmageddonUI (gtk.glade.XML):
    def Increment_Progressbar(self):
        if self.start_time == False:  
            self.start_time = time.time()
-           print "start time " + str(self.start_time)  
        try:
            position, format = self._transcoder.uridecoder.query_position(gst.FORMAT_TIME)
        except:
@@ -309,8 +306,6 @@ class TransmageddonUI (gtk.glade.XML):
    def _on_eos(self, source):
        context_id = self.StatusBar.get_context_id("EOS")
        if (self.multipass ==  False) or (self.passcounter == int(0)):
-           print "EOS gotten, multipass is " + str(self.multipass)
-           print "EOS gotten, passcounter is " + str(self.passcounter)
            self.StatusBar.push(context_id, (_("File saved to ") + self.VideoDirectory))
            self.FileChooser.set_sensitive(True)
            self.containerchoice.set_sensitive(True)
@@ -324,13 +319,10 @@ class TransmageddonUI (gtk.glade.XML):
            self.multipass = False
            self.passcounter = False
        else:
-           print "EOS gotten, multipass is " + str(self.multipass)
-           print "EOS gotten, passcounter is " + str(self.passcounter)
            self.StatusBar.push(context_id, (_("Pass 1 Complete")))
            self.start_time = False
            self.ProgressBar.set_text(_("Start Next pass"))
            self.passcounter = int(0)
-           print "switching passcounter to 0 for second run"
            self._start_transcoding()
 
 
@@ -474,7 +466,6 @@ class TransmageddonUI (gtk.glade.XML):
        else:
            self.ProgressBar.set_text(_("Pass 1 Progress"))
            self.passcounter=int(1)
-           print "setting passcounter to 1"
        if self.audiodata.has_key("samplerate"):
            self.check_for_elements()
        else:

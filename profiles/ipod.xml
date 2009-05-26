@@ -37,7 +37,7 @@
             </presets>
             <width>320, 640</width>
             <height>240, 480</height>
-            <rate>1, 25</rate>
+            <framerate>1, 25</framerate>
         </video>
     </profile>
     <profile>
@@ -65,7 +65,7 @@
             </presets>
             <width>320, 640</width>
             <height>240, 480</height>
-            <rate>1, 30</rate>
+            <framerate>1, 30</framerate>
         </video>
     </profile>
 </device>

@@ -17,27 +17,27 @@
         <container>video/quicktime,variant=3gpp</container>
         <extension>3gp</extension>
         <audio>
-            <name>audio/mpeg,mpegversion=[4, 2]</name>
+            <name>audio/AMR</name>
             <presets>
                 <preset>
-                    Quality Low, Profile Low Complexity
+                    Quality Low
                 </preset>
             </presets>
-            <channels>1, 2</channels>
-            <samplerate>44100</samplerate>
+            <channels>1, 1</channels>
+            <samplerate>8000</samplerate>
         </audio>
         <video>
             <name>video/mpeg,mpegversion=4</name>
-            <border>N</border>
+            <border>Y</border>
             <passes>0</passes>
             <presets>
                 <preset>
                     Quality Low, Profile Simple
                 </preset>
             </presets>
-            <width>40, 165</width>
-            <height>40, 200</height>
-            <rate>1, 25</rate>
+            <width>176, 176</width>
+            <height>144, 144</height>
+            <framerate>1,15</framerate>
         </video>
     </profile>
     <profile>
@@ -45,27 +45,27 @@
         <container>video/quicktime,variant=3gpp</container>
         <extension>3gp</extension>
         <audio>
-            <name>audio/mpeg,mpegversion=[4, 2]</name>
+            <name>audio/AMR</name>
             <presets>
                 <preset>
-                    Quality Normal, Profile Low Complexity
+                    Quality Normal
                 </preset>
             </presets>
-            <channels>1, 2</channels>
-            <samplerate>44100</samplerate>
+            <channels>1, 1</channels>
+            <samplerate>8000</samplerate>
         </audio>
         <video>
             <name>video/mpeg,mpegversion=4</name>  
-            <border>N</border>
+            <border>Y</border>
             <passes>0</passes>
             <presets>
                 <preset>
                     Quality Normal,Profile Simple
                 </preset>
             </presets>
-            <width>40, 165</width>
-            <height>40, 200</height>
-            <rate>1, 30</rate>
+            <width>176, 176</width>
+            <height>144, 144</height>
+            <framerate>1,15</framerate>
         </video>
     </profile>
 </device>

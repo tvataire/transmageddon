@@ -85,3 +85,5 @@ cause anyone to make any kind of assumptions about priorties.
   i) interface with gnome-dvb-daemon so could live transcode dvb, 
   ii) montior directory and transcode to multiple devices when files 
       turn up in directory
+
+* Add black borders based on aspect-ratio

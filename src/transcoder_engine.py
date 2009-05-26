@@ -66,9 +66,12 @@ class Transcoder(gobject.GObject):
        self.outputfilename = OUTPUTNAME
        self.timestamp = TIMESTAMP
        self.vbox = {}
-       print "Passcounter is " + str(self.passcounter)
 
-       self.VideoDirectory = glib.get_user_special_dir(glib.USER_DIRECTORY_VIDEOS)
+
+       if 'get_user_special_dir' in glib.__dict__:
+           self.VideoDirectory = glib.get_user_special_dir(glib.USER_DIRECTORY_VIDEOS)
+       else:
+           self.VideoDirectory = os.getenv('HOME')
        CheckDir = os.path.isdir(self.VideoDirectory)
        if CheckDir == (False):
            os.mkdir(self.VideoDirectory)
@@ -79,7 +82,6 @@ class Transcoder(gobject.GObject):
        # if needed create a variable to store the filename of the multipass statistics file
        if self.multipass != False:
            self.cachefilename = ("multipass-cache-file"+self.timestamp+".log")
-           print self.cachefilename
 
        # Create transcoding pipeline
        self.pipeline = gst.Pipeline("TranscodingPipeline")
@@ -91,7 +93,6 @@ class Transcoder(gobject.GObject):
        self.pipeline.add(self.uridecoder)
        
        if (self.multipass == False) or (self.passcounter == int(0)):
-           print "creating muxer and filesink since multipass is " + str(self.multipass)
            self.containermuxer = gst.element_factory_make(self.ContainerFormatPlugin, "containermuxer")
            self.pipeline.add(self.containermuxer)
 
@@ -101,7 +102,6 @@ class Transcoder(gobject.GObject):
 
            self.containermuxer.link(self.transcodefileoutput)
        else:
-           print "creating fakesink since multipass is " + str(self.multipass)
            self.multipassfakesink = gst.element_factory_make("fakesink", "multipassfakesink")
            self.pipeline.add(self.multipassfakesink)    
 
@@ -153,7 +153,6 @@ class Transcoder(gobject.GObject):
          
        # Scale width / height down
        if self.owidth > wmax:
-           # print "output video smaller than input video, scaling"
            width = wmax
            height = int((float(wmax) / self.owidth) * self.oheight)
        if height > hmax:
@@ -166,7 +165,7 @@ class Transcoder(gobject.GObject):
            height += 1
 
        # Add any required padding
-       if self.blackborderflag == True: 
+       if self.blackborderflag == True:
            if width < wmin and height < hmin:
                wpx = (wmin - width) / 2
                hpx = (hmin - height) / 2
@@ -186,16 +185,16 @@ class Transcoder(gobject.GObject):
                self.vbox['bottom'] = -px
                self.vbox['left'] = -int(0)
                self.vbox['right'] = -int(0)
+           else:
+               print "failed to add boxes"
 
        # Setup video framerate and add to caps - 
        # FIXME: Is minimum framerate really worthwhile checking for?
        # =================================================================
-       rmin = preset.vcodec.rate[0].num / \
-           float(preset.vcodec.rate[0].denom)
-       rmax = preset.vcodec.rate[1].num / \
-           float(preset.vcodec.rate[1].denom)
-       orate = self.fratenum / self.frateden
-            
+       rmin = preset.vcodec.rate[0].num / float(preset.vcodec.rate[0].denom)
+       rmax = preset.vcodec.rate[1].num / float(preset.vcodec.rate[1].denom)
+       rmaxtest = preset.vcodec.rate[1]
+       orate = self.fratenum / self.frateden 
        if orate > rmax:
            num = preset.vcodec.rate[1].num
            denom = preset.vcodec.rate[1].denom
@@ -205,8 +204,6 @@ class Transcoder(gobject.GObject):
        else:
            num = self.fratenum
            denom = self.frateden
-
-
        return height, width, num, denom
 
    def noMorePads(self, dbin):
@@ -343,10 +340,10 @@ class Transcoder(gobject.GObject):
                        cachefile =  (str(glib.get_user_cache_dir())+"/"+self.cachefilename)
                    if (self.multipass != False) and (self.passcounter == int(1)) :
                        self.videoencoder.load_preset("Pass 1")
-                       self.videoencoder.set_property("statsfile", cachefile)
+                       self.videoencoder.set_property("multipass-cache-file", cachefile)
                    elif (self.multipass != False) and (self.passcounter == int(0)):
                        self.videoencoder.load_preset("Pass 2")
-                       self.videoencoder.set_property("statsfile", cachefile)
+                       self.videoencoder.set_property("multipass-cache-file", cachefile)
 
            if (self.multipass == False) or (self.passcounter == int(0)):
                self.gstvideoqueue = gst.element_factory_make("queue")
@@ -388,7 +385,6 @@ class Transcoder(gobject.GObject):
            self.videoencoder.set_state(gst.STATE_PAUSED)
            if self.multipass == False or (self.passcounter == int(0)):
                self.gstvideoqueue.set_state(gst.STATE_PAUSED)
-               print "linking videoqueue to container muxer since self.multipass is " + str(self.multipass)
                self.gstvideoqueue.link(self.containermuxer)
        else:
            raise Exception("Got a non-A/V pad!")
