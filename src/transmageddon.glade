@@ -896,17 +896,6 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkLabel" id="label4">
-                    <property name="visible">True</property>
-                  </widget>
-                  <packing>
-                    <property name="left_attach">2</property>
-                    <property name="right_attach">3</property>
-                    <property name="top_attach">7</property>
-                    <property name="bottom_attach">8</property>
-                  </packing>
-                </child>
-                <child>
                   <widget class="GtkRadioButton" id="amrnbbutton">
                     <property name="label" translatable="yes">AMR-NB</property>
                     <property name="visible">True</property>
@@ -922,6 +911,24 @@
                     <property name="top_attach">8</property>
                     <property name="bottom_attach">9</property>
                     <property name="y_padding">3</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkRadioButton" id="h263pbutton">
+                    <property name="label" translatable="yes">H263+</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">False</property>
+                    <property name="draw_indicator">True</property>
+                    <property name="group">theorabutton</property>
+                    <signal name="pressed" handler="on_h263pbutton_pressed"/>
+                    <signal name="activate" handler="on_h263pbutton_pressed"/>
+                  </widget>
+                  <packing>
+                    <property name="left_attach">2</property>
+                    <property name="right_attach">3</property>
+                    <property name="top_attach">7</property>
+                    <property name="bottom_attach">8</property>
                   </packing>
                 </child>
               </widget>

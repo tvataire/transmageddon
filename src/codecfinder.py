@@ -47,7 +47,8 @@ codecmap = {     'vorbis' : "audio/x-vorbis", 'flac' : "audio/x-flac", 'mp3' : "
                         'mpeg2' : "video/mpeg,mpegversion=2", 'mpeg4' : "video/mpeg,mpegversion=4",
                         'xvid' : "video/x-xvid", 'dnxhd' : "video/x-dnxhd", 'wmv2' : "video/x-wmv,wmvversion=2",
                         'dnxhd' : "video/x-dnxhd", 'divx5' : "video/x-divx,divxversion=5", 
-                        'divx4' : "video/x-divx,divxversion=4", 'amrnb' : "audio/AMR"}
+                        'divx4' : "video/x-divx,divxversion=4", 'amrnb' : "audio/AMR", 
+                        'h263p' : "video/x-h263,variant=itu,h263version=h263p"}
 #####
 #This code checks for available muxers and return a unique caps string
 #for each. It also creates a python dictionary mapping the caps strings 

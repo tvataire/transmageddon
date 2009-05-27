@@ -27,7 +27,7 @@
             <samplerate>8000</samplerate>
         </audio>
         <video>
-            <name>video/mpeg,mpegversion=4</name>
+            <name>video/x-h263,variant=itu,h263version=h263p4</name>
             <border>Y</border>
             <passes>0</passes>
             <presets>
@@ -55,7 +55,7 @@
             <samplerate>8000</samplerate>
         </audio>
         <video>
-            <name>video/mpeg,mpegversion=4</name>  
+            <name>video/x-h263,variant=itu,h263version=h263p</name>  
             <border>Y</border>
             <passes>0</passes>
             <presets>

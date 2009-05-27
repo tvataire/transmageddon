@@ -79,7 +79,7 @@ supported_video_codecs = [
        "mpeg2",
        "mpeg4",
        "xvid",
-#      "dnxhd"
+       "h263p"
 ]
 
 # Maps containers to the codecs they support.  The first two elements are
@@ -93,7 +93,7 @@ supported_container_map = {
     'AVI':        [ 'mp3', 'h264', 'dirac', 'ac3', 'mpeg2', 'mpeg4', 'xvid' ],
     'Quicktime':  [ 'aac', 'h264', 'ac3', 'dirac', 'mp3', 'mpeg2', 'mpeg4' ],
     'MPEG4':      [ 'aac', 'h264', 'mp3', 'mpeg2', 'mpeg4' ],
-    '3GPP':       [ 'aac', 'h264', 'mp3', 'mpeg2', 'mpeg4','amrnb' ],
+    '3GPP':       [ 'aac', 'h264', 'mp3', 'mpeg2', 'mpeg4','amrnb','h263p' ],
     'MPEG PS':    [ 'mp3', 'mpeg2', 'ac3', 'h264', 'aac', 'mpeg4' ],
     'MPEG TS':    [ 'mp3', 'h264', 'ac3', 'mpeg2', 'aac', 'mpeg4', 'dirac' ],
     'FLV':        [ 'mp3', 'h264' ],

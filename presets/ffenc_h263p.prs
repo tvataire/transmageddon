@@ -1,14 +1,6 @@
 [_presets_]
 version=0.10
-element-name=ffenc_mpeg4
-
-[Profile Simple]
-_meta/comment=Simple Profile
-flags=0x00000004
-
-[Profile Advanced Simple]
-_meta/comment=Advanced Simple Profile
-flags=0x00000036
+element-name=ffenc_h263p
 
 [Quality Low]
 _meta/comment=Low quality
