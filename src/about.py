@@ -6,7 +6,9 @@ Authors = ["Christian Schaller <uraeus@gnome.org>",
            "Łukasz Jernaś <deejay1@srem.org>",
            "Nicolò Chieffo <nicolo.chieffo@gmail.com>",
            "Steven Walter <stevenrwalter@gmail.com>",
-           "Michal Schmidt <mschmidt@redhat.com>"]
+           "Michal Schmidt <mschmidt@redhat.com>",
+           "Stephane Maniaci <stephane.maniaci@gmail.com>"
+           ]
 
 Translators = ("Łukasz Jernaś <deejay1@srem.org>")
 
