@@ -14,22 +14,23 @@
     
     <profile>
         <name>Low</name> # This is a low quality output setting
-        <container>video/quicktime,variant=3gpp</container>
-        <extension>3gp</extension>
+        <container>video/quicktime,variant=iso</container>
+        <extension>mp4</extension>
         <audio>
-            <name>audio/AMR</name>
+            <name>audio/mpeg,mpegversion=[4, 2]</name>
             <presets>
                 <preset>
-                    Quality Low
+                    Quality Low, Profile Low Complexity
                 </preset>
             </presets>
             <channels>1, 1</channels>
-            <samplerate>8000</samplerate>
+            <samplerate>44100</samplerate>
         </audio>
         <video>
-            <name>video/x-h263,variant=itu,h263version=h263p4</name>
+            <name>video/mpeg,mpegversion=4</name>
             <border>Y</border>
             <passes>0</passes>
+            <pixelaspectratio>12/11</pixelaspectratio>
             <presets>
                 <preset>
                     Quality Low, Profile Simple
@@ -42,25 +43,26 @@
     </profile>
     <profile>
         <name>Normal</name>
-        <container>video/quicktime,variant=3gpp</container>
-        <extension>3gp</extension>
+        <container>video/quicktime,variant=iso</container>
+        <extension>mp4</extension>
         <audio>
-            <name>audio/AMR</name>
+            <name>audio/mpeg,mpegversion=[4, 2]</name>
             <presets>
                 <preset>
-                    Quality Normal
+                    Quality Low , Profile Low Complexity
                 </preset>
             </presets>
-            <channels>1, 1</channels>
-            <samplerate>8000</samplerate>
+            <channels>1, 2</channels>
+            <samplerate>44100</samplerate>
         </audio>
         <video>
-            <name>video/x-h263,variant=itu,h263version=h263p</name>  
+            <name>video/mpeg,mpegversion=4</name>  
             <border>Y</border>
             <passes>0</passes>
+            <pixelaspectratio>12/11</pixelaspectratio>
             <presets>
                 <preset>
-                    Quality Normal,Profile Simple
+                    Quality Low, Profile Simple
                 </preset>
             </presets>
             <width>176, 176</width>

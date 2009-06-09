@@ -39,7 +39,7 @@ class Transcoder(gobject.GObject):
 
    def __init__(self, FILECHOSEN, FILENAME, DESTDIR, CONTAINERCHOICE, AUDIOCODECVALUE, VIDEOCODECVALUE, PRESET, 
                       OHEIGHT, OWIDTH, FRATENUM, FRATEDEN, ACHANNELS, MULTIPASS, PASSCOUNTER, OUTPUTNAME, 
-                      TIMESTAMP):
+                      TIMESTAMP, ROTATIONVALUE):
        gobject.GObject.__init__(self)
 
        # Choose plugin based on Container name
@@ -65,6 +65,7 @@ class Transcoder(gobject.GObject):
        self.passcounter = PASSCOUNTER
        self.outputfilename = OUTPUTNAME
        self.timestamp = TIMESTAMP
+       self.rotationvalue = int(ROTATIONVALUE)
        self.vbox = {}
 
        # if needed create a variable to store the filename of the multipass statistics file
@@ -130,6 +131,7 @@ class Transcoder(gobject.GObject):
        wmin, wmax  =  preset.vcodec.width
        hmin, hmax = preset.vcodec.height
        width, height = self.owidth, self.oheight
+       print "owidth is " + str(self.owidth) + " oheight is " + str(self.oheight)
        self.vpreset = []       
        voutput = preset.vcodec.presets[0].split(", ")
        for x in voutput:
@@ -139,6 +141,9 @@ class Transcoder(gobject.GObject):
        for x in aoutput:
            self.apreset.append(x)
          
+       # Get Display aspect ratio
+       pixelaspectratio = preset.vcodec.aspectratio[0]
+
        # Scale width / height down
        if self.owidth > wmax:
            width = wmax
@@ -146,6 +151,9 @@ class Transcoder(gobject.GObject):
        if height > hmax:
            height = hmax
            width = int((float(hmax) / self.oheight) * self.owidth)
+
+       
+
        # Some encoders like x264enc are not able to handle odd height or widths
        if width % 2:
            width += 1
@@ -162,19 +170,24 @@ class Transcoder(gobject.GObject):
                self.vbox['top'] = -hpx
                self.vbox['bottom'] = -hpx
            elif width < wmin:
+               print "adding width borders"
                px = (wmin - width) / 2
                self.vbox['left'] = -px
                self.vbox['right'] = -px
                self.vbox['top'] = -0
                self.vbox['bottom'] = -0
            elif height < hmin:
+               print " adding height borders"
                px = (hmin - height) / 2
                self.vbox['top'] = -px
                self.vbox['bottom'] = -px
                self.vbox['left'] = -int(0)
                self.vbox['right'] = -int(0)
            else:
-               print "failed to add boxes"
+               self.vbox['top'] = -int(0)
+               self.vbox['bottom'] = -int(0)
+               self.vbox['left'] = -int(0)
+               self.vbox['right'] = -int(0)
 
        # Setup video framerate and add to caps - 
        # FIXME: Is minimum framerate really worthwhile checking for?
@@ -192,7 +205,18 @@ class Transcoder(gobject.GObject):
        else:
            num = self.fratenum
            denom = self.frateden
-       return height, width, num, denom
+       print "self.rotationvalue is "
+       print self.rotationvalue
+       if self.rotationvalue == 1 or self.rotationvalue == 3:
+           print "switching height and with around"
+           nwidth = height
+           nheight = width
+           height = nheight
+           width = nwidth
+
+
+       print "final height " + str(height) + " final width " + str(width)
+       return height, width, num, denom, pixelaspectratio
 
    def noMorePads(self, dbin):
        if (self.multipass == False) or (self.passcounter == int(0)):
@@ -278,6 +302,10 @@ class Transcoder(gobject.GObject):
            self.colorspaceconverter = gst.element_factory_make("ffmpegcolorspace")
            self.pipeline.add(self.colorspaceconverter)
 
+           self.videoflipper = gst.element_factory_make("videoflip")
+           self.videoflipper.set_property("method", self.rotationvalue)
+           self.pipeline.add(self.videoflipper)
+
            if self.preset != "nopreset":
                self.colorspaceconvert2 = gst.element_factory_make("ffmpegcolorspace")
                self.pipeline.add(self.colorspaceconvert2)
@@ -285,11 +313,12 @@ class Transcoder(gobject.GObject):
                self.vcaps = gst.Caps()
                self.vcaps.append_structure(gst.Structure("video/x-raw-rgb"))
                self.vcaps.append_structure(gst.Structure("video/x-raw-yuv"))
-               height, width, num, denom = self.provide_presets()
+               height, width, num, denom, pixelaspectratio = self.provide_presets()
                for vcap in self.vcaps:
                    vcap["width"] = width
                    vcap["height"] = height
                    vcap["framerate"] = gst.Fraction(num, denom)
+                   vcap["pixel-aspect-ratio"] = pixelaspectratio                   
 
                self.vcapsfilter = gst.element_factory_make("capsfilter")
                self.vcapsfilter.set_property("caps", self.vcaps)
@@ -312,9 +341,15 @@ class Transcoder(gobject.GObject):
                    self.colorspaceconvert3 = gst.element_factory_make("ffmpegcolorspace")
                    self.pipeline.add(self.colorspaceconvert3)
 
+           self.vcaps2 = gst.Caps()
+           print "self.videocaps is " + str(self.videocaps)
+           self.vcaps2 = gst.caps_from_string(self.videocaps)
+           height, width, num, denom, pixelaspectratio = self.provide_presets()
+           for vcap in self.vcaps2:
+                   vcap["pixel-aspect-ratio"] = pixelaspectratio                   
+           print "self.vcaps2 is " + str(self.vcaps2)
            self.vcapsfilter2 = gst.element_factory_make("capsfilter")
-           caps2 = gst.caps_from_string(self.videocaps)
-           self.vcapsfilter2.set_property("caps", caps2)
+           self.vcapsfilter2.set_property("caps", self.vcaps2)
            self.pipeline.add(self.vcapsfilter2)
 
            self.videoencoder = gst.element_factory_make(self.VideoEncoderPlugin)
@@ -339,26 +374,25 @@ class Transcoder(gobject.GObject):
 
            sink_pad.link(self.colorspaceconverter.get_pad("sink"))
            if self.preset != "nopreset":
-               self.colorspaceconverter.link(self.videorate)
+               self.colorspaceconverter.link(self.videoflipper)
+               self.videoflipper.link(self.videorate)
                self.videorate.link(self.videoscaler)
                self.videoscaler.link(self.vcapsfilter)
                if self.blackborderflag == True:
                    self.vcapsfilter.link(self.colorspaceconvert3)
                    self.colorspaceconvert3.link(self.videoboxer)
                    self.videoboxer.link(self.colorspaceconvert2)
-               else:
-                   self.vcapsfilter.link(self.colorspaceconvert2)
                self.colorspaceconvert2.link(self.videoencoder)
            else:
-               self.colorspaceconverter.link(self.videoencoder)
-               
-               
+                self.colorspaceconverter.link(self.videoflipper)
+                self.videoflipper.link(self.videoencoder)
            self.videoencoder.link(self.vcapsfilter2)
            if (self.multipass == False) or (self.passcounter == int(0)):
                self.vcapsfilter2.link(self.gstvideoqueue)
            else:
                self.vcapsfilter2.link(self.multipassfakesink)
            self.colorspaceconverter.set_state(gst.STATE_PAUSED)
+           self.videoflipper.set_state(gst.STATE_PAUSED)  
            if self.preset != "nopreset":
                self.videoscaler.set_state(gst.STATE_PAUSED)
                self.videorate.set_state(gst.STATE_PAUSED)

@@ -58,7 +58,7 @@
             <name>video/mpeg,mpegversion=4</name>
             <border>N</border>
             <passes>0</passes>
-            <aspectratio>5:3</aspectratio>
+            <aspectratio>5/3</aspectratio>
             <presets>
                 <preset>
                     Quality Low, Profile Simple

@@ -4,15 +4,15 @@ element-name=ffenc_mpeg4
 
 [Profile Simple]
 _meta/comment=Simple Profile
-flags=0x00000004
+flags=0x00400004
 
 [Profile Advanced Simple]
 _meta/comment=Advanced Simple Profile
-flags=0x00000036
+flags=0x00400036
 
 [Quality Low]
 _meta/comment=Low quality
-bitrate=200000
+bitrate=128000
 
 [Quality Normal]
 _meta/comment=Normal quality

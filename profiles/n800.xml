@@ -2,8 +2,8 @@
 
 <device>
     <make>Nokia</make>
-    <model>N800</model>
-    <description>profiles for Nokia N800</description>
+    <model>N800/N810</model>
+    <description>profiles for Nokia N800/N810</description>
     <author>
         <name>Christian Schaller</name>
         <email>christian.schaller@collabora.co.uk</email>

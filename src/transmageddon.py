@@ -89,7 +89,7 @@ supported_container_map = {
     'Ogg':        [ 'vorbis', 'theora', 'flac', 'speex', 'celt', 'dirac' ],
     'MXF':        [ 'mp3', 'h264', 'aac', 'ac3', 'mpeg2', 'mpeg4' ],
     'Matroska':   [ 'flac', 'dirac', 'aac', 'ac3', 'theora', 'mp3', 'h264',
-    'mpeg4', 'mpeg2', 'xvid', 'vorbis' ],
+    'mpeg4', 'mpeg2', 'xvid', 'vorbis', 'h263p' ],
     'AVI':        [ 'mp3', 'h264', 'dirac', 'ac3', 'mpeg2', 'mpeg4', 'xvid' ],
     'Quicktime':  [ 'aac', 'h264', 'ac3', 'dirac', 'mp3', 'mpeg2', 'mpeg4' ],
     'MPEG4':      [ 'aac', 'h264', 'mp3', 'mpeg2', 'mpeg4' ],
@@ -119,6 +119,7 @@ class TransmageddonUI (gtk.glade.XML):
        self.CodecBox = self.get_widget("CodecBox")
        self.presetchoice = self.get_widget("presetchoice")
        self.containerchoice = self.get_widget("containerchoice")
+       self.rotationchoice = self.get_widget("rotationchoice")
        self.codec_buttons = dict()
        for c in supported_audio_codecs:
            self.codec_buttons[c] = self.get_widget(c+"button")
@@ -172,6 +173,7 @@ class TransmageddonUI (gtk.glade.XML):
        self.cancelbutton.set_sensitive(False)
        self.presetchoice.set_sensitive(False)
        self.containerchoice.set_sensitive(False)
+       self.rotationchoice.set_sensitive(True)
 
        # set default values for various variables
        self.AudioCodec = "vorbis"
@@ -185,6 +187,17 @@ class TransmageddonUI (gtk.glade.XML):
        self.lst = supported_containers
        for i in self.lst:
            self.containerchoice.append_text(i)
+
+       # Populate the rotatation box
+       self.rotationlist = ["No rotation (default)", "Clockwise 90 degrees", "Rotate 180 degrees", 
+                           "Counterclockwise 90 degrees", "Horizontal flip", 
+                           "Vertical flip", "Upper left diagonal flip", 
+                           "Upper right diagnonal flip" ]
+       for y in self.rotationlist: 
+           self.rotationchoice.append_text(y)
+
+       self.rotationchoice.set_active(0)
+       self.rotationvalue == int(0) 
       
        # Populate Device Presets combobox
        devicelist = []
@@ -316,6 +329,7 @@ class TransmageddonUI (gtk.glade.XML):
            self.transcodebutton.set_sensitive(False)
            self.start_time = False
            self.ProgressBar.set_text(_("Done Transcoding"))
+           self.ProgressBar.set_fraction(1.0)
            self.start_time = False
            self.multipass = False
            self.passcounter = False
@@ -381,7 +395,7 @@ class TransmageddonUI (gtk.glade.XML):
                                                        self.AudioCodec, self.VideoCodec, self.devicename, 
                                                        vheight, vwidth, ratenum, ratednom, achannels, 
                                                        self.multipass, self.passcounter, self.outputfilename,
-                                                       self.timestamp)
+                                                       self.timestamp, self.rotationvalue)
        
        self._transcoder.connect("ready-for-querying", self.ProgressBarUpdate)
        self._transcoder.connect("got-eos", self._on_eos)
@@ -487,6 +501,7 @@ class TransmageddonUI (gtk.glade.XML):
 
    def on_containerchoice_changed(self, widget):
        self.CodecBox.set_sensitive(True)
+       self.rotationchoice.set_sensitive(True)
        self.ProgressBar.set_fraction(0.0)
        self.ProgressBar.set_text(_("Transcoding Progress"))
        containerchoice = self.get_widget ("containerchoice").get_active_text ()
@@ -521,6 +536,10 @@ class TransmageddonUI (gtk.glade.XML):
            self.CodecBox.set_sensitive(False)
            if self.get_widget("containerchoice").get_active_text():
                self.transcodebutton.set_sensitive(True)
+
+   def on_rotationchoice_changed(self, widget):
+       self.rotationvalue = self.rotationchoice.get_active()
+       print "rotationchoice value " + str(self.rotationvalue)
 
    def audio_codec_changed (self, audio_codec):
        self.transcodebutton.set_sensitive(True)

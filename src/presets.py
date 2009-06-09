@@ -228,6 +228,7 @@ class VideoCodec(Codec):
         self.border = "N"
         self.passes ="0"
         self.rate = (Fraction("1"), Fraction("60"))
+        self.aspectratio = Fraction("16/9")
         self.width = (2, 1920)
         self.height = (2, 1080)
 
@@ -327,6 +328,8 @@ def _load_video_codec(root):
             codec.width = _parse_range(child.text.strip())
         elif child.tag == "height":
             codec.height = _parse_range(child.text.strip())
+        elif child.tag == "pixelaspectratio":
+            codec.aspectratio = _parse_range(child.text.strip(), Fraction)
         elif child.tag == "framerate":
             codec.rate = _parse_range(child.text.strip(), Fraction)
         elif child.tag == "border":
