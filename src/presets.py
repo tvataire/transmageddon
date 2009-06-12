@@ -228,7 +228,7 @@ class VideoCodec(Codec):
         self.border = "N"
         self.passes ="0"
         self.rate = (Fraction("1"), Fraction("60"))
-        self.aspectratio = Fraction("16/9")
+        self.aspectratio = Fraction("0/0")
         self.width = (2, 1920)
         self.height = (2, 1080)
 

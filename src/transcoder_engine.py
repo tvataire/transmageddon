@@ -318,7 +318,8 @@ class Transcoder(gobject.GObject):
                    vcap["width"] = width
                    vcap["height"] = height
                    vcap["framerate"] = gst.Fraction(num, denom)
-                   vcap["pixel-aspect-ratio"] = pixelaspectratio                   
+                   if pixelaspectratio != gst.Fraction(0, 0):
+                       vcap["pixel-aspect-ratio"] = pixelaspectratio                   
 
                self.vcapsfilter = gst.element_factory_make("capsfilter")
                self.vcapsfilter.set_property("caps", self.vcaps)
@@ -346,6 +347,7 @@ class Transcoder(gobject.GObject):
            self.vcaps2 = gst.caps_from_string(self.videocaps)
            height, width, num, denom, pixelaspectratio = self.provide_presets()
            for vcap in self.vcaps2:
+               if pixelaspectratio != gst.Fraction(0, 0):
                    vcap["pixel-aspect-ratio"] = pixelaspectratio                   
            print "self.vcaps2 is " + str(self.vcaps2)
            self.vcapsfilter2 = gst.element_factory_make("capsfilter")
@@ -361,12 +363,18 @@ class Transcoder(gobject.GObject):
                        self.videoencoder.load_preset(x)
                    if self.multipass != False:
                        cachefile =  (str(glib.get_user_cache_dir())+"/"+self.cachefilename)
-                   if (self.multipass != False) and (self.passcounter == int(1)) :
-                       self.videoencoder.load_preset("Pass 1")
+                   if (self.multipass != False) and (self.passcounter != int(0)) :
+                       passvalue = "Pass "+ str(self.passcounter)
+                       print "passvalue is " + str(passvalue)
+                       bob = self.videoencoder.load_preset("Pass 1")
+                       print "loading multipass preset number " + str(self.passcounter)
+                       print "did preset loading succeed " + str(bob)
                        self.videoencoder.set_property("multipass-cache-file", cachefile)
                    elif (self.multipass != False) and (self.passcounter == int(0)):
-                       self.videoencoder.load_preset("Pass 2")
+                       self.videoencoder.load_preset("Pass " + str(self.multipass))
+                       print "loading final pass preset " + str(self.multipass)
                        self.videoencoder.set_property("multipass-cache-file", cachefile)
+             
 
            if (self.multipass == False) or (self.passcounter == int(0)):
                self.gstvideoqueue = gst.element_factory_make("queue")

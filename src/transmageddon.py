@@ -173,7 +173,7 @@ class TransmageddonUI (gtk.glade.XML):
        self.cancelbutton.set_sensitive(False)
        self.presetchoice.set_sensitive(False)
        self.containerchoice.set_sensitive(False)
-       self.rotationchoice.set_sensitive(True)
+       self.rotationchoice.set_sensitive(False)
 
        # set default values for various variables
        self.AudioCodec = "vorbis"
@@ -297,7 +297,7 @@ class TransmageddonUI (gtk.glade.XML):
                    if self.passcounter == int(0):
                        self.ProgressBar.set_text(_("Estimated time remaining: ") + str(time_rem))
                    else:
-                       self.ProgressBar.set_text(_("Pass 1 time remaining: ") + str(time_rem))
+                       self.ProgressBar.set_text(_("Pass " + str(self.passcounter) + " time remaining: ") + str(time_rem))
                return True
            else:
                self.ProgressBar.set_fraction(0.0)
@@ -327,6 +327,7 @@ class TransmageddonUI (gtk.glade.XML):
            self.presetchoice.set_sensitive(True)
            self.cancelbutton.set_sensitive(False)
            self.transcodebutton.set_sensitive(False)
+           self.rotationchoice.set_sensitive(True)
            self.start_time = False
            self.ProgressBar.set_text(_("Done Transcoding"))
            self.ProgressBar.set_fraction(1.0)
@@ -334,11 +335,16 @@ class TransmageddonUI (gtk.glade.XML):
            self.multipass = False
            self.passcounter = False
        else:
-           self.StatusBar.push(context_id, (_("Pass 1 Complete")))
+           self.StatusBar.push(context_id, (_("Pass " + str(self.passcounter) + " Complete")))
            self.start_time = False
-           self.ProgressBar.set_text(_("Start Next pass"))
-           self.passcounter = int(0)
-           self._start_transcoding()
+           self.ProgressBar.set_text(_("Start next pass"))
+           if self.passcounter == (self.multipass-1):
+               print "setting passcounter to 0"
+               self.passcounter = int(0)
+               self._start_transcoding()
+           else:
+               self.passcounter = self.passcounter+1
+               self._start_transcoding()
 
 
    # Use the pygst extension 'discoverer' to get information about the incoming media. Probably need to get codec data in another way.
@@ -463,6 +469,7 @@ class TransmageddonUI (gtk.glade.XML):
        self.presetchoice.set_sensitive(False)
        self.CodecBox.set_sensitive(False)
        self.transcodebutton.set_sensitive(False)
+       self.rotationchoice.set_sensitive(False)
        self.cancelbutton.set_sensitive(True)
        self.ProgressBar.set_fraction(0.0)
        # create a variable with a timestamp code
@@ -479,8 +486,8 @@ class TransmageddonUI (gtk.glade.XML):
        if self.multipass == False:
            self.ProgressBar.set_text(_("Transcoding Progress"))
        else:
-           self.ProgressBar.set_text(_("Pass 1 Progress"))
            self.passcounter=int(1)
+           self.ProgressBar.set_text(_("Pass " + str(self.passcounter) + " Progress"))
        if self.audiodata.has_key("samplerate"):
            self.check_for_elements()
        else:
@@ -491,6 +498,7 @@ class TransmageddonUI (gtk.glade.XML):
        self.containerchoice.set_sensitive(True)
        self.CodecBox.set_sensitive(True)
        self.presetchoice.set_sensitive(True)
+       self.rotationchoice.set_sensitive(True)
        self.presetchoice.set_active(0)
        self.cancelbutton.set_sensitive(False)
        self._cancel_encoding = transcoder_engine.Transcoder.Pipeline(self._transcoder,"null")

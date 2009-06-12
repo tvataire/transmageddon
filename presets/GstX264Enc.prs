@@ -44,14 +44,14 @@ ref=3
 threads=0
 
 [Pass 1]
-_meta/comment=Second pass
+_meta/comment=First pass
 pass=17
 subme=1
 me=dia
 bframe=0
 
 [Pass 2]
-_meta/comment=Third pass
+_meta/comment=Second pass
 pass=18
 
 [Pass 3]

@@ -30,6 +30,7 @@
             <name>video/x-h264</name>
             <border>Y</border>
             <passes>0</passes>
+            <pixelaspectratio>0/0</pixelaspectratio>
             <presets>
                 <preset>
                     Quality Low, Profile Baseline
@@ -58,6 +59,7 @@
             <name>video/x-h264</name>
             <border>Y</border>
             <passes>2</passes>
+            <pixelaspectratio>0/0</pixelaspectratio>
             <presets>
                 <preset>
                     Quality Normal, Profile Baseline
