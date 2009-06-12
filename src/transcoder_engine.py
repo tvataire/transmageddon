@@ -298,7 +298,7 @@ class Transcoder(gobject.GObject):
                self.gstaudioqueue.link(self.containermuxer)
 
        elif c.startswith("video/"):
-           # print "Got an video cap"
+           print "Got an video cap"
            self.colorspaceconverter = gst.element_factory_make("ffmpegcolorspace")
            self.pipeline.add(self.colorspaceconverter)
 
@@ -307,6 +307,7 @@ class Transcoder(gobject.GObject):
            self.pipeline.add(self.videoflipper)
 
            if self.preset != "nopreset":
+               print "preset setting used on video"
                self.colorspaceconvert2 = gst.element_factory_make("ffmpegcolorspace")
                self.pipeline.add(self.colorspaceconvert2)
            
@@ -332,6 +333,7 @@ class Transcoder(gobject.GObject):
                self.videoscaler.set_property("method", int(1))
                self.pipeline.add(self.videoscaler)
                if self.blackborderflag == True:
+                   print "using black border"
                    self.videoboxer = gst.element_factory_make("videobox", "videoboxer")
                    self.videoboxer.set_property("top", self.vbox["top"])
                    self.videoboxer.set_property("bottom", self.vbox["bottom"])
@@ -357,6 +359,7 @@ class Transcoder(gobject.GObject):
            self.videoencoder = gst.element_factory_make(self.VideoEncoderPlugin)
            self.pipeline.add(self.videoencoder)
            if self.preset != "nopreset":
+               print "using preset values"
                GstPresetType = gobject.type_from_name("GstPreset")
                if GstPresetType in gobject.type_interfaces(self.videoencoder):
                    for x in self.vpreset:
@@ -382,6 +385,7 @@ class Transcoder(gobject.GObject):
 
            sink_pad.link(self.colorspaceconverter.get_pad("sink"))
            if self.preset != "nopreset":
+               print "linking elements in preset pipeline"
                self.colorspaceconverter.link(self.videoflipper)
                self.videoflipper.link(self.videorate)
                self.videorate.link(self.videoscaler)
@@ -390,6 +394,9 @@ class Transcoder(gobject.GObject):
                    self.vcapsfilter.link(self.colorspaceconvert3)
                    self.colorspaceconvert3.link(self.videoboxer)
                    self.videoboxer.link(self.colorspaceconvert2)
+               else:
+                   self.vcapsfilter.link(self.colorspaceconvert2)
+                   print "linking capsfilter with colorspace2"
                self.colorspaceconvert2.link(self.videoencoder)
            else:
                 self.colorspaceconverter.link(self.videoflipper)

@@ -30,6 +30,7 @@
             <name>video/mpeg,mpegversion=4</name>
             <border>N</border>
             <passes>0</passes>
+            <pixelaspectratio>0/0</pixelaspectratio>
             <presets>
                 <preset>
                     Quality Low, Profile Advanced Simple
@@ -58,7 +59,7 @@
             <name>video/mpeg,mpegversion=4</name>
             <border>N</border>
             <passes>0</passes>
-            <aspectratio>5/3</aspectratio>
+            <pixelaspectratio>0/0</pixelaspectratio>
             <presets>
                 <preset>
                     Quality Low, Profile Simple

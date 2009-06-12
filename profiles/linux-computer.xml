@@ -21,9 +21,14 @@
             <presets>
                 <preset>Quality Low</preset>
             </presets>
+            <channels>1, 2</channels>
+            <samplerate>44100</samplerate>
         </audio>
         <video>
             <name>video/x-theora</name>
+            <border>N</border>
+            <passes>0</passes>
+            <pixelaspectratio>0/0</pixelaspectratio>
             <presets>
                 <preset>Quality Low</preset>
             </presets> 
@@ -41,9 +46,14 @@
             <presets>
                 <preset>Quality Normal</preset>
             </presets>
+            <channels>1, 2</channels>
+            <samplerate>44100</samplerate>
         </audio>
         <video>
             <name>video/x-theora</name>
+            <border>N</border>
+            <passes>0</passes>
+            <pixelaspectratio>0/0</pixelaspectratio>
             <presets>
                 <preset>Quality Normal</preset>
             </presets>
@@ -65,7 +75,7 @@
         <video>
             <name>video/x-theora</name>
             <presets>
-                <preset>pass=cbr bitrate=2048 subme=4 threads=0</preset>
+                <preset>Quality Normal</preset>
             </presets> 
             <width>320, 1920</width>
             <height>240, 1080</height>
@@ -74,18 +84,21 @@
     </profile>
     <profile>
         <name>High</name>
-        <container>ffmux_mp4</container>
-        <extension>mp4</extension>
+        <container>application/ogg</container>
+        <extension>ogg</extension>
         <audio>
-            <name>faac</name>
+            <name>audio/x-vorbis</name>
             <presets>
-                <preset>bitrate=256000</preset>
+                <preset>Quality High</preset>
             </presets>
         </audio>
         <video>
-            <name>x264enc</name>
+            <name>video/x-dirac</name>
+            <border>N</border>
+            <passes>0</passes>
+            <pixelaspectratio>0/0</pixelaspectratio>
             <presets>
-                <preset>pass=qual quantizer=18 me=umh subme=6 ref=3 bframes=3 8x8dct=1 threads=0</preset>
+                <preset>Quality High</preset>
             </presets>
             <width>320, 1920</width>
             <height>240, 1080</height>

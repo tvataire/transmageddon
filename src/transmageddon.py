@@ -547,7 +547,7 @@ class TransmageddonUI (gtk.glade.XML):
 
    def on_rotationchoice_changed(self, widget):
        self.rotationvalue = self.rotationchoice.get_active()
-       print "rotationchoice value " + str(self.rotationvalue)
+       # print "rotationchoice value " + str(self.rotationvalue)
 
    def audio_codec_changed (self, audio_codec):
        self.transcodebutton.set_sensitive(True)
