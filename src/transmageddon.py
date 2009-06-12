@@ -339,7 +339,6 @@ class TransmageddonUI (gtk.glade.XML):
            self.start_time = False
            self.ProgressBar.set_text(_("Start next pass"))
            if self.passcounter == (self.multipass-1):
-               print "setting passcounter to 0"
                self.passcounter = int(0)
                self._start_transcoding()
            else:
