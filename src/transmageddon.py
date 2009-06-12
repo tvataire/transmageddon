@@ -532,6 +532,7 @@ class TransmageddonUI (gtk.glade.XML):
            self.start_time = False
            self.multipass = False
            self.passcounter = False
+           self.rotationchoice.set_sensitive(True)
            if self.get_widget("containerchoice").get_active_text():
                self.CodecBox.set_sensitive(True)
                self.transcodebutton.set_sensitive(True)
@@ -541,6 +542,7 @@ class TransmageddonUI (gtk.glade.XML):
            self.provide_presets(self.devicename)
            self.containerchoice.set_sensitive(False)
            self.CodecBox.set_sensitive(False)
+           self.rotationchoice.set_sensitive(False)
            if self.get_widget("containerchoice").get_active_text():
                self.transcodebutton.set_sensitive(True)
 

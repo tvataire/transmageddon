@@ -205,15 +205,13 @@ class Transcoder(gobject.GObject):
        else:
            num = self.fratenum
            denom = self.frateden
-       print "self.rotationvalue is "
-       print self.rotationvalue
+
        if self.rotationvalue == 1 or self.rotationvalue == 3:
            print "switching height and with around"
            nwidth = height
            nheight = width
            height = nheight
            width = nwidth
-
 
        print "final height " + str(height) + " final width " + str(width)
        return height, width, num, denom, pixelaspectratio
@@ -310,6 +308,18 @@ class Transcoder(gobject.GObject):
            self.videoflipper.set_property("method", self.rotationvalue)
            self.pipeline.add(self.videoflipper)
 
+           self.vcaps2 = gst.Caps()
+           self.vcaps2 = gst.caps_from_string(self.videocaps)
+           if self.preset != "nopreset":
+               height, width, num, denom, pixelaspectratio = self.provide_presets()
+               for vcap in self.vcaps2:
+                   if pixelaspectratio != gst.Fraction(0, 0):
+                       vcap["pixel-aspect-ratio"] = pixelaspectratio
+           print "self.videocaps2 is " + str(self.vcaps2)                   
+           self.vcapsfilter2 = gst.element_factory_make("capsfilter")
+           self.vcapsfilter2.set_property("caps", self.vcaps2)
+           self.pipeline.add(self.vcapsfilter2)
+
            if self.preset != "nopreset":
                # print "preset setting used on video"
                self.colorspaceconvert2 = gst.element_factory_make("ffmpegcolorspace")
@@ -347,18 +357,6 @@ class Transcoder(gobject.GObject):
 
                    self.colorspaceconvert3 = gst.element_factory_make("ffmpegcolorspace")
                    self.pipeline.add(self.colorspaceconvert3)
-
-           self.vcaps2 = gst.Caps()
-           # print "self.videocaps is " + str(self.videocaps)
-           self.vcaps2 = gst.caps_from_string(self.videocaps)
-           height, width, num, denom, pixelaspectratio = self.provide_presets()
-           for vcap in self.vcaps2:
-               if pixelaspectratio != gst.Fraction(0, 0):
-                   vcap["pixel-aspect-ratio"] = pixelaspectratio                   
-           # print "self.vcaps2 is " + str(self.vcaps2)
-           self.vcapsfilter2 = gst.element_factory_make("capsfilter")
-           self.vcapsfilter2.set_property("caps", self.vcaps2)
-           self.pipeline.add(self.vcapsfilter2)
 
            self.videoencoder = gst.element_factory_make(self.VideoEncoderPlugin)
            self.pipeline.add(self.videoencoder)
