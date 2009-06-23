@@ -46,7 +46,12 @@ try:
    import gst.pbutils
 except:
    sys.exit(1)
-   
+
+major, minor, patch = gobject.pygobject_version
+if (major == 2) and (minor < 18):
+   print "You need version 2.18.0 or higher of pygobject for Transmageddon" 
+   sys.exit(1)
+
 supported_containers = [
         "Ogg",
         "Matroska",
