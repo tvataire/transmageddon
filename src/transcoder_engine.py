@@ -368,10 +368,10 @@ class Transcoder(gobject.GObject):
                        self.videoencoder.load_preset(x)
                    if (self.multipass != False) and (self.passcounter != int(0)) :
                        passvalue = "Pass "+ str(self.passcounter)
-                       print "passvalue is " + str(passvalue)
+                       # print "passvalue is " + str(passvalue)
                        bob = self.videoencoder.load_preset(passvalue)
                        # print "loading multipass preset number " + str(self.passcounter)
-                       print "did preset loading succeed " + str(bob)
+                       # print "did preset loading succeed " + str(bob)
                        self.videoencoder.set_property("multipass-cache-file", self.cachefile)
                    elif (self.multipass != False) and (self.passcounter == int(0)):
                        self.videoencoder.load_preset("Pass " + str(self.multipass))
