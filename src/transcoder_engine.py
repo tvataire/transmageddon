@@ -131,7 +131,7 @@ class Transcoder(gobject.GObject):
        wmin, wmax  =  preset.vcodec.width
        hmin, hmax = preset.vcodec.height
        width, height = self.owidth, self.oheight
-       print "owidth is " + str(self.owidth) + " oheight is " + str(self.oheight)
+       # print "owidth is " + str(self.owidth) + " oheight is " + str(self.oheight)
        self.vpreset = []       
        voutput = preset.vcodec.presets[0].split(", ")
        for x in voutput:
@@ -170,14 +170,14 @@ class Transcoder(gobject.GObject):
                self.vbox['top'] = -hpx
                self.vbox['bottom'] = -hpx
            elif width < wmin:
-               print "adding width borders"
+               # print "adding width borders"
                px = (wmin - width) / 2
                self.vbox['left'] = -px
                self.vbox['right'] = -px
                self.vbox['top'] = -0
                self.vbox['bottom'] = -0
            elif height < hmin:
-               print " adding height borders"
+               # print " adding height borders"
                px = (hmin - height) / 2
                self.vbox['top'] = -px
                self.vbox['bottom'] = -px
@@ -207,13 +207,13 @@ class Transcoder(gobject.GObject):
            denom = self.frateden
 
        if self.rotationvalue == 1 or self.rotationvalue == 3:
-           print "switching height and with around"
+           # print "switching height and with around"
            nwidth = height
            nheight = width
            height = nheight
            width = nwidth
 
-       print "final height " + str(height) + " final width " + str(width)
+       # print "final height " + str(height) + " final width " + str(width)
        return height, width, num, denom, pixelaspectratio
 
    def noMorePads(self, dbin):
@@ -315,7 +315,7 @@ class Transcoder(gobject.GObject):
                for vcap in self.vcaps2:
                    if pixelaspectratio != gst.Fraction(0, 0):
                        vcap["pixel-aspect-ratio"] = pixelaspectratio
-           print "self.videocaps2 is " + str(self.vcaps2)                   
+           # print "self.videocaps2 is " + str(self.vcaps2)                   
            self.vcapsfilter2 = gst.element_factory_make("capsfilter")
            self.vcapsfilter2.set_property("caps", self.vcaps2)
            self.pipeline.add(self.vcapsfilter2)
@@ -347,7 +347,7 @@ class Transcoder(gobject.GObject):
                self.videoscaler.set_property("method", int(1))
                self.pipeline.add(self.videoscaler)
                if self.blackborderflag == True:
-                   print "using black border"
+                   # print "using black border"
                    self.videoboxer = gst.element_factory_make("videobox", "videoboxer")
                    self.videoboxer.set_property("top", self.vbox["top"])
                    self.videoboxer.set_property("bottom", self.vbox["bottom"])
@@ -361,7 +361,7 @@ class Transcoder(gobject.GObject):
            self.videoencoder = gst.element_factory_make(self.VideoEncoderPlugin)
            self.pipeline.add(self.videoencoder)
            if self.preset != "nopreset":
-               print "using preset values"
+               # print "using preset values"
                GstPresetType = gobject.type_from_name("GstPreset")
                if GstPresetType in gobject.type_interfaces(self.videoencoder):
                    for x in self.vpreset:
@@ -369,13 +369,13 @@ class Transcoder(gobject.GObject):
                    if (self.multipass != False) and (self.passcounter != int(0)) :
                        passvalue = "Pass "+ str(self.passcounter)
                        print "passvalue is " + str(passvalue)
-                       bob = self.videoencoder.load_preset("Pass 1")
-                       print "loading multipass preset number " + str(self.passcounter)
+                       bob = self.videoencoder.load_preset(passvalue)
+                       # print "loading multipass preset number " + str(self.passcounter)
                        print "did preset loading succeed " + str(bob)
                        self.videoencoder.set_property("multipass-cache-file", self.cachefile)
                    elif (self.multipass != False) and (self.passcounter == int(0)):
                        self.videoencoder.load_preset("Pass " + str(self.multipass))
-                       print "loading final pass preset " + str(self.multipass)
+                       # print "loading final pass preset " + str(self.multipass)
                        self.videoencoder.set_property("multipass-cache-file", self.cachefile)
              
 
@@ -385,7 +385,7 @@ class Transcoder(gobject.GObject):
 
            sink_pad.link(self.colorspaceconverter.get_pad("sink"))
            if self.preset != "nopreset":
-               print "linking elements in preset pipeline"
+               # print "linking elements in preset pipeline"
                self.colorspaceconverter.link(self.videoflipper)
                self.videoflipper.link(self.videorate)
                self.videorate.link(self.videoscaler)
@@ -396,7 +396,7 @@ class Transcoder(gobject.GObject):
                    self.videoboxer.link(self.colorspaceconvert2)
                else:
                    self.vcapsfilter.link(self.colorspaceconvert2)
-                   print "linking capsfilter with colorspace2"
+                   # print "linking capsfilter with colorspace2"
                self.colorspaceconvert2.link(self.videoencoder)
            else:
                 self.colorspaceconverter.link(self.videoflipper)
