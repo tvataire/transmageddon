@@ -12,15 +12,18 @@ flags=0x00400036
 
 [Quality Low]
 _meta/comment=Low quality
-bitrate=128000
+pass=2
+quantizer=11
 
 [Quality Normal]
 _meta/comment=Normal quality
-bitrate=400000
+pass=2
+quantizer=8
 
 [Quality High]
 _meta/comment=High quality
-bitrate=700000
+pass=2
+quantizer=5
 
 [Pass 1]
 _meta/comment=First pass
