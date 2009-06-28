@@ -12,51 +12,55 @@
     <icon>file://ps3.svg</icon>
     <default>Normal</default>
     
-    <preset>
+    <profile>
         <name>Low</name>
         <container>video/mpegts</container>
         <extension>ts</extension>
         <audio>
             <name>audio/x-ac3</name>
-            <passes>
-                <pass>BD Quality Low</pass>
-            </passes>
-            <channels>1, 7</channels>
+            <presets>
+                <preset>BD Quality Low</preset>
+            </presets>
+            <channels>1, 6</channels>
             <samplerate>44100</samplerate>
         </audio>
         <video>
             <name>video/x-h264</name>
             <border>N</border>
-            <passes>
-                <pass>Quality Low, Profile Baseline</pass>
-            </passes> 
+            <passes>0</passes>
+            <pixelaspectratio>0/0</pixelaspectratio>
+            <presets>
+                <preset>Quality Low, Profile Baseline</preset>
+            </presets> 
             <width>320, 720</width>
             <height>240, 480</height>
-            <rate>1, 25</rate>
+            <framerate>1, 25</framerate>
         </video>
-    </preset>
-    <preset>
+    </profile>
+    <profile>
         <name>Normal</name>
-        <border>N</border>
         <container>video/mpegts</container>
         <extension>ts</extension>
         <audio>
             <name>audio/x-ac3</name>
-            <passes>
-                <pass>BD Quality Low</pass>
-            </passes>
-            <channels>1, 7</channels>
+            <presets>
+                <preset>BD Quality Low</preset>
+            </presets>
+            <channels>1, 6</channels>
             <samplerate>44100</samplerate>
         </audio>
         <video>
             <name>video/x-h264</name>
-            <passes>
-                <pass>Quality Normal, Profile Baseline</pass>
-            </passes>
+            <border>N</border>
+            <passes>2</passes>
+            <pixelaspectratio>0/0</pixelaspectratio>
+            <presets>
+                <preset>Quality Normal, Profile Baseline</preset>
+            </presets>
             <width>320, 1920</width>
             <height>240, 1080</height>
-            <rate>1, 30</rate>
+            <framerate>1, 30</framerate>
         </video>
-    </preset>
+    </profile>
 </device>
 

@@ -12,85 +12,98 @@
     <icon>file://computer.svg</icon>
     <default>Normal</default>
     
-    <preset>
+    <profile>
         <name>Low</name>
         <container>application/ogg</container>
         <extension>ogg</extension>
         <audio>
             <name>audio/x-vorbis</name>
-            <passes>
-                <pass>bitrate=128000</pass>
-            </passes>
+            <presets>
+                <preset>Quality Low</preset>
+            </presets>
+            <channels>1, 2</channels>
+            <samplerate>44100</samplerate>
         </audio>
         <video>
             <name>video/x-theora</name>
-            <passes>
-                <pass>pass=qual quantizer=27 subme=4 threads=0</pass>
-            </passes> 
+            <border>N</border>
+            <passes>0</passes>
+            <pixelaspectratio>0/0</pixelaspectratio>
+            <presets>
+                <preset>Quality Low</preset>
+            </presets> 
             <width>320, 640</width>
             <height>240, 480</height>
-            <rate>1, 25</rate>
+            <framerate>1, 25</framerate>
         </video>
-    </preset>
-    <preset>
+    </profile>
+    <profile>
         <name>Normal</name>
         <container>application/ogg</container>
         <extension>ogg</extension>
         <audio>
             <name>audio/x-vorbis</name>
-            <passes>
-                <pass>bitrate=192000</pass>
-            </passes>
+            <presets>
+                <preset>Quality Normal</preset>
+            </presets>
+            <channels>1, 2</channels>
+            <samplerate>44100</samplerate>
         </audio>
         <video>
             <name>video/x-theora</name>
-            <passes>
-                <pass>pass=qual quantizer=21 me=umh subme=6 ref=3 bframes=3 threads=0</pass>
-            </passes>
+            <border>N</border>
+            <passes>0</passes>
+            <pixelaspectratio>0/0</pixelaspectratio>
+            <presets>
+                <preset>Quality Normal</preset>
+            </presets>
             <width>320, 1920</width>
             <height>240, 1080</height>
-            <rate>1, 30</rate>
+            <framerate>1, 30</framerate>
         </video>
-    </preset>
-    <preset>
+    </profile>
+    <profile>
         <name>Live Input</name>
         <container>application/ogg</container>
         <extension>ogg</extension>
         <audio>
             <name>audio/x-vorbis</name>
-            <passes>
-                <pass>bitrate=192000</pass>
-            </passes>
+            <presets>
+                <preset>bitrate=192000</preset>
+            </presets>
         </audio>
         <video>
             <name>video/x-theora</name>
-            <passes>
-                <pass>pass=cbr bitrate=2048 subme=4 threads=0</pass>
-            </passes> 
+            <presets>
+                <preset>Quality Normal</preset>
+            </presets> 
             <width>320, 1920</width>
             <height>240, 1080</height>
-            <rate>1, 30</rate>
+            <framerate>1, 30</framerate>
         </video>
-    </preset>
-    <preset>
+    </profile>
+    <profile>
         <name>High</name>
-        <container>ffmux_mp4</container>
-        <extension>mp4</extension>
+        <container>application/ogg</container>
+        <extension>ogg</extension>
         <audio>
-            <name>faac</name>
-            <passes>
-                <pass>bitrate=256000</pass>
-            </passes>
+            <name>audio/x-vorbis</name>
+            <presets>
+                <preset>Quality High</preset>
+            </presets>
         </audio>
         <video>
-            <name>x264enc</name>
-            <passes>
-                <pass>pass=qual quantizer=18 me=umh subme=6 ref=3 bframes=3 8x8dct=1 threads=0</pass>
-            </passes>
+            <name>video/x-dirac</name>
+            <border>N</border>
+            <passes>0</passes>
+            <pixelaspectratio>0/0</pixelaspectratio>
+            <presets>
+                <preset>Quality High</preset>
+            </presets>
             <width>320, 1920</width>
             <height>240, 1080</height>
-            <rate>1, 60</rate>
+            <framerate>1, 60</framerate>
         </video>
-    </preset>
+    </profile>
 </device>
 

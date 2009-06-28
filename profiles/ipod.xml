@@ -2,8 +2,8 @@
 
 <device>
     <make>Apple</make>
-    <model>iPod</model>
-    <description>Profile for Apple iPod / iPhone</description>
+    <model>iPod Nano</model>
+    <description>Profile for Apple iPod Nano</description>
     <author>
         <name>Joe Example</name>
         <email>mr.example@example.org</email>
@@ -12,58 +12,62 @@
     <icon>file://ipod.svg</icon>
     <default>Normal</default>
     
-    <preset>
-        <name>Low</name> # This is a low quality output setting
+    <profile>
+        <name>Low</name>
         <container>video/quicktime,variant=apple</container>
         <extension>m4v</extension>
         <audio>
             <name>audio/mpeg,mpegversion=[4, 2]</name>
-            <passes>
-                <pass>
+            <presets>
+                <preset>
                     Quality Low, Profile Low Complexity
-                </pass>
-            </passes>
+                </preset>
+            </presets>
             <channels>1, 2</channels>
             <samplerate>44100</samplerate>
         </audio>
         <video>
             <name>video/x-h264</name>
-            <border>N</border>
-            <passes>
-                <pass>
+            <border>Y</border>
+            <passes>0</passes>
+            <pixelaspectratio>0/0</pixelaspectratio>
+            <presets>
+                <preset>
                     Quality Low, Profile Baseline
-                </pass>
-            </passes>
+                </preset>
+            </presets>
             <width>320, 640</width>
             <height>240, 480</height>
-            <rate>1, 25</rate>
+            <framerate>1, 25</framerate>
         </video>
-    </preset>
-    <preset>
+    </profile>
+    <profile>
         <name>Normal</name>
         <container>video/quicktime,variant=apple</container>
         <extension>m4v</extension>
         <audio>
             <name>audio/mpeg,mpegversion=[4, 2]</name>
-            <passes>
-                <pass>
+            <presets>
+                <preset>
                     Quality Normal, Profile Low Complexity
-                </pass>
-            </passes>
+                </preset>
+            </presets>
             <channels>1, 2</channels>
             <samplerate>44100</samplerate>
         </audio>
         <video>
             <name>video/x-h264</name>
-            <border>N</border>
-            <passes>
-                <pass>
+            <border>Y</border>
+            <passes>2</passes>
+            <pixelaspectratio>0/0</pixelaspectratio>
+            <presets>
+                <preset>
                     Quality Normal, Profile Baseline
-                </pass>
-            </passes>
+                </preset>
+            </presets>
             <width>320, 640</width>
             <height>240, 480</height>
-            <rate>1, 30</rate>
+            <framerate>1, 30</framerate>
         </video>
-    </preset>
+    </profile>
 </device>

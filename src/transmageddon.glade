@@ -481,15 +481,6 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkLabel" id="label1">
-                    <property name="visible">True</property>
-                  </widget>
-                  <packing>
-                    <property name="top_attach">8</property>
-                    <property name="bottom_attach">9</property>
-                  </packing>
-                </child>
-                <child>
                   <widget class="GtkLabel" id="label2">
                     <property name="visible">True</property>
                   </widget>
@@ -905,8 +896,34 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkLabel" id="label4">
+                  <widget class="GtkRadioButton" id="amrnbbutton">
+                    <property name="label" translatable="yes">AMR-NB</property>
                     <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">False</property>
+                    <property name="relief">none</property>
+                    <property name="draw_indicator">True</property>
+                    <property name="group">vorbisbutton</property>
+                    <signal name="pressed" handler="on_amrnbbutton_pressed"/>
+                    <signal name="activate" handler="on_amrnbbutton_pressed"/>
+                  </widget>
+                  <packing>
+                    <property name="top_attach">8</property>
+                    <property name="bottom_attach">9</property>
+                    <property name="y_padding">3</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkRadioButton" id="h263pbutton">
+                    <property name="label" translatable="yes">H263+</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">False</property>
+                    <property name="relief">none</property>
+                    <property name="draw_indicator">True</property>
+                    <property name="group">theorabutton</property>
+                    <signal name="pressed" handler="on_h263pbutton_pressed"/>
+                    <signal name="activate" handler="on_h263pbutton_pressed"/>
                   </widget>
                   <packing>
                     <property name="left_attach">2</property>
@@ -921,12 +938,44 @@
               </packing>
             </child>
             <child>
+              <widget class="GtkVBox" id="vbox3">
+                <property name="visible">True</property>
+                <child>
+                  <widget class="GtkLabel" id="rotationlabel">
+                    <property name="visible">True</property>
+                    <property name="xalign">0</property>
+                    <property name="yalign">0</property>
+                    <property name="label" translatable="yes">&lt;small&gt;Rotate the video image if needed&lt;/small&gt;</property>
+                    <property name="use_markup">True</property>
+                    <property name="justify">right</property>
+                  </widget>
+                  <packing>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkComboBox" id="rotationchoice">
+                    <property name="visible">True</property>
+                    <property name="active">0</property>
+                    <property name="items"></property>
+                    <signal name="changed" handler="on_rotationchoice_changed"/>
+                  </widget>
+                  <packing>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+              </widget>
+              <packing>
+                <property name="position">2</property>
+              </packing>
+            </child>
+            <child>
               <widget class="GtkProgressBar" id="ProgressBar">
                 <property name="visible">True</property>
               </widget>
               <packing>
                 <property name="padding">6</property>
-                <property name="position">2</property>
+                <property name="position">3</property>
               </packing>
             </child>
             <child>
@@ -970,7 +1019,7 @@
               </widget>
               <packing>
                 <property name="padding">3</property>
-                <property name="position">3</property>
+                <property name="position">4</property>
               </packing>
             </child>
           </widget>

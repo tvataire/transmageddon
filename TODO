@@ -80,3 +80,10 @@ cause anyone to make any kind of assumptions about priorties.
 
 * Add thumbnail support
   Automatically create a jpeg thumbnail for devices such as the PSP
+
+* DVB integration with DVB-daemon
+  i) interface with gnome-dvb-daemon so could live transcode dvb, 
+  ii) montior directory and transcode to multiple devices when files 
+      turn up in directory
+
+* Add black borders based on aspect-ratio

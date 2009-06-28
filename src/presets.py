@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 """
     Arista Presets
     ==============
@@ -205,7 +203,7 @@ class Codec(object):
         self.name = name
         self.container = container
         self.rate = (Fraction(), Fraction())
-        self.passes = []
+        self.presets = []
     
     def __repr__(self):
         return "%s %s" % (self.name, self.container)
@@ -216,7 +214,7 @@ class AudioCodec(Codec):
     """
     def __init__(self, *args):
         Codec.__init__(self, *args)
-        self.samplerate = (96000)
+        self.sample = (96000)
         self.width = (8, 24)
         self.depth = (8, 24)
         self.channels = (1, 6)
@@ -228,7 +226,9 @@ class VideoCodec(Codec):
     def __init__(self, *args):
         Codec.__init__(self, *args)
         self.border = "N"
+        self.passes ="0"
         self.rate = (Fraction("1"), Fraction("60"))
+        self.aspectratio = Fraction("0/0")
         self.width = (2, 1920)
         self.height = (2, 1080)
 
@@ -302,9 +302,9 @@ def _load_audio_codec(root):
             codec.channels = _parse_range(child.text.strip())
         elif child.tag == "samplerate":
             codec.samplerate = child.text.strip()
-        elif child.tag == "passes":
+        elif child.tag == "presets":
             for command in child.getchildren():
-                codec.passes.append(command.text.strip())
+                codec.presets.append(command.text.strip())
     
     return codec
 
@@ -328,13 +328,17 @@ def _load_video_codec(root):
             codec.width = _parse_range(child.text.strip())
         elif child.tag == "height":
             codec.height = _parse_range(child.text.strip())
+        elif child.tag == "pixelaspectratio":
+            codec.aspectratio = _parse_range(child.text.strip(), Fraction)
         elif child.tag == "framerate":
             codec.rate = _parse_range(child.text.strip(), Fraction)
         elif child.tag == "border":
             codec.border = child.text.strip()
         elif child.tag == "passes":
+            codec.passes = child.text.strip()
+        elif child.tag == "presets":
             for command in child.getchildren():
-                codec.passes.append(command.text.strip())
+                codec.presets.append(command.text.strip())
     
     return codec
 
@@ -395,9 +399,9 @@ def load(filename):
             device.author = _load_author(child)
         elif child.tag == "version":
             device.version = child.text.strip()
-        elif child.tag == "preset":
-            preset = (_load_preset(child))
-            device.presets[preset.name] = preset
+        elif child.tag == "profile":
+            profile = (_load_preset(child))
+            device.presets[profile.name] = profile
         elif child.tag == "icon":
             device.icon = child.text.strip()
         elif child.tag == "default":
@@ -579,7 +583,7 @@ def check_and_install_updates(location = UPDATE_LOCATION):
 
 # Automatically load presets - system, home, current path
 for path in reversed(utils.get_search_paths()):
-    full = os.path.join(path, "presets")
+    full = os.path.join(path, "profiles")
     if os.path.exists(full):
         load_directory(full)
 

@@ -1,29 +1,18 @@
 [_presets_]
 version=0.10
-element-name=ffenc_mpeg4
-
-[Profile Simple]
-_meta/comment=Simple Profile
-flags=0x00400004
-
-[Profile Advanced Simple]
-_meta/comment=Advanced Simple Profile
-flags=0x00400036
+element-name=ffenc_h263p
 
 [Quality Low]
 _meta/comment=Low quality
-pass=2
-quantizer=11
+bitrate=200000
 
 [Quality Normal]
 _meta/comment=Normal quality
-pass=2
-quantizer=8
+bitrate=400000
 
 [Quality High]
 _meta/comment=High quality
-pass=2
-quantizer=5
+bitrate=700000
 
 [Pass 1]
 _meta/comment=First pass

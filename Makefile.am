@@ -11,7 +11,7 @@ desktop_DATA = $(desktop_in_files:.desktop.in.in=.desktop)
 icondir = $(datadir)/pixmaps
 icon_DATA = transmageddon.png
 
-transmageddondir = $(libdir)/transmageddon
+transmageddondir = $(datadir)/transmageddon
 transmageddon_DATA = transmageddon.png
 
 EXTRA_DIST = \

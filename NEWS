@@ -1,3 +1,10 @@
+0.11
+  Add multipass encoding support
+  Add support to flip video in non-preset mode
+  Add version check for pygobject
+  Add support for handling pixel aspect ratio
+  Clean up more profiles
+
 0.10 Profiles and presets:
    Adding first stab at profiles and presets support
    i18n support
