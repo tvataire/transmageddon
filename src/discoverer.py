@@ -31,8 +31,6 @@ import gst
 
 from gst.extend.pygobject import gsignal
 
-import gst.pbutils
-
 class Discoverer(gst.Pipeline):
     """
     Discovers information about files.
@@ -314,20 +312,14 @@ class Discoverer(gst.Pipeline):
 
     def _decodebin_autoplug_continue_cb(self, dbin, pad, caps):
         if self.containercaps == False:
-            print "skipping first caps as it is the container format " + str(caps)
             self.containercaps = caps
         else:
            # print "autoplug continue returns " + str(caps)
            c = caps[0].get_name()
            if c.startswith("audio/"):
-               if c.startswith("audio/x-raw"):
-                   print "skipping raw audio caps"
-               else:
-                   print "got audio caps "
+               if c.startswith("audio/x-raw") == False:
                    if caps[0].has_field("rate"):
                        if caps.is_fixed():
-                           print "audiocaps is fixed"
-                           print "found rate value in caps"
                            blacklist = ['rate','channels','bitrate','block_align','mode','subbands'
                                         ,'allocation','framed','bitpool','blocks','width','parsed']
                            for x in caps:
@@ -336,19 +328,10 @@ class Discoverer(gst.Pipeline):
                                    if attr not in blacklist:
                                        result += ","+attr+"="+str(caps[0][attr])
                            self.inputaudiocaps = result
-                           humanreadable = gst.pbutils.get_codec_description(self.inputaudiocaps)
-                           print "final inputaudiocaps " + str(humanreadable)
-                       else:
-                           print "non-fixed caps, ignoring"
-                   else:
-                       print "no rate value in audio caps, ignoring"
+
            elif c.startswith("video/"):
-              if c.startswith("video/x-raw-yuv") or c.startswith("video/x-raw-rgb"):
-                  print "skipping raw video caps"
-              else: 
-                  print "got video caps " + str(caps)
+              if c.startswith("video/x-raw-yuv") == False or c.startswith("video/x-raw-rgb") == False:
                   if caps.is_fixed():
-                      print "videocaps is fixed"
                       blacklist = ['height','width','framerate','depth','codec_data']
                       for x in caps:
                            result = caps[0].get_name();
@@ -356,9 +339,6 @@ class Discoverer(gst.Pipeline):
                                if attr not in blacklist:
                                    result += ","+attr+"="+str(caps[0][attr])
                       self.inputvideocaps = result
-                      print "self.inputvideocaps " + str(self.inputvideocaps)
-                      humanreadable = gst.pbutils.get_codec_description(self.inputvideocaps)
-                      print "final input video caps " + str(humanreadable)
         return True
 
 
