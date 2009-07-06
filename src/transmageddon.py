@@ -127,6 +127,8 @@ class TransmageddonUI (gtk.glade.XML):
        self.presetchoice = self.get_widget("presetchoice")
        self.containerchoice = self.get_widget("containerchoice")
        self.rotationchoice = self.get_widget("rotationchoice")
+       self.audiopassthrough = self.get_widget("audiopassthrough")
+       self.videopassthrough = self.get_widget("videopassthrough")
        self.codec_buttons = dict()
        for c in supported_audio_codecs:
            self.codec_buttons[c] = self.get_widget(c+"button")
@@ -181,6 +183,8 @@ class TransmageddonUI (gtk.glade.XML):
        self.presetchoice.set_sensitive(False)
        self.containerchoice.set_sensitive(False)
        self.rotationchoice.set_sensitive(False)
+       self.audiopassthrough.set_sensitive(False)
+       self.videopassthrough.set_sensitive(False)
 
        # set default values for various variables
        self.AudioCodec = "vorbis"
@@ -362,11 +366,31 @@ class TransmageddonUI (gtk.glade.XML):
                               'videolenght' : d.videolength, 'fratenum' : d.videorate.num, 'frateden' :  d.videorate.denom }
            self.videoinformation.set_markup(''.join(('<small>', 'Video height&#47;width: ', str(self.videodata['videoheight']), 
                                             "x", str(self.videodata['videowidth']), '</small>')))
-           self.videocodec.set_markup(''.join(('<small>', 'Video codec: ', str(gst.pbutils.get_codec_description(self.videodata['videotype'])), '</small>')))
+           self.videocodec.set_markup(''.join(('<small>', 'Video codec: ', str(gst.pbutils.get_codec_description(self.videodata[
+                                      'videotype'])), '</small>')))
+           container = codecfinder.containermap['MPEG TS']
+           print "container is " + str(container)
+           containerelement = codecfinder.get_muxer_element(container)
+           print "container element is " + str(containerelement)
+           print "videocodec caps is " + str(gst.caps_from_string(self.videodata['videotype']))
+           factory = gst.registry_get_default().lookup_feature(containerelement)
+           print "factory is " + str(factory)
+           for x in factory.get_static_pad_templates():
+               if (x.direction == gst.PAD_SINK):
+                   sourcecaps = x.get_caps() 
+           intersect = sourcecaps.intersect(gst.caps_from_string(self.videodata['videotype']))
+           print "value of interesercttest " + str(intersect)
+           if intersect == ("EMPTY"):
+              print "not valid combo for remux"
+              self.videopassthrough.set_sensitive(False)
+           else:
+              self.videopassthrough.set_sensitive(True)
+     
        if d.is_audio:
            self.audiodata = { 'audiochannels' : d.audiochannels, 'samplerate' : d.audiorate, 'audiotype' : d.inputaudiocaps }
            self.audioinformation.set_markup(''.join(('<small>', 'Audio channels: ', str(self.audiodata['audiochannels']), '</small>')))
-           self.audiocodec.set_markup(''.join(('<small>','Audio codec: ',str(gst.pbutils.get_codec_description(self.audiodata['audiotype'])),'</small>')))
+           self.audiocodec.set_markup(''.join(('<small>','Audio codec: ',str(gst.pbutils.get_codec_description(self.audiodata[
+                                      'audiotype'])),'</small>')))
        if self.waiting_for_signal == "True":
            self.check_for_elements()
 

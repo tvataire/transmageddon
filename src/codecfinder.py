@@ -44,7 +44,7 @@ codecmap = {     'vorbis' : "audio/x-vorbis", 'flac' : "audio/x-flac", 'mp3' : "
                         'aac' : "audio/mpeg,mpegversion=[4, 2]", 'ac3' : "audio/x-ac3", 'speex' : "audio/x-speex", 
                         'celt' : "audio/x-celt", 'alac' : "audio/x-alac", 'wma2' : "audio/x-wma,wmaversion=2", 
                         'theora' : "video/x-theora", 'dirac' : "video/x-dirac", 'h264' : "video/x-h264", 
-                        'mpeg2' : "video/mpeg,mpegversion=2", 'mpeg4' : "video/mpeg,mpegversion=4",
+                        'mpeg2' : "video/mpeg,mpegversion=2,systemstream=false", 'mpeg4' : "video/mpeg,mpegversion=4",
                         'xvid' : "video/x-xvid", 'dnxhd' : "video/x-dnxhd", 'wmv2' : "video/x-wmv,wmvversion=2",
                         'dnxhd' : "video/x-dnxhd", 'divx5' : "video/x-divx,divxversion=5", 
                         'divx4' : "video/x-divx,divxversion=4", 'amrnb' : "audio/AMR", 
@@ -62,7 +62,7 @@ def get_muxer_element(containercaps):
    """
 
    muxerchoice = {}
-   blacklist = ['rate','systemstream','packetsize']
+   blacklist = ['rate','packetsize','systemstream']
    flist = gst.registry_get_default().get_feature_list(gst.ElementFactory)
    muxers = []
    features = []
@@ -74,15 +74,18 @@ def get_muxer_element(containercaps):
            muxers.append(fact.get_name())
            features.append(fact)
    muxerfeature = dict(zip(muxers, features))
+   print muxers
    for x in muxers:
        muxer=x
        factory = gst.registry_get_default().lookup_feature(str(x))
        sinkcaps = [x.get_caps() for x in factory.get_static_pad_templates() if x.direction == gst.PAD_SRC]
        for caps in sinkcaps:
+           print "sinkcaps is " + str(gst.Caps.to_string(caps))
            result = caps[0].get_name()
            for attr in caps[0].keys():
                if attr not in blacklist:
                    result += ","+attr+"="+str(caps[0][attr])
+       print "muxer is " + str(muxer)
        if muxerchoice.has_key(result):
            mostrecent = gst.PluginFeature.get_rank(muxerfeature[muxer])
            original = gst.PluginFeature.get_rank(muxerfeature[muxerchoice[result]])
@@ -94,6 +97,7 @@ def get_muxer_element(containercaps):
    if muxerchoice.has_key(containercaps):
        elementname = muxerchoice[containercaps]
    else:
+       print "failed to find element"
        elementname = False
    return elementname
 
