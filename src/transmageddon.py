@@ -29,7 +29,7 @@ import about
 import presets
 import utils
 import datetime
-
+import discoverer
 from gettext import gettext as _
 import gettext
 
@@ -42,9 +42,9 @@ try:
    import pygst
    pygst.require("0.10")
    import gst
-   from gst.extend import discoverer
    import gst.pbutils
 except:
+   print "failed to import required modules"
    sys.exit(1)
 
 major, minor, patch = gobject.pygobject_version
@@ -121,6 +121,8 @@ class TransmageddonUI (gtk.glade.XML):
        self.FileChooser = self.get_widget("FileChooser")
        self.videoinformation = self.get_widget("videoinformation")
        self.audioinformation = self.get_widget("audioinformation")
+       self.videocodec = self.get_widget("videocodec")
+       self.audiocodec = self.get_widget("audiocodec")
        self.CodecBox = self.get_widget("CodecBox")
        self.presetchoice = self.get_widget("presetchoice")
        self.containerchoice = self.get_widget("containerchoice")
@@ -356,13 +358,15 @@ class TransmageddonUI (gtk.glade.XML):
  
    def succeed(self, d):
        if d.is_video:
-           self.videodata = { 'videowidth' : d.videowidth, 'videoheight' : d.videoheight, 
+           self.videodata = { 'videowidth' : d.videowidth, 'videoheight' : d.videoheight, 'videotype' : d.inputvideocaps,
                               'videolenght' : d.videolength, 'fratenum' : d.videorate.num, 'frateden' :  d.videorate.denom }
            self.videoinformation.set_markup(''.join(('<small>', 'Video height&#47;width: ', str(self.videodata['videoheight']), 
-                                            "x", str(self.videodata['videowidth']), '</small>')))  
+                                            "x", str(self.videodata['videowidth']), '</small>')))
+           self.videocodec.set_markup(''.join(('<small>', 'Video codec: ', str(gst.pbutils.get_codec_description(self.videodata['videotype'])), '</small>')))
        if d.is_audio:
-           self.audiodata = { 'audiochannels' : d.audiochannels, 'samplerate' : d.audiorate }
+           self.audiodata = { 'audiochannels' : d.audiochannels, 'samplerate' : d.audiorate, 'audiotype' : d.inputaudiocaps }
            self.audioinformation.set_markup(''.join(('<small>', 'Audio channels: ', str(self.audiodata['audiochannels']), '</small>')))
+           self.audiocodec.set_markup(''.join(('<small>','Audio codec: ',str(gst.pbutils.get_codec_description(self.audiodata['audiotype'])),'</small>')))
        if self.waiting_for_signal == "True":
            self.check_for_elements()
 

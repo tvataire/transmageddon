@@ -154,7 +154,7 @@
             <child>
               <widget class="GtkTable" id="table1">
                 <property name="visible">True</property>
-                <property name="n_rows">8</property>
+                <property name="n_rows">9</property>
                 <property name="n_columns">3</property>
                 <child>
                   <widget class="GtkLabel" id="vspacer3">
@@ -204,8 +204,8 @@
                     <property name="use_markup">True</property>
                   </widget>
                   <packing>
-                    <property name="top_attach">4</property>
-                    <property name="bottom_attach">5</property>
+                    <property name="top_attach">5</property>
+                    <property name="bottom_attach">6</property>
                   </packing>
                 </child>
                 <child>
@@ -216,8 +216,8 @@
                   <packing>
                     <property name="left_attach">1</property>
                     <property name="right_attach">2</property>
-                    <property name="top_attach">4</property>
-                    <property name="bottom_attach">5</property>
+                    <property name="top_attach">5</property>
+                    <property name="bottom_attach">6</property>
                     <property name="x_options"></property>
                   </packing>
                 </child>
@@ -231,8 +231,8 @@
                   <packing>
                     <property name="left_attach">2</property>
                     <property name="right_attach">3</property>
-                    <property name="top_attach">4</property>
-                    <property name="bottom_attach">5</property>
+                    <property name="top_attach">5</property>
+                    <property name="bottom_attach">6</property>
                   </packing>
                 </child>
                 <child>
@@ -274,8 +274,8 @@
                   <packing>
                     <property name="left_attach">2</property>
                     <property name="right_attach">3</property>
-                    <property name="top_attach">3</property>
-                    <property name="bottom_attach">4</property>
+                    <property name="top_attach">4</property>
+                    <property name="bottom_attach">5</property>
                     <property name="y_options">GTK_EXPAND</property>
                   </packing>
                 </child>
@@ -287,8 +287,8 @@
                   <packing>
                     <property name="left_attach">1</property>
                     <property name="right_attach">2</property>
-                    <property name="top_attach">3</property>
-                    <property name="bottom_attach">4</property>
+                    <property name="top_attach">4</property>
+                    <property name="bottom_attach">5</property>
                     <property name="x_options"></property>
                   </packing>
                 </child>
@@ -298,8 +298,8 @@
                     <property name="visible">True</property>
                   </widget>
                   <packing>
-                    <property name="top_attach">3</property>
-                    <property name="bottom_attach">4</property>
+                    <property name="top_attach">4</property>
+                    <property name="bottom_attach">5</property>
                     <property name="y_options">GTK_EXPAND</property>
                   </packing>
                 </child>
@@ -348,8 +348,8 @@
                     <property name="visible">True</property>
                   </widget>
                   <packing>
-                    <property name="top_attach">7</property>
-                    <property name="bottom_attach">8</property>
+                    <property name="top_attach">8</property>
+                    <property name="bottom_attach">9</property>
                     <property name="y_options">GTK_EXPAND</property>
                   </packing>
                 </child>
@@ -361,8 +361,8 @@
                   <packing>
                     <property name="left_attach">2</property>
                     <property name="right_attach">3</property>
-                    <property name="top_attach">7</property>
-                    <property name="bottom_attach">8</property>
+                    <property name="top_attach">8</property>
+                    <property name="bottom_attach">9</property>
                     <property name="y_options">GTK_EXPAND</property>
                   </packing>
                 </child>
@@ -375,8 +375,8 @@
                   <packing>
                     <property name="left_attach">1</property>
                     <property name="right_attach">2</property>
-                    <property name="top_attach">7</property>
-                    <property name="bottom_attach">8</property>
+                    <property name="top_attach">8</property>
+                    <property name="bottom_attach">9</property>
                     <property name="x_options"></property>
                     <property name="y_options">GTK_FILL</property>
                   </packing>
@@ -389,8 +389,8 @@
                     <property name="use_markup">True</property>
                   </widget>
                   <packing>
-                    <property name="top_attach">5</property>
-                    <property name="bottom_attach">6</property>
+                    <property name="top_attach">6</property>
+                    <property name="bottom_attach">7</property>
                   </packing>
                 </child>
                 <child>
@@ -403,8 +403,8 @@
                   <packing>
                     <property name="left_attach">2</property>
                     <property name="right_attach">3</property>
-                    <property name="top_attach">5</property>
-                    <property name="bottom_attach">6</property>
+                    <property name="top_attach">6</property>
+                    <property name="bottom_attach">7</property>
                   </packing>
                 </child>
                 <child>
@@ -413,8 +413,8 @@
                     <property name="visible">True</property>
                   </widget>
                   <packing>
-                    <property name="top_attach">6</property>
-                    <property name="bottom_attach">7</property>
+                    <property name="top_attach">7</property>
+                    <property name="bottom_attach">8</property>
                     <property name="y_options">GTK_EXPAND</property>
                   </packing>
                 </child>
@@ -426,8 +426,8 @@
                   <packing>
                     <property name="left_attach">2</property>
                     <property name="right_attach">3</property>
-                    <property name="top_attach">6</property>
-                    <property name="bottom_attach">7</property>
+                    <property name="top_attach">7</property>
+                    <property name="bottom_attach">8</property>
                     <property name="y_options">GTK_EXPAND</property>
                   </packing>
                 </child>
@@ -440,8 +440,8 @@
                   <packing>
                     <property name="left_attach">1</property>
                     <property name="right_attach">2</property>
-                    <property name="top_attach">6</property>
-                    <property name="bottom_attach">7</property>
+                    <property name="top_attach">7</property>
+                    <property name="bottom_attach">8</property>
                     <property name="x_options"></property>
                     <property name="y_options">GTK_FILL</property>
                   </packing>
@@ -455,10 +455,51 @@
                   <packing>
                     <property name="left_attach">1</property>
                     <property name="right_attach">2</property>
-                    <property name="top_attach">5</property>
-                    <property name="bottom_attach">6</property>
+                    <property name="top_attach">6</property>
+                    <property name="bottom_attach">7</property>
                     <property name="x_options"></property>
                     <property name="y_options">GTK_FILL</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkLabel" id="videocodec">
+                    <property name="visible">True</property>
+                    <property name="xalign">0</property>
+                    <property name="yalign">0</property>
+                    <property name="label" translatable="yes">&lt;small&gt;Video codec:&lt;/small&gt;</property>
+                    <property name="use_markup">True</property>
+                  </widget>
+                  <packing>
+                    <property name="top_attach">3</property>
+                    <property name="bottom_attach">4</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkLabel" id="audiocodec">
+                    <property name="visible">True</property>
+                    <property name="xalign">0</property>
+                    <property name="yalign">0</property>
+                    <property name="label" translatable="yes">&lt;small&gt;Audio codec:&lt;/small&gt;</property>
+                    <property name="use_markup">True</property>
+                  </widget>
+                  <packing>
+                    <property name="left_attach">2</property>
+                    <property name="right_attach">3</property>
+                    <property name="top_attach">3</property>
+                    <property name="bottom_attach">4</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkLabel" id="vspacer10">
+                    <property name="width_request">12</property>
+                    <property name="visible">True</property>
+                  </widget>
+                  <packing>
+                    <property name="left_attach">1</property>
+                    <property name="right_attach">2</property>
+                    <property name="top_attach">3</property>
+                    <property name="bottom_attach">4</property>
+                    <property name="x_options"></property>
                   </packing>
                 </child>
               </widget>
@@ -469,15 +510,15 @@
             <child>
               <widget class="GtkTable" id="CodecBox">
                 <property name="visible">True</property>
-                <property name="n_rows">10</property>
+                <property name="n_rows">11</property>
                 <property name="n_columns">3</property>
                 <child>
                   <widget class="GtkLabel" id="label3">
                     <property name="visible">True</property>
                   </widget>
                   <packing>
-                    <property name="top_attach">9</property>
-                    <property name="bottom_attach">10</property>
+                    <property name="top_attach">10</property>
+                    <property name="bottom_attach">11</property>
                   </packing>
                 </child>
                 <child>
@@ -487,8 +528,8 @@
                   <packing>
                     <property name="left_attach">2</property>
                     <property name="right_attach">3</property>
-                    <property name="top_attach">9</property>
-                    <property name="bottom_attach">10</property>
+                    <property name="top_attach">10</property>
+                    <property name="bottom_attach">11</property>
                   </packing>
                 </child>
                 <child>
@@ -498,8 +539,8 @@
                   <packing>
                     <property name="left_attach">2</property>
                     <property name="right_attach">3</property>
-                    <property name="top_attach">8</property>
-                    <property name="bottom_attach">9</property>
+                    <property name="top_attach">9</property>
+                    <property name="bottom_attach">10</property>
                   </packing>
                 </child>
                 <child>
@@ -510,8 +551,8 @@
                   <packing>
                     <property name="left_attach">1</property>
                     <property name="right_attach">2</property>
-                    <property name="top_attach">9</property>
-                    <property name="bottom_attach">10</property>
+                    <property name="top_attach">10</property>
+                    <property name="bottom_attach">11</property>
                     <property name="x_options"></property>
                   </packing>
                 </child>
@@ -523,13 +564,26 @@
                   <packing>
                     <property name="left_attach">1</property>
                     <property name="right_attach">2</property>
+                    <property name="top_attach">9</property>
+                    <property name="bottom_attach">10</property>
+                    <property name="x_options"></property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkLabel" id="vspacer17">
+                    <property name="width_request">12</property>
+                    <property name="visible">True</property>
+                  </widget>
+                  <packing>
+                    <property name="left_attach">1</property>
+                    <property name="right_attach">2</property>
                     <property name="top_attach">8</property>
                     <property name="bottom_attach">9</property>
                     <property name="x_options"></property>
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkLabel" id="vspacer17">
+                  <widget class="GtkLabel" id="vspacer18">
                     <property name="width_request">12</property>
                     <property name="visible">True</property>
                   </widget>
@@ -542,7 +596,7 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkLabel" id="vspacer18">
+                  <widget class="GtkLabel" id="vspacer19">
                     <property name="width_request">12</property>
                     <property name="visible">True</property>
                   </widget>
@@ -555,7 +609,7 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkLabel" id="vspacer19">
+                  <widget class="GtkLabel" id="vspacer20">
                     <property name="width_request">12</property>
                     <property name="visible">True</property>
                   </widget>
@@ -568,7 +622,7 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkLabel" id="vspacer20">
+                  <widget class="GtkLabel" id="vspacer21">
                     <property name="width_request">12</property>
                     <property name="visible">True</property>
                   </widget>
@@ -581,7 +635,7 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkLabel" id="vspacer21">
+                  <widget class="GtkLabel" id="vspacer22">
                     <property name="width_request">12</property>
                     <property name="visible">True</property>
                   </widget>
@@ -594,7 +648,7 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkLabel" id="vspacer22">
+                  <widget class="GtkLabel" id="vspacer23">
                     <property name="width_request">12</property>
                     <property name="visible">True</property>
                   </widget>
@@ -603,19 +657,6 @@
                     <property name="right_attach">2</property>
                     <property name="top_attach">2</property>
                     <property name="bottom_attach">3</property>
-                    <property name="x_options"></property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="GtkLabel" id="vspacer23">
-                    <property name="width_request">12</property>
-                    <property name="visible">True</property>
-                  </widget>
-                  <packing>
-                    <property name="left_attach">1</property>
-                    <property name="right_attach">2</property>
-                    <property name="top_attach">1</property>
-                    <property name="bottom_attach">2</property>
                     <property name="x_options"></property>
                   </packing>
                 </child>
@@ -634,8 +675,8 @@
                   <packing>
                     <property name="left_attach">2</property>
                     <property name="right_attach">3</property>
-                    <property name="top_attach">5</property>
-                    <property name="bottom_attach">6</property>
+                    <property name="top_attach">6</property>
+                    <property name="bottom_attach">7</property>
                     <property name="y_padding">3</property>
                   </packing>
                 </child>
@@ -654,8 +695,8 @@
                   <packing>
                     <property name="left_attach">2</property>
                     <property name="right_attach">3</property>
-                    <property name="top_attach">4</property>
-                    <property name="bottom_attach">5</property>
+                    <property name="top_attach">5</property>
+                    <property name="bottom_attach">6</property>
                     <property name="y_padding">3</property>
                   </packing>
                 </child>
@@ -672,8 +713,8 @@
                     <signal name="activate" handler="on_celtbutton_pressed"/>
                   </widget>
                   <packing>
-                    <property name="top_attach">7</property>
-                    <property name="bottom_attach">8</property>
+                    <property name="top_attach">8</property>
+                    <property name="bottom_attach">9</property>
                     <property name="y_padding">3</property>
                   </packing>
                 </child>
@@ -690,8 +731,8 @@
                     <signal name="activate" handler="on_speexbutton_pressed"/>
                   </widget>
                   <packing>
-                    <property name="top_attach">6</property>
-                    <property name="bottom_attach">7</property>
+                    <property name="top_attach">7</property>
+                    <property name="bottom_attach">8</property>
                     <property name="y_padding">3</property>
                   </packing>
                 </child>
@@ -708,8 +749,8 @@
                     <signal name="activate" handler="on_ac3button_pressed"/>
                   </widget>
                   <packing>
-                    <property name="top_attach">5</property>
-                    <property name="bottom_attach">6</property>
+                    <property name="top_attach">6</property>
+                    <property name="bottom_attach">7</property>
                     <property name="y_padding">3</property>
                   </packing>
                 </child>
@@ -726,8 +767,8 @@
                     <signal name="activate" handler="on_aacbutton_pressed"/>
                   </widget>
                   <packing>
-                    <property name="top_attach">4</property>
-                    <property name="bottom_attach">5</property>
+                    <property name="top_attach">5</property>
+                    <property name="bottom_attach">6</property>
                     <property name="y_padding">3</property>
                   </packing>
                 </child>
@@ -746,8 +787,8 @@
                   <packing>
                     <property name="left_attach">2</property>
                     <property name="right_attach">3</property>
-                    <property name="top_attach">3</property>
-                    <property name="bottom_attach">4</property>
+                    <property name="top_attach">4</property>
+                    <property name="bottom_attach">5</property>
                     <property name="y_padding">3</property>
                   </packing>
                 </child>
@@ -764,8 +805,8 @@
                     <signal name="activate" handler="on_mp3button_pressed"/>
                   </widget>
                   <packing>
-                    <property name="top_attach">3</property>
-                    <property name="bottom_attach">4</property>
+                    <property name="top_attach">4</property>
+                    <property name="bottom_attach">5</property>
                     <property name="y_padding">3</property>
                   </packing>
                 </child>
@@ -784,8 +825,8 @@
                   <packing>
                     <property name="left_attach">2</property>
                     <property name="right_attach">3</property>
-                    <property name="top_attach">2</property>
-                    <property name="bottom_attach">3</property>
+                    <property name="top_attach">3</property>
+                    <property name="bottom_attach">4</property>
                     <property name="y_padding">3</property>
                   </packing>
                 </child>
@@ -802,8 +843,8 @@
                     <signal name="activate" handler="on_flacbutton_pressed"/>
                   </widget>
                   <packing>
-                    <property name="top_attach">2</property>
-                    <property name="bottom_attach">3</property>
+                    <property name="top_attach">3</property>
+                    <property name="bottom_attach">4</property>
                     <property name="y_padding">3</property>
                   </packing>
                 </child>
@@ -821,8 +862,8 @@
                   <packing>
                     <property name="left_attach">2</property>
                     <property name="right_attach">3</property>
-                    <property name="top_attach">1</property>
-                    <property name="bottom_attach">2</property>
+                    <property name="top_attach">2</property>
+                    <property name="bottom_attach">3</property>
                     <property name="y_padding">3</property>
                   </packing>
                 </child>
@@ -838,8 +879,8 @@
                     <signal name="activate" handler="on_vorbisbutton_pressed"/>
                   </widget>
                   <packing>
-                    <property name="top_attach">1</property>
-                    <property name="bottom_attach">2</property>
+                    <property name="top_attach">2</property>
+                    <property name="bottom_attach">3</property>
                     <property name="y_padding">3</property>
                   </packing>
                 </child>
@@ -891,8 +932,8 @@
                   <packing>
                     <property name="left_attach">2</property>
                     <property name="right_attach">3</property>
-                    <property name="top_attach">6</property>
-                    <property name="bottom_attach">7</property>
+                    <property name="top_attach">7</property>
+                    <property name="bottom_attach">8</property>
                   </packing>
                 </child>
                 <child>
@@ -908,8 +949,8 @@
                     <signal name="activate" handler="on_amrnbbutton_pressed"/>
                   </widget>
                   <packing>
-                    <property name="top_attach">8</property>
-                    <property name="bottom_attach">9</property>
+                    <property name="top_attach">9</property>
+                    <property name="bottom_attach">10</property>
                     <property name="y_padding">3</property>
                   </packing>
                 </child>
@@ -928,8 +969,57 @@
                   <packing>
                     <property name="left_attach">2</property>
                     <property name="right_attach">3</property>
-                    <property name="top_attach">7</property>
-                    <property name="bottom_attach">8</property>
+                    <property name="top_attach">8</property>
+                    <property name="bottom_attach">9</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkRadioButton" id="audiopassthrough">
+                    <property name="label" translatable="yes">Audio passthrough</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">False</property>
+                    <property name="active">True</property>
+                    <property name="draw_indicator">True</property>
+                    <property name="group">theorabutton</property>
+                    <signal name="pressed" handler="on_apass_button_pressed"/>
+                    <signal name="activate" handler="on_apass_button_pressed"/>
+                  </widget>
+                  <packing>
+                    <property name="top_attach">1</property>
+                    <property name="bottom_attach">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkRadioButton" id="videopassthrough">
+                    <property name="label" translatable="yes">Video passthrough</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">False</property>
+                    <property name="active">True</property>
+                    <property name="draw_indicator">True</property>
+                    <property name="group">theorabutton</property>
+                    <signal name="pressed" handler="on_vpass_button_pressed"/>
+                    <signal name="activate" handler="on_videopassthrough_activate"/>
+                  </widget>
+                  <packing>
+                    <property name="left_attach">2</property>
+                    <property name="right_attach">3</property>
+                    <property name="top_attach">1</property>
+                    <property name="bottom_attach">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkLabel" id="vspacer9">
+                    <property name="width_request">12</property>
+                    <property name="visible">True</property>
+                  </widget>
+                  <packing>
+                    <property name="left_attach">1</property>
+                    <property name="right_attach">2</property>
+                    <property name="top_attach">1</property>
+                    <property name="bottom_attach">2</property>
+                    <property name="x_options"></property>
                   </packing>
                 </child>
               </widget>
