@@ -5,7 +5,7 @@
     
     Example Use
     -----------
-    Presets are automatically loaded whent he module is initialized.
+    Presets are automatically loaded when the module is initialized.
     
         >>> import transmageddon.presets
         >>> transmageddon.presets.get()
