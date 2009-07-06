@@ -1,0 +1,305 @@
+#
+# Traducció del Transmageddon al català
+# 
+# Jordi Mas i Hernàndez, jmas@softcatala.org
+#
+# Correccions: David Planella 
+#
+# N.T.
+#
+# 1) Traduïm "preset" per "predefinició" 
+# 2) Traduïm "Transcoding" per "Transcodificació"
+#
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-06-29 12:54+0200\n"
+"PO-Revision-Date: 2009-06-30 23:17+0200\n"
+"Last-Translator: Jordi Mas <jmas@softcatala.org>\n"
+"Language-Team: tradgnome@softcatala.net\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../src/presets.py:77
+#, python-format
+msgid "Not a valid integer or fraction: %(value)s!"
+msgstr "%(value)s no és un enter o fracció vàlida"
+
+#: ../src/presets.py:258
+#, python-format
+msgid "Value may only contain one comma; got %(value)s"
+msgstr "El valor només pot tenir una coma. S'ha obtingut: %(value)s"
+
+#: ../src/presets.py:410
+#, python-format
+msgid "Loaded device %(device)s (%(presets)d presets)"
+msgstr "S'ha carregat el dispositiu %(device)s (%(presets)d predefinicions)"
+
+#: ../src/presets.py:477
+#, python-format
+msgid "Fetching %(location)s"
+msgstr "S'està obtenint %(location)s"
+
+#: ../src/presets.py:484
+#, python-format
+msgid "Writing to %(file)s"
+msgstr "S'esta escrivint a %(file)s"
+
+#: ../src/presets.py:489
+#, python-format
+msgid "There was an error fetching and installing %(location)s: %(error)s"
+msgstr ""
+"S'ha produït un error en obtenir i instal·lar %(location)s: %(error)s"
+
+#: ../src/presets.py:506
+msgid "Checking for device preset updates..."
+msgstr "S'està comprovant si hi ha actualitzacions de les predefinicions del dispositiu..."
+
+#: ../src/presets.py:526
+#, python-format
+msgid "Device preset %(name)s is up to date"
+msgstr "La predefinició del dispositiu %(name)s està actualitzada"
+
+#: ../src/presets.py:530
+#, python-format
+msgid "Found updated device preset %(name)s"
+msgstr "S'ha trobat una predefinició actualitzada del dispositiu %(name)s"
+
+#: ../src/presets.py:536 ../src/presets.py:549
+#, python-format
+msgid "Error installing preset %(name)s from %(location)s: %(error)s"
+msgstr ""
+"S'ha produït un error en instal·lar la predefinició %(name)s des de "
+"%(location)s: %(error)s"
+
+#: ../src/presets.py:543
+#, python-format
+msgid "Found new device preset %(name)s"
+msgstr "S'ha trobat una predefinició nova del dispositiu %(name)s"
+
+#: ../src/presets.py:556
+#, python-format
+msgid "Malformed plugin version line %(line)s"
+msgstr "Línia de la versió del connector mal formada: %(line)s"
+
+#: ../src/presets.py:560
+#, python-format
+msgid "There was a problem accessing %(location)spresets.txt!"
+msgstr "S'ha produït un error en accedir a %(location)spresets.txt"
+
+#: ../src/presets.py:582
+msgid "All device presets are up to date!"
+msgstr "Totes les predefinicions del dispositiu estan actualitzades"
+
+#: ../src/transmageddon.glade.h:1
+msgid "<b>Choose Audio Codec</b>:"
+msgstr "<b>Trieu el còdec d'àudio</b>:"
+
+#: ../src/transmageddon.glade.h:2
+msgid "<b>Choose Input File:</b>"
+msgstr "<b>Trieu el fitxer d'entrada:</b>"
+
+#: ../src/transmageddon.glade.h:3
+msgid "<b>Choose Video Codec</b>:"
+msgstr "<b>Trieu el còdec de vídeo</b>:"
+
+#: ../src/transmageddon.glade.h:4
+msgid "<b>Output Format:</b>"
+msgstr "<b>Format de sortida:</b>"
+
+#: ../src/transmageddon.glade.h:5
+msgid "<b>Presets:</b>"
+msgstr "<b>Predefinicions:</b>"
+
+#: ../src/transmageddon.glade.h:6
+msgid "<small>Audio Channels:</small>"
+msgstr "<small>Canals d'àudio:</small>"
+
+#: ../src/transmageddon.glade.h:7
+msgid "<small>Rotate the video image if needed</small>"
+msgstr "<small>Gira la imatge del vídeo si és necessari</small>"
+
+#: ../src/transmageddon.glade.h:8
+msgid "<small>Video height&#47;width:</small>"
+msgstr "<small>Alçada i amplada del vídeo:</small>"
+
+#: ../src/transmageddon.glade.h:9
+msgid "AAC"
+msgstr "AAC"
+
+#: ../src/transmageddon.glade.h:10
+msgid "AC3"
+msgstr "AC3"
+
+#: ../src/transmageddon.glade.h:11
+msgid "AMR-NB"
+msgstr "AMR-NB"
+
+#: ../src/transmageddon.glade.h:12
+msgid "Celt"
+msgstr "Celt"
+
+#: ../src/transmageddon.glade.h:13
+msgid "Dirac"
+msgstr "Dirac"
+
+#: ../src/transmageddon.glade.h:14
+msgid "FLAC"
+msgstr "FLAC"
+
+#: ../src/transmageddon.glade.h:15
+msgid "H263+"
+msgstr "H263+"
+
+#: ../src/transmageddon.glade.h:16
+msgid "H264"
+msgstr "H264"
+
+#: ../src/transmageddon.glade.h:17
+msgid "MPEG2"
+msgstr "MPEG2"
+
+#: ../src/transmageddon.glade.h:18
+msgid "MPEG4/DivX5"
+msgstr "MPEG4/DivX5"
+
+#: ../src/transmageddon.glade.h:19
+msgid "Speex"
+msgstr "Speex"
+
+#: ../src/transmageddon.glade.h:20
+msgid "Theora"
+msgstr "Theora"
+
+#: ../src/transmageddon.glade.h:21
+msgid "Transcode"
+msgstr "Transcodifica"
+
+#: ../src/transmageddon.glade.h:22
+msgid "Transmageddon"
+msgstr "Transmageddon"
+
+#: ../src/transmageddon.glade.h:23
+msgid "Vorbis"
+msgstr "Vorbis"
+
+#: ../src/transmageddon.glade.h:24
+msgid "_Edit"
+msgstr "_Edita"
+
+#: ../src/transmageddon.glade.h:25
+msgid "_File"
+msgstr "_Fitxer"
+
+#: ../src/transmageddon.glade.h:26
+msgid "_Help"
+msgstr "Aj_uda"
+
+#: ../src/transmageddon.glade.h:27
+msgid "_View"
+msgstr "_Visualitza"
+
+#: ../src/transmageddon.glade.h:28
+msgid "mp3"
+msgstr "mp3"
+
+#: ../src/transmageddon.glade.h:29
+msgid "xvid"
+msgstr "xvid"
+
+#: ../src/transmageddon.py:186 ../src/transmageddon.py:393
+#: ../src/transmageddon.py:491 ../src/transmageddon.py:510
+#: ../src/transmageddon.py:518
+msgid "Transcoding Progress"
+msgstr "Progrés de la transcodificació"
+
+#. Populate the rotatation box
+#: ../src/transmageddon.py:197
+msgid "No rotation (default)"
+msgstr "Sense rotació (predeterminat)"
+
+#: ../src/transmageddon.py:197
+msgid "Clockwise 90 degrees"
+msgstr "En sentit horari 90 graus"
+
+#: ../src/transmageddon.py:197
+msgid "Rotate 180 degrees"
+msgstr "Gira 180 graus"
+
+#: ../src/transmageddon.py:198
+msgid "Counterclockwise 90 degrees"
+msgstr "En sentit antihorari 90 graus"
+
+#: ../src/transmageddon.py:198
+msgid "Horizontal flip"
+msgstr "Inverteix horitzontalment"
+
+#: ../src/transmageddon.py:199
+msgid "Vertical flip"
+msgstr "Inverteix verticalment"
+
+#: ../src/transmageddon.py:199
+msgid "Upper left diagonal flip"
+msgstr "Inverteix per la diagonal superior esquerra"
+
+#: ../src/transmageddon.py:200
+msgid "Upper right diagnonal flip"
+msgstr "Inverteix per la diagonal superior dreta"
+
+#: ../src/transmageddon.py:297
+#, python-format
+msgid "%(min)d:%(sec)02d"
+msgstr "%(min)d:%(sec)02d"
+
+#: ../src/transmageddon.py:303
+msgid "Estimated time remaining: "
+msgstr "Temps restant estimat:"
+
+#: ../src/transmageddon.py:305 ../src/transmageddon.py:343
+#: ../src/transmageddon.py:494
+msgid "Pass "
+msgstr "Pas "
+
+#: ../src/transmageddon.py:328
+msgid "File saved to "
+msgstr "S'ha desat el fitxer a "
+
+#: ../src/transmageddon.py:337
+msgid "Done Transcoding"
+msgstr "S'ha finalitzat la transcodificació"
+
+#: ../src/transmageddon.py:345
+msgid "Start next pass"
+msgstr "Inicia el pas següent"
+
+#: ../src/transmageddon.py:429
+msgid "Plugins not found, choose different codecs."
+msgstr "No s'han trobat els connectors, trieu uns còdecs diferents."
+
+#: ../src/transmageddon.py:437
+msgid "Codec installation aborted."
+msgstr "S'ha cancel·lat la instal·lació del còdec."
+
+#: ../src/transmageddon.py:445
+msgid "Missing plugin installation failed: "
+msgstr "Ha fallat la instal·lació del connector que mancava: "
+
+#: ../src/transmageddon.py:489
+msgid "Writing "
+msgstr "S'està escrivint "
+
+#: ../src/utils.py:72
+#, python-format
+msgid "Can't find %(path)s in any known prefix!"
+msgstr "No es pot trobar %(path)s a cap prefix conegut"
+
+#: ../transmageddon.desktop.in.in.h:1
+msgid "Transmageddon Video Transcoder"
+msgstr "Transcodificador de vídeo Transmageddon"
+
+#: ../transmageddon.desktop.in.in.h:2
+msgid "Video format conversion tool"
+msgstr "Eina de conversió de formats de vídeo"
