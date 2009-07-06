@@ -349,7 +349,7 @@ class Discoverer(gst.Pipeline):
                   print "got video caps " + str(caps)
                   if caps.is_fixed():
                       print "videocaps is fixed"
-                      blacklist = ['height','width','framerate','depth']
+                      blacklist = ['height','width','framerate','depth','codec_data']
                       for x in caps:
                            result = caps[0].get_name();
                            for attr in caps[0].keys():

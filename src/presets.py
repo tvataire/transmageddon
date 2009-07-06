@@ -255,7 +255,7 @@ def _parse_range(value, type = int):
     elif len(parts) == 2:
         return (type(parts[0]), type(parts[1]))
     else:
-        raise ValueError(_("Value may only contain one comma; got %(value)s") % {
+        raise ValueError(ngettext("Value may only contain one comma; got %(value)s") % {
             "value": value
         })
 

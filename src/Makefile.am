@@ -7,7 +7,7 @@ transmageddon_PYTHON = \
 	transcoder_engine.py \
 	transmageddon.glade \
 	codecfinder.py \
-        discovery.py \
+        discoverer.py \
 	presets.py \
 	utils.py \
 	about.py

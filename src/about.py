@@ -35,7 +35,7 @@ Boston, MA 02111-1307, USA.
 class AboutDialog:
    def __init__(self):
        x = gtk.AboutDialog()
-       x.set_version("0.9")
+       x.set_version("0.11")
        x.set_name("Transmageddon")
        x.set_authors(Authors)
        x.set_translator_credits(Translators)
