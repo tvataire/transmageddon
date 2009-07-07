@@ -190,6 +190,7 @@ class TransmageddonUI (gtk.glade.XML):
        self.AudioCodec = "vorbis"
        self.VideoCodec = "theora"
        self.ProgressBar.set_text(_("Transcoding Progress"))
+       self.container = False
 
        self.p_duration = gst.CLOCK_TIME_NONE
        self.p_time = gst.FORMAT_TIME
@@ -368,24 +369,6 @@ class TransmageddonUI (gtk.glade.XML):
                                             "x", str(self.videodata['videowidth']), '</small>')))
            self.videocodec.set_markup(''.join(('<small>', 'Video codec: ', str(gst.pbutils.get_codec_description(self.videodata[
                                       'videotype'])), '</small>')))
-           container = codecfinder.containermap['MPEG TS']
-           print "container is " + str(container)
-           containerelement = codecfinder.get_muxer_element(container)
-           print "container element is " + str(containerelement)
-           print "videocodec caps is " + str(gst.caps_from_string(self.videodata['videotype']))
-           factory = gst.registry_get_default().lookup_feature(containerelement)
-           print "factory is " + str(factory)
-           for x in factory.get_static_pad_templates():
-               if (x.direction == gst.PAD_SINK):
-                   sourcecaps = x.get_caps() 
-           intersect = sourcecaps.intersect(gst.caps_from_string(self.videodata['videotype']))
-           print "value of interesercttest " + str(intersect)
-           if intersect == ("EMPTY"):
-              print "not valid combo for remux"
-              self.videopassthrough.set_sensitive(False)
-           else:
-              self.videopassthrough.set_sensitive(True)
-     
        if d.is_audio:
            self.audiodata = { 'audiochannels' : d.audiochannels, 'samplerate' : d.audiorate, 'audiotype' : d.inputaudiocaps }
            self.audioinformation.set_markup(''.join(('<small>', 'Audio channels: ', str(self.audiodata['audiochannels']), '</small>')))
@@ -393,6 +376,8 @@ class TransmageddonUI (gtk.glade.XML):
                                       'audiotype'])),'</small>')))
        if self.waiting_for_signal == "True":
            self.check_for_elements()
+       if self.container != False:
+           self.check_for_passthrough(self.container)
 
    def discover(self, path):
        self.videodata ={}
@@ -408,6 +393,30 @@ class TransmageddonUI (gtk.glade.XML):
        path = uri.path
        # print path
        return self.discover(path)
+   
+   def check_for_passthrough(self, containerchoice):
+       videointersect = ("EMPTY")
+       audiointersect = ("EMPTY")   
+       container = codecfinder.containermap[containerchoice]
+       containerelement = codecfinder.get_muxer_element(container)
+       factory = gst.registry_get_default().lookup_feature(containerelement)
+       for x in factory.get_static_pad_templates():
+           if (x.direction == gst.PAD_SINK):
+               sourcecaps = x.get_caps()
+               if videointersect == ("EMPTY"): 
+                   videointersect = sourcecaps.intersect(gst.caps_from_string(self.videodata['videotype']))
+               if audiointersect == ("EMPTY"):
+                   audiointersect = sourcecaps.intersect(gst.caps_from_string(self.audiodata['audiotype']))
+       print "video intersect is " + str(videointersect)
+       print "audio intersect is " + str(audiointersect)
+       if videointersect == ("EMPTY"):
+           self.videopassthrough.set_sensitive(False)
+       else:
+           self.videopassthrough.set_sensitive(True)
+       if audiointersect == ("EMPTY"):
+           self.audiopassthrough.set_sensitive(False)
+       else:
+           self.audiopassthrough.set_sensitive(True)
 
    # define the behaviour of the other buttons
    def on_FileChooser_file_set(self, widget):
@@ -474,7 +483,7 @@ class TransmageddonUI (gtk.glade.XML):
 
    def check_for_elements(self):
        containerchoice = self.get_widget ("containerchoice").get_active_text ()
-       containerstatus = codecfinder.get_muxer_element(codecfinder.containermap[containerchoice])
+       containerstatus = codecfinder.get_element(codecfinder.containermap[containerchoice])
        audiostatus = codecfinder.get_audio_encoder_element(codecfinder.codecmap[self.AudioCodec])
        videostatus = codecfinder.get_video_encoder_element(codecfinder.codecmap[self.VideoCodec])
        
@@ -544,8 +553,9 @@ class TransmageddonUI (gtk.glade.XML):
        self.rotationchoice.set_sensitive(True)
        self.ProgressBar.set_fraction(0.0)
        self.ProgressBar.set_text(_("Transcoding Progress"))
-       containerchoice = self.get_widget ("containerchoice").get_active_text ()
-       codecs = supported_container_map[containerchoice]
+       self.container = self.get_widget ("containerchoice").get_active_text ()
+       codecs = supported_container_map[self.container]
+       self.check_for_passthrough(self.container)
        self.AudioCodec = codecs[0]
        self.VideoCodec = codecs[1]
        self.transcodebutton.set_sensitive(True)
