@@ -47,10 +47,20 @@ class Transcoder(gobject.GObject):
        self.ContainerFormatPlugin = codecfinder.get_muxer_element(containercaps)
 
        # Choose plugin based on Codec Name
-       self.audiocaps = codecfinder.codecmap[AUDIOCODECVALUE]
-       videocodecvalue = VIDEOCODECVALUE
-       self.videocaps = codecfinder.codecmap[videocodecvalue]
-       # print "videocaps ended up as " + str(self.videocaps)
+       # or switch to remuxing mode if any of the values are set to 'pastr'
+       print "Audiocodecvalue is " + str(AUDIOCODECVALUE)
+       if AUDIOCODECVALUE != "apass":
+           self.audiocaps = codecfinder.codecmap[AUDIOCODECVALUE]
+       else:
+           self.audiocaps = "apass"
+       print "self.audiocaps is " + str(self.audiocaps)
+       print "VIDEOCODECVALUE is " + str(VIDEOCODECVALUE)
+       if VIDEOCODECVALUE != "vpass":
+           self.videocaps = codecfinder.codecmap[VIDEOCODECVALUE]
+       else:
+           self.videocaps = "vpass"
+       print "videocaps ended up as " + str(self.videocaps)
+       
        self.AudioEncoderPlugin = codecfinder.get_audio_encoder_element(self.audiocaps)
        self.VideoEncoderPlugin = codecfinder.get_video_encoder_element(self.videocaps)
 

@@ -65,6 +65,7 @@ supported_containers = [
 ]
 
 supported_audio_codecs = [
+       "apass",
        "vorbis",
        "flac",
        "mp3",
@@ -78,6 +79,7 @@ supported_audio_codecs = [
 ]
 
 supported_video_codecs = [
+       "vpass",
        "theora",
        "dirac",
        "h264",
@@ -127,8 +129,6 @@ class TransmageddonUI (gtk.glade.XML):
        self.presetchoice = self.get_widget("presetchoice")
        self.containerchoice = self.get_widget("containerchoice")
        self.rotationchoice = self.get_widget("rotationchoice")
-       self.audiopassthrough = self.get_widget("audiopassthrough")
-       self.videopassthrough = self.get_widget("videopassthrough")
        self.codec_buttons = dict()
        for c in supported_audio_codecs:
            self.codec_buttons[c] = self.get_widget(c+"button")
@@ -183,8 +183,8 @@ class TransmageddonUI (gtk.glade.XML):
        self.presetchoice.set_sensitive(False)
        self.containerchoice.set_sensitive(False)
        self.rotationchoice.set_sensitive(False)
-       self.audiopassthrough.set_sensitive(False)
-       self.videopassthrough.set_sensitive(False)
+       self.codec_buttons["apass"].set_sensitive(False)
+       self.codec_buttons["vpass"].set_sensitive(False)
 
        # set default values for various variables
        self.AudioCodec = "vorbis"
@@ -407,16 +407,14 @@ class TransmageddonUI (gtk.glade.XML):
                    videointersect = sourcecaps.intersect(gst.caps_from_string(self.videodata['videotype']))
                if audiointersect == ("EMPTY"):
                    audiointersect = sourcecaps.intersect(gst.caps_from_string(self.audiodata['audiotype']))
-       print "video intersect is " + str(videointersect)
-       print "audio intersect is " + str(audiointersect)
        if videointersect == ("EMPTY"):
-           self.videopassthrough.set_sensitive(False)
+           self.codec_buttons["vpass"].set_sensitive(False)
        else:
-           self.videopassthrough.set_sensitive(True)
+           self.codec_buttons["vpass"].set_sensitive(True)
        if audiointersect == ("EMPTY"):
-           self.audiopassthrough.set_sensitive(False)
+           self.codec_buttons["apass"].set_sensitive(False)
        else:
-           self.audiopassthrough.set_sensitive(True)
+           self.codec_buttons["apass"].set_sensitive(True)
 
    # define the behaviour of the other buttons
    def on_FileChooser_file_set(self, widget):
@@ -483,10 +481,18 @@ class TransmageddonUI (gtk.glade.XML):
 
    def check_for_elements(self):
        containerchoice = self.get_widget ("containerchoice").get_active_text ()
-       containerstatus = codecfinder.get_element(codecfinder.containermap[containerchoice])
-       audiostatus = codecfinder.get_audio_encoder_element(codecfinder.codecmap[self.AudioCodec])
-       videostatus = codecfinder.get_video_encoder_element(codecfinder.codecmap[self.VideoCodec])
-       
+       containerstatus = codecfinder.get_muxer_element(codecfinder.containermap[containerchoice])
+       print "containerstatus is " + str(containerstatus)
+       if self.AudioCodec != "apass":
+           print "in element check" + str(self.AudioCodec)
+           audiostatus = codecfinder.get_audio_encoder_element(codecfinder.codecmap[self.AudioCodec])
+       else: audiostatus = "apass"
+       if self.VideoCodec != "vpass":
+           print "in element check videocodec " + str(self.VideoCodec)
+           videostatus = codecfinder.get_video_encoder_element(codecfinder.codecmap[self.VideoCodec])
+       else:
+           videostatus = "vpass"
+
        if not containerstatus or not videostatus or not audiostatus:
            fail_info = []  
            if containerstatus == False: 
@@ -501,10 +507,13 @@ class TransmageddonUI (gtk.glade.XML):
            context = gst.pbutils.InstallPluginsContext ()
            gst.pbutils.install_plugins_async (missing, context, self.donemessage, "")
        else:
+           print "this was successful"
            self._start_transcoding()
 
    # The transcodebutton is the one that calls the Transcoder class and thus starts the transcoding
    def on_transcodebutton_clicked(self, widget):
+       print "on transcodebutton pressed audio 1 - " + str(self.AudioCodec)
+       print "on transcodebutton pressed video 1 - " + str(self.VideoCodec)
        self.FileChooser.set_sensitive(False)
        self.containerchoice.set_sensitive(False)
        self.presetchoice.set_sensitive(False)
@@ -529,6 +538,8 @@ class TransmageddonUI (gtk.glade.XML):
        else:
            self.passcounter=int(1)
            self.ProgressBar.set_text(_("Pass " + str(self.passcounter) + " Progress"))
+       print "on transcodebutton pressed audio " + str(self.AudioCodec)
+       print "on transcodebutton pressed video " + str(self.VideoCodec)
        if self.audiodata.has_key("samplerate"):
            self.check_for_elements()
        else:
@@ -555,7 +566,6 @@ class TransmageddonUI (gtk.glade.XML):
        self.ProgressBar.set_text(_("Transcoding Progress"))
        self.container = self.get_widget ("containerchoice").get_active_text ()
        codecs = supported_container_map[self.container]
-       self.check_for_passthrough(self.container)
        self.AudioCodec = codecs[0]
        self.VideoCodec = codecs[1]
        self.transcodebutton.set_sensitive(True)
@@ -565,6 +575,7 @@ class TransmageddonUI (gtk.glade.XML):
            self.codec_buttons[c].set_sensitive(True)
        self.codec_buttons[self.AudioCodec].set_active(True)
        self.codec_buttons[self.VideoCodec].set_active(True)
+       self.check_for_passthrough(self.container)
 
    def on_presetchoice_changed(self, widget):
        presetchoice = self.get_widget ("presetchoice").get_active_text ()
@@ -593,16 +604,9 @@ class TransmageddonUI (gtk.glade.XML):
        self.rotationvalue = self.rotationchoice.get_active()
        # print "rotationchoice value " + str(self.rotationvalue)
 
-   def audio_codec_changed (self, audio_codec):
-       self.transcodebutton.set_sensitive(True)
-       self.AudioCodec = audio_codec
-
-   def video_codec_changed (self, video_codec):
-       self.transcodebutton.set_sensitive(True)
-       self.VideoCodec = video_codec
-
    def on_audiobutton_pressed(self, widget, codec):
        self.AudioCodec = codec
+       print "audiobutton activated" + str(self.AudioCodec)
 
    def on_videobutton_pressed(self, widget, codec):
        self.VideoCodec = codec

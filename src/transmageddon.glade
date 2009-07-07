@@ -974,16 +974,16 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkRadioButton" id="audiopassthrough">
+                  <widget class="GtkRadioButton" id="apassbutton">
                     <property name="label" translatable="yes">Audio passthrough</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
                     <property name="active">True</property>
                     <property name="draw_indicator">True</property>
-                    <property name="group">theorabutton</property>
-                    <signal name="pressed" handler="on_apass_button_pressed"/>
-                    <signal name="activate" handler="on_apass_button_pressed"/>
+                    <property name="group">vorbisbutton</property>
+                    <signal name="pressed" handler="on_apassbutton_pressed"/>
+                    <signal name="activate" handler="on_apassbutton_pressed"/>
                   </widget>
                   <packing>
                     <property name="top_attach">1</property>
@@ -991,7 +991,7 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkRadioButton" id="videopassthrough">
+                  <widget class="GtkRadioButton" id="vpassbutton">
                     <property name="label" translatable="yes">Video passthrough</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
@@ -999,8 +999,8 @@
                     <property name="active">True</property>
                     <property name="draw_indicator">True</property>
                     <property name="group">theorabutton</property>
-                    <signal name="pressed" handler="on_vpass_button_pressed"/>
-                    <signal name="activate" handler="on_videopassthrough_activate"/>
+                    <signal name="pressed" handler="on_vpassbutton_pressed"/>
+                    <signal name="activate" handler="on_vpassbutton_pressed"/>
                   </widget>
                   <packing>
                     <property name="left_attach">2</property>
