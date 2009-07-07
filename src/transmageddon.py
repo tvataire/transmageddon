@@ -435,9 +435,11 @@ class TransmageddonUI (gtk.glade.XML):
        ratenum = self.videodata['fratenum']
        ratednom = self.videodata['frateden']
        achannels = self.audiodata['audiochannels']
+       audiocodec = codecfinder.codecmap[self.AudioCodec]
+       videocodec = codecfinder.codecmap[self.VideoCodec]
        container = self.get_widget ("containerchoice").get_active_text ()
        self._transcoder = transcoder_engine.Transcoder(filechoice, self.filename, self.videodirectory, container, 
-                                                       self.AudioCodec, self.VideoCodec, self.devicename, 
+                                                       audiocodec, videocodec, self.devicename, 
                                                        vheight, vwidth, ratenum, ratednom, achannels, 
                                                        self.multipass, self.passcounter, self.outputfilename,
                                                        self.timestamp, self.rotationvalue)
@@ -484,11 +486,9 @@ class TransmageddonUI (gtk.glade.XML):
        containerstatus = codecfinder.get_muxer_element(codecfinder.containermap[containerchoice])
        print "containerstatus is " + str(containerstatus)
        if self.AudioCodec != "apass":
-           print "in element check" + str(self.AudioCodec)
            audiostatus = codecfinder.get_audio_encoder_element(codecfinder.codecmap[self.AudioCodec])
        else: audiostatus = "apass"
        if self.VideoCodec != "vpass":
-           print "in element check videocodec " + str(self.VideoCodec)
            videostatus = codecfinder.get_video_encoder_element(codecfinder.codecmap[self.VideoCodec])
        else:
            videostatus = "vpass"
@@ -507,13 +507,10 @@ class TransmageddonUI (gtk.glade.XML):
            context = gst.pbutils.InstallPluginsContext ()
            gst.pbutils.install_plugins_async (missing, context, self.donemessage, "")
        else:
-           print "this was successful"
            self._start_transcoding()
 
    # The transcodebutton is the one that calls the Transcoder class and thus starts the transcoding
    def on_transcodebutton_clicked(self, widget):
-       print "on transcodebutton pressed audio 1 - " + str(self.AudioCodec)
-       print "on transcodebutton pressed video 1 - " + str(self.VideoCodec)
        self.FileChooser.set_sensitive(False)
        self.containerchoice.set_sensitive(False)
        self.presetchoice.set_sensitive(False)
@@ -538,8 +535,6 @@ class TransmageddonUI (gtk.glade.XML):
        else:
            self.passcounter=int(1)
            self.ProgressBar.set_text(_("Pass " + str(self.passcounter) + " Progress"))
-       print "on transcodebutton pressed audio " + str(self.AudioCodec)
-       print "on transcodebutton pressed video " + str(self.VideoCodec)
        if self.audiodata.has_key("samplerate"):
            self.check_for_elements()
        else:
@@ -606,7 +601,6 @@ class TransmageddonUI (gtk.glade.XML):
 
    def on_audiobutton_pressed(self, widget, codec):
        self.AudioCodec = codec
-       print "audiobutton activated" + str(self.AudioCodec)
 
    def on_videobutton_pressed(self, widget, codec):
        self.VideoCodec = codec

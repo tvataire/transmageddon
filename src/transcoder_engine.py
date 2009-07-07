@@ -50,13 +50,13 @@ class Transcoder(gobject.GObject):
        # or switch to remuxing mode if any of the values are set to 'pastr'
        print "Audiocodecvalue is " + str(AUDIOCODECVALUE)
        if AUDIOCODECVALUE != "apass":
-           self.audiocaps = codecfinder.codecmap[AUDIOCODECVALUE]
+           self.audiocaps = AUDIOCODECVALUE
        else:
            self.audiocaps = "apass"
        print "self.audiocaps is " + str(self.audiocaps)
        print "VIDEOCODECVALUE is " + str(VIDEOCODECVALUE)
        if VIDEOCODECVALUE != "vpass":
-           self.videocaps = codecfinder.codecmap[VIDEOCODECVALUE]
+           self.videocaps = VIDEOCODECVALUE
        else:
            self.videocaps = "vpass"
        print "videocaps ended up as " + str(self.videocaps)
@@ -89,6 +89,8 @@ class Transcoder(gobject.GObject):
        self.uridecoder = gst.element_factory_make("uridecodebin", "uridecoder")
        self.uridecoder.set_property("uri", FILECHOSEN)
        self.uridecoder.connect("pad-added", self.OnDynamicPad)
+       # if self.audiocaps == "apass":
+           # self.uridecoder.set_property("caps", ****mp3****;****h264***)
        self.pipeline.add(self.uridecoder)
        
        if (self.multipass == False) or (self.passcounter == int(0)):
