@@ -11,7 +11,8 @@ Authors = ["Christian Schaller <uraeus@gnome.org>",
            ]
 
 Translators = ("Łukasz Jernaś <deejay1@srem.org>\n" +
-              "Jordi Mas <jmas@softcatala.org>")
+              "Jordi Mas <jmas@softcatala.org>\n" +
+              "Łukasz Jernaś <deejay1@srem.org>")
 
 LGPL = """
 Transmageddon

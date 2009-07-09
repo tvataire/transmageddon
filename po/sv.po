@@ -1,0 +1,280 @@
+# Swedish translation for Transmageddon.
+# Copyright (C) 2009 Free Software Foundation, Inc.
+# This file is distributed under the same license as the transmageddon package.
+# Daniel Nylander <po@danielnylander.se>, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: transmageddon\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-07-08 13:32+0200\n"
+"PO-Revision-Date: 2009-07-08 13:32+0100\n"
+"Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
+"Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../src/presets.py:77
+#, python-format
+msgid "Not a valid integer or fraction: %(value)s!"
+msgstr "Inte ett giltigt heltal eller del: %(value)s!"
+
+#: ../src/presets.py:410
+#, python-format
+msgid "Loaded device %(device)s (%(presets)d presets)"
+msgstr "Läste in enheten %(device)s (%(presets)d förval)"
+
+#: ../src/presets.py:477
+#, python-format
+msgid "Fetching %(location)s"
+msgstr "Hämtar %(location)s"
+
+#: ../src/presets.py:484
+#, python-format
+msgid "Writing to %(file)s"
+msgstr "Skriver till %(file)s"
+
+#: ../src/presets.py:489
+#, python-format
+msgid "There was an error fetching and installing %(location)s: %(error)s"
+msgstr "Det uppstod ett fel vid hämtning och installation från %(location)s: %(error)s"
+
+#: ../src/presets.py:506
+msgid "Checking for device preset updates..."
+msgstr "Letar efter uppdateringar av enhetsförval..."
+
+#: ../src/presets.py:526
+#, python-format
+msgid "Device preset %(name)s is up to date"
+msgstr "Enhetsförvalet %(name)s är uppdaterat"
+
+#: ../src/presets.py:530
+#, python-format
+msgid "Found updated device preset %(name)s"
+msgstr "Hittade uppdaterade enhetsförvalet %(name)s"
+
+#: ../src/presets.py:536
+#: ../src/presets.py:549
+#, python-format
+msgid "Error installing preset %(name)s from %(location)s: %(error)s"
+msgstr "Fel vid installation av förvalet %(name)s från %(location)s: %(error)s"
+
+#: ../src/presets.py:543
+#, python-format
+msgid "Found new device preset %(name)s"
+msgstr "Hittade nya enhetsförvalet %(name)s"
+
+#: ../src/presets.py:556
+#, python-format
+msgid "Malformed plugin version line %(line)s"
+msgstr "Felformaterad versionsrad i insticksmodul %(line)s"
+
+#: ../src/presets.py:560
+#, python-format
+msgid "There was a problem accessing %(location)spresets.txt!"
+msgstr "Det uppstod ett problem med åtkomst till %(location)spresets.txt!"
+
+#: ../src/presets.py:582
+msgid "All device presets are up to date!"
+msgstr "Alla enhetsförval är uppdaterade!"
+
+#: ../src/transmageddon.glade.h:1
+msgid "<b>Choose Audio Codec</b>:"
+msgstr "<b>Välj ljudkodek</b>:"
+
+#: ../src/transmageddon.glade.h:2
+msgid "<b>Choose Input File:</b>"
+msgstr "<b>Välj inmatningsfil:</b>"
+
+#: ../src/transmageddon.glade.h:3
+msgid "<b>Choose Video Codec</b>:"
+msgstr "<b>Välj videokodek</b>:"
+
+#: ../src/transmageddon.glade.h:4
+msgid "<b>Output Format:</b>"
+msgstr "<b>Utmatningsformat:</b>"
+
+#: ../src/transmageddon.glade.h:5
+msgid "<b>Presets:</b>"
+msgstr "<b>Förval:</b>"
+
+#: ../src/transmageddon.glade.h:6
+msgid "<small>Audio Channels:</small>"
+msgstr "<small>Ljudkanaler:</small>"
+
+#: ../src/transmageddon.glade.h:7
+msgid "<small>Audio codec:</small>"
+msgstr "<small>Ljudkodek:</small>"
+
+#: ../src/transmageddon.glade.h:8
+msgid "<small>Rotate the video image if needed</small>"
+msgstr "<small>Rotera videobilden om det behövs</small>"
+
+#: ../src/transmageddon.glade.h:9
+msgid "<small>Video codec:</small>"
+msgstr "<small>Videokodek:</small>"
+
+#: ../src/transmageddon.glade.h:10
+msgid "<small>Video height&#47;width:</small>"
+msgstr "<small>Höjd och bredd för video:</small>"
+
+#: ../src/transmageddon.glade.h:11
+msgid "AAC"
+msgstr "AAC"
+
+#: ../src/transmageddon.glade.h:12
+msgid "AC3"
+msgstr "AC3"
+
+#: ../src/transmageddon.glade.h:13
+msgid "AMR-NB"
+msgstr "AMR-NB"
+
+#: ../src/transmageddon.glade.h:14
+msgid "Audio passthrough"
+msgstr "Ljud passthrough"
+
+#: ../src/transmageddon.glade.h:15
+msgid "Celt"
+msgstr "Celt"
+
+#: ../src/transmageddon.glade.h:16
+msgid "Dirac"
+msgstr "Dirac"
+
+#: ../src/transmageddon.glade.h:17
+msgid "FLAC"
+msgstr "FLAC"
+
+#: ../src/transmageddon.glade.h:18
+msgid "H263+"
+msgstr "H263+"
+
+#: ../src/transmageddon.glade.h:19
+msgid "H264"
+msgstr "H264"
+
+#: ../src/transmageddon.glade.h:20
+msgid "MPEG2"
+msgstr "MPEG2"
+
+#: ../src/transmageddon.glade.h:21
+msgid "MPEG4/DivX5"
+msgstr "MPEG4/DivX5"
+
+#: ../src/transmageddon.glade.h:22
+msgid "Speex"
+msgstr "Speex"
+
+#: ../src/transmageddon.glade.h:23
+msgid "Theora"
+msgstr "Theora"
+
+#: ../src/transmageddon.glade.h:24
+msgid "Transcode"
+msgstr "Koda om"
+
+#: ../src/transmageddon.glade.h:25
+msgid "Transmageddon"
+msgstr "Transmageddon"
+
+#: ../src/transmageddon.glade.h:26
+msgid "Video passthrough"
+msgstr "Video passthrough"
+
+#: ../src/transmageddon.glade.h:27
+msgid "Vorbis"
+msgstr "Vorbis"
+
+#: ../src/transmageddon.glade.h:28
+msgid "_Edit"
+msgstr "R_edigera"
+
+#: ../src/transmageddon.glade.h:29
+msgid "_File"
+msgstr "_Arkiv"
+
+#: ../src/transmageddon.glade.h:30
+msgid "_Help"
+msgstr "_Hjälp"
+
+#: ../src/transmageddon.glade.h:31
+msgid "_View"
+msgstr "_Visa"
+
+#: ../src/transmageddon.glade.h:32
+msgid "mp3"
+msgstr "mp3"
+
+#: ../src/transmageddon.glade.h:33
+msgid "xvid"
+msgstr "xvid"
+
+#: ../src/transmageddon.py:192
+#: ../src/transmageddon.py:428
+#: ../src/transmageddon.py:534
+#: ../src/transmageddon.py:553
+#: ../src/transmageddon.py:561
+msgid "Transcoding Progress"
+msgstr "Förlopp för omkodning"
+
+#: ../src/transmageddon.py:304
+#, python-format
+msgid "%(min)d:%(sec)02d"
+msgstr "%(min)d:%(sec)02d"
+
+#: ../src/transmageddon.py:310
+msgid "Estimated time remaining: "
+msgstr "Beräknade återstående tid: "
+
+#: ../src/transmageddon.py:312
+#: ../src/transmageddon.py:350
+#: ../src/transmageddon.py:537
+msgid "Pass "
+msgstr "Pass "
+
+#: ../src/transmageddon.py:335
+msgid "File saved to "
+msgstr "Filen sparades till "
+
+#: ../src/transmageddon.py:344
+msgid "Done Transcoding"
+msgstr "Omkodningen är färdig"
+
+#: ../src/transmageddon.py:352
+msgid "Start next pass"
+msgstr "Starta nästa pass"
+
+#: ../src/transmageddon.py:466
+msgid "Plugins not found, choose different codecs."
+msgstr "Insticksmoduler hittades inte. Välj andra kodekar."
+
+#: ../src/transmageddon.py:474
+msgid "Codec installation aborted."
+msgstr "Kodekinstallationen avbröts."
+
+#: ../src/transmageddon.py:482
+msgid "Missing plugin installation failed: "
+msgstr "Installation av saknad insticksmodul misslyckades: "
+
+#: ../src/transmageddon.py:532
+msgid "Writing "
+msgstr "Skriver "
+
+#: ../src/utils.py:72
+#, python-format
+msgid "Can't find %(path)s in any known prefix!"
+msgstr "Kan inte hitta %(path)s i något känt prefix!"
+
+#: ../transmageddon.desktop.in.in.h:1
+msgid "Transmageddon Video Transcoder"
+msgstr "Videoomkodaren Transmageddon"
+
+#: ../transmageddon.desktop.in.in.h:2
+msgid "Video format conversion tool"
+msgstr "Verktyg för konvertering av videoformat"
+
+#~ msgid "Value may only contain one comma; got %(value)s"
+#~ msgstr "Värdet får endast innehålla ett kommatecken; fick %(value)s"
+
