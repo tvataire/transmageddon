@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: transmageddon\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-08 13:32+0200\n"
-"PO-Revision-Date: 2009-07-08 13:32+0100\n"
+"POT-Creation-Date: 2009-07-09 14:18+0200\n"
+"PO-Revision-Date: 2009-07-09 17:14+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -226,7 +226,7 @@ msgstr "%(min)d:%(sec)02d"
 
 #: ../src/transmageddon.py:310
 msgid "Estimated time remaining: "
-msgstr "Beräknade återstående tid: "
+msgstr "Återstående tid: "
 
 #: ../src/transmageddon.py:312
 #: ../src/transmageddon.py:350
