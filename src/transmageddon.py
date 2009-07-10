@@ -191,6 +191,10 @@ class TransmageddonUI (gtk.glade.XML):
        self.VideoCodec = "theora"
        self.ProgressBar.set_text(_("Transcoding Progress"))
        self.container = False
+       self.vsourcecaps = False
+       self.asourcecaps = False
+       self.videopasstoggle=False
+       self.audiopasstoggle=False
 
        self.p_duration = gst.CLOCK_TIME_NONE
        self.p_time = gst.FORMAT_TIME
@@ -371,9 +375,11 @@ class TransmageddonUI (gtk.glade.XML):
                                       'videotype'])), '</small>')))
        if d.is_audio:
            self.audiodata = { 'audiochannels' : d.audiochannels, 'samplerate' : d.audiorate, 'audiotype' : d.inputaudiocaps }
+           print "d.inputaudiocaps " + str(d.inputaudiocaps)
            self.audioinformation.set_markup(''.join(('<small>', 'Audio channels: ', str(self.audiodata['audiochannels']), '</small>')))
-           self.audiocodec.set_markup(''.join(('<small>','Audio codec: ',str(gst.pbutils.get_codec_description(self.audiodata[
-                                      'audiotype'])),'</small>')))
+           print "self.audiodata['audiotype'] " + str(self.audiodata['audiotype']) 
+           self.audiocodec.set_markup(''.join(('<small>','Audio codec: ',
+                                      str(gst.pbutils.get_codec_description(self.audiodata['audiotype'])),'</small>')))
        if self.waiting_for_signal == "True":
            self.check_for_elements()
        if self.container != False:
@@ -405,8 +411,12 @@ class TransmageddonUI (gtk.glade.XML):
                sourcecaps = x.get_caps()
                if videointersect == ("EMPTY"): 
                    videointersect = sourcecaps.intersect(gst.caps_from_string(self.videodata['videotype']))
+                   if videointersect != ("EMPTY"):
+                       self.vsourcecaps = videointersect
                if audiointersect == ("EMPTY"):
                    audiointersect = sourcecaps.intersect(gst.caps_from_string(self.audiodata['audiotype']))
+                   if audiointersect != ("EMPTY"):
+                       self.asourcecaps = audiointersect
        if videointersect == ("EMPTY"):
            self.codec_buttons["vpass"].set_sensitive(False)
        else:
@@ -435,14 +445,22 @@ class TransmageddonUI (gtk.glade.XML):
        ratenum = self.videodata['fratenum']
        ratednom = self.videodata['frateden']
        achannels = self.audiodata['audiochannels']
-       audiocodec = codecfinder.codecmap[self.AudioCodec]
-       videocodec = codecfinder.codecmap[self.VideoCodec]
+       if self.videopasstoggle == False:
+           videocodec = codecfinder.codecmap[self.VideoCodec]
+       else:
+           videocodec = gst.Caps.to_string(self.vsourcecaps)
+       print "audiopass toggle " + str(self.audiopasstoggle)
+       if self.audiopasstoggle == False:
+           audiocodec = codecfinder.codecmap[self.AudioCodec]
+       else:
+           audiocodec = gst.Caps.to_string(self.asourcecaps)
+
        container = self.get_widget ("containerchoice").get_active_text ()
        self._transcoder = transcoder_engine.Transcoder(filechoice, self.filename, self.videodirectory, container, 
                                                        audiocodec, videocodec, self.devicename, 
                                                        vheight, vwidth, ratenum, ratednom, achannels, 
                                                        self.multipass, self.passcounter, self.outputfilename,
-                                                       self.timestamp, self.rotationvalue)
+                                                       self.timestamp, self.rotationvalue, self.audiopasstoggle, self.videopasstoggle)
        
        self._transcoder.connect("ready-for-querying", self.ProgressBarUpdate)
        self._transcoder.connect("got-eos", self._on_eos)
@@ -541,6 +559,7 @@ class TransmageddonUI (gtk.glade.XML):
            self.waiting_for_signal="True"
 
    def on_cancelbutton_clicked(self, widget):
+     #  gst.DEBUG_BIN_TO_DOT_FILE (self._transcoder.pipeline, gst.DEBUG_GRAPH_SHOW_ALL, 'janishardcore.dot')
        self.FileChooser.set_sensitive(True)
        self.containerchoice.set_sensitive(True)
        self.CodecBox.set_sensitive(True)
@@ -601,9 +620,14 @@ class TransmageddonUI (gtk.glade.XML):
 
    def on_audiobutton_pressed(self, widget, codec):
        self.AudioCodec = codec
+       if self.AudioCodec == "apass":
+           self.audiopasstoggle=True
+       print "self.AudioCodec is " + str(self.AudioCodec)
 
    def on_videobutton_pressed(self, widget, codec):
        self.VideoCodec = codec
+       if self.VideoCodec == "vpass":
+           self.videopasstoggle=True
 
    def on_about_dialog_activate(self, widget):
        """

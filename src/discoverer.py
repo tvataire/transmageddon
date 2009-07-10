@@ -318,27 +318,28 @@ class Discoverer(gst.Pipeline):
            c = caps[0].get_name()
            if c.startswith("audio/"):
                if c.startswith("audio/x-raw") == False:
-                   if caps[0].has_field("rate"):
+                   # print "discoverer: c is audio " + str(c)
+                   # if caps[0].has_field("rate"):
                        if caps.is_fixed():
                            blacklist = ['rate','channels','bitrate','block_align','mode','subbands'
                                         ,'allocation','framed','bitpool','blocks','width','parsed']
                            for x in caps:
-                               result = caps[0].get_name();
+                               aresult = caps[0].get_name();
                                for attr in caps[0].keys():
                                    if attr not in blacklist:
-                                       result += ","+attr+"="+str(caps[0][attr])
-                           self.inputaudiocaps = result
-
+                                       aresult += ","+attr+"="+str(caps[0][attr])
+                           self.inputaudiocaps = aresult
+                           print "discoverer: self.inputaudiocaps " + str(self.inputaudiocaps)
            elif c.startswith("video/"):
               if c.startswith("video/x-raw-yuv") == False or c.startswith("video/x-raw-rgb") == False:
                   if caps.is_fixed():
                       blacklist = ['height','width','framerate','depth','codec_data']
                       for x in caps:
-                           result = caps[0].get_name();
+                           vresult = caps[0].get_name();
                            for attr in caps[0].keys():
                                if attr not in blacklist:
-                                   result += ","+attr+"="+str(caps[0][attr])
-                      self.inputvideocaps = result
+                                   vresult += ","+attr+"="+str(caps[0][attr])
+                      self.inputvideocaps = vresult
         return True
 
 
