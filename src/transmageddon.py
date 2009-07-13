@@ -205,10 +205,10 @@ class TransmageddonUI (gtk.glade.XML):
            self.containerchoice.append_text(i)
 
        # Populate the rotatation box
-       self.rotationlist = ["No rotation (default)", "Clockwise 90 degrees", "Rotate 180 degrees", 
-                           "Counterclockwise 90 degrees", "Horizontal flip", 
-                           "Vertical flip", "Upper left diagonal flip", 
-                           "Upper right diagnonal flip" ]
+       self.rotationlist = [_("No rotation (default)"), _("Clockwise 90 degrees"), _("Rotate 180 degrees"), 
+                           _("Counterclockwise 90 degrees"), _("Horizontal flip"),
+                           _("Vertical flip"), _("Upper left diagonal flip"),
+                           _("Upper right diagnonal flip") ]
        for y in self.rotationlist: 
            self.rotationchoice.append_text(y)
 
