@@ -6,7 +6,7 @@ cause anyone to make any kind of assumptions about priorties.
   formats.
 
 * MPEG PS support.
-  Summer of Code project looks to addres this.
+  Summer of Code project looks to address this.
 
 * AVC HD support.
   Variation of MPEG TS with H264 and AC3 audio. Summer of code will look at it.
@@ -18,9 +18,6 @@ cause anyone to make any kind of assumptions about priorties.
 
 * Get application icon made
   Find a graphics artist to make nice Tango style icon
-
-* Support remuxing 
-  Allow incoming codecs to be preserved and just remuxed into new file when possible
 
 * Support non-muxed audio codec 
   Allow the outputting of non-muxed audio codecs (mp3 mostly). Not sure we really
@@ -41,12 +38,6 @@ cause anyone to make any kind of assumptions about priorties.
 * Windows port
   Port application to windows and get a py2exe binary going with everything. The video
   directory stuff is only known current non-portable.
-
-* AMR support 
-  Which would be useful for 3GPP files. Problem is that there is no proper AMR plugin 
-  for GStreamer yet, the one in 'ugly' is never built as it requires some code which 
-  there is a lot of uncertainty about whether can be  distributed. AMR encoder in 
-  Android that could be a good starting point.
 
 * DVD input support
   Maybe it would be nice to allow DVDs to be the input. Could probably look at Thoggen 
@@ -75,9 +66,6 @@ cause anyone to make any kind of assumptions about priorties.
 * Subtitles
   Support muxing in Subtitles into AVI and MPEG4 files. Need GStreamer work for it to happen.
 
-* Multipass encoding
-  Add multipass encoding to encoders that support it
-
 * Add thumbnail support
   Automatically create a jpeg thumbnail for devices such as the PSP
 
@@ -85,5 +73,6 @@ cause anyone to make any kind of assumptions about priorties.
   i) interface with gnome-dvb-daemon so could live transcode dvb, 
   ii) montior directory and transcode to multiple devices when files 
       turn up in directory
+  iii) start transcode once dvb-daemon says recording is done
 
 * Add black borders based on aspect-ratio
