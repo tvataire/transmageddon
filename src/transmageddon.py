@@ -372,18 +372,21 @@ class TransmageddonUI (gtk.glade.XML):
                               'videolenght' : d.videolength, 'fratenum' : d.videorate.num, 'frateden' :  d.videorate.denom }
            self.videoinformation.set_markup(''.join(('<small>', 'Video height&#47;width: ', str(self.videodata['videoheight']), 
                                             "x", str(self.videodata['videowidth']), '</small>')))
-           self.videocodec.set_markup(''.join(('<small>', 'Video codec: ', str(gst.pbutils.get_codec_description(self.videodata[
-                                      'videotype'])), '</small>')))
+           self.videocodec.set_markup(''.join(('<small>', 'Video codec: ', 
+                                       str(gst.pbutils.get_codec_description(self.videodata['videotype'])), 
+                                      '</small>')))
        if d.is_audio:
            self.audiodata = { 'audiochannels' : d.audiochannels, 'samplerate' : d.audiorate, 'audiotype' : d.inputaudiocaps }
-           print "d.inputaudiocaps " + str(d.inputaudiocaps)
            self.audioinformation.set_markup(''.join(('<small>', 'Audio channels: ', str(self.audiodata['audiochannels']), '</small>')))
-           print "self.audiodata['audiotype'] " + str(self.audiodata['audiotype']) 
            self.audiocodec.set_markup(''.join(('<small>','Audio codec: ',
                                       str(gst.pbutils.get_codec_description(self.audiodata['audiotype'])),'</small>')))
-       if self.waiting_for_signal == "True":
-           self.check_for_elements()
-           self._start_transcoding()
+       if self.waiting_for_signal == True:
+           if self.containertoggle == True:
+               if self.container != False:
+                   self.check_for_passthrough(self.container)
+           else:
+               self.check_for_elements()
+               self._start_transcoding()
        if self.container != False:
            self.check_for_passthrough(self.container)
 
@@ -418,7 +421,6 @@ class TransmageddonUI (gtk.glade.XML):
                if (x.direction == gst.PAD_SINK):
                    sourcecaps = x.get_caps()
                    if videointersect == ("EMPTY"):
-                       print "self.videodata is " + str(self.videodata)
                        videointersect = sourcecaps.intersect(gst.caps_from_string(self.videodata['videotype']))
                        if videointersect != ("EMPTY"):
                            self.vsourcecaps = videointersect
@@ -638,12 +640,15 @@ class TransmageddonUI (gtk.glade.XML):
        self.AudioCodec = codec
        if self.AudioCodec == "apass":
            self.audiopasstoggle=True
-       print "self.AudioCodec is " + str(self.AudioCodec)
 
    def on_videobutton_pressed(self, widget, codec):
        self.VideoCodec = codec
        if self.VideoCodec == "vpass":
            self.videopasstoggle=True
+           self.rotationchoice.set_sensitive(False)
+           self.rotationchoice.set_active(0)
+       else:
+           self.rotationchoice.set_sensitive(True)
 
    def on_about_dialog_activate(self, widget):
        """
