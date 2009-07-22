@@ -35,10 +35,12 @@ def list_compat(a1, b1):
 
 containermap = { 'Ogg' : "application/ogg",'Matroska' : "video/x-matroska", 'MXF' : "application/mxf", 'AVI' : "video/x-msvideo", 
                         'Quicktime' : "video/quicktime,variant=apple", 'MPEG4' : "video/quicktime,variant=iso", 'MPEG PS' : "ffmux_mpeg", 
-                        'MPEG TS' : "video/mpegts", 'FLV' : "video/x-flv", '3GPP' : "video/quicktime,variant=3gpp" }
+                        'MPEG TS' : "video/mpegts", 'FLV' : "video/x-flv", '3GPP' : "video/quicktime,variant=3gpp",
+                        'ASF' : "video/x-ms-asf" }
 
 csuffixmap =   { 'Ogg' : ".ogg", 'Matroska' : ".mkv", 'MXF' : ".mxf", 'AVI' : ".avi", 'Quicktime' : ".mov",
-                        'MPEG4' : ".mp4", 'MPEG PS' : ".mpg", 'MPEG TS' : ".ts", 'FLV' : ".flv", '3GPP' : ".3gp" }
+                        'MPEG4' : ".mp4", 'MPEG PS' : ".mpg", 'MPEG TS' : ".ts", 'FLV' : ".flv", '3GPP' : ".3gp",
+                 'ASF' : ".asf" }
 
 codecmap = {     'vorbis' : "audio/x-vorbis", 'flac' : "audio/x-flac", 'mp3' : "audio/mpeg,mpegversion=1,layer=3", 
                         'aac' : "audio/mpeg,mpegversion=4", 'ac3' : "audio/x-ac3", 'speex' : "audio/x-speex", 
@@ -62,7 +64,7 @@ def get_muxer_element(containercaps):
    """
 
    muxerchoice = {}
-   blacklist = ['rate','packetsize','systemstream']
+   blacklist = ['rate','packetsize','systemstream','parsed']
    flist = gst.registry_get_default().get_feature_list(gst.ElementFactory)
    muxers = []
    features = []
@@ -90,11 +92,10 @@ def get_muxer_element(containercaps):
                muxerchoice[result] = muxer
        else:
            muxerchoice[result] = muxer
-
    if muxerchoice.has_key(containercaps):
        elementname = muxerchoice[containercaps]
    else:
-       print "failed to find element"
+       print "failed to find muxer element"
        elementname = False
    return elementname
 
@@ -135,11 +136,9 @@ def get_audio_encoder_element(audioencodercaps):
                # print "result before attributes " + str(result)
                for attr in caps[0].keys():
                    if attr not in blacklist:
-                       if codec == "faac":
-                           result = "audio/mpeg,mpegversion=4" 
-                       #ugly workaround for Caps.from_string not handling mpegversion =[2,4]
-                       else:
-                           result += ","+attr+"="+str(caps[0][attr])
+                       result += ","+attr+"="+str(caps[0][attr])
+                       if result == "audio/mpeg,mpegversion=[4, 2]":
+                           result = "audio/mpeg,mpegversion=4"
            if audiocoderchoice.has_key(result):
                    mostrecent = gst.PluginFeature.get_rank(encoderfeature[codec])
                    original = gst.PluginFeature.get_rank(encoderfeature[audiocoderchoice[result]])
@@ -148,8 +147,6 @@ def get_audio_encoder_element(audioencodercaps):
            else:
                    audiocoderchoice[result] = codec
 
-   # print "*** printing audiocodecchoice ***"
-   # print audiocoderchoice
    if audiocoderchoice.has_key(audioencodercaps):
        elementname = audiocoderchoice[audioencodercaps]
    else:
@@ -189,37 +186,26 @@ def get_video_encoder_element(videoencodercaps):
    # print encoderfeature
    for x in encoders:
            element = x
-           # print "encoder is " + str(codec)
            factory = gst.registry_get_default().lookup_feature(str(x))
            sinkcaps = [x.get_caps() for x in factory.get_static_pad_templates() if x.direction == gst.PAD_SRC]
            for caps in sinkcaps:
-               # print "caps is "+ str(caps)
                result = caps[0].get_name();
                for attr in caps[0].keys():
                    if attr not in blacklist:
                        result += ","+attr+"="+str(caps[0][attr])
-               # print "result is " + str(result)
-               # print "videocodechoice before if statement"
-               # print videocoderchoice
            if videocoderchoice.has_key(result):
                    mostrecent = gst.PluginFeature.get_rank(encoderfeature[element])
-                   # print "fact is " + str(value)
-                   # print str(codec) + " has rank " + str(mostrecent)
                    original = gst.PluginFeature.get_rank(encoderfeature[videocoderchoice[result]])
-                   # print str(videocoderchoice[result]) + " has rank " + str(original)
-                   # print "original value " + videocoderchoice[result]
                    if mostrecent >= original:
                        videocoderchoice[result] = element
-                       # print "new value " + videocoderchoice[result]
-
            else:
                    videocoderchoice[result] = element
-                   # print videocoderchoice
+
            videocoderchoice["video/x-divx,divxversion=5"] = "ffenc_mpeg4"
-   # print videocoderchoice
    if videocoderchoice.has_key(videoencodercaps):
        elementname = videocoderchoice[videoencodercaps]
    else:
+       print "Failed to find video encoder element"
        elementname = False
    return elementname
 

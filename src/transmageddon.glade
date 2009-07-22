@@ -510,15 +510,15 @@
             <child>
               <widget class="GtkTable" id="CodecBox">
                 <property name="visible">True</property>
-                <property name="n_rows">11</property>
+                <property name="n_rows">12</property>
                 <property name="n_columns">3</property>
                 <child>
                   <widget class="GtkLabel" id="label3">
                     <property name="visible">True</property>
                   </widget>
                   <packing>
-                    <property name="top_attach">10</property>
-                    <property name="bottom_attach">11</property>
+                    <property name="top_attach">11</property>
+                    <property name="bottom_attach">12</property>
                   </packing>
                 </child>
                 <child>
@@ -528,19 +528,8 @@
                   <packing>
                     <property name="left_attach">2</property>
                     <property name="right_attach">3</property>
-                    <property name="top_attach">10</property>
-                    <property name="bottom_attach">11</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="GtkLabel" id="label12">
-                    <property name="visible">True</property>
-                  </widget>
-                  <packing>
-                    <property name="left_attach">2</property>
-                    <property name="right_attach">3</property>
-                    <property name="top_attach">9</property>
-                    <property name="bottom_attach">10</property>
+                    <property name="top_attach">11</property>
+                    <property name="bottom_attach">12</property>
                   </packing>
                 </child>
                 <child>
@@ -551,8 +540,8 @@
                   <packing>
                     <property name="left_attach">1</property>
                     <property name="right_attach">2</property>
-                    <property name="top_attach">10</property>
-                    <property name="bottom_attach">11</property>
+                    <property name="top_attach">11</property>
+                    <property name="bottom_attach">12</property>
                     <property name="x_options"></property>
                   </packing>
                 </child>
@@ -1020,6 +1009,67 @@
                     <property name="top_attach">1</property>
                     <property name="bottom_attach">2</property>
                     <property name="x_options"></property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkRadioButton" id="wma2button">
+                    <property name="label" translatable="yes">WMA2</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">False</property>
+                    <property name="relief">none</property>
+                    <property name="draw_indicator">True</property>
+                    <property name="group">vorbisbutton</property>
+                    <signal name="pressed" handler="on_wma2button_pressed"/>
+                    <signal name="activate" handler="on_wma2button_pressed"/>
+                  </widget>
+                  <packing>
+                    <property name="top_attach">10</property>
+                    <property name="bottom_attach">11</property>
+                    <property name="y_padding">3</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkLabel" id="label1">
+                    <property name="visible">True</property>
+                  </widget>
+                  <packing>
+                    <property name="left_attach">2</property>
+                    <property name="right_attach">3</property>
+                    <property name="top_attach">10</property>
+                    <property name="bottom_attach">11</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkLabel" id="vspacer11">
+                    <property name="width_request">12</property>
+                    <property name="visible">True</property>
+                  </widget>
+                  <packing>
+                    <property name="left_attach">1</property>
+                    <property name="right_attach">2</property>
+                    <property name="top_attach">10</property>
+                    <property name="bottom_attach">11</property>
+                    <property name="x_options"></property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkRadioButton" id="wmv2button">
+                    <property name="label" translatable="yes">WMV2</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">False</property>
+                    <property name="relief">none</property>
+                    <property name="draw_indicator">True</property>
+                    <property name="group">theorabutton</property>
+                    <signal name="pressed" handler="on_wmv2button_pressed"/>
+                    <signal name="activate" handler="on_wmv2button_pressed"/>
+                  </widget>
+                  <packing>
+                    <property name="left_attach">2</property>
+                    <property name="right_attach">3</property>
+                    <property name="top_attach">9</property>
+                    <property name="bottom_attach">10</property>
                   </packing>
                 </child>
               </widget>

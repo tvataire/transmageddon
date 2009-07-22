@@ -134,12 +134,12 @@ class Transcoder(gobject.GObject):
                        if videointersect != ("EMPTY"):
                            # print "pad is X which is " + str(x)
                            self.containermuxervideosinkpad = self.containermuxer.get_request_pad(x.name_template)
-                           # print "self.containermuxervideosinkpad " + str(self.containermuxervideosinkpad)
+                           print "self.containermuxervideosinkpad is " + str(self.containermuxervideosinkpad)
                    if audiointersect == ("EMPTY"):
                        # print "self.audiocaps is " + str(self.audiocaps)
                        # print "caps converted audio caps is " + str(gst.caps_from_string(self.audiocaps))
                        audiointersect = sourcecaps.intersect(gst.caps_from_string(self.audiocaps))
-                       # print "muxer audio intersect is " + str(audiointersect)
+                       print "muxer audio intersect is " + str(audiointersect)
                        if audiointersect != ("EMPTY"):
                            self.containermuxeraudiosinkpad = self.containermuxer.get_request_pad(x.name_template)
                            # print "self.containermuxeraudiosinkpad " + str(self.containermuxeraudiosinkpad)

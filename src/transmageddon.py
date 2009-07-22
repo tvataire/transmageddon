@@ -61,7 +61,8 @@ supported_containers = [
         "Quicktime",
         "MPEG4",
         "3GPP",
-        "MXF"
+        "MXF",
+        "ASF"
 ]
 
 supported_audio_codecs = [
@@ -73,9 +74,8 @@ supported_audio_codecs = [
        "ac3",
        "speex",
        "celt",
-       "amrnb"
-#       "alac",
-#       "wma2",
+       "amrnb",
+       "wma2"
 ]
 
 supported_video_codecs = [
@@ -86,7 +86,8 @@ supported_video_codecs = [
        "mpeg2",
        "mpeg4",
        "xvid",
-       "h263p"
+       "h263p",
+       "wmv2"
 ]
 
 # Maps containers to the codecs they support.  The first two elements are
@@ -104,6 +105,7 @@ supported_container_map = {
     'MPEG PS':    [ 'mp3', 'mpeg2', 'ac3', 'h264', 'aac', 'mpeg4' ],
     'MPEG TS':    [ 'mp3', 'h264', 'ac3', 'mpeg2', 'aac', 'mpeg4', 'dirac' ],
     'FLV':        [ 'mp3', 'h264' ],
+    'ASF':        [ 'wma2','wmv2']
 }
 
 class TransmageddonUI (gtk.glade.XML):
@@ -408,10 +410,10 @@ class TransmageddonUI (gtk.glade.XML):
    def check_for_passthrough(self, containerchoice):
        videointersect = ("EMPTY")
        audiointersect = ("EMPTY")
-       print "container is " + str(containerchoice)
+       # print "container is " + str(containerchoice)
        container = codecfinder.containermap[containerchoice]
        containerelement = codecfinder.get_muxer_element(container)
-       print "container element is " + str(containerelement)
+       # print "container element is " + str(containerelement)
        if containerelement == False:
            self.containertoggle = True
            self.check_for_elements()
@@ -422,14 +424,17 @@ class TransmageddonUI (gtk.glade.XML):
                    sourcecaps = x.get_caps()
                    if videointersect == ("EMPTY"):
                        videointersect = sourcecaps.intersect(gst.caps_from_string(self.videodata['videotype']))
+                       print "video intersect is " + str(videointersect)
                        if videointersect != ("EMPTY"):
+                           print "videointersect is not empty"
+                           print "self.vsourcecaps is set to " + str(videointersect)
                            self.vsourcecaps = videointersect
                    if audiointersect == ("EMPTY"):
                        audiointersect = sourcecaps.intersect(gst.caps_from_string(self.audiodata['audiotype']))
                        if audiointersect != ("EMPTY"):
                            self.asourcecaps = audiointersect
-               if videointersect == ("EMPTY"):
-                   self.codec_buttons["vpass"].set_sensitive(False)
+           if videointersect == ("EMPTY"):
+               self.codec_buttons["vpass"].set_sensitive(False)
            else:
                self.codec_buttons["vpass"].set_sensitive(True)
            if audiointersect == ("EMPTY"):
@@ -459,6 +464,7 @@ class TransmageddonUI (gtk.glade.XML):
        if self.videopasstoggle == False:
            videocodec = codecfinder.codecmap[self.VideoCodec]
        else:
+           print "self.vsourcecaps is " + str(self.vsourcecaps)
            videocodec = gst.Caps.to_string(self.vsourcecaps)
        print "audiopass toggle " + str(self.audiopasstoggle)
        if self.audiopasstoggle == False:
@@ -513,7 +519,7 @@ class TransmageddonUI (gtk.glade.XML):
    def check_for_elements(self):
        containerchoice = self.get_widget ("containerchoice").get_active_text ()
        containerstatus = codecfinder.get_muxer_element(codecfinder.containermap[containerchoice])
-       print "containerstatus is " + str(containerstatus)
+       # print "containerstatus is " + str(containerstatus)
        if self.AudioCodec != "apass":
            audiostatus = codecfinder.get_audio_encoder_element(codecfinder.codecmap[self.AudioCodec])
        else: audiostatus = "apass"
@@ -534,11 +540,11 @@ class TransmageddonUI (gtk.glade.XML):
            if videostatus == False:
                fail_info.append(gst.caps_from_string (codecfinder.codecmap[self.VideoCodec]))
            missing = []
-           print "empty missing is " + str(missing)
+           # print "empty missing is " + str(missing)
            for x in fail_info:
                missing.append(gst.pbutils.missing_encoder_installer_detail_new(x))
            context = gst.pbutils.InstallPluginsContext ()
-           print "missing is " + str(missing)
+           # print "missing is " + str(missing)
            strmissing = str(missing)
            gst.pbutils.install_plugins_async (missing, context, self.donemessage, "NULL")
 
@@ -604,7 +610,7 @@ class TransmageddonUI (gtk.glade.XML):
            b.set_sensitive(False)
        for c in codecs:
            self.codec_buttons[c].set_sensitive(True)
-       print "self.AudioCodec before active button is " + str(self.AudioCodec)
+       # print "self.AudioCodec before active button is " + str(self.AudioCodec)
        self.codec_buttons[self.AudioCodec].set_active(True)
        self.codec_buttons[self.VideoCodec].set_active(True)
        self.check_for_passthrough(self.container)
