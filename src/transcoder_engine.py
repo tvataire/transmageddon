@@ -52,15 +52,18 @@ class Transcoder(gobject.GObject):
        self.audiocaps = AUDIOCODECVALUE
        self.videocaps = VIDEOCODECVALUE
        self.audiopasstoggle = AUDIOPASSTOGGLE
+       # print "audiopass toggle is " + str(self.audiopasstoggle)
        self.videopasstoggle = VIDEOPASSTOGGLE
        
        if self.audiopasstoggle == False:
+           # print "audiopasstoggle is false, setting AudioEncoderPlugin"
+           # print "self.audiocaps IS **** " + str(self.audiocaps)
            self.AudioEncoderPlugin = codecfinder.get_audio_encoder_element(self.audiocaps)
        if self.videopasstoggle == False:
-           print "self.videopasstoggle is false so setting self.VideoEncoderPlugin"
-           print "look at incoming videocaps " + str(self.videocaps)
+           # print "self.videopasstoggle is false so setting self.VideoEncoderPlugin"
+           # print "look at incoming videocaps " + str(self.videocaps)
            self.VideoEncoderPlugin = codecfinder.get_video_encoder_element(self.videocaps)
-           print "self.VideoEncoderPlugin " + str(self.VideoEncoderPlugin)
+           # print "self.VideoEncoderPlugin " + str(self.VideoEncoderPlugin)
        self.preset = PRESET
        self.oheight = OHEIGHT
        self.owidth = OWIDTH
@@ -89,17 +92,17 @@ class Transcoder(gobject.GObject):
 
        self.gstmultiqueue = gst.element_factory_make("multiqueue")
        self.multiqueueaudiosinkpad = self.gstmultiqueue.get_request_pad("sink0")
-       print "self.multiqueueaudiosinkpad " + str(self.multiqueueaudiosinkpad)
+       # print "self.multiqueueaudiosinkpad " + str(self.multiqueueaudiosinkpad)
        self.multiqueuevideosinkpad = self.gstmultiqueue.get_request_pad("sink1")
-       print "self.multiqueuevideosinkpad " + str(self.multiqueuevideosinkpad)
+       # print "self.multiqueuevideosinkpad " + str(self.multiqueuevideosinkpad)
        self.multiqueueaudiosrcpad = self.gstmultiqueue.get_pad("src0")
-       print "self.multiqueueaudiosrcpad " + str(self.multiqueueaudiosrcpad)
+       # print "self.multiqueueaudiosrcpad " + str(self.multiqueueaudiosrcpad)
        self.multiqueuevideosrcpad = self.gstmultiqueue.get_pad("src1")
-       print "self.multiqueuevideosrcpad " + str(self.multiqueuevideosrcpad)
+       # print "self.multiqueuevideosrcpad " + str(self.multiqueuevideosrcpad)
        self.pipeline.add(self.gstmultiqueue) 
 
-       print "audiopass toggle is " + str(self.audiopasstoggle)
-       print "videopass toggle is " + str(self.videopasstoggle)
+       # print "audiopass toggle is " + str(self.audiopasstoggle)
+       # print "videopass toggle is " + str(self.videopasstoggle)
        self.remuxcaps = gst.Caps()
        if self.audiopasstoggle:
           self.remuxcaps.append(self.audiocaps)
@@ -113,7 +116,7 @@ class Transcoder(gobject.GObject):
           self.remuxcaps.append_structure(gst.Structure("audio/x-raw-int"))  
 
        if (self.audiopasstoggle) or (self.videopasstoggle):
-           print "remuxcaps is " + str(self.remuxcaps)
+           # print "remuxcaps is " + str(self.remuxcaps)
            self.uridecoder.set_property("caps", self.remuxcaps)
        self.pipeline.add(self.uridecoder)
        
@@ -127,20 +130,21 @@ class Transcoder(gobject.GObject):
                    sourcecaps = x.get_caps()
                    if videointersect == ("EMPTY"): 
                        videointersect = sourcecaps.intersect(gst.caps_from_string(self.videocaps))
-                       print "muxer video intersect is " + str(videointersect)
+                       # print "muxer video intersect is " + str(videointersect)
                        if videointersect != ("EMPTY"):
-                           print "pad is X which is " + str(x)
+                           # print "pad is X which is " + str(x)
                            self.containermuxervideosinkpad = self.containermuxer.get_request_pad(x.name_template)
-                           print "self.containermuxervideosinkpad " + str(self.containermuxervideosinkpad)
+                           # print "self.containermuxervideosinkpad " + str(self.containermuxervideosinkpad)
                    if audiointersect == ("EMPTY"):
-                       print "self.audiocaps is " + str(self.audiocaps)
+                       # print "self.audiocaps is " + str(self.audiocaps)
+                       # print "caps converted audio caps is " + str(gst.caps_from_string(self.audiocaps))
                        audiointersect = sourcecaps.intersect(gst.caps_from_string(self.audiocaps))
-                       print "muxer audio intersect is " + str(audiointersect)
+                       # print "muxer audio intersect is " + str(audiointersect)
                        if audiointersect != ("EMPTY"):
                            self.containermuxeraudiosinkpad = self.containermuxer.get_request_pad(x.name_template)
-                           print "self.containermuxeraudiosinkpad " + str(self.containermuxeraudiosinkpad)
-                       else:
-                           print "audiointersect is EMPTY and thus no self.containermuxeraudiosinkpad gets created"
+                           # print "self.containermuxeraudiosinkpad " + str(self.containermuxeraudiosinkpad)
+                       # else:
+                           # print "audiointersect is EMPTY and thus no self.containermuxeraudiosinkpad gets created"
            self.pipeline.add(self.containermuxer)
 
 
@@ -149,17 +153,17 @@ class Transcoder(gobject.GObject):
            self.pipeline.add(self.transcodefileoutput)
 
            self.containermuxer.link(self.transcodefileoutput)
-           print "reached end of first pipeline bulk, next step dynamic audio/video pads"
+           # print "reached end of first pipeline bulk, next step dynamic audio/video pads"
        else:
            self.multipassfakesink = gst.element_factory_make("fakesink", "multipassfakesink")
            self.pipeline.add(self.multipassfakesink)    
 
        self.uridecoder.set_state(gst.STATE_PAUSED)
-       print "setting uridcodebin to paused"
+       # print "setting uridcodebin to paused"
        self.BusMessages = self.BusWatcher()
 
        self.uridecoder.connect("no-more-pads", self.noMorePads) # we need to wait on this one before going further
-       print "connecting to no-more-pads"
+       # print "connecting to no-more-pads"
        # Get hold of all needed data from the XML profile files. 
    def provide_presets(self):
        devices = presets.get()
@@ -279,7 +283,7 @@ class Transcoder(gobject.GObject):
            self.transcodefileoutput.set_state(gst.STATE_PAUSED)
            self.containermuxer.set_state(gst.STATE_PAUSED)
        glib.idle_add(self.idlePlay)
-       print "No More pads received"
+       # print "No More pads received"
 
    def idlePlay(self):
         self.Pipeline("playing")
@@ -322,7 +326,7 @@ class Transcoder(gobject.GObject):
                if (self.multipass == False) or (self.passcounter == int(0)):
                    self.audioconverter = gst.element_factory_make("audioconvert")
                    self.pipeline.add(self.audioconverter)
-
+                   print "self.AudioEncoderPlugin is " + str(self.AudioEncoderPlugin)
                    self.audioencoder = gst.element_factory_make(self.AudioEncoderPlugin)
                    self.pipeline.add(self.audioencoder)
                    if self.preset != "nopreset":
@@ -360,8 +364,8 @@ class Transcoder(gobject.GObject):
                    self.acapsfilter.set_state(gst.STATE_PAUSED)
                self.audioencoder.set_state(gst.STATE_PAUSED)
                self.gstmultiqueue.set_state(gst.STATE_PAUSED)
-               print "containermuxer audio sinkpad  is " + str(self.containermuxeraudiosinkpad)
                self.multiqueueaudiosrcpad.link(self.containermuxeraudiosinkpad)
+               print "containermuxer audio sinkpad  is " + str(self.containermuxeraudiosinkpad)
 
            else:
                # TODO: dynamically plug correct parser. Iterate on parsers and intersect.
@@ -394,7 +398,7 @@ class Transcoder(gobject.GObject):
                    self.audioparse = gst.element_factory_make(self.aparserelement)
                    self.pipeline.add(self.audioparse)
 
-                   print "audiopad " + str(self.multiqueueaudiosinkpad)
+                   # print "audiopad " + str(self.multiqueueaudiosinkpad)
                    sink_pad.link(self.audioparse.get_static_pad("sink"))
                    self.audioparse.get_static_pad("src").link(self.multiqueueaudiosinkpad)                    
                    self.multiqueueaudiosrcpad.link(self.containermuxeraudiosinkpad)
@@ -403,7 +407,7 @@ class Transcoder(gobject.GObject):
 
        elif c.startswith("video/"):
            if self.videopasstoggle == False:
-               print "Got an video cap"
+               # print "Got an video cap"
                self.colorspaceconverter = gst.element_factory_make("ffmpegcolorspace")
                self.pipeline.add(self.colorspaceconverter)
 
@@ -460,7 +464,7 @@ class Transcoder(gobject.GObject):
 
                        self.colorspaceconvert3 = gst.element_factory_make("ffmpegcolorspace")
                        self.pipeline.add(self.colorspaceconvert3)
-               print "self.VideoEncoderPlugin is " + str(self.VideoEncoderPlugin)
+               # print "self.VideoEncoderPlugin is " + str(self.VideoEncoderPlugin)
                self.videoencoder = gst.element_factory_make(self.VideoEncoderPlugin)
                self.pipeline.add(self.videoencoder)
                if self.preset != "nopreset":
@@ -521,15 +525,15 @@ class Transcoder(gobject.GObject):
                self.videoencoder.set_state(gst.STATE_PAUSED)
                if self.multipass == False or (self.passcounter == int(0)):
                    self.gstmultiqueue.set_state(gst.STATE_PAUSED)
-                   print "self.multiqueuevideosrcpad is hopefully " + str(self.multiqueuevideosrcpad)
+                   # print "self.multiqueuevideosrcpad is hopefully " + str(self.multiqueuevideosrcpad)
 
                    self.multiqueuevideosrcpad.link(self.containermuxervideosinkpad)
            else:
-               print "videopasstoggle True, remuxing" + str(self.videopasstoggle)
+               # print "videopasstoggle True, remuxing" + str(self.videopasstoggle)
                vparsedcaps = gst.caps_from_string(self.videocaps+",parsed=true")
                vframedcaps = gst.caps_from_string(self.videocaps+",framed=true")
                if (sink_pad.get_caps().is_subset(vparsedcaps)) or (sink_pad.get_caps().is_subset(vframedcaps)):
-                   print "is framedcaps subset? Yes"
+                   # print "is framedcaps subset? Yes"
                    sink_pad.link(self.multiqueuevideosinkpad)
                    self.multiqueuevideosrcpad.link(self.containermuxervideosinkpad)
                    self.gstmultiqueue.set_state(gst.STATE_PAUSED)
@@ -552,7 +556,7 @@ class Transcoder(gobject.GObject):
                    self.videoparse = gst.element_factory_make(self.vparserelement)
                    self.pipeline.add(self.videoparse)
 
-                   print "videopad " + str(self.multiqueuevideosinkpad)
+                   # print "videopad " + str(self.multiqueuevideosinkpad)
                    sink_pad.link(self.videoparse.get_static_pad("sink"))
                    self.videoparse.get_static_pad("src").link(self.multiqueuevideosinkpad)                    
                    self.multiqueuevideosrcpad.link(self.containermuxervideosinkpad)

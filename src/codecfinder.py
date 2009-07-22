@@ -41,7 +41,7 @@ csuffixmap =   { 'Ogg' : ".ogg", 'Matroska' : ".mkv", 'MXF' : ".mxf", 'AVI' : ".
                         'MPEG4' : ".mp4", 'MPEG PS' : ".mpg", 'MPEG TS' : ".ts", 'FLV' : ".flv", '3GPP' : ".3gp" }
 
 codecmap = {     'vorbis' : "audio/x-vorbis", 'flac' : "audio/x-flac", 'mp3' : "audio/mpeg,mpegversion=1,layer=3", 
-                        'aac' : "audio/mpeg,mpegversion=[4, 2]", 'ac3' : "audio/x-ac3", 'speex' : "audio/x-speex", 
+                        'aac' : "audio/mpeg,mpegversion=4", 'ac3' : "audio/x-ac3", 'speex' : "audio/x-speex", 
                         'celt' : "audio/x-celt", 'alac' : "audio/x-alac", 'wma2' : "audio/x-wma,wmaversion=2", 
                         'theora' : "video/x-theora", 'dirac' : "video/x-dirac", 'h264' : "video/x-h264", 
                         'mpeg2' : "video/mpeg,mpegversion=2,systemstream=false", 'mpeg4' : "video/mpeg,mpegversion=4",
@@ -79,7 +79,6 @@ def get_muxer_element(containercaps):
        factory = gst.registry_get_default().lookup_feature(str(x))
        sinkcaps = [x.get_caps() for x in factory.get_static_pad_templates() if x.direction == gst.PAD_SRC]
        for caps in sinkcaps:
-
            result = caps[0].get_name()
            for attr in caps[0].keys():
                if attr not in blacklist:
@@ -133,9 +132,14 @@ def get_audio_encoder_element(audioencodercaps):
            sinkcaps = [x.get_caps() for x in factory.get_static_pad_templates() if x.direction == gst.PAD_SRC]
            for caps in sinkcaps:
                result = caps[0].get_name();
+               # print "result before attributes " + str(result)
                for attr in caps[0].keys():
                    if attr not in blacklist:
-                       result += ","+attr+"="+str(caps[0][attr])
+                       if codec == "faac":
+                           result = "audio/mpeg,mpegversion=4" 
+                       #ugly workaround for Caps.from_string not handling mpegversion =[2,4]
+                       else:
+                           result += ","+attr+"="+str(caps[0][attr])
            if audiocoderchoice.has_key(result):
                    mostrecent = gst.PluginFeature.get_rank(encoderfeature[codec])
                    original = gst.PluginFeature.get_rank(encoderfeature[audiocoderchoice[result]])
@@ -144,6 +148,7 @@ def get_audio_encoder_element(audioencodercaps):
            else:
                    audiocoderchoice[result] = codec
 
+   # print "*** printing audiocodecchoice ***"
    # print audiocoderchoice
    if audiocoderchoice.has_key(audioencodercaps):
        elementname = audiocoderchoice[audioencodercaps]
