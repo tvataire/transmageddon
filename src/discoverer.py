@@ -333,7 +333,7 @@ class Discoverer(gst.Pipeline):
            elif c.startswith("video/"):
               if c.startswith("video/x-raw-yuv") == False or c.startswith("video/x-raw-rgb") == False:
                   if caps.is_fixed():
-                      blacklist = ['height','width','framerate','depth','codec_data']
+                      blacklist = ['height','width','framerate','depth','codec_data','pixel-aspect-ratio']
                       for x in caps:
                            vresult = caps[0].get_name();
                            for attr in caps[0].keys():
