@@ -195,6 +195,7 @@ class TransmageddonUI (gtk.glade.XML):
        self.asourcecaps = False
        self.videopasstoggle=False
        self.audiopasstoggle=False
+       self.containertoggle=False # this toggle is used to not check for encoders with pbutils
 
        self.p_duration = gst.CLOCK_TIME_NONE
        self.p_time = gst.FORMAT_TIME
@@ -382,6 +383,7 @@ class TransmageddonUI (gtk.glade.XML):
                                       str(gst.pbutils.get_codec_description(self.audiodata['audiotype'])),'</small>')))
        if self.waiting_for_signal == "True":
            self.check_for_elements()
+           self._start_transcoding()
        if self.container != False:
            self.check_for_passthrough(self.container)
 
@@ -402,29 +404,36 @@ class TransmageddonUI (gtk.glade.XML):
    
    def check_for_passthrough(self, containerchoice):
        videointersect = ("EMPTY")
-       audiointersect = ("EMPTY")   
+       audiointersect = ("EMPTY")
+       print "container is " + str(containerchoice)
        container = codecfinder.containermap[containerchoice]
        containerelement = codecfinder.get_muxer_element(container)
-       factory = gst.registry_get_default().lookup_feature(containerelement)
-       for x in factory.get_static_pad_templates():
-           if (x.direction == gst.PAD_SINK):
-               sourcecaps = x.get_caps()
-               if videointersect == ("EMPTY"): 
-                   videointersect = sourcecaps.intersect(gst.caps_from_string(self.videodata['videotype']))
-                   if videointersect != ("EMPTY"):
-                       self.vsourcecaps = videointersect
-               if audiointersect == ("EMPTY"):
-                   audiointersect = sourcecaps.intersect(gst.caps_from_string(self.audiodata['audiotype']))
-                   if audiointersect != ("EMPTY"):
-                       self.asourcecaps = audiointersect
-       if videointersect == ("EMPTY"):
-           self.codec_buttons["vpass"].set_sensitive(False)
+       print "container element is " + str(containerelement)
+       if containerelement == False:
+           self.containertoggle = True
+           self.check_for_elements()
        else:
-           self.codec_buttons["vpass"].set_sensitive(True)
-       if audiointersect == ("EMPTY"):
-           self.codec_buttons["apass"].set_sensitive(False)
-       else:
-           self.codec_buttons["apass"].set_sensitive(True)
+           factory = gst.registry_get_default().lookup_feature(containerelement)
+           for x in factory.get_static_pad_templates():
+               if (x.direction == gst.PAD_SINK):
+                   sourcecaps = x.get_caps()
+                   if videointersect == ("EMPTY"):
+                       print "self.videodata is " + str(self.videodata)
+                       videointersect = sourcecaps.intersect(gst.caps_from_string(self.videodata['videotype']))
+                       if videointersect != ("EMPTY"):
+                           self.vsourcecaps = videointersect
+                   if audiointersect == ("EMPTY"):
+                       audiointersect = sourcecaps.intersect(gst.caps_from_string(self.audiodata['audiotype']))
+                       if audiointersect != ("EMPTY"):
+                           self.asourcecaps = audiointersect
+               if videointersect == ("EMPTY"):
+                   self.codec_buttons["vpass"].set_sensitive(False)
+           else:
+               self.codec_buttons["vpass"].set_sensitive(True)
+           if audiointersect == ("EMPTY"):
+               self.codec_buttons["apass"].set_sensitive(False)
+           else:
+               self.codec_buttons["apass"].set_sensitive(True)
 
    # define the behaviour of the other buttons
    def on_FileChooser_file_set(self, widget):
@@ -474,12 +483,12 @@ class TransmageddonUI (gtk.glade.XML):
                print "Plugin registry updated, trying again"
            else:
                print "GStreamer registry update failed"
-           self._start_transcoding()
+           if self.containertoggle == False:
+               self._start_transcoding()
        elif donemessage == gst.pbutils.INSTALL_PLUGINS_PARTIAL_SUCCESS:
            #print "partial success " + str(donemessage)
            self.check_for_elements()
        elif donemessage == gst.pbutils.INSTALL_PLUGINS_NOT_FOUND:
-           # print "not found " + str(donemessage)
            context_id = self.StatusBar.get_context_id("EOS")
            self.StatusBar.push(context_id, _("Plugins not found, choose different codecs."))
            self.FileChooser.set_sensitive(True)
@@ -512,7 +521,10 @@ class TransmageddonUI (gtk.glade.XML):
            videostatus = "vpass"
 
        if not containerstatus or not videostatus or not audiostatus:
-           fail_info = []  
+           fail_info = []
+           if self.containertoggle==True:
+               audiostatus=True
+               videostatus=True
            if containerstatus == False: 
                fail_info.append(gst.caps_from_string(codecfinder.containermap[containerchoice]))
            if audiostatus == False:
@@ -520,15 +532,17 @@ class TransmageddonUI (gtk.glade.XML):
            if videostatus == False:
                fail_info.append(gst.caps_from_string (codecfinder.codecmap[self.VideoCodec]))
            missing = []
+           print "empty missing is " + str(missing)
            for x in fail_info:
                missing.append(gst.pbutils.missing_encoder_installer_detail_new(x))
            context = gst.pbutils.InstallPluginsContext ()
-           gst.pbutils.install_plugins_async (missing, context, self.donemessage, "")
-       else:
-           self._start_transcoding()
+           print "missing is " + str(missing)
+           strmissing = str(missing)
+           gst.pbutils.install_plugins_async (missing, context, self.donemessage, "NULL")
 
    # The transcodebutton is the one that calls the Transcoder class and thus starts the transcoding
    def on_transcodebutton_clicked(self, widget):
+       self.containertoggle = False
        self.FileChooser.set_sensitive(False)
        self.containerchoice.set_sensitive(False)
        self.presetchoice.set_sensitive(False)
@@ -555,6 +569,7 @@ class TransmageddonUI (gtk.glade.XML):
            self.ProgressBar.set_text(_("Pass " + str(self.passcounter) + " Progress"))
        if self.audiodata.has_key("samplerate"):
            self.check_for_elements()
+           self._start_transcoding()
        else:
            self.waiting_for_signal="True"
 
@@ -587,6 +602,7 @@ class TransmageddonUI (gtk.glade.XML):
            b.set_sensitive(False)
        for c in codecs:
            self.codec_buttons[c].set_sensitive(True)
+       print "self.AudioCodec before active button is " + str(self.AudioCodec)
        self.codec_buttons[self.AudioCodec].set_active(True)
        self.codec_buttons[self.VideoCodec].set_active(True)
        self.check_for_passthrough(self.container)
