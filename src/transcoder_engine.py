@@ -133,11 +133,14 @@ class Transcoder(gobject.GObject):
                            self.containermuxervideosinkpad = self.containermuxer.get_request_pad(x.name_template)
                            print "self.containermuxervideosinkpad " + str(self.containermuxervideosinkpad)
                    if audiointersect == ("EMPTY"):
+                       print "self.audiocaps is " + str(self.audiocaps)
                        audiointersect = sourcecaps.intersect(gst.caps_from_string(self.audiocaps))
                        print "muxer audio intersect is " + str(audiointersect)
                        if audiointersect != ("EMPTY"):
                            self.containermuxeraudiosinkpad = self.containermuxer.get_request_pad(x.name_template)
                            print "self.containermuxeraudiosinkpad " + str(self.containermuxeraudiosinkpad)
+                       else:
+                           print "audiointersect is EMPTY and thus no self.containermuxeraudiosinkpad gets created"
            self.pipeline.add(self.containermuxer)
 
 
@@ -357,6 +360,7 @@ class Transcoder(gobject.GObject):
                    self.acapsfilter.set_state(gst.STATE_PAUSED)
                self.audioencoder.set_state(gst.STATE_PAUSED)
                self.gstmultiqueue.set_state(gst.STATE_PAUSED)
+               print "containermuxer audio sinkpad  is " + str(self.containermuxeraudiosinkpad)
                self.multiqueueaudiosrcpad.link(self.containermuxeraudiosinkpad)
 
            else:
