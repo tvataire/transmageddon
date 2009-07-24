@@ -322,7 +322,8 @@ class Discoverer(gst.Pipeline):
                    # if caps[0].has_field("rate"):
                        if caps.is_fixed():
                            blacklist = ['rate','channels','bitrate','block_align','mode','subbands'
-                                        ,'allocation','framed','bitpool','blocks','width','parsed']
+                                        ,'allocation','framed','bitpool','blocks','width','parsed','depth'
+                                        ,'codec_data']
                            for x in caps:
                                aresult = caps[0].get_name();
                                for attr in caps[0].keys():
@@ -333,7 +334,7 @@ class Discoverer(gst.Pipeline):
            elif c.startswith("video/"):
               if c.startswith("video/x-raw-yuv") == False or c.startswith("video/x-raw-rgb") == False:
                   if caps.is_fixed():
-                      blacklist = ['height','width','framerate','depth','codec_data','pixel-aspect-ratio']
+                      blacklist = ['height','width','framerate','depth','codec_data','pixel-aspect-ratio','format']
                       for x in caps:
                            vresult = caps[0].get_name();
                            for attr in caps[0].keys():

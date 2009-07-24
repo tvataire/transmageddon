@@ -374,6 +374,7 @@ class TransmageddonUI (gtk.glade.XML):
                               'videolenght' : d.videolength, 'fratenum' : d.videorate.num, 'frateden' :  d.videorate.denom }
            self.videoinformation.set_markup(''.join(('<small>', 'Video height&#47;width: ', str(self.videodata['videoheight']), 
                                             "x", str(self.videodata['videowidth']), '</small>')))
+           print "self.videodata[videotype] is " + str(self.videodata['videotype'])
            self.videocodec.set_markup(''.join(('<small>', 'Video codec: ', 
                                        str(gst.pbutils.get_codec_description(self.videodata['videotype'])), 
                                       '</small>')))
