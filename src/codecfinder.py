@@ -42,9 +42,9 @@ csuffixmap =   { 'Ogg' : ".ogg", 'Matroska' : ".mkv", 'MXF' : ".mxf", 'AVI' : ".
                         'MPEG4' : ".mp4", 'MPEG PS' : ".mpg", 'MPEG TS' : ".ts", 'FLV' : ".flv", '3GPP' : ".3gp",
                  'ASF' : ".asf" }
 
-codecmap = {     'vorbis' : "audio/x-vorbis", 'flac' : "audio/x-flac", 'mp3' : "audio/mpeg,mpegversion=1,layer=3", 
-                        'aac' : "audio/mpeg,mpegversion=4", 'ac3' : "audio/x-ac3", 'speex' : "audio/x-speex", 
-                        'celt' : "audio/x-celt", 'alac' : "audio/x-alac", 'wma2' : "audio/x-wma,wmaversion=2", 
+codecmap = {     'vorbis' : "audio/x-vorbis", 'flac' : "audio/x-flac", 'mp3' : "audio/mpeg, mpegversion=(int)1, layer=(int)3", 
+                        'aac' : "audio/mpeg, mpegversion=(int){ 4, 2 }", 'ac3' : "audio/x-ac3", 'speex' : "audio/x-speex", 
+                        'celt' : "audio/x-celt", 'alac' : "audio/x-alac", 'wma2' : "audio/x-wma, wmaversion=(int)2", 
                         'theora' : "video/x-theora", 'dirac' : "video/x-dirac", 'h264' : "video/x-h264", 
                         'mpeg2' : "video/mpeg,mpegversion=2,systemstream=false", 'mpeg4' : "video/mpeg,mpegversion=4",
                         'xvid' : "video/x-xvid", 'dnxhd' : "video/x-dnxhd", 'wmv2' : "video/x-wmv,wmvversion=2",
@@ -131,14 +131,14 @@ def get_audio_encoder_element(audioencodercaps):
            codec = x
            factory = gst.registry_get_default().lookup_feature(str(x))
            sinkcaps = [x.get_caps() for x in factory.get_static_pad_templates() if x.direction == gst.PAD_SRC]
+	   result = ""
            for caps in sinkcaps:
-               result = caps[0].get_name();
-               # print "result before attributes " + str(result)
-               for attr in caps[0].keys():
-                   if attr not in blacklist:
-                       result += ","+attr+"="+str(caps[0][attr])
-                       if result == "audio/mpeg,mpegversion=[4, 2]":
-                           result = "audio/mpeg,mpegversion=4"
+               structure = gst.Structure(caps[0].get_name())
+               for k in caps[0].keys():
+                    if k not in blacklist:
+                        structure[k] = caps[0][k]
+               result += structure.to_string()[:-1]
+               # print "audio result is " + str(result) 
            if audiocoderchoice.has_key(result):
                    mostrecent = gst.PluginFeature.get_rank(encoderfeature[codec])
                    original = gst.PluginFeature.get_rank(encoderfeature[audiocoderchoice[result]])
@@ -146,7 +146,8 @@ def get_audio_encoder_element(audioencodercaps):
                        audiocoderchoice[result] = codec
            else:
                    audiocoderchoice[result] = codec
-
+   print audiocoderchoice
+   print "audioencodercaps incoming is " + str(audioencodercaps)
    if audiocoderchoice.has_key(audioencodercaps):
        elementname = audiocoderchoice[audioencodercaps]
    else:
