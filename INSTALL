@@ -1,7 +1,7 @@
 Requirements:
 
 Transmageddon relies on a set of libraries to be a certain version to
-work optimaly, namely:
+work optimaly. Namely:
 
 gstreamer-plugins-good: 0.10.15 or higher
 gstreamer-plugins-base: 0.10.23 or higher
@@ -9,4 +9,7 @@ gstreamer-plugins-ugly: 0.10.12 or higher
 gstreamer-plugins-bad: 0.10.13 or higher
 gstreamer-ffmpeg: 0.10.7 or higher
 
-pygobject: 2.18.0 or higher 
+pygobject: 2.18.0 or higher
+pycairo
+pygtk
+gst-python
