@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: transmageddon\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-09 14:18+0200\n"
-"PO-Revision-Date: 2009-07-09 17:14+0100\n"
+"POT-Creation-Date: 2009-07-28 16:49+0200\n"
+"PO-Revision-Date: 2009-07-28 16:50+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -188,77 +188,118 @@ msgid "Vorbis"
 msgstr "Vorbis"
 
 #: ../src/transmageddon.glade.h:28
+msgid "WMA2"
+msgstr "WMA2"
+
+#: ../src/transmageddon.glade.h:29
+msgid "WMV2"
+msgstr "WMV2"
+
+#: ../src/transmageddon.glade.h:30
 msgid "_Edit"
 msgstr "R_edigera"
 
-#: ../src/transmageddon.glade.h:29
+#: ../src/transmageddon.glade.h:31
 msgid "_File"
 msgstr "_Arkiv"
 
-#: ../src/transmageddon.glade.h:30
+#: ../src/transmageddon.glade.h:32
 msgid "_Help"
 msgstr "_Hjälp"
 
-#: ../src/transmageddon.glade.h:31
+#: ../src/transmageddon.glade.h:33
 msgid "_View"
 msgstr "_Visa"
 
-#: ../src/transmageddon.glade.h:32
+#: ../src/transmageddon.glade.h:34
 msgid "mp3"
 msgstr "mp3"
 
-#: ../src/transmageddon.glade.h:33
+#: ../src/transmageddon.glade.h:35
 msgid "xvid"
 msgstr "xvid"
 
-#: ../src/transmageddon.py:192
-#: ../src/transmageddon.py:428
-#: ../src/transmageddon.py:534
-#: ../src/transmageddon.py:553
-#: ../src/transmageddon.py:561
+#: ../src/transmageddon.py:196
+#: ../src/transmageddon.py:453
+#: ../src/transmageddon.py:569
+#: ../src/transmageddon.py:590
+#: ../src/transmageddon.py:598
 msgid "Transcoding Progress"
 msgstr "Förlopp för omkodning"
 
-#: ../src/transmageddon.py:304
+#. Populate the rotatation box
+#: ../src/transmageddon.py:213
+msgid "No rotation (default)"
+msgstr "Ingen rotering (standard)"
+
+#: ../src/transmageddon.py:213
+msgid "Clockwise 90 degrees"
+msgstr "Medsols 90 grader"
+
+#: ../src/transmageddon.py:213
+msgid "Rotate 180 degrees"
+msgstr "Rotera 180 grader"
+
+#: ../src/transmageddon.py:214
+msgid "Counterclockwise 90 degrees"
+msgstr "Motsols 90 grader"
+
+#: ../src/transmageddon.py:214
+msgid "Horizontal flip"
+msgstr "Vänd horisontellt"
+
+#: ../src/transmageddon.py:215
+msgid "Vertical flip"
+msgstr "Vänd vertikalt"
+
+#: ../src/transmageddon.py:215
+msgid "Upper left diagonal flip"
+msgstr "Diagonal vändning i övre vänster"
+
+#: ../src/transmageddon.py:216
+msgid "Upper right diagnonal flip"
+msgstr "Diagonal vändning i övre höger"
+
+#: ../src/transmageddon.py:313
 #, python-format
 msgid "%(min)d:%(sec)02d"
 msgstr "%(min)d:%(sec)02d"
 
-#: ../src/transmageddon.py:310
+#: ../src/transmageddon.py:319
 msgid "Estimated time remaining: "
 msgstr "Återstående tid: "
 
-#: ../src/transmageddon.py:312
-#: ../src/transmageddon.py:350
-#: ../src/transmageddon.py:537
+#: ../src/transmageddon.py:321
+#: ../src/transmageddon.py:359
+#: ../src/transmageddon.py:572
 msgid "Pass "
 msgstr "Pass "
 
-#: ../src/transmageddon.py:335
+#: ../src/transmageddon.py:344
 msgid "File saved to "
 msgstr "Filen sparades till "
 
-#: ../src/transmageddon.py:344
+#: ../src/transmageddon.py:353
 msgid "Done Transcoding"
 msgstr "Omkodningen är färdig"
 
-#: ../src/transmageddon.py:352
+#: ../src/transmageddon.py:361
 msgid "Start next pass"
 msgstr "Starta nästa pass"
 
-#: ../src/transmageddon.py:466
+#: ../src/transmageddon.py:498
 msgid "Plugins not found, choose different codecs."
 msgstr "Insticksmoduler hittades inte. Välj andra kodekar."
 
-#: ../src/transmageddon.py:474
+#: ../src/transmageddon.py:506
 msgid "Codec installation aborted."
 msgstr "Kodekinstallationen avbröts."
 
-#: ../src/transmageddon.py:482
+#: ../src/transmageddon.py:514
 msgid "Missing plugin installation failed: "
 msgstr "Installation av saknad insticksmodul misslyckades: "
 
-#: ../src/transmageddon.py:532
+#: ../src/transmageddon.py:567
 msgid "Writing "
 msgstr "Skriver "
 
