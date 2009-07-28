@@ -159,9 +159,11 @@ class TransmageddonUI (gtk.glade.XML):
        if 'get_user_special_dir' in glib.__dict__:
            self.videodirectory = glib.get_user_special_dir(glib.USER_DIRECTORY_VIDEOS)
        else:
-            print "XDG video directory not available"
-            self.videodirectory = os.getenv('HOME')
-
+           print "XDG video directory not available"
+           self.videodirectory = os.getenv('HOME')
+       if self.videodirectory is None:
+           print "XDG video directory not available"
+           self.videodirectory = os.getenv('HOME')
        CheckDir = os.path.isdir(self.videodirectory)
        if CheckDir == (False):
            os.mkdir(self.videodirectory)
