@@ -98,7 +98,7 @@ supported_container_map = {
     'MXF':        [ 'mp3', 'h264', 'aac', 'ac3', 'mpeg2', 'mpeg4' ],
     'Matroska':   [ 'flac', 'dirac', 'aac', 'ac3', 'theora', 'mp3', 'h264',
     'mpeg4', 'mpeg2', 'xvid', 'vorbis', 'h263p' ],
-    'AVI':        [ 'mp3', 'h264', 'dirac', 'ac3', 'mpeg2', 'mpeg4', 'xvid' ],
+    'AVI':        [ 'mp3', 'h264', 'dirac', 'ac3', 'mpeg2', 'mpeg4', 'xvid','wma2','wmv2' ],
     'Quicktime':  [ 'aac', 'h264', 'ac3', 'dirac', 'mp3', 'mpeg2', 'mpeg4' ],
     'MPEG4':      [ 'aac', 'h264', 'mp3', 'mpeg2', 'mpeg4' ],
     '3GPP':       [ 'aac', 'h264', 'mp3', 'mpeg2', 'mpeg4','amrnb','h263p' ],
@@ -374,7 +374,6 @@ class TransmageddonUI (gtk.glade.XML):
                               'videolenght' : d.videolength, 'fratenum' : d.videorate.num, 'frateden' :  d.videorate.denom }
            self.videoinformation.set_markup(''.join(('<small>', 'Video height&#47;width: ', str(self.videodata['videoheight']), 
                                             "x", str(self.videodata['videowidth']), '</small>')))
-           print "self.videodata[videotype] is " + str(self.videodata['videotype'])
            self.videocodec.set_markup(''.join(('<small>', 'Video codec: ', 
                                        str(gst.pbutils.get_codec_description(self.videodata['videotype'])), 
                                       '</small>')))
@@ -425,10 +424,7 @@ class TransmageddonUI (gtk.glade.XML):
                    sourcecaps = x.get_caps()
                    if videointersect == ("EMPTY"):
                        videointersect = sourcecaps.intersect(gst.caps_from_string(self.videodata['videotype']))
-                       print "video intersect is " + str(videointersect)
                        if videointersect != ("EMPTY"):
-                           print "videointersect is not empty"
-                           print "self.vsourcecaps is set to " + str(videointersect)
                            self.vsourcecaps = videointersect
                    if audiointersect == ("EMPTY"):
                        audiointersect = sourcecaps.intersect(gst.caps_from_string(self.audiodata['audiotype']))
@@ -465,9 +461,7 @@ class TransmageddonUI (gtk.glade.XML):
        if self.videopasstoggle == False:
            videocodec = codecfinder.codecmap[self.VideoCodec]
        else:
-           print "self.vsourcecaps is " + str(self.vsourcecaps)
            videocodec = gst.Caps.to_string(self.vsourcecaps)
-       print "audiopass toggle " + str(self.audiopasstoggle)
        if self.audiopasstoggle == False:
            audiocodec = codecfinder.codecmap[self.AudioCodec]
        else:
@@ -541,11 +535,9 @@ class TransmageddonUI (gtk.glade.XML):
            if videostatus == False:
                fail_info.append(gst.caps_from_string (codecfinder.codecmap[self.VideoCodec]))
            missing = []
-           # print "empty missing is " + str(missing)
            for x in fail_info:
                missing.append(gst.pbutils.missing_encoder_installer_detail_new(x))
            context = gst.pbutils.InstallPluginsContext ()
-           # print "missing is " + str(missing)
            strmissing = str(missing)
            gst.pbutils.install_plugins_async (missing, context, self.donemessage, "NULL")
 
