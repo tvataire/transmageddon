@@ -330,7 +330,7 @@ class Discoverer(gst.Pipeline):
                                    if attr not in blacklist:
                                        aresult += ","+attr+"="+str(caps[0][attr])
                            self.inputaudiocaps = aresult
-                           print "discoverer: self.inputaudiocaps " + str(self.inputaudiocaps)
+                           # print "discoverer: self.inputaudiocaps " + str(self.inputaudiocaps)
            elif c.startswith("video/"):
               if c.startswith("video/x-raw-yuv") == False or c.startswith("video/x-raw-rgb") == False:
                   if caps.is_fixed():

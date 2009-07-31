@@ -52,6 +52,8 @@ if (major == 2) and (minor < 18):
    print "You need version 2.18.0 or higher of pygobject for Transmageddon" 
    sys.exit(1)
 
+os.environ["GST_DEBUG_DUMP_DOT_DIR"] = '/tmp'
+
 supported_containers = [
         "Ogg",
         "Matroska",
@@ -577,7 +579,6 @@ class TransmageddonUI (gtk.glade.XML):
            self.waiting_for_signal="True"
 
    def on_cancelbutton_clicked(self, widget):
-     #  gst.DEBUG_BIN_TO_DOT_FILE (self._transcoder.pipeline, gst.DEBUG_GRAPH_SHOW_ALL, 'janishardcore.dot')
        self.FileChooser.set_sensitive(True)
        self.containerchoice.set_sensitive(True)
        self.CodecBox.set_sensitive(True)
@@ -605,7 +606,6 @@ class TransmageddonUI (gtk.glade.XML):
            b.set_sensitive(False)
        for c in codecs:
            self.codec_buttons[c].set_sensitive(True)
-       # print "self.AudioCodec before active button is " + str(self.AudioCodec)
        self.codec_buttons[self.AudioCodec].set_active(True)
        self.codec_buttons[self.VideoCodec].set_active(True)
        self.check_for_passthrough(self.container)
@@ -635,7 +635,6 @@ class TransmageddonUI (gtk.glade.XML):
 
    def on_rotationchoice_changed(self, widget):
        self.rotationvalue = self.rotationchoice.get_active()
-       # print "rotationchoice value " + str(self.rotationvalue)
 
    def on_audiobutton_pressed(self, widget, codec):
        self.AudioCodec = codec
@@ -657,6 +656,10 @@ class TransmageddonUI (gtk.glade.XML):
        """
        about.AboutDialog()
 
+   def on_debug_activate(self, widget):
+       gst.DEBUG_BIN_TO_DOT_FILE (self._transcoder.pipeline, gst.DEBUG_GRAPH_SHOW_ALL, 'transmageddon-debug-graph')
+       os.system("dot -Tsvg -o /tmp/transmageddon-pipeline.svg /tmp/transmageddon-debug-graph.dot")
+       os.system("eog /tmp/transmageddon-pipeline.svg &")
 if __name__ == "__main__":
         hwg = TransmageddonUI()
         gtk.main()

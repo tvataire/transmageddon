@@ -146,8 +146,7 @@ def get_audio_encoder_element(audioencodercaps):
                        audiocoderchoice[result] = codec
            else:
                    audiocoderchoice[result] = codec
-   print audiocoderchoice
-   print "audioencodercaps incoming is " + str(audioencodercaps)
+
    if audiocoderchoice.has_key(audioencodercaps):
        elementname = audiocoderchoice[audioencodercaps]
    else:

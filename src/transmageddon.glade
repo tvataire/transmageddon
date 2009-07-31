@@ -129,6 +129,24 @@
                   <widget class="GtkMenu" id="menu6">
                     <property name="visible">True</property>
                     <child>
+                      <widget class="GtkImageMenuItem" id="debug">
+                        <property name="label">Debug</property>
+                        <property name="visible">True</property>
+                        <property name="use_stock">False</property>
+                        <signal name="activate" handler="on_debug_activate"/>
+                        <child internal-child="image">
+                          <widget class="GtkImage" id="image1">
+                            <property name="visible">True</property>
+                            <property name="xalign">0.40000000596046448</property>
+                            <property name="yalign">0.40000000596046448</property>
+                            <property name="xpad">6</property>
+                            <property name="stock">gtk-dialog-info</property>
+                            <property name="icon-size">2</property>
+                          </widget>
+                        </child>
+                      </widget>
+                    </child>
+                    <child>
                       <widget class="GtkImageMenuItem" id="about_dialog">
                         <property name="label">gtk-about</property>
                         <property name="visible">True</property>

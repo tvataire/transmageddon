@@ -130,21 +130,14 @@ class Transcoder(gobject.GObject):
                    sourcecaps = x.get_caps()
                    if videointersect == ("EMPTY"): 
                        videointersect = sourcecaps.intersect(gst.caps_from_string(self.videocaps))
-                       # print "muxer video intersect is " + str(videointersect)
                        if videointersect != ("EMPTY"):
                            # print "pad is X which is " + str(x)
                            self.containermuxervideosinkpad = self.containermuxer.get_request_pad(x.name_template)
-                           print "self.containermuxervideosinkpad is " + str(self.containermuxervideosinkpad)
                    if audiointersect == ("EMPTY"):
-                       # print "self.audiocaps is " + str(self.audiocaps)
-                       # print "caps converted audio caps is " + str(gst.caps_from_string(self.audiocaps))
                        audiointersect = sourcecaps.intersect(gst.caps_from_string(self.audiocaps))
-                       print "muxer audio intersect is " + str(audiointersect)
                        if audiointersect != ("EMPTY"):
                            self.containermuxeraudiosinkpad = self.containermuxer.get_request_pad(x.name_template)
-                           # print "self.containermuxeraudiosinkpad " + str(self.containermuxeraudiosinkpad)
-                       # else:
-                           # print "audiointersect is EMPTY and thus no self.containermuxeraudiosinkpad gets created"
+
            self.pipeline.add(self.containermuxer)
 
 
@@ -321,12 +314,11 @@ class Transcoder(gobject.GObject):
    def OnDynamicPad(self, dbin, sink_pad):
        c = sink_pad.get_caps().to_string()
        if c.startswith("audio/"):
-           print "audio pad found"
+           # print "audio pad found"
            if self.audiopasstoggle == False:
                if (self.multipass == False) or (self.passcounter == int(0)):
                    self.audioconverter = gst.element_factory_make("audioconvert")
                    self.pipeline.add(self.audioconverter)
-                   print "self.AudioEncoderPlugin is " + str(self.AudioEncoderPlugin)
                    self.audioencoder = gst.element_factory_make(self.AudioEncoderPlugin)
                    self.pipeline.add(self.audioencoder)
                    if self.preset != "nopreset":
@@ -365,7 +357,7 @@ class Transcoder(gobject.GObject):
                self.audioencoder.set_state(gst.STATE_PAUSED)
                self.gstmultiqueue.set_state(gst.STATE_PAUSED)
                self.multiqueueaudiosrcpad.link(self.containermuxeraudiosinkpad)
-               print "containermuxer audio sinkpad  is " + str(self.containermuxeraudiosinkpad)
+
 
            else:
                # TODO: dynamically plug correct parser. Iterate on parsers and intersect.
@@ -373,13 +365,11 @@ class Transcoder(gobject.GObject):
                parsedcaps = gst.caps_from_string(self.audiocaps+",parsed=true")
                framedcaps = gst.caps_from_string(self.audiocaps+",framed=true")
                if (sink_pad.get_caps().is_subset(parsedcaps)) or (sink_pad.get_caps().is_subset(framedcaps)):
-                   print "is framedcaps subset? Yes"
                    sink_pad.link(self.multiqueueaudiosinkpad)
                    self.multiqueueaudiosrcpad.link(self.containermuxeraudiosinkpad)
                    self.gstmultiqueue.set_state(gst.STATE_PAUSED)
                else:
                    flist = gst.registry_get_default().get_feature_list(gst.ElementFactory)
-                   print "need audio parser"
                    parsers = []
                    for fact in flist:
                        # print "fact is " + str(fact)
@@ -522,12 +512,10 @@ class Transcoder(gobject.GObject):
                vparsedcaps = gst.caps_from_string(self.videocaps+",parsed=true")
                vframedcaps = gst.caps_from_string(self.videocaps+",framed=true")
                if (sink_pad.get_caps().is_subset(vparsedcaps)) or (sink_pad.get_caps().is_subset(vframedcaps)):
-                   print "video is framed, no need for parser"
                    sink_pad.link(self.multiqueuevideosinkpad)
                    self.multiqueuevideosrcpad.link(self.containermuxervideosinkpad)
                    self.gstmultiqueue.set_state(gst.STATE_PAUSED)
                else:
-                   print "video is NOT framed, need parser"
                    flist = gst.registry_get_default().get_feature_list(gst.ElementFactory)
                    parsers = []
                    for fact in flist:
@@ -542,7 +530,6 @@ class Transcoder(gobject.GObject):
                                    if parseintersect == ("EMPTY"):
                                        parseintersect = caps.intersect(gst.caps_from_string(self.videocaps))
                                    if parseintersect != ("EMPTY"):
-                                       print "setting parser element" + str(parser)
                                        self.vparserelement = parser
                                        self.videoparse = gst.element_factory_make(self.vparserelement)
                                        self.pipeline.add(self.videoparse)
