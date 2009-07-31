@@ -658,8 +658,9 @@ class TransmageddonUI (gtk.glade.XML):
 
    def on_debug_activate(self, widget):
        gst.DEBUG_BIN_TO_DOT_FILE (self._transcoder.pipeline, gst.DEBUG_GRAPH_SHOW_ALL, 'transmageddon-debug-graph')
-       os.system("dot -Tsvg -o /tmp/transmageddon-pipeline.svg /tmp/transmageddon-debug-graph.dot")
-       os.system("eog /tmp/transmageddon-pipeline.svg &")
+       print "The debug feature requirs Eye of GNOME (eog) and graphviz (dot) to be installed"
+       os.system("dot -Tpng -o /tmp/transmageddon-pipeline.png /tmp/transmageddon-debug-graph.dot")
+       os.system("eog /tmp/transmageddon-pipeline.png &")
 if __name__ == "__main__":
         hwg = TransmageddonUI()
         gtk.main()

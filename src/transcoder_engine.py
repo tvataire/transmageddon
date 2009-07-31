@@ -330,7 +330,8 @@ class Transcoder(gobject.GObject):
 
                    self.audioresampler = gst.element_factory_make("audioresample")
                    self.pipeline.add(self.audioresampler)
-
+               
+               if self.preset != "nopreset":
                    self.acaps = gst.Caps()
                    self.acaps.append_structure(gst.Structure("audio/x-raw-float"))
                    self.acaps.append_structure(gst.Structure("audio/x-raw-int"))
@@ -348,12 +349,13 @@ class Transcoder(gobject.GObject):
                    self.audioresampler.link(self.acapsfilter)
                    self.acapsfilter.link(self.audioencoder)
                else:
-                   self.audioconverter.link(self.audioencoder)
+                   self.audioconverter.link(self.audioresampler)
+                   self.audioresampler.link(self.audioencoder)
                self.audioencoder.get_static_pad("src").link(self.multiqueueaudiosinkpad)
                self.audioconverter.set_state(gst.STATE_PAUSED)
                if self.preset != "nopreset":
-                   self.audioresampler.set_state(gst.STATE_PAUSED)
                    self.acapsfilter.set_state(gst.STATE_PAUSED)
+               self.audioresampler.set_state(gst.STATE_PAUSED)
                self.audioencoder.set_state(gst.STATE_PAUSED)
                self.gstmultiqueue.set_state(gst.STATE_PAUSED)
                self.multiqueueaudiosrcpad.link(self.containermuxeraudiosinkpad)
