@@ -7,10 +7,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=transmageddon&component=General\n"
-"POT-Creation-Date: 2009-07-10 20:13+0000\n"
-"PO-Revision-Date: 2009-07-13 14:14+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-08-31 22:53+0100\n"
+"PO-Revision-Date: 2009-08-31 12:56+0100\n"
 "Last-Translator: Filipe Gomes <filipefgomes@gmail.com>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -190,74 +189,115 @@ msgid "Vorbis"
 msgstr "Vorbis"
 
 #: ../src/transmageddon.glade.h:28
+msgid "WMA2"
+msgstr "WMA2"
+
+#: ../src/transmageddon.glade.h:29
+msgid "WMV2"
+msgstr "WMV2"
+
+#: ../src/transmageddon.glade.h:30
 msgid "_Edit"
 msgstr "_Editar"
 
-#: ../src/transmageddon.glade.h:29
+#: ../src/transmageddon.glade.h:31
 msgid "_File"
 msgstr "_Ficheiro"
 
-#: ../src/transmageddon.glade.h:30
+#: ../src/transmageddon.glade.h:32
 msgid "_Help"
 msgstr "_Ajuda"
 
-#: ../src/transmageddon.glade.h:31
+#: ../src/transmageddon.glade.h:33
 msgid "_View"
 msgstr "_Ver"
 
-#: ../src/transmageddon.glade.h:32
+#: ../src/transmageddon.glade.h:34
 msgid "mp3"
 msgstr "mp3"
 
-#: ../src/transmageddon.glade.h:33
+#: ../src/transmageddon.glade.h:35
 msgid "xvid"
 msgstr "xvid"
 
-#: ../src/transmageddon.py:192 ../src/transmageddon.py:438
-#: ../src/transmageddon.py:552 ../src/transmageddon.py:572
-#: ../src/transmageddon.py:580
+#: ../src/transmageddon.py:198 ../src/transmageddon.py:455
+#: ../src/transmageddon.py:571 ../src/transmageddon.py:591
+#: ../src/transmageddon.py:599
 msgid "Transcoding Progress"
 msgstr "Progresso da Codificação"
 
-#: ../src/transmageddon.py:308
+#. Populate the rotatation box
+#: ../src/transmageddon.py:215
+msgid "No rotation (default)"
+msgstr "Sem rotação (omissão)"
+
+#: ../src/transmageddon.py:215
+msgid "Clockwise 90 degrees"
+msgstr "Sentido horário 90 graus"
+
+#: ../src/transmageddon.py:215
+msgid "Rotate 180 degrees"
+msgstr "Rodar 180 graus"
+
+#: ../src/transmageddon.py:216
+msgid "Counterclockwise 90 degrees"
+msgstr "Sentido anti-horário 90 graus"
+
+#: ../src/transmageddon.py:216
+msgid "Horizontal flip"
+msgstr "Inverter na horizontal"
+
+#: ../src/transmageddon.py:217
+msgid "Vertical flip"
+msgstr "Inverter na vertical"
+
+#: ../src/transmageddon.py:217
+msgid "Upper left diagonal flip"
+msgstr "Inverter na diagonal do topo esquerdo"
+
+#: ../src/transmageddon.py:218
+msgid "Upper right diagnonal flip"
+msgstr "Inverter na diagonal do topo direito"
+
+#: ../src/transmageddon.py:315
 #, python-format
 msgid "%(min)d:%(sec)02d"
 msgstr "%(min)d:%(sec)02d"
 
-#: ../src/transmageddon.py:314
+#: ../src/transmageddon.py:321
 msgid "Estimated time remaining: "
 msgstr "Tempo restante estimado:"
 
-#: ../src/transmageddon.py:316 ../src/transmageddon.py:354
-#: ../src/transmageddon.py:555
+#: ../src/transmageddon.py:323 ../src/transmageddon.py:361
+#: ../src/transmageddon.py:574
 msgid "Pass "
 msgstr "Passo "
 
-#: ../src/transmageddon.py:339
+#: ../src/transmageddon.py:346
 msgid "File saved to "
 msgstr "Ficheiro gravado em "
 
-#: ../src/transmageddon.py:348
+#: ../src/transmageddon.py:355
 msgid "Done Transcoding"
 msgstr "Codificação Terminada"
 
-#: ../src/transmageddon.py:356
+#: ../src/transmageddon.py:363
 msgid "Start next pass"
 msgstr "Iniciar passo seguinte"
 
-#: ../src/transmageddon.py:484
+#: ../src/transmageddon.py:500
 msgid "Plugins not found, choose different codecs."
 msgstr "Plugins não encontrados, escolha codecs diferentes."
 
-#: ../src/transmageddon.py:492
+#: ../src/transmageddon.py:508
 msgid "Codec installation aborted."
 msgstr "Instalação de codec abortada."
 
-#: ../src/transmageddon.py:500
+#: ../src/transmageddon.py:516
 msgid "Missing plugin installation failed: "
 msgstr "Instalação de plugin em falta falhou: "
 
-#: ../src/transmageddon.py:550
+#: ../src/transmageddon.py:569
 msgid "Writing "
 msgstr "A Escrever "
 
