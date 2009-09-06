@@ -40,6 +40,7 @@ def get_search_paths():
     """
     return [
         os.getcwd(),
+        os.path.join(os.getcwd(), ".."),
         os.path.expanduser(os.path.join("~", ".transmageddon")),
         os.path.join(sys.prefix, "share", "transmageddon"),
         os.path.join(sys.prefix, "local", "share", "transmageddon"),
