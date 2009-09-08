@@ -9,10 +9,10 @@ desktop_in_files = transmageddon.desktop.in.in
 desktop_DATA = $(desktop_in_files:.desktop.in.in=.desktop)
 
 icondir = $(datadir)/pixmaps
-icon_DATA = transmageddon.png
+icon_DATA = transmageddon.svg
 
 transmageddondir = $(datadir)/transmageddon
-transmageddon_DATA = transmageddon.png
+transmageddon_DATA = transmageddon.svg
 
 EXTRA_DIST = \
 	transmageddon.spec \
@@ -23,7 +23,7 @@ EXTRA_DIST = \
 	AUTHORS \
 	RELEASE \
 	ABOUT-NLS \
-	transmageddon.png \
+	transmageddon.svg \
 	$(desktop_in_files) \
 	$(INTLTOOL)
 

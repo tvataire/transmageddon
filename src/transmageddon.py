@@ -172,12 +172,13 @@ class TransmageddonUI (gtk.glade.XML):
        self.FileChooser.set_current_folder(self.videodirectory)
 
        # Setting AppIcon
-       FileExist = os.path.isfile("../../share/pixmaps/transmageddon.png")
+       FileExist = os.path.isfile("../../share/pixmaps/transmageddon.svg")
        if FileExist:
-           self.TopWindow.set_icon_from_file("../../share/pixmaps/transmageddon.png")
+           self.TopWindow.set_icon_from_file("../../share/pixmaps/transmageddon.svg")
+
        else:
            try:
-               self.TopWindow.set_icon_from_file("transmageddon.png")
+               self.TopWindow.set_icon_from_file("transmageddon.svg")
            except:
                print "failed to find appicon"
 
@@ -271,7 +272,7 @@ class TransmageddonUI (gtk.glade.XML):
            self.containerchoice.set_active(9) 
        else:
             print "failed to set container format"
-       # print preset.acodec.name
+       print "preset acodec name " + str(preset.acodec.name)
        self.codec_buttons[self.reverse_lookup(str(preset.acodec.name))].set_active(True)
        self.codec_buttons[self.reverse_lookup(str(preset.vcodec.name))].set_active(True)
 

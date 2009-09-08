@@ -8,7 +8,8 @@ Authors = ["Christian Schaller <uraeus@gnome.org>",
            "Steven Walter <stevenrwalter@gmail.com>",
            "Michal Schmidt <mschmidt@redhat.com>",
            "Stephane Maniaci <stephane.maniaci@gmail.com>",
-           "Jordi Mas <jmas@softcatala.org>"
+           "Jordi Mas <jmas@softcatala.org>",
+           "Emily and Liam <liam@fightingcrane.com>"
            ]
 
 Translators = ("Łukasz Jernaś <deejay1@srem.org>\n" +

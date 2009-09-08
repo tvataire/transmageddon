@@ -53,7 +53,7 @@ rm -rf %{buildroot}
 %doc ChangeLog AUTHORS TODO COPYING NEWS
 %{_bindir}/transmageddon
 %{_datadir}/transmageddon
-%{_datadir}/pixmaps/transmageddon.png
+%{_datadir}/pixmaps/transmageddon.svg
 %{_datadir}/applications/transmageddon.desktop
 %{_datadir}/gstreamer-0.10/presets/*.prs
 
