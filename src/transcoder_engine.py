@@ -384,7 +384,7 @@ class Transcoder(gobject.GObject):
                                        parseintersect = caps.intersect(gst.caps_from_string(self.audiocaps))
                                    if parseintersect != ("EMPTY"):
                                        self.aparserelement = parser
-                                       print "parser " + str(parser)
+                                       print "audio parser " + str(parser)
                    # TODO: Need to handle the case when no parser is found
             
                    self.audioparse = gst.element_factory_make(self.aparserelement)
@@ -508,33 +508,44 @@ class Transcoder(gobject.GObject):
                    self.gstmultiqueue.set_state(gst.STATE_PAUSED)
                    self.multiqueuevideosrcpad.link(self.containermuxervideosinkpad)
            else:
+               # Code for passthrough mode
                vparsedcaps = gst.caps_from_string(self.videocaps+",parsed=true")
                vframedcaps = gst.caps_from_string(self.videocaps+",framed=true")
                if (sink_pad.get_caps().is_subset(vparsedcaps)) or (sink_pad.get_caps().is_subset(vframedcaps)):
                    sink_pad.link(self.multiqueuevideosinkpad)
                    self.multiqueuevideosrcpad.link(self.containermuxervideosinkpad)
                    self.gstmultiqueue.set_state(gst.STATE_PAUSED)
+                   print "video pad is subset"
                else:
+                   print "video pad is not subset"
                    flist = gst.registry_get_default().get_feature_list(gst.ElementFactory)
                    parsers = []
                    for fact in flist:
                        if self.list_compat(["Codec", "Parser","Video"], fact.get_klass().split('/')):
                            parsers.append(fact.get_name())
+                       elif self.list_compat(["Codec", "Parser"], fact.get_klass().split('/')):
+                           parsers.append(fact.get_name())
                            for x in parsers:
                                parser = x
+                               print parser
                                factory = gst.registry_get_default().lookup_feature(str(x))
                                sinkcaps = [x.get_caps() for x in factory.get_static_pad_templates() if x.direction == gst.PAD_SRC]
                                parseintersect = ("EMPTY")   
                                for caps in sinkcaps:
                                    if parseintersect == ("EMPTY"):
+                                       print "trying to intersect videoparser"
+                                       print "parser caps are   " + gst.Caps.to_string(caps)
+                                       print "incomign caps are " + self.videocaps
                                        parseintersect = caps.intersect(gst.caps_from_string(self.videocaps))
                                    if parseintersect != ("EMPTY"):
                                        self.vparserelement = parser
-                                       self.videoparse = gst.element_factory_make(self.vparserelement)
-                                       self.pipeline.add(self.videoparse)
-                                       sink_pad.link(self.videoparse.get_static_pad("sink"))
-                                       self.videoparse.get_static_pad("src").link(self.multiqueuevideosinkpad)
-                                       self.videoparse.set_state(gst.STATE_PAUSED)                    
+                                       print "video parser " + str(parser)
+
+                   self.videoparse = gst.element_factory_make(self.vparserelement)
+                   self.pipeline.add(self.videoparse)
+                   sink_pad.link(self.videoparse.get_static_pad("sink"))
+                   self.videoparse.get_static_pad("src").link(self.multiqueuevideosinkpad)
+                   self.videoparse.set_state(gst.STATE_PAUSED)                    
                    self.multiqueuevideosrcpad.link(self.containermuxervideosinkpad)
                    self.gstmultiqueue.set_state(gst.STATE_PAUSED)
 

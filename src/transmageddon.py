@@ -53,7 +53,7 @@ if (major == 2) and (minor < 18):
    sys.exit(1)
 
 os.environ["GST_DEBUG_DUMP_DOT_DIR"] = "/tmp"
-# os.putenv('GST_DEBUG_DUMP_DIR_DIR', '/tmp')
+os.putenv('GST_DEBUG_DUMP_DIR_DIR', '/tmp')
 
 supported_containers = [
         "Ogg",
@@ -665,6 +665,12 @@ class TransmageddonUI (gtk.glade.XML):
        about.AboutDialog()
 
    def on_debug_activate(self, widget):
+       dotfile = "/tmp/transmageddon-debug-graph.dot"
+       pngfile = "/tmp/transmageddon-pipeline.png"
+       if os.access(dotfile, os.F_OK):
+           os.remove(dotfile)
+       if os.access(pngfile, os.F_OK):
+           os.remove(pngfile)
        gst.DEBUG_BIN_TO_DOT_FILE (self._transcoder.pipeline, gst.DEBUG_GRAPH_SHOW_ALL, 'transmageddon-debug-graph')
        print "The debug feature requiers Eye of GNOME (eog) and graphviz (dot) to be installed"
        os.system("dot -Tpng -o /tmp/transmageddon-pipeline.png /tmp/transmageddon-debug-graph.dot")
