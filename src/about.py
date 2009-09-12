@@ -9,6 +9,7 @@ Authors = ["Christian Schaller <uraeus@gnome.org>",
            "Michal Schmidt <mschmidt@redhat.com>",
            "Stephane Maniaci <stephane.maniaci@gmail.com>",
            "Jordi Mas <jmas@softcatala.org>",
+           "Stuart Langridge <sil@kryogenix.org>"
            ]
 
 Translators = ("Łukasz Jernaś <deejay1@srem.org>\n" +
