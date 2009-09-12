@@ -2,7 +2,7 @@ Summary:	Video transcoder
 Summary(pl.UTF.8):	Narzędzie do transkodowania obrazu wideo
 Name:		@PACKAGE@
 Version:	@VERSION@
-Release:	3
+Release:	1
 
 Source:		http://www.linuxrising.org/transmageddon/files/%{name}-%{version}.tar.gz
 Packager:	uraeus@gnome.org
