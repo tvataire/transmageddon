@@ -54,7 +54,7 @@ class Transcoder(gobject.GObject):
        self.audiopasstoggle = AUDIOPASSTOGGLE
        # print "audiopass toggle is " + str(self.audiopasstoggle)
        self.videopasstoggle = VIDEOPASSTOGGLE
-       
+       self.doaudio= False
        if self.audiopasstoggle == False:
            # print "audiopasstoggle is false, setting AudioEncoderPlugin"
            # print "self.audiocaps IS **** " + str(self.audiocaps)
@@ -300,7 +300,8 @@ class Transcoder(gobject.GObject):
            if (self.multipass != False):
                if (self.passcounter == 0):
                    #removing multipass cache file when done
-                   os.remove(self.cachefile)
+                   if os.access(self.cachefile, os.F_OK):
+                       os.remove(self.cachefile)
            self.emit('got-eos')
            self.pipeline.set_state(gst.STATE_NULL)
        return True
@@ -314,8 +315,9 @@ class Transcoder(gobject.GObject):
    def OnDynamicPad(self, dbin, sink_pad):
        c = sink_pad.get_caps().to_string()
        if c.startswith("audio/"):
-           # print "audio pad found"
-           if self.audiopasstoggle == False:
+           # First check for passthough mode
+           if self.audiopasstoggle is False:
+               # Check if either we are not doing multipass or if its the final pass before enabling audio
                if (self.multipass == False) or (self.passcounter == int(0)):
                    self.audioconverter = gst.element_factory_make("audioconvert")
                    self.pipeline.add(self.audioconverter)
@@ -327,41 +329,36 @@ class Transcoder(gobject.GObject):
                        if GstPresetType in gobject.type_interfaces(self.audioencoder):
                            for x in self.apreset:
                                self.audioencoder.load_preset(x)
-
                    self.audioresampler = gst.element_factory_make("audioresample")
                    self.pipeline.add(self.audioresampler)
-               
-               if self.preset != "nopreset":
-                   self.acaps = gst.Caps()
-                   self.acaps.append_structure(gst.Structure("audio/x-raw-float"))
-                   self.acaps.append_structure(gst.Structure("audio/x-raw-int"))
-                   #for acap in self.acaps:
-                   #    acap["rate"] = self.samplerate
-                   #    acap["channels"] = self.channels
-                   self.acapsfilter = gst.element_factory_make("capsfilter")
-                   self.acapsfilter.set_property("caps", self.acaps)
-                   self.pipeline.add(self.acapsfilter)
+                   sink_pad.link(self.audioconverter.get_pad("sink"))
 
-               sink_pad.link(self.audioconverter.get_pad("sink"))
+                   # Check if we are using a preset
+                   if self.preset != "nopreset":
+                           self.acaps = gst.Caps()
+                           self.acaps.append_structure(gst.Structure("audio/x-raw-float"))
+                           self.acaps.append_structure(gst.Structure("audio/x-raw-int"))
+                           self.acapsfilter = gst.element_factory_make("capsfilter")
+                           self.acapsfilter.set_property("caps", self.acaps)
+                           self.pipeline.add(self.acapsfilter)
+                           self.audioconverter.link(self.audioresampler)
+                           self.audioresampler.link(self.acapsfilter)
+                           self.acapsfilter.link(self.audioencoder)
+                   else:
+                       self.audioconverter.link(self.audioresampler)
+                       self.audioresampler.link(self.audioencoder)
 
-               if self.preset != "nopreset":
-                   self.audioconverter.link(self.audioresampler)
-                   self.audioresampler.link(self.acapsfilter)
-                   self.acapsfilter.link(self.audioencoder)
-               else:
-                   self.audioconverter.link(self.audioresampler)
-                   self.audioresampler.link(self.audioencoder)
-               self.audioencoder.get_static_pad("src").link(self.multiqueueaudiosinkpad)
-               self.audioconverter.set_state(gst.STATE_PAUSED)
-               if self.preset != "nopreset":
-                   self.acapsfilter.set_state(gst.STATE_PAUSED)
-               self.audioresampler.set_state(gst.STATE_PAUSED)
-               self.audioencoder.set_state(gst.STATE_PAUSED)
-               self.gstmultiqueue.set_state(gst.STATE_PAUSED)
-               self.multiqueueaudiosrcpad.link(self.containermuxeraudiosinkpad)
-
+                   self.audioencoder.get_static_pad("src").link(self.multiqueueaudiosinkpad)
+                   self.audioconverter.set_state(gst.STATE_PAUSED)
+                   if self.preset != "nopreset":
+                       self.acapsfilter.set_state(gst.STATE_PAUSED)
+                   self.audioresampler.set_state(gst.STATE_PAUSED)
+                   self.audioencoder.set_state(gst.STATE_PAUSED)
+                   self.gstmultiqueue.set_state(gst.STATE_PAUSED)
+                   self.multiqueueaudiosrcpad.link(self.containermuxeraudiosinkpad)
 
            else:
+               # This code is for handling passthrough mode. 
                # TODO: dynamically plug correct parser. Iterate on parsers and intersect.
                # No parser if output is framed
                parsedcaps = gst.caps_from_string(self.audiocaps+",parsed=true")

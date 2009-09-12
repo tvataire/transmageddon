@@ -9,7 +9,6 @@ Authors = ["Christian Schaller <uraeus@gnome.org>",
            "Michal Schmidt <mschmidt@redhat.com>",
            "Stephane Maniaci <stephane.maniaci@gmail.com>",
            "Jordi Mas <jmas@softcatala.org>",
-           "Emily and Liam <liam@fightingcrane.com>"
            ]
 
 Translators = ("Łukasz Jernaś <deejay1@srem.org>\n" +
@@ -17,6 +16,7 @@ Translators = ("Łukasz Jernaś <deejay1@srem.org>\n" +
               "Mario Blättermann <mariobl@gnome.org>\n" +
               "Jorge González <jorgegonz@svn.gnome.org>\n")
 
+Artists = ["Emily and Liam <liam@fightingcrane.com>"]
 LGPL = """
 Transmageddon
 Copyright (C) 2009 Transmageddon Authors
@@ -44,6 +44,7 @@ class AboutDialog:
        x.set_name("Transmageddon")
        x.set_authors(Authors)
        x.set_translator_credits(Translators)
+       x.set_artists(Artists)
        x.set_license(LGPL)   
        x.connect("response", lambda d, r: d.destroy())
        x.show()

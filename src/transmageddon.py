@@ -52,7 +52,8 @@ if (major == 2) and (minor < 18):
    print "You need version 2.18.0 or higher of pygobject for Transmageddon" 
    sys.exit(1)
 
-os.environ["GST_DEBUG_DUMP_DOT_DIR"] = '/tmp'
+os.environ["GST_DEBUG_DUMP_DOT_DIR"] = "/tmp"
+# os.putenv('GST_DEBUG_DUMP_DIR_DIR', '/tmp')
 
 supported_containers = [
         "Ogg",
@@ -107,7 +108,7 @@ supported_container_map = {
     'MPEG PS':    [ 'mp3', 'mpeg2', 'ac3', 'h264', 'aac', 'mpeg4' ],
     'MPEG TS':    [ 'mp3', 'h264', 'ac3', 'mpeg2', 'aac', 'mpeg4', 'dirac' ],
     'FLV':        [ 'mp3', 'h264' ],
-    'ASF':        [ 'wma2','wmv2']
+    'ASF':        [ 'wma2','wmv2','mp3']
 }
 
 class TransmageddonUI (gtk.glade.XML):
@@ -242,9 +243,15 @@ class TransmageddonUI (gtk.glade.XML):
 
    # Get all preset values
    def reverse_lookup(self,v):
-    for k in codecfinder.codecmap:
-        if codecfinder.codecmap[k] == v:
-            return k
+       #FIXME - this is ugly special casing of AAC due to 
+       #python/gstreamer conflict over meaning of []
+       if v == "audio/mpeg,mpegversion=[4, 2]":
+           k = "aac"
+           return k
+       else:
+           for k in codecfinder.codecmap:
+               if codecfinder.codecmap[k] == v:
+                   return k
 
    def provide_presets(self,devicename): 
        devices = presets.get()
@@ -272,7 +279,6 @@ class TransmageddonUI (gtk.glade.XML):
            self.containerchoice.set_active(9) 
        else:
             print "failed to set container format"
-       print "preset acodec name " + str(preset.acodec.name)
        self.codec_buttons[self.reverse_lookup(str(preset.acodec.name))].set_active(True)
        self.codec_buttons[self.reverse_lookup(str(preset.vcodec.name))].set_active(True)
 
@@ -659,11 +665,9 @@ class TransmageddonUI (gtk.glade.XML):
 
    def on_debug_activate(self, widget):
        gst.DEBUG_BIN_TO_DOT_FILE (self._transcoder.pipeline, gst.DEBUG_GRAPH_SHOW_ALL, 'transmageddon-debug-graph')
-       print "The debug feature requirs Eye of GNOME (eog) and graphviz (dot) to be installed"
+       print "The debug feature requiers Eye of GNOME (eog) and graphviz (dot) to be installed"
        os.system("dot -Tpng -o /tmp/transmageddon-pipeline.png /tmp/transmageddon-debug-graph.dot")
        os.system("eog /tmp/transmageddon-pipeline.png &")
 if __name__ == "__main__":
         hwg = TransmageddonUI()
         gtk.main()
-
-
