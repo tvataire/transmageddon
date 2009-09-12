@@ -60,6 +60,7 @@ supported_containers = [
         "Matroska",
         "AVI",
         "MPEG TS",
+        "MPEG PS",
         "FLV",
         "Quicktime",
         "MPEG4",

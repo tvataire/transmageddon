@@ -34,7 +34,8 @@ def list_compat(a1, b1):
    return True
 
 containermap = { 'Ogg' : "application/ogg",'Matroska' : "video/x-matroska", 'MXF' : "application/mxf", 'AVI' : "video/x-msvideo", 
-                        'Quicktime' : "video/quicktime,variant=apple", 'MPEG4' : "video/quicktime,variant=iso", 'MPEG PS' : "ffmux_mpeg", 
+                        'Quicktime' : "video/quicktime,variant=apple", 'MPEG4' : "video/quicktime,variant=iso", 
+                        'MPEG PS' : "video/mpeg,mpegversion=2,systemstream=true", 
                         'MPEG TS' : "video/mpegts", 'FLV' : "video/x-flv", '3GPP' : "video/quicktime,variant=3gpp",
                         'ASF' : "video/x-ms-asf" }
 
