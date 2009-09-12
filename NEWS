@@ -1,3 +1,11 @@
+0.12
+  Add keyboard bindings for UI
+  Add support for passthrough mode
+  Add easy debug graph generation
+  Add new Transmageddon Icon
+  Improved robustness for lack of XDG directories
+  Add ASF support
+
 0.11
   Add multipass encoding support
   Add support to flip video in non-preset mode

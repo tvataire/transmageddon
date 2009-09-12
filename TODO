@@ -1,10 +1,6 @@
 This list is completely unordered. Nothing about the ordering in this list should
 cause anyone to make any kind of assumptions about priorties.
 
-* ASF support. 
-  Summer of code will provide us with a ASF muxer. This would enable all Windows media 
-  formats.
-
 * MPEG PS support.
   Summer of Code project looks to address this.
 
@@ -15,9 +11,6 @@ cause anyone to make any kind of assumptions about priorties.
   Make sure the application runs even if directory names etc. are different. 
   Enable reporting when no plugin is found which allows allows muxing or 
   encoding.
-
-* Get application icon made
-  Find a graphics artist to make nice Tango style icon
 
 * Support non-muxed audio codec 
   Allow the outputting of non-muxed audio codecs (mp3 mostly). Not sure we really
