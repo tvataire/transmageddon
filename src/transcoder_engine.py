@@ -384,8 +384,6 @@ class Transcoder(gobject.GObject):
                                        parseintersect = caps.intersect(gst.caps_from_string(self.audiocaps))
                                    if parseintersect != ("EMPTY"):
                                        self.aparserelement = parser
-                                       print "audio parser " + str(parser)
-                   # TODO: Need to handle the case when no parser is found
             
                    self.audioparse = gst.element_factory_make(self.aparserelement)
                    self.pipeline.add(self.audioparse)
@@ -515,9 +513,7 @@ class Transcoder(gobject.GObject):
                    sink_pad.link(self.multiqueuevideosinkpad)
                    self.multiqueuevideosrcpad.link(self.containermuxervideosinkpad)
                    self.gstmultiqueue.set_state(gst.STATE_PAUSED)
-                   print "video pad is subset"
                else:
-                   print "video pad is not subset"
                    flist = gst.registry_get_default().get_feature_list(gst.ElementFactory)
                    parsers = []
                    for fact in flist:
@@ -527,19 +523,15 @@ class Transcoder(gobject.GObject):
                            parsers.append(fact.get_name())
                            for x in parsers:
                                parser = x
-                               print parser
                                factory = gst.registry_get_default().lookup_feature(str(x))
                                sinkcaps = [x.get_caps() for x in factory.get_static_pad_templates() if x.direction == gst.PAD_SRC]
                                parseintersect = ("EMPTY")   
                                for caps in sinkcaps:
                                    if parseintersect == ("EMPTY"):
-                                       print "trying to intersect videoparser"
-                                       print "parser caps are   " + gst.Caps.to_string(caps)
-                                       print "incomign caps are " + self.videocaps
                                        parseintersect = caps.intersect(gst.caps_from_string(self.videocaps))
                                    if parseintersect != ("EMPTY"):
                                        self.vparserelement = parser
-                                       print "video parser " + str(parser)
+
 
                    self.videoparse = gst.element_factory_make(self.vparserelement)
                    self.pipeline.add(self.videoparse)

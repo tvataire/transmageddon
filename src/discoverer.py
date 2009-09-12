@@ -322,7 +322,7 @@ class Discoverer(gst.Pipeline):
                    # if caps[0].has_field("rate"):
                        if caps.is_fixed():
                            blacklist = ['rate','channels','bitrate','block_align','mode','subbands'
-                                        ,'allocation','framed','bitpool','blocks','width','parsed','depth'
+                                        ,'allocation','bitpool','blocks','width','depth'
                                         ,'codec_data']
                            for x in caps:
                                aresult = caps[0].get_name();

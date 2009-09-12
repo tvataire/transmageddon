@@ -175,4 +175,3 @@ def get_video_encoder_element(videoencodercaps):
                        if mostrecent >= original:
                            elementname = element
    return elementname
-

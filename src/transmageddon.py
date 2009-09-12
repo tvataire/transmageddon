@@ -529,11 +529,12 @@ class TransmageddonUI (gtk.glade.XML):
        # print "containerstatus is " + str(containerstatus)
        if self.AudioCodec != "apass":
            audiostatus = codecfinder.get_audio_encoder_element(codecfinder.codecmap[self.AudioCodec])
-       else: audiostatus = "apass"
+       else:
+           audiostatus = "apass"
        if self.VideoCodec != "vpass":
            videostatus = codecfinder.get_video_encoder_element(codecfinder.codecmap[self.VideoCodec])
        else:
-           videostatus = "vpass"
+           audiostatus= "apass"
 
        if not containerstatus or not videostatus or not audiostatus:
            fail_info = []
