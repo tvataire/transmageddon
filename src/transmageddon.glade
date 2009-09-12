@@ -669,10 +669,11 @@
                 </child>
                 <child>
                   <widget class="GtkRadioButton" id="mpeg4button">
-                    <property name="label" translatable="yes">MPEG4/DivX5</property>
+                    <property name="label" translatable="yes">MPEG_4/DivX5</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
+                    <property name="use_underline">True</property>
                     <property name="active">True</property>
                     <property name="draw_indicator">True</property>
                     <property name="group">theorabutton</property>
@@ -689,10 +690,11 @@
                 </child>
                 <child>
                   <widget class="GtkRadioButton" id="mpeg2button">
-                    <property name="label" translatable="yes">MPEG2</property>
+                    <property name="label" translatable="yes">MPEG_2</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
+                    <property name="use_underline">True</property>
                     <property name="active">True</property>
                     <property name="draw_indicator">True</property>
                     <property name="group">theorabutton</property>
@@ -709,10 +711,11 @@
                 </child>
                 <child>
                   <widget class="GtkRadioButton" id="celtbutton">
-                    <property name="label" translatable="yes">Celt</property>
+                    <property name="label" translatable="yes">Celt _Ultra</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
+                    <property name="use_underline">True</property>
                     <property name="active">True</property>
                     <property name="draw_indicator">True</property>
                     <property name="group">vorbisbutton</property>
@@ -727,10 +730,11 @@
                 </child>
                 <child>
                   <widget class="GtkRadioButton" id="speexbutton">
-                    <property name="label" translatable="yes">Speex</property>
+                    <property name="label" translatable="yes">_Speex</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
+                    <property name="use_underline">True</property>
                     <property name="active">True</property>
                     <property name="draw_indicator">True</property>
                     <property name="group">vorbisbutton</property>
@@ -745,10 +749,11 @@
                 </child>
                 <child>
                   <widget class="GtkRadioButton" id="ac3button">
-                    <property name="label" translatable="yes">AC3</property>
+                    <property name="label" translatable="yes">AC_3</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
+                    <property name="use_underline">True</property>
                     <property name="active">True</property>
                     <property name="draw_indicator">True</property>
                     <property name="group">vorbisbutton</property>
@@ -763,10 +768,11 @@
                 </child>
                 <child>
                   <widget class="GtkRadioButton" id="aacbutton">
-                    <property name="label" translatable="yes">AAC</property>
+                    <property name="label" translatable="yes">AA_C</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
+                    <property name="use_underline">True</property>
                     <property name="active">True</property>
                     <property name="draw_indicator">True</property>
                     <property name="group">vorbisbutton</property>
@@ -781,10 +787,11 @@
                 </child>
                 <child>
                   <widget class="GtkRadioButton" id="h264button">
-                    <property name="label" translatable="yes">H264</property>
+                    <property name="label" translatable="yes">H2_64</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
+                    <property name="use_underline">True</property>
                     <property name="active">True</property>
                     <property name="draw_indicator">True</property>
                     <property name="group">theorabutton</property>
@@ -801,10 +808,11 @@
                 </child>
                 <child>
                   <widget class="GtkRadioButton" id="mp3button">
-                    <property name="label" translatable="yes">mp3</property>
+                    <property name="label" translatable="yes">_mp3</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
+                    <property name="use_underline">True</property>
                     <property name="active">True</property>
                     <property name="draw_indicator">True</property>
                     <property name="group">vorbisbutton</property>
@@ -819,10 +827,11 @@
                 </child>
                 <child>
                   <widget class="GtkRadioButton" id="diracbutton">
-                    <property name="label" translatable="yes">Dirac</property>
+                    <property name="label" translatable="yes">_Dirac</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
+                    <property name="use_underline">True</property>
                     <property name="active">True</property>
                     <property name="draw_indicator">True</property>
                     <property name="group">theorabutton</property>
@@ -839,10 +848,11 @@
                 </child>
                 <child>
                   <widget class="GtkRadioButton" id="flacbutton">
-                    <property name="label" translatable="yes">FLAC</property>
+                    <property name="label" translatable="yes">F_LAC</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
+                    <property name="use_underline">True</property>
                     <property name="active">True</property>
                     <property name="draw_indicator">True</property>
                     <property name="group">vorbisbutton</property>
@@ -857,10 +867,11 @@
                 </child>
                 <child>
                   <widget class="GtkRadioButton" id="theorabutton">
-                    <property name="label" translatable="yes">Theora</property>
+                    <property name="label" translatable="yes">Theo_ra</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
+                    <property name="use_underline">True</property>
                     <property name="active">True</property>
                     <property name="draw_indicator">True</property>
                     <signal name="pressed" handler="on_theorabutton_pressed"/>
@@ -876,10 +887,11 @@
                 </child>
                 <child>
                   <widget class="GtkRadioButton" id="vorbisbutton">
-                    <property name="label" translatable="yes">Vorbis</property>
+                    <property name="label" translatable="yes">V_orbis</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
+                    <property name="use_underline">True</property>
                     <property name="active">True</property>
                     <property name="draw_indicator">True</property>
                     <signal name="pressed" handler="on_vorbisbutton_pressed"/>
@@ -926,10 +938,11 @@
                 </child>
                 <child>
                   <widget class="GtkRadioButton" id="xvidbutton">
-                    <property name="label" translatable="yes">xvid</property>
+                    <property name="label" translatable="yes">_xvid</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
+                    <property name="use_underline">True</property>
                     <property name="active">True</property>
                     <property name="draw_indicator">True</property>
                     <property name="group">theorabutton</property>
@@ -945,11 +958,12 @@
                 </child>
                 <child>
                   <widget class="GtkRadioButton" id="amrnbbutton">
-                    <property name="label" translatable="yes">AMR-NB</property>
+                    <property name="label" translatable="yes">AMR-N_B</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
                     <property name="relief">none</property>
+                    <property name="use_underline">True</property>
                     <property name="draw_indicator">True</property>
                     <property name="group">vorbisbutton</property>
                     <signal name="pressed" handler="on_amrnbbutton_pressed"/>
@@ -963,11 +977,12 @@
                 </child>
                 <child>
                   <widget class="GtkRadioButton" id="h263pbutton">
-                    <property name="label" translatable="yes">H263+</property>
+                    <property name="label" translatable="yes">H263_plus</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
                     <property name="relief">none</property>
+                    <property name="use_underline">True</property>
                     <property name="draw_indicator">True</property>
                     <property name="group">theorabutton</property>
                     <signal name="pressed" handler="on_h263pbutton_pressed"/>
@@ -982,10 +997,11 @@
                 </child>
                 <child>
                   <widget class="GtkRadioButton" id="apassbutton">
-                    <property name="label" translatable="yes">Audio passthrough</property>
+                    <property name="label" translatable="yes">_Audio passthrough</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
+                    <property name="use_underline">True</property>
                     <property name="active">True</property>
                     <property name="draw_indicator">True</property>
                     <property name="group">vorbisbutton</property>
@@ -999,10 +1015,11 @@
                 </child>
                 <child>
                   <widget class="GtkRadioButton" id="vpassbutton">
-                    <property name="label" translatable="yes">Video passthrough</property>
+                    <property name="label" translatable="yes">_Video passthrough</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
+                    <property name="use_underline">True</property>
                     <property name="active">True</property>
                     <property name="draw_indicator">True</property>
                     <property name="group">theorabutton</property>
@@ -1031,11 +1048,12 @@
                 </child>
                 <child>
                   <widget class="GtkRadioButton" id="wma2button">
-                    <property name="label" translatable="yes">WMA2</property>
+                    <property name="label" translatable="yes">W_indowsMediaAudio 2</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
                     <property name="relief">none</property>
+                    <property name="use_underline">True</property>
                     <property name="draw_indicator">True</property>
                     <property name="group">vorbisbutton</property>
                     <signal name="pressed" handler="on_wma2button_pressed"/>
@@ -1073,11 +1091,12 @@
                 </child>
                 <child>
                   <widget class="GtkRadioButton" id="wmv2button">
-                    <property name="label" translatable="yes">WMV2</property>
+                    <property name="label" translatable="yes">_WindowsMediaVideo2</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
                     <property name="relief">none</property>
+                    <property name="use_underline">True</property>
                     <property name="draw_indicator">True</property>
                     <property name="group">theorabutton</property>
                     <signal name="pressed" handler="on_wmv2button_pressed"/>
@@ -1163,7 +1182,7 @@
                 </child>
                 <child>
                   <widget class="GtkButton" id="transcodebutton">
-                    <property name="label" translatable="yes">Transcode</property>
+                    <property name="label" translatable="yes">_Transcode</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
