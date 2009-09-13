@@ -267,6 +267,7 @@
                   <widget class="GtkFileChooserButton" id="FileChooser">
                     <property name="visible">True</property>
                     <signal name="file_set" handler="on_FileChooser_file_set"/>
+                    <signal name="selection_changed" handler="on_FileChooser_file_set"/>
                   </widget>
                   <packing>
                     <property name="left_attach">2</property>

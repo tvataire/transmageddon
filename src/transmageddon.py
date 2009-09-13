@@ -52,6 +52,9 @@ if (major == 2) and (minor < 18):
    print "You need version 2.18.0 or higher of pygobject for Transmageddon" 
    sys.exit(1)
 
+TARGET_TYPE_URI_LIST = 80
+dnd_list = [ ( 'text/uri-list', 0, TARGET_TYPE_URI_LIST ) ]
+
 os.environ["GST_DEBUG_DUMP_DOT_DIR"] = "/tmp"
 os.putenv('GST_DEBUG_DUMP_DIR_DIR', '/tmp')
 
@@ -151,6 +154,27 @@ class TransmageddonUI (gtk.glade.XML):
        self.StatusBar = self.get_widget("StatusBar")
 
        self.TopWindow.connect("destroy", gtk.main_quit)
+       
+       def get_file_path_from_dnd_dropped_uri(self, uri):
+           # get the path to file
+           path = ""
+           if uri.startswith('file:\\\\\\'): # windows
+               path = uri[8:] # 8 is len('file:///')
+           elif uri.startswith('file://'): # nautilus, rox
+               path = uri[7:] # 7 is len('file://')
+           elif uri.startswith('file:'): # xffm
+               path = uri[5:] # 5 is len('file:')
+
+           return path
+
+       def on_drag_data_received(widget, context, x, y, selection, target_type, timestamp):
+           if target_type == TARGET_TYPE_URI_LIST:
+               uri = selection.data.strip('\r\n\x00')
+               self.get_widget ("FileChooser").set_uri(uri)
+
+       self.TopWindow.connect('drag_data_received', on_drag_data_received)
+       self.TopWindow.drag_dest_set( gtk.DEST_DEFAULT_MOTION |
+           gtk.DEST_DEFAULT_HIGHLIGHT | gtk.DEST_DEFAULT_DROP, dnd_list, gtk.gdk.ACTION_COPY)
 
        self.signal_autoconnect(self) # Initialize User Interface
 
@@ -455,12 +479,13 @@ class TransmageddonUI (gtk.glade.XML):
    def on_FileChooser_file_set(self, widget):
        self.filename = self.get_widget ("FileChooser").get_filename()
        self.audiodata = {}
-       codecinfo = self.mediacheck(self.filename)
-       self.containerchoice.set_sensitive(True)
-       self.presetchoice.set_sensitive(True)
-       self.presetchoice.set_active(0)
-       self.ProgressBar.set_fraction(0.0)
-       self.ProgressBar.set_text(_("Transcoding Progress"))
+       if self.filename is not None: 
+           codecinfo = self.mediacheck(self.filename)
+           self.containerchoice.set_sensitive(True)
+           self.presetchoice.set_sensitive(True)
+           self.presetchoice.set_active(0)
+           self.ProgressBar.set_fraction(0.0)
+           self.ProgressBar.set_text(_("Transcoding Progress"))
 
    def _start_transcoding(self): 
        filechoice = self.get_widget ("FileChooser").get_uri()
@@ -676,6 +701,7 @@ class TransmageddonUI (gtk.glade.XML):
        print "The debug feature requiers Eye of GNOME (eog) and graphviz (dot) to be installed"
        os.system("dot -Tpng -o /tmp/transmageddon-pipeline.png /tmp/transmageddon-debug-graph.dot")
        os.system("eog /tmp/transmageddon-pipeline.png &")
+
 if __name__ == "__main__":
         hwg = TransmageddonUI()
         gtk.main()
