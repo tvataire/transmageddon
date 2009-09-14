@@ -44,7 +44,7 @@ csuffixmap =   { 'Ogg' : ".ogg", 'Matroska' : ".mkv", 'MXF' : ".mxf", 'AVI' : ".
                  'ASF' : ".asf" }
 
 codecmap = {     'vorbis' : "audio/x-vorbis", 'flac' : "audio/x-flac", 'mp3' : "audio/mpeg, mpegversion=(int)1, layer=(int)3", 
-                        'aac' : "audio/mpeg, mpegversion=(int){ 4, 2 }", 'ac3' : "audio/x-ac3", 'speex' : "audio/x-speex", 
+                        'aac' : "audio/mpeg,mpegversion=4", 'ac3' : "audio/x-ac3", 'speex' : "audio/x-speex", 
                         'celt' : "audio/x-celt", 'alac' : "audio/x-alac", 'wma2' : "audio/x-wma, wmaversion=(int)2", 
                         'theora' : "video/x-theora", 'dirac' : "video/x-dirac", 'h264' : "video/x-h264", 
                         'mpeg2' : "video/mpeg,mpegversion=2,systemstream=false", 'mpeg4' : "video/mpeg,mpegversion=4",

@@ -268,15 +268,9 @@ class TransmageddonUI (gtk.glade.XML):
 
    # Get all preset values
    def reverse_lookup(self,v):
-       #FIXME - this is ugly special casing of AAC due to 
-       #python/gstreamer conflict over meaning of []
-       if v == "audio/mpeg,mpegversion=[4, 2]":
-           k = "aac"
-           return k
-       else:
-           for k in codecfinder.codecmap:
-               if codecfinder.codecmap[k] == v:
-                   return k
+       for k in codecfinder.codecmap:
+           if codecfinder.codecmap[k] == v:
+               return k
 
    def provide_presets(self,devicename): 
        devices = presets.get()
@@ -290,20 +284,25 @@ class TransmageddonUI (gtk.glade.XML):
            self.containerchoice.set_active(2)
        elif preset.container == "video/mpegts":
            self.containerchoice.set_active(3)
-       elif preset.container == "video/x-flv":
+       elif preset.container == "video/mpeg,mpegversion=2,systemstream=true":
            self.containerchoice.set_active(4)
-       elif preset.container == "video/quicktime,variant=apple":
+       elif preset.container == "video/x-flv":
            self.containerchoice.set_active(5)
-       elif preset.container == "video/quicktime,variant=iso":
+       elif preset.container == "video/quicktime,variant=apple":
            self.containerchoice.set_active(6)
-       elif preset.container == "video/quicktime,variant=3gpp":
+       elif preset.container == "video/quicktime,variant=iso":
            self.containerchoice.set_active(7)
        elif preset.container == "video/quicktime,variant=3gpp":
            self.containerchoice.set_active(8)
+       elif preset.container == "video/quicktime,variant=3gpp":
+           self.containerchoice.set_active(9)
        elif preset.container == "application/mxf":
-           self.containerchoice.set_active(9) 
+           self.containerchoice.set_active(10)
+       elif preset.container == "video/x-ms-asf":
+           self.containerchoice.set_active(11)
        else:
             print "failed to set container format"
+       # print "preset.acodec.name is " + str(preset.acodec.name)
        self.codec_buttons[self.reverse_lookup(str(preset.acodec.name))].set_active(True)
        self.codec_buttons[self.reverse_lookup(str(preset.vcodec.name))].set_active(True)
 
@@ -660,6 +659,7 @@ class TransmageddonUI (gtk.glade.XML):
        else:
            self.ProgressBar.set_fraction(0.0)
            self.devicename= self.presetchoices[presetchoice]
+           # print "self.devicename is " + str(self.devicename)
            self.provide_presets(self.devicename)
            self.containerchoice.set_sensitive(False)
            self.CodecBox.set_sensitive(False)

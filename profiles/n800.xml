@@ -17,7 +17,7 @@
         <container>video/quicktime,variant=iso</container>
         <extension>mp4</extension>
         <audio>
-            <name>audio/mpeg,mpegversion=[4, 2]</name>
+            <name>audio/mpeg,mpegversion=4</name>
             <presets>
                 <preset>
                     Quality Low, Profile Low Complexity
@@ -46,7 +46,7 @@
         <container>video/quicktime,variant=iso</container>
         <extension>mp4</extension>
         <audio>
-            <name>audio/mpeg,mpegversion=[4, 2]</name>
+            <name>audio/mpeg,mpegversion=4</name>
             <presets>
                 <preset>
                     Quality Normal, Profile Low Complexity
