@@ -229,6 +229,7 @@ class TransmageddonUI (gtk.glade.XML):
        self.videopasstoggle=False
        self.audiopasstoggle=False
        self.containertoggle=False # this toggle is used to not check for encoders with pbutils
+       self.discover_done=False # lets us know that discover is finished
 
        self.p_duration = gst.CLOCK_TIME_NONE
        self.p_time = gst.FORMAT_TIME
@@ -417,6 +418,7 @@ class TransmageddonUI (gtk.glade.XML):
            self.audioinformation.set_markup(''.join(('<small>', 'Audio channels: ', str(self.audiodata['audiochannels']), '</small>')))
            self.audiocodec.set_markup(''.join(('<small>','Audio codec: ',
                                       str(gst.pbutils.get_codec_description(self.audiodata['audiotype'])),'</small>')))
+       self.discover_done=True
        if self.waiting_for_signal == True:
            if self.containertoggle == True:
                if self.container != False:
@@ -641,7 +643,8 @@ class TransmageddonUI (gtk.glade.XML):
            self.codec_buttons[c].set_sensitive(True)
        self.codec_buttons[self.AudioCodec].set_active(True)
        self.codec_buttons[self.VideoCodec].set_active(True)
-       self.check_for_passthrough(self.container)
+       if self.discover_done == True:
+           self.check_for_passthrough(self.container)
 
    def on_presetchoice_changed(self, widget):
        presetchoice = self.get_widget ("presetchoice").get_active_text ()
