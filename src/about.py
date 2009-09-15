@@ -15,7 +15,10 @@ Authors = ["Christian Schaller <uraeus@gnome.org>",
 Translators = ("Łukasz Jernaś <deejay1@srem.org>\n" +
               "Jordi Mas <jmas@softcatala.org>\n" +
               "Mario Blättermann <mariobl@gnome.org>\n" +
-              "Jorge González <jorgegonz@svn.gnome.org>\n")
+              "Jorge González <jorgegonz@svn.gnome.org>\n" +
+              "Charles-Henri d'Adhémar\n" +
+              "Filipe Gomes <filipefgomes@gmail.com>\n" +
+              "Daniel Nylander <po@danielnylander.se>\n")
 
 Artists = ["Emily and Liam <liam@fightingcrane.com>"]
 LGPL = """
