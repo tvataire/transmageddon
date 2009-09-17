@@ -1,284 +1,335 @@
 # Translation of Transmageddon into Polish.
 # Copyright (C) 2009
 # This file is distributed under the same license as the transmageddon package.
-# Łukasz Jernaś <deejay1@srem.org>
+# -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+# Aviary.pl
+# Jeśli masz jakiekolwiek uwagi odnoszące się do tłumaczenia lub chcesz
+# pomóc w jego rozwijaniu i pielęgnowaniu, napisz do nas:
+# gnomepl@aviary.pl
+# -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 #
+# Łukasz Jernaś <deejay1@srem.org>, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: transmageddon\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-12 18:04+0200\n"
-"PO-Revision-Date: 2009-03-29 13:29+0200\n"
-"Last-Translator: Łukasz Jernaś <deejay1@srem.org>\n"
+"POT-Creation-Date: 2009-09-17 18:31+0200\n"
+"PO-Revision-Date: 2009-09-17 18:24+0100\n"
+"Last-Translator: Tomasz Dominikowski <dominikowski@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 1.0\n"
 
-#: ../profiles/ipod.xml.in.h:1 ../profiles/krzr-k1v.xml.in.h:1
-#: ../profiles/linux-computer.xml.in.h:3 ../profiles/n770.xml.in.h:1
-#: ../profiles/n800.xml.in.h:1 ../profiles/ps3.xml.in.h:1
-msgid "Low"
-msgstr "Niska"
-
-#: ../profiles/ipod.xml.in.h:2 ../profiles/krzr-k1v.xml.in.h:2
-#: ../profiles/linux-computer.xml.in.h:4 ../profiles/n770.xml.in.h:2
-#: ../profiles/n800.xml.in.h:2 ../profiles/ps3.xml.in.h:2
-msgid "Normal"
-msgstr "Normalna"
-
-#: ../profiles/ipod.xml.in.h:3
-msgid "Profile for Apple iPod / iPhone"
-msgstr "Profil dla odtwarzaczy Apple iPod / iPhone"
-
-#: ../profiles/krzr-k1v.xml.in.h:3
-msgid "Profile for Motorola KRZR K1v"
-msgstr ""
-
-#: ../profiles/linux-computer.xml.in.h:1
-msgid "High"
-msgstr "Wysoka"
-
-#: ../profiles/linux-computer.xml.in.h:2
-msgid "Live Input"
-msgstr "Wejście bezpośrednie"
-
-#: ../profiles/linux-computer.xml.in.h:5
-msgid "Profile for Linux Computer"
-msgstr "Profil dla komputerów linuksowych"
-
-#: ../profiles/n770.xml.in.h:3
-msgid "Profile for Nokia N770"
-msgstr "Profil dla Nokii N770"
-
-#: ../profiles/n800.xml.in.h:3
-msgid "Profile for Nokia N800"
-msgstr "Profil dla Nokii N800"
-
-#: ../profiles/ps3.xml.in.h:3
-msgid "Profile for Playstation 3"
-msgstr "Profil dla konsoli Playstation 3"
-
-#: ../src/presets.py:79
+#: ../src/presets.py:77
 #, python-format
 msgid "Not a valid integer or fraction: %(value)s!"
-msgstr ""
+msgstr "Błędna wartość całkowita lub zmiennoprzecinkowa: %(value)s!"
 
-#: ../src/presets.py:257
-#, python-format
-msgid "Value may only contain one comma; got %(value)s"
-msgstr ""
-
-#: ../src/presets.py:403
+#: ../src/presets.py:410
 #, python-format
 msgid "Loaded device %(device)s (%(presets)d presets)"
-msgstr ""
-
-#: ../src/presets.py:470
-#, python-format
-msgid "Fetching %(location)s"
-msgstr ""
+msgstr "Wczytano urządzenie %(device)s (%(presets)d ustawień)"
 
 #: ../src/presets.py:477
 #, python-format
-msgid "Writing to %(file)s"
-msgstr ""
+msgid "Fetching %(location)s"
+msgstr "Pobieranie %(location)s"
 
-#: ../src/presets.py:482
+#: ../src/presets.py:484
+#, python-format
+msgid "Writing to %(file)s"
+msgstr "Zapisywanie do pliku %(file)s"
+
+#: ../src/presets.py:489
 #, python-format
 msgid "There was an error fetching and installing %(location)s: %(error)s"
-msgstr ""
+msgstr "Wystąpił błąd podczas pobierania i instalacji %(location)s: %(error)s"
 
-#: ../src/presets.py:499
+#: ../src/presets.py:506
 msgid "Checking for device preset updates..."
-msgstr ""
+msgstr "Wyszukiwanie aktualizacji ustawień urządzeń..."
 
-#: ../src/presets.py:519
+#: ../src/presets.py:526
 #, python-format
 msgid "Device preset %(name)s is up to date"
-msgstr ""
+msgstr "Ustawienia urządzenia %(name)s są aktualne"
 
-#: ../src/presets.py:523
+#: ../src/presets.py:530
 #, python-format
 msgid "Found updated device preset %(name)s"
-msgstr ""
+msgstr "Znaleziono zaktualizowane ustawienia dla urządzenia %(name)s"
 
-#: ../src/presets.py:529 ../src/presets.py:542
+#: ../src/presets.py:536 ../src/presets.py:549
 #, python-format
 msgid "Error installing preset %(name)s from %(location)s: %(error)s"
 msgstr ""
+"Błąd instalacji ustawienia %(name)s z położenia %(location)s: %(error)s"
 
-#: ../src/presets.py:536
+#: ../src/presets.py:543
 #, python-format
 msgid "Found new device preset %(name)s"
-msgstr ""
+msgstr "Znaleziono nowe ustawienie urządzenia %(name)s"
 
-#: ../src/presets.py:549
+#: ../src/presets.py:556
 #, python-format
 msgid "Malformed plugin version line %(line)s"
-msgstr ""
+msgstr "Nieprawidłowy wiersz dotyczący wersji wtyczki %(line)s"
 
-#: ../src/presets.py:553
+#: ../src/presets.py:560
 #, python-format
 msgid "There was a problem accessing %(location)spresets.txt!"
-msgstr ""
+msgstr "Wystąpił błąd dostępu do %(location)spresets.txt."
 
-#: ../src/presets.py:575
+#: ../src/presets.py:582
 msgid "All device presets are up to date!"
-msgstr ""
+msgstr "Wszystkie profile urządzeń są aktualne."
 
 #: ../src/transmageddon.glade.h:1
 msgid "<b>Choose Audio Codec</b>:"
-msgstr "<b>Wybierz kodek dźwięku</b>"
+msgstr "<b>Wybór kodeka dźwięku</b>:"
 
 #: ../src/transmageddon.glade.h:2
 msgid "<b>Choose Input File:</b>"
-msgstr "<b>Wybierz plik źródłowy</b>"
+msgstr "<b>Wybór pliku źródłowego:</b>"
 
 #: ../src/transmageddon.glade.h:3
 msgid "<b>Choose Video Codec</b>:"
-msgstr "<b>Wybierz kodek obrazu</b>"
+msgstr "<b>Wybór kodeka wideo</b>:"
 
 #: ../src/transmageddon.glade.h:4
-#, fuzzy
 msgid "<b>Output Format:</b>"
-msgstr "<b>Format kontenera wyjściowego:</b>"
+msgstr "<b>Format wyjściowy:</b>"
 
 #: ../src/transmageddon.glade.h:5
 msgid "<b>Presets:</b>"
-msgstr ""
+msgstr "<b>Ustawienia:</b>"
 
 #: ../src/transmageddon.glade.h:6
 msgid "<small>Audio Channels:</small>"
 msgstr "<small>Kanały dźwięku:</small>"
 
 #: ../src/transmageddon.glade.h:7
-msgid "<small>Video height&#47;width:</small>"
-msgstr "<small>Wysokość&#47;szerokość obrazu:</small>"
+msgid "<small>Audio codec:</small>"
+msgstr "<small>Kodek dźwięku:</small>"
 
 #: ../src/transmageddon.glade.h:8
-msgid "AAC"
-msgstr "AAC"
+msgid "<small>Rotate the video image if needed</small>"
+msgstr "<small>Obrócenie obrazu, jeśli to konieczne</small>"
 
 #: ../src/transmageddon.glade.h:9
-msgid "AC3"
-msgstr "AC3"
+msgid "<small>Video codec:</small>"
+msgstr "<small>Kodek wideo:</small>"
 
 #: ../src/transmageddon.glade.h:10
-msgid "Celt"
-msgstr "Celt"
+msgid "<small>Video height&#47;width:</small>"
+msgstr "<small>Wysokość&#47;szerokość nagrania wideo:</small>"
 
 #: ../src/transmageddon.glade.h:11
-msgid "Dirac"
-msgstr "Dirac"
+msgid "AA_C"
+msgstr "_AAC"
 
 #: ../src/transmageddon.glade.h:12
-msgid "FLAC"
-msgstr "FLAC"
+msgid "AC_3"
+msgstr "AC_3"
 
 #: ../src/transmageddon.glade.h:13
-msgid "H264"
-msgstr "H264"
+msgid "AMR-N_B"
+msgstr "AMR-N_B"
 
 #: ../src/transmageddon.glade.h:14
-msgid "MPEG2"
-msgstr "MPEG2"
+msgid "Celt _Ultra"
+msgstr "Celt _Ultra"
 
 #: ../src/transmageddon.glade.h:15
-msgid "MPEG4/DivX5"
-msgstr "MPEG4/DivX5"
+msgid "F_LAC"
+msgstr "F_LAC"
 
 #: ../src/transmageddon.glade.h:16
-msgid "Speex"
-msgstr "Speex"
+msgid "H263_plus"
+msgstr "H263_plus"
 
 #: ../src/transmageddon.glade.h:17
-msgid "Theora"
-msgstr "Theora"
+msgid "H2_64"
+msgstr "H2_64"
 
 #: ../src/transmageddon.glade.h:18
-msgid "Transcode"
-msgstr "Transkoduj"
+msgid "MPEG_2"
+msgstr "MPEG_2"
 
 #: ../src/transmageddon.glade.h:19
+msgid "MPEG_4/DivX5"
+msgstr "MPEG_4/DivX5"
+
+#: ../src/transmageddon.glade.h:20
+msgid "Theo_ra"
+msgstr "Theo_ra"
+
+#: ../src/transmageddon.glade.h:21
 msgid "Transmageddon"
 msgstr "Transmageddon"
 
-#: ../src/transmageddon.glade.h:20
-msgid "Vorbis"
-msgstr "Vorbis"
+#: ../src/transmageddon.glade.h:22
+msgid "V_orbis"
+msgstr "V_orbis"
 
-#: ../src/transmageddon.glade.h:21
+#: ../src/transmageddon.glade.h:23
+msgid "W_indowsMediaAudio 2"
+msgstr "WindowsM_ediaAudio 2"
+
+#: ../src/transmageddon.glade.h:24
+msgid "_Audio passthrough"
+msgstr "Dź_więk bez zmian"
+
+#: ../src/transmageddon.glade.h:25
+msgid "_Dirac"
+msgstr "_Dirac"
+
+#: ../src/transmageddon.glade.h:26
 msgid "_Edit"
 msgstr "_Edycja"
 
-#: ../src/transmageddon.glade.h:22
+#: ../src/transmageddon.glade.h:27
 msgid "_File"
 msgstr "_Plik"
 
-#: ../src/transmageddon.glade.h:23
+#: ../src/transmageddon.glade.h:28
 msgid "_Help"
 msgstr "Pomo_c"
 
-#: ../src/transmageddon.glade.h:24
+#: ../src/transmageddon.glade.h:29
+msgid "_Speex"
+msgstr "_Speex"
+
+#: ../src/transmageddon.glade.h:30
+msgid "_Transcode"
+msgstr "Prze_koduj"
+
+#: ../src/transmageddon.glade.h:31
+msgid "_Video passthrough"
+msgstr "Wideo bez _zmian"
+
+#: ../src/transmageddon.glade.h:32
 msgid "_View"
 msgstr "_Widok"
 
-#: ../src/transmageddon.glade.h:25
-msgid "mp3"
-msgstr "mp3"
+#: ../src/transmageddon.glade.h:33
+msgid "_WindowsMediaVideo2"
+msgstr "WindowsMedia_Video2"
 
-#: ../src/transmageddon.glade.h:26
-msgid "xvid"
-msgstr ""
+#: ../src/transmageddon.glade.h:34
+msgid "_mp3"
+msgstr "_mp3"
 
-#: ../src/transmageddon.py:176 ../src/transmageddon.py:341
-#: ../src/transmageddon.py:422 ../src/transmageddon.py:435
-#: ../src/transmageddon.py:442
+#: ../src/transmageddon.glade.h:35
+msgid "_xvid"
+msgstr "_xvid"
+
+#: ../src/transmageddon.py:225 ../src/transmageddon.py:492
+#: ../src/transmageddon.py:609 ../src/transmageddon.py:629
+#: ../src/transmageddon.py:637
 msgid "Transcoding Progress"
-msgstr "Postęp transkodowania"
+msgstr "Postęp przekodowywania"
 
-#: ../src/transmageddon.py:265
+#. Populate the rotatation box
+#: ../src/transmageddon.py:243
+msgid "No rotation (default)"
+msgstr "Bez obracania obrazu (domyślnie)"
+
+#: ../src/transmageddon.py:243
+msgid "Clockwise 90 degrees"
+msgstr "Obrót o 90 stopni zgodnie z ruchem wskazówek zegara"
+
+#: ../src/transmageddon.py:243
+msgid "Rotate 180 degrees"
+msgstr "Obrót o 180 stopni"
+
+#: ../src/transmageddon.py:244
+msgid "Counterclockwise 90 degrees"
+msgstr "Obrót o 90 stopni przeciwnie do ruchu wskazówek zegara"
+
+#: ../src/transmageddon.py:244
+msgid "Horizontal flip"
+msgstr "Odbicie poziome"
+
+#: ../src/transmageddon.py:245
+msgid "Vertical flip"
+msgstr "Odbicie pionowe"
+
+#: ../src/transmageddon.py:245
+msgid "Upper left diagonal flip"
+msgstr "Odbicie względem górnego lewego rogu"
+
+#: ../src/transmageddon.py:246
+msgid "Upper right diagnonal flip"
+msgstr "Odbicie względem górnego prawego rogu"
+
+#: ../src/transmageddon.py:350
 #, python-format
 msgid "%(min)d:%(sec)02d"
-msgstr ""
+msgstr "%(min)d:%(sec)02d"
 
-#: ../src/transmageddon.py:270
+#: ../src/transmageddon.py:356
 msgid "Estimated time remaining: "
-msgstr ""
+msgstr "Pozostały czas: "
 
-#: ../src/transmageddon.py:292
+#: ../src/transmageddon.py:358 ../src/transmageddon.py:396
+#: ../src/transmageddon.py:612
+msgid "Pass "
+msgstr "Przebieg "
+
+#: ../src/transmageddon.py:381
 msgid "File saved to "
 msgstr "Plik zapisany jako "
 
-#: ../src/transmageddon.py:299
+#: ../src/transmageddon.py:390
 msgid "Done Transcoding"
-msgstr "Zakończono transkodowanie"
+msgstr "Ukończono przekodowywanie"
 
-#: ../src/transmageddon.py:373
+#: ../src/transmageddon.py:398
+msgid "Start next pass"
+msgstr "Uruchamianie następnego przebiegu"
+
+#: ../src/transmageddon.py:537
 msgid "Plugins not found, choose different codecs."
 msgstr "Nie znaleziono wtyczek, proszę wybrać inne kodeki."
 
-#: ../src/transmageddon.py:381
+#: ../src/transmageddon.py:545
 msgid "Codec installation aborted."
 msgstr "Przerwano instalację kodeków."
 
-#: ../src/transmageddon.py:389
+#: ../src/transmageddon.py:553
 msgid "Missing plugin installation failed: "
-msgstr "Instalacja wtyczki zakończona niepowodzeniem: "
+msgstr "Instalacja brakującej wtyczki zakończona niepowodzeniem: "
 
-#: ../src/utils.py:74
+#: ../src/transmageddon.py:607
+msgid "Writing "
+msgstr "Zapisywanie "
+
+#: ../src/utils.py:73
 #, python-format
 msgid "Can't find %(path)s in any known prefix!"
-msgstr ""
+msgstr "Nie można znaleźć %(path)s w żadnym znanym położeniu."
 
 #: ../transmageddon.desktop.in.in.h:1
 msgid "Transmageddon Video Transcoder"
-msgstr "Transkoder obrazu wideo Transmageddon"
+msgstr "Przekodowywanie nagrań wideo Transmageddon"
 
 #: ../transmageddon.desktop.in.in.h:2
 msgid "Video format conversion tool"
-msgstr "Narzędzie do transkodowania obrazu wideo"
+msgstr "Narzędzie do przekodowywania nagrań wideo"
 
+#~ msgid "Celt"
+#~ msgstr "Celt"
+
+#~ msgid "H263+"
+#~ msgstr "H263+"
+
+#~ msgid "WMA2"
+#~ msgstr "WMA2"
+
+#~ msgid "WMV2"
+#~ msgstr "WMV2"
