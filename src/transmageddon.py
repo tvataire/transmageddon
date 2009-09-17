@@ -343,6 +343,8 @@ class TransmageddonUI (gtk.glade.XML):
                # print percent_remain
                if percent != 0:
                    rem = (timespent / percent) * percent_remain
+               else: 
+                   rem = 0.1
                min = rem / 60
                sec = rem % 60
                time_rem = _("%(min)d:%(sec)02d") % {
