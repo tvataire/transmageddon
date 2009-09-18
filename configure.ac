@@ -69,6 +69,7 @@ Makefile
 bin/Makefile
 common/Makefile
 common/m4/Makefile
+src/about.py
 src/Makefile
 presets/Makefile
 profiles/Makefile

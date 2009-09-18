@@ -16,6 +16,7 @@ po/POTFILES
 po/stamp-it
 po/.intltool-merge-cache
 py-compile
+src/about.py
 src/*.pyc
 src/*.*~
 profiles/*.*~

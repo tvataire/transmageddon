@@ -1,3 +1,4 @@
+src/about.py.in
 src/presets.py
 src/transmageddon.glade
 src/transmageddon.py
