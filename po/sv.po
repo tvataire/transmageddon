@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: transmageddon\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-28 16:49+0200\n"
-"PO-Revision-Date: 2009-07-28 16:50+0100\n"
+"POT-Creation-Date: 2009-09-18 12:59+0200\n"
+"PO-Revision-Date: 2009-09-18 12:59+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -120,190 +120,190 @@ msgid "<small>Video height&#47;width:</small>"
 msgstr "<small>Höjd och bredd för video:</small>"
 
 #: ../src/transmageddon.glade.h:11
-msgid "AAC"
-msgstr "AAC"
+msgid "AA_C"
+msgstr "AA_C"
 
 #: ../src/transmageddon.glade.h:12
-msgid "AC3"
-msgstr "AC3"
+msgid "AC_3"
+msgstr "AC_3"
 
 #: ../src/transmageddon.glade.h:13
-msgid "AMR-NB"
-msgstr "AMR-NB"
+msgid "AMR-N_B"
+msgstr "AMR-N_B"
 
 #: ../src/transmageddon.glade.h:14
-msgid "Audio passthrough"
-msgstr "Ljud passthrough"
+msgid "Celt _Ultra"
+msgstr "Celt _Ultra"
 
 #: ../src/transmageddon.glade.h:15
-msgid "Celt"
-msgstr "Celt"
+msgid "F_LAC"
+msgstr "F_LAC"
 
 #: ../src/transmageddon.glade.h:16
-msgid "Dirac"
-msgstr "Dirac"
+msgid "H263_plus"
+msgstr "H263_plus"
 
 #: ../src/transmageddon.glade.h:17
-msgid "FLAC"
-msgstr "FLAC"
+msgid "H2_64"
+msgstr "H2_64"
 
 #: ../src/transmageddon.glade.h:18
-msgid "H263+"
-msgstr "H263+"
+msgid "MPEG_2"
+msgstr "MPEG_2"
 
 #: ../src/transmageddon.glade.h:19
-msgid "H264"
-msgstr "H264"
+msgid "MPEG_4/DivX5"
+msgstr "MPEG_4/DivX5"
 
 #: ../src/transmageddon.glade.h:20
-msgid "MPEG2"
-msgstr "MPEG2"
+msgid "Theo_ra"
+msgstr "Theo_ra"
 
 #: ../src/transmageddon.glade.h:21
-msgid "MPEG4/DivX5"
-msgstr "MPEG4/DivX5"
-
-#: ../src/transmageddon.glade.h:22
-msgid "Speex"
-msgstr "Speex"
-
-#: ../src/transmageddon.glade.h:23
-msgid "Theora"
-msgstr "Theora"
-
-#: ../src/transmageddon.glade.h:24
-msgid "Transcode"
-msgstr "Koda om"
-
-#: ../src/transmageddon.glade.h:25
 msgid "Transmageddon"
 msgstr "Transmageddon"
 
+#: ../src/transmageddon.glade.h:22
+msgid "V_orbis"
+msgstr "V_orbis"
+
+#: ../src/transmageddon.glade.h:23
+msgid "W_indowsMediaAudio 2"
+msgstr "W_indowsMediaAudio 2"
+
+#: ../src/transmageddon.glade.h:24
+msgid "_Audio passthrough"
+msgstr "_Ljud passthrough"
+
+#: ../src/transmageddon.glade.h:25
+msgid "_Dirac"
+msgstr "_Dirac"
+
 #: ../src/transmageddon.glade.h:26
-msgid "Video passthrough"
-msgstr "Video passthrough"
-
-#: ../src/transmageddon.glade.h:27
-msgid "Vorbis"
-msgstr "Vorbis"
-
-#: ../src/transmageddon.glade.h:28
-msgid "WMA2"
-msgstr "WMA2"
-
-#: ../src/transmageddon.glade.h:29
-msgid "WMV2"
-msgstr "WMV2"
-
-#: ../src/transmageddon.glade.h:30
 msgid "_Edit"
 msgstr "R_edigera"
 
-#: ../src/transmageddon.glade.h:31
+#: ../src/transmageddon.glade.h:27
 msgid "_File"
 msgstr "_Arkiv"
 
-#: ../src/transmageddon.glade.h:32
+#: ../src/transmageddon.glade.h:28
 msgid "_Help"
 msgstr "_Hjälp"
 
-#: ../src/transmageddon.glade.h:33
+#: ../src/transmageddon.glade.h:29
+msgid "_Speex"
+msgstr "_Speex"
+
+#: ../src/transmageddon.glade.h:30
+msgid "_Transcode"
+msgstr "Koda _om"
+
+#: ../src/transmageddon.glade.h:31
+msgid "_Video passthrough"
+msgstr "_Video passthrough"
+
+#: ../src/transmageddon.glade.h:32
 msgid "_View"
 msgstr "_Visa"
 
+#: ../src/transmageddon.glade.h:33
+msgid "_WindowsMediaVideo2"
+msgstr "_WindowsMediaVideo2"
+
 #: ../src/transmageddon.glade.h:34
-msgid "mp3"
-msgstr "mp3"
+msgid "_mp3"
+msgstr "_mp3"
 
 #: ../src/transmageddon.glade.h:35
-msgid "xvid"
-msgstr "xvid"
+msgid "_xvid"
+msgstr "_xvid"
 
-#: ../src/transmageddon.py:196
-#: ../src/transmageddon.py:453
-#: ../src/transmageddon.py:569
-#: ../src/transmageddon.py:590
-#: ../src/transmageddon.py:598
+#: ../src/transmageddon.py:225
+#: ../src/transmageddon.py:492
+#: ../src/transmageddon.py:609
+#: ../src/transmageddon.py:629
+#: ../src/transmageddon.py:637
 msgid "Transcoding Progress"
 msgstr "Förlopp för omkodning"
 
 #. Populate the rotatation box
-#: ../src/transmageddon.py:213
+#: ../src/transmageddon.py:243
 msgid "No rotation (default)"
 msgstr "Ingen rotering (standard)"
 
-#: ../src/transmageddon.py:213
+#: ../src/transmageddon.py:243
 msgid "Clockwise 90 degrees"
 msgstr "Medsols 90 grader"
 
-#: ../src/transmageddon.py:213
+#: ../src/transmageddon.py:243
 msgid "Rotate 180 degrees"
 msgstr "Rotera 180 grader"
 
-#: ../src/transmageddon.py:214
+#: ../src/transmageddon.py:244
 msgid "Counterclockwise 90 degrees"
 msgstr "Motsols 90 grader"
 
-#: ../src/transmageddon.py:214
+#: ../src/transmageddon.py:244
 msgid "Horizontal flip"
 msgstr "Vänd horisontellt"
 
-#: ../src/transmageddon.py:215
+#: ../src/transmageddon.py:245
 msgid "Vertical flip"
 msgstr "Vänd vertikalt"
 
-#: ../src/transmageddon.py:215
+#: ../src/transmageddon.py:245
 msgid "Upper left diagonal flip"
 msgstr "Diagonal vändning i övre vänster"
 
-#: ../src/transmageddon.py:216
+#: ../src/transmageddon.py:246
 msgid "Upper right diagnonal flip"
 msgstr "Diagonal vändning i övre höger"
 
-#: ../src/transmageddon.py:313
+#: ../src/transmageddon.py:350
 #, python-format
 msgid "%(min)d:%(sec)02d"
 msgstr "%(min)d:%(sec)02d"
 
-#: ../src/transmageddon.py:319
+#: ../src/transmageddon.py:356
 msgid "Estimated time remaining: "
 msgstr "Återstående tid: "
 
-#: ../src/transmageddon.py:321
-#: ../src/transmageddon.py:359
-#: ../src/transmageddon.py:572
+#: ../src/transmageddon.py:358
+#: ../src/transmageddon.py:396
+#: ../src/transmageddon.py:612
 msgid "Pass "
 msgstr "Pass "
 
-#: ../src/transmageddon.py:344
+#: ../src/transmageddon.py:381
 msgid "File saved to "
 msgstr "Filen sparades till "
 
-#: ../src/transmageddon.py:353
+#: ../src/transmageddon.py:390
 msgid "Done Transcoding"
 msgstr "Omkodningen är färdig"
 
-#: ../src/transmageddon.py:361
+#: ../src/transmageddon.py:398
 msgid "Start next pass"
 msgstr "Starta nästa pass"
 
-#: ../src/transmageddon.py:498
+#: ../src/transmageddon.py:537
 msgid "Plugins not found, choose different codecs."
 msgstr "Insticksmoduler hittades inte. Välj andra kodekar."
 
-#: ../src/transmageddon.py:506
+#: ../src/transmageddon.py:545
 msgid "Codec installation aborted."
 msgstr "Kodekinstallationen avbröts."
 
-#: ../src/transmageddon.py:514
+#: ../src/transmageddon.py:553
 msgid "Missing plugin installation failed: "
 msgstr "Installation av saknad insticksmodul misslyckades: "
 
-#: ../src/transmageddon.py:567
+#: ../src/transmageddon.py:607
 msgid "Writing "
 msgstr "Skriver "
 
-#: ../src/utils.py:72
+#: ../src/utils.py:73
 #, python-format
 msgid "Can't find %(path)s in any known prefix!"
 msgstr "Kan inte hitta %(path)s i något känt prefix!"
@@ -316,6 +316,14 @@ msgstr "Videoomkodaren Transmageddon"
 msgid "Video format conversion tool"
 msgstr "Verktyg för konvertering av videoformat"
 
+#~ msgid "Celt"
+#~ msgstr "Celt"
+#~ msgid "H263+"
+#~ msgstr "H263+"
+#~ msgid "WMA2"
+#~ msgstr "WMA2"
+#~ msgid "WMV2"
+#~ msgstr "WMV2"
 #~ msgid "Value may only contain one comma; got %(value)s"
 #~ msgstr "Värdet får endast innehålla ett kommatecken; fick %(value)s"
 
