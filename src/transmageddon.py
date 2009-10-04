@@ -230,6 +230,7 @@ class TransmageddonUI (gtk.glade.XML):
        self.audiopasstoggle=False
        self.containertoggle=False # this toggle is used to not check for encoders with pbutils
        self.discover_done=False # lets us know that discover is finished
+       self.missingtoggle=False
 
        self.p_duration = gst.CLOCK_TIME_NONE
        self.p_time = gst.FORMAT_TIME
@@ -428,7 +429,8 @@ class TransmageddonUI (gtk.glade.XML):
                    self.check_for_passthrough(self.container)
            else:
                self.check_for_elements()
-               self._start_transcoding()
+               if self.missingtoggle==False:
+                   self._start_transcoding()
        if self.container != False:
            self.check_for_passthrough(self.container)
 
@@ -507,7 +509,7 @@ class TransmageddonUI (gtk.glade.XML):
            audiocodec = codecfinder.codecmap[self.AudioCodec]
        else:
            audiocodec = gst.Caps.to_string(self.asourcecaps)
-
+       print "videocodec is " + str(videocodec)
        container = self.get_widget ("containerchoice").get_active_text ()
        self._transcoder = transcoder_engine.Transcoder(filechoice, self.filename, self.videodirectory, container, 
                                                        audiocodec, videocodec, self.devicename, 
@@ -528,6 +530,9 @@ class TransmageddonUI (gtk.glade.XML):
            else:
                print "GStreamer registry update failed"
            if self.containertoggle == False:
+               # print "done installing plugins, starting transcode"
+               # FIXME - might want some test here to check plugins needed are actually installed
+               # but it is a rather narrow corner case when it fails
                self._start_transcoding()
        elif donemessage == gst.pbutils.INSTALL_PLUGINS_PARTIAL_SUCCESS:
            #print "partial success " + str(donemessage)
@@ -566,6 +571,7 @@ class TransmageddonUI (gtk.glade.XML):
            audiostatus= "apass"
 
        if not containerstatus or not videostatus or not audiostatus:
+           self.missingtoggle=True
            fail_info = []
            if self.containertoggle==True:
                audiostatus=True
@@ -612,7 +618,8 @@ class TransmageddonUI (gtk.glade.XML):
            self.ProgressBar.set_text(_("Pass " + str(self.passcounter) + " Progress"))
        if self.audiodata.has_key("samplerate"):
            self.check_for_elements()
-           self._start_transcoding()
+           if self.missingtoggle==False:
+               self._start_transcoding()
        else:
            self.waiting_for_signal="True"
 
