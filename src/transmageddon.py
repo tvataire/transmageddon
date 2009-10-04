@@ -509,7 +509,6 @@ class TransmageddonUI (gtk.glade.XML):
            audiocodec = codecfinder.codecmap[self.AudioCodec]
        else:
            audiocodec = gst.Caps.to_string(self.asourcecaps)
-       print "videocodec is " + str(videocodec)
        container = self.get_widget ("containerchoice").get_active_text ()
        self._transcoder = transcoder_engine.Transcoder(filechoice, self.filename, self.videodirectory, container, 
                                                        audiocodec, videocodec, self.devicename, 
