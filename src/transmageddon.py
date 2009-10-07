@@ -567,7 +567,7 @@ class TransmageddonUI (gtk.glade.XML):
        if self.VideoCodec != "vpass":
            videostatus = codecfinder.get_video_encoder_element(codecfinder.codecmap[self.VideoCodec])
        else:
-           audiostatus= "apass"
+           videostatus= "vpass"
 
        if not containerstatus or not videostatus or not audiostatus:
            self.missingtoggle=True
