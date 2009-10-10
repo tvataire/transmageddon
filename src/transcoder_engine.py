@@ -34,7 +34,8 @@ class Transcoder(gobject.GObject):
 
    __gsignals__ = {
             'ready-for-querying' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, []),
-            'got-eos' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, [])
+            'got-eos' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, []),
+            'got-error' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,))
                     }
 
    def __init__(self, FILECHOSEN, FILENAME, DESTDIR, CONTAINERCHOICE, AUDIOCODECVALUE, VIDEOCODECVALUE, PRESET, 
@@ -48,7 +49,7 @@ class Transcoder(gobject.GObject):
 
        # Choose plugin based on Codec Name
        # or switch to remuxing mode if any of the values are set to 'pastr'
-
+       self.stoptoggle=False
        self.audiocaps = AUDIOCODECVALUE
        self.videocaps = VIDEOCODECVALUE
        self.audiopasstoggle = AUDIOPASSTOGGLE
@@ -289,6 +290,7 @@ class Transcoder(gobject.GObject):
 
    def on_message(self, bus, message):
        mtype = message.type
+       # print mtype
        if mtype == gst.MESSAGE_ERROR:
            err, debug = message.parse_error()
            print err 
@@ -304,6 +306,10 @@ class Transcoder(gobject.GObject):
                        os.remove(self.cachefile)
            self.emit('got-eos')
            self.pipeline.set_state(gst.STATE_NULL)
+       elif mtype == gst.MESSAGE_APPLICATION:
+           print "I am getting the appliation message"
+           self.pipeline.set_state(gst.STATE_NULL)
+           self.pipeline.remove(self.uridecoder)
        return True
 
    def list_compat(self, a1, b1):
@@ -315,6 +321,10 @@ class Transcoder(gobject.GObject):
    def OnDynamicPad(self, dbin, sink_pad):
        c = sink_pad.get_caps().to_string()
        if c.startswith("audio/"):
+           if self.stoptoggle==True:
+               bus = self.pipeline.get_bus()
+               bus.post(gst.message_new_application(self.pipeline, gst.Structure('STOP TRANSCODER')))
+               return
            # First check for passthough mode
            if self.audiopasstoggle is False:
                # Check if either we are not doing multipass or if its the final pass before enabling audio
@@ -370,6 +380,7 @@ class Transcoder(gobject.GObject):
                else:
                    flist = gst.registry_get_default().get_feature_list(gst.ElementFactory)
                    parsers = []
+                   self.aparserelement = False
                    for fact in flist:
                        # print "fact is " + str(fact)
                        if self.list_compat(["Codec", "Parser","Audio"], fact.get_klass().split('/')):
@@ -384,7 +395,11 @@ class Transcoder(gobject.GObject):
                                        parseintersect = caps.intersect(gst.caps_from_string(self.audiocaps))
                                    if parseintersect != ("EMPTY"):
                                        self.aparserelement = parser
-            
+                   if self.aparserelement == False:
+                                   error_message="noaudioparser"
+                                   self.emit("got-error", error_message)
+                                   self.stoptoggle=True
+                                   return  
                    self.audioparse = gst.element_factory_make(self.aparserelement)
                    self.pipeline.add(self.audioparse)
 
@@ -396,6 +411,10 @@ class Transcoder(gobject.GObject):
                    self.gstmultiqueue.set_state(gst.STATE_PAUSED)
 
        elif c.startswith("video/"):
+           if self.stoptoggle==True:
+               bus = self.pipeline.get_bus()
+               bus.post(gst.message_new_application(self.pipeline, gst.Structure('STOP TRANSCODER')))
+               return
            if self.videopasstoggle == False:
                # print "Got an video cap"
                self.colorspaceconverter = gst.element_factory_make("ffmpegcolorspace")
@@ -516,6 +535,7 @@ class Transcoder(gobject.GObject):
                else:
                    flist = gst.registry_get_default().get_feature_list(gst.ElementFactory)
                    parsers = []
+                   self.vparserelement = False
                    for fact in flist:
                        if self.list_compat(["Codec", "Parser","Video"], fact.get_klass().split('/')):
                            parsers.append(fact.get_name())
@@ -530,7 +550,12 @@ class Transcoder(gobject.GObject):
                                    if parseintersect == ("EMPTY"):
                                        parseintersect = caps.intersect(gst.caps_from_string(self.videocaps))
                                    if parseintersect != ("EMPTY"):
-                                       self.vparserelement = parser
+                                       self.vparserelement = parser                               
+                   if self.vparserelement == False:
+                                   error_message="novideoparser"
+                                   self.emit("got-error", error_message)
+                                   self.stoptoggle=True
+                                   return
 
 
                    self.videoparse = gst.element_factory_make(self.vparserelement)

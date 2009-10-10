@@ -370,12 +370,6 @@ class TransmageddonUI (gtk.glade.XML):
        gobject.timeout_add(500, self.Increment_Progressbar)
        # print "ProgressBar timeout_add startet"
 
-
-   # Set up function to start listening on the GStreamer bus
-   # We need this so we know when the pipeline has started and when the pipeline has stopped
-   # listening for ASYNC_DONE is sorta ok way to listen for when the pipeline is running
-   # You need to listen on the GStreamer bus to know when EOS is hit for instance.
-
    def _on_eos(self, source):
        context_id = self.StatusBar.get_context_id("EOS")
        if (self.multipass ==  False) or (self.passcounter == int(0)):
@@ -515,9 +509,9 @@ class TransmageddonUI (gtk.glade.XML):
                                                        vheight, vwidth, ratenum, ratednom, achannels, 
                                                        self.multipass, self.passcounter, self.outputfilename,
                                                        self.timestamp, self.rotationvalue, self.audiopasstoggle, self.videopasstoggle)
-       
        self._transcoder.connect("ready-for-querying", self.ProgressBarUpdate)
        self._transcoder.connect("got-eos", self._on_eos)
+       self._transcoder.connect("got-error", self.show_error) 
        return True
 
 
@@ -701,6 +695,36 @@ class TransmageddonUI (gtk.glade.XML):
            Show the about dialog.
        """
        about.AboutDialog()
+
+
+   def show_error(self, NONE, error_string):
+       if (error_string=="noaudioparser") or (error_string=="novideoparser"):
+           self.FileChooser.set_sensitive(True)
+           self.containerchoice.set_sensitive(True)
+           self.CodecBox.set_sensitive(True)
+           self.presetchoice.set_sensitive(True)
+           self.rotationchoice.set_sensitive(True)
+           self.presetchoice.set_active(0)
+           self.cancelbutton.set_sensitive(True)
+           self.ProgressBar.set_fraction(0.0)
+           self.ProgressBar.set_text(_("Transcoding Progress"))
+           if error_string=="noaudioparser":
+               error_message = _("No audio parser, passthrough not available")
+               self.codec_buttons["apass"].set_sensitive(False)
+               codecs = supported_container_map[self.container]
+               self.AudioCodec = codecs[0]
+               self.codec_buttons[self.AudioCodec].set_active(True)
+           elif error_string=="novideoparser":
+               error_message= _("No video parser, passthrough not available")
+               self.codec_buttons["vpass"].set_sensitive(False)
+               codecs = supported_container_map[self.container]
+               self.VideoCodec = codecs[1]
+               self.codec_buttons[self.VideoCodec].set_active(True)
+           else:
+               error_message=_("Uknown error")
+       context_id = self.StatusBar.get_context_id("EOS")
+       self.StatusBar.push(context_id, error_message)
+
 
    def on_debug_activate(self, widget):
        dotfile = "/tmp/transmageddon-debug-graph.dot"
