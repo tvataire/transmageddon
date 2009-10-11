@@ -1,3 +1,11 @@
+0.14
+  Error handling added for when a parser is missing
+  Add icon to about dialog
+  Make debug graphic system actually work
+  Automatically set version number in about box
+  Ensure pipeline doesn't start until plugins downloaded
+  Add Google G1 and Sony PSP profiles
+
 0.13
   Fix bad bug in presets caused by addition of MPEG PS
   Add drag and drop support

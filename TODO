@@ -1,16 +1,8 @@
 This list is completely unordered. Nothing about the ordering in this list should
 cause anyone to make any kind of assumptions about priorties.
 
-* MPEG PS support.
-  Summer of Code project looks to address this.
-
 * AVC HD support.
-  Variation of MPEG TS with H264 and AC3 audio. Summer of code will look at it.
-
-* Add better error handling
-  Make sure the application runs even if directory names etc. are different. 
-  Enable reporting when no plugin is found which allows allows muxing or 
-  encoding.
+  Variation of MPEG TS with H264 and AC3 audio.
 
 * Support non-muxed audio codec 
   Allow the outputting of non-muxed audio codecs (mp3 mostly). Not sure we really
