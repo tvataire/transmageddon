@@ -1,3 +1,4 @@
 #!/bin/bash
+export GST_DEBUG_DUMP_DOT_DIR="/tmp"
 cd @DATADIR@/transmageddon
 python transmageddon.py

@@ -20,6 +20,10 @@
 
 import sys
 import os
+
+os.environ["GST_DEBUG_DUMP_DOT_DIR"] = "/tmp"
+os.putenv('GST_DEBUG_DUMP_DIR_DIR', '/tmp')
+
 import time
 import transcoder_engine
 import gobject; gobject.threads_init()
@@ -54,9 +58,6 @@ if (major == 2) and (minor < 18):
 
 TARGET_TYPE_URI_LIST = 80
 dnd_list = [ ( 'text/uri-list', 0, TARGET_TYPE_URI_LIST ) ]
-
-os.environ["GST_DEBUG_DUMP_DOT_DIR"] = "/tmp"
-os.putenv('GST_DEBUG_DUMP_DIR_DIR', '/tmp')
 
 supported_containers = [
         "Ogg",

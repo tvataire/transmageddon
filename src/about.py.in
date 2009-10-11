@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import gtk
+import os
 from gettext import gettext as _
 
 Authors = ["Christian Schaller <uraeus@gnome.org>",
@@ -42,6 +43,7 @@ class AboutDialog:
        x.set_authors(Authors)
        x.set_translator_credits(_("translator-credits"))
        x.set_artists(Artists)
+       x.set_logo_icon_name("transmageddon")
        x.set_license(LGPL)   
        x.connect("response", lambda d, r: d.destroy())
        x.show()
