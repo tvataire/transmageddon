@@ -706,7 +706,8 @@ class TransmageddonUI (gtk.glade.XML):
            self.presetchoice.set_sensitive(True)
            self.rotationchoice.set_sensitive(True)
            self.presetchoice.set_active(0)
-           self.cancelbutton.set_sensitive(True)
+           self.cancelbutton.set_sensitive(False)
+           self.transcodebutton.set_sensitive(True)
            self.ProgressBar.set_fraction(0.0)
            self.ProgressBar.set_text(_("Transcoding Progress"))
            if error_string=="noaudioparser":
@@ -715,12 +716,14 @@ class TransmageddonUI (gtk.glade.XML):
                codecs = supported_container_map[self.container]
                self.AudioCodec = codecs[0]
                self.codec_buttons[self.AudioCodec].set_active(True)
+               self.audiopasstoggle = False
            elif error_string=="novideoparser":
                error_message= _("No video parser, passthrough not available")
                self.codec_buttons["vpass"].set_sensitive(False)
                codecs = supported_container_map[self.container]
                self.VideoCodec = codecs[1]
                self.codec_buttons[self.VideoCodec].set_active(True)
+               self.videopasstoggle = False
            else:
                error_message=_("Uknown error")
        context_id = self.StatusBar.get_context_id("EOS")
