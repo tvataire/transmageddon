@@ -177,7 +177,6 @@ class Transcoder(gobject.GObject):
 
        # calculate number of channels
        chanmin, chanmax = preset.acodec.channels
-       print "chanmin, chanmax is " + str(chanmin) + " " + str(chanmax)
        if int(self.achannels) < int(chanmax):
            if int(self.achannels) > int(chanmin): 
                self.channels = int(self.achannels)
@@ -185,7 +184,6 @@ class Transcoder(gobject.GObject):
                self.channels = int(chanmin)
        else:
            self.channels = int(chanmax)
-       print "final self.channels is " + str(self.channels)
        # Check if rescaling is needed and calculate new video width/height keeping aspect ratio
        # Also add black borders if needed
        wmin, wmax  =  preset.vcodec.width
@@ -354,7 +352,6 @@ class Transcoder(gobject.GObject):
                                acap["rate"] = self.samplerate
                                acap["channels"] = self.channels
 
-                           print "caps is " + str(self.acaps)
                            self.acapsfilter = gst.element_factory_make("capsfilter")
                            self.acapsfilter.set_property("caps", self.acaps)
                            self.pipeline.add(self.acapsfilter)

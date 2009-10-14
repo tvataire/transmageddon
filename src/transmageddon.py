@@ -738,9 +738,9 @@ class TransmageddonUI (gtk.glade.XML):
        if os.access(pngfile, os.F_OK):
            os.remove(pngfile)
        gst.DEBUG_BIN_TO_DOT_FILE (self._transcoder.pipeline, gst.DEBUG_GRAPH_SHOW_ALL, 'transmageddon-debug-graph')
-       print "The debug feature requiers Eye of GNOME (eog) and graphviz (dot) to be installed"
+       print "The debug feature requires graphviz (dot) to be installed"
        os.system("dot -Tpng -o /tmp/transmageddon-pipeline.png /tmp/transmageddon-debug-graph.dot")
-       os.system("eog /tmp/transmageddon-pipeline.png &")
+       gtk.show_uri(gtk.gdk.Screen(), "file:///tmp/transmageddon-pipeline.png", 0)
 
 if __name__ == "__main__":
         hwg = TransmageddonUI()
