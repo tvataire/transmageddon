@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: transmageddon\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=transmageddon&component=General\n"
-"POT-Creation-Date: 2009-09-12 13:36+0000\n"
-"PO-Revision-Date: 2009-09-16 20:35+0100\n"
+"POT-Creation-Date: 2009-10-10 23:26+0000\n"
+"PO-Revision-Date: 2009-10-16 18:29+0100\n"
 "Last-Translator: Mario Blättermann <mariobl@gnome.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -17,6 +17,12 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "X-Poedit-Language: German\n"
 "X-Poedit-Country: GERMANY\n"
+
+#: ../src/about.py.in:43
+msgid "translator-credits"
+msgstr ""
+"Mario Blättermann <mariobl@gnome.org>\n"
+"Christian Kirbach <Christian.Kirbach@googlemail.com>"
 
 #: ../src/presets.py:77
 #, python-format
@@ -124,17 +130,14 @@ msgid "<small>Video height&#47;width:</small>"
 msgstr "<small>Videohöhe und -breite:</small>"
 
 #: ../src/transmageddon.glade.h:11
-#| msgid "AAC"
 msgid "AA_C"
 msgstr "AA_C"
 
 #: ../src/transmageddon.glade.h:12
-#| msgid "AC3"
 msgid "AC_3"
 msgstr "AC_3"
 
 #: ../src/transmageddon.glade.h:13
-#| msgid "AMR-NB"
 msgid "AMR-N_B"
 msgstr "AMR-N_B"
 
@@ -143,7 +146,6 @@ msgid "Celt _Ultra"
 msgstr "Celt _Ultra"
 
 #: ../src/transmageddon.glade.h:15
-#| msgid "FLAC"
 msgid "F_LAC"
 msgstr "F_LAC"
 
@@ -152,22 +154,18 @@ msgid "H263_plus"
 msgstr "H263_plus"
 
 #: ../src/transmageddon.glade.h:17
-#| msgid "H264"
 msgid "H2_64"
 msgstr "H2_64"
 
 #: ../src/transmageddon.glade.h:18
-#| msgid "MPEG2"
 msgid "MPEG_2"
 msgstr "MPEG_2"
 
 #: ../src/transmageddon.glade.h:19
-#| msgid "MPEG4/DivX5"
 msgid "MPEG_4/DivX5"
 msgstr "MPEG_4/DivX5"
 
 #: ../src/transmageddon.glade.h:20
-#| msgid "Theora"
 msgid "Theo_ra"
 msgstr "Theo_ra"
 
@@ -176,7 +174,6 @@ msgid "Transmageddon"
 msgstr "Transmageddon"
 
 #: ../src/transmageddon.glade.h:22
-#| msgid "Vorbis"
 msgid "V_orbis"
 msgstr "V_orbis"
 
@@ -185,12 +182,10 @@ msgid "W_indowsMediaAudio 2"
 msgstr "W_indowsMediaAudio 2"
 
 #: ../src/transmageddon.glade.h:24
-#| msgid "Audio passthrough"
 msgid "_Audio passthrough"
 msgstr "_Audio durchschleifen"
 
 #: ../src/transmageddon.glade.h:25
-#| msgid "Dirac"
 msgid "_Dirac"
 msgstr "_Dirac"
 
@@ -207,17 +202,14 @@ msgid "_Help"
 msgstr "_Hilfe"
 
 #: ../src/transmageddon.glade.h:29
-#| msgid "Speex"
 msgid "_Speex"
 msgstr "_Speex"
 
 #: ../src/transmageddon.glade.h:30
-#| msgid "Transcode"
 msgid "_Transcode"
 msgstr "_Umwandeln"
 
 #: ../src/transmageddon.glade.h:31
-#| msgid "Video passthrough"
 msgid "_Video passthrough"
 msgstr "_Video durchschleifen"
 
@@ -230,95 +222,105 @@ msgid "_WindowsMediaVideo2"
 msgstr "_WindowsMediaVideo2"
 
 #: ../src/transmageddon.glade.h:34
-#| msgid "mp3"
 msgid "_mp3"
 msgstr "_mp3"
 
 #: ../src/transmageddon.glade.h:35
-#| msgid "xvid"
 msgid "_xvid"
 msgstr "_xvid"
 
-#: ../src/transmageddon.py:200 ../src/transmageddon.py:462
-#: ../src/transmageddon.py:578 ../src/transmageddon.py:598
-#: ../src/transmageddon.py:606
+#: ../src/transmageddon.py:225 ../src/transmageddon.py:488
+#: ../src/transmageddon.py:608 ../src/transmageddon.py:629
+#: ../src/transmageddon.py:637 ../src/transmageddon.py:710
 msgid "Transcoding Progress"
 msgstr "Umwandlungsfortschritt"
 
 #. Populate the rotatation box
-#: ../src/transmageddon.py:217
+#: ../src/transmageddon.py:244
 msgid "No rotation (default)"
 msgstr "Keine Drehung (Vorgabe)"
 
-#: ../src/transmageddon.py:217
+#: ../src/transmageddon.py:244
 msgid "Clockwise 90 degrees"
 msgstr "90 Grad im Uhrzeigersinn"
 
-#: ../src/transmageddon.py:217
+#: ../src/transmageddon.py:244
 msgid "Rotate 180 degrees"
 msgstr "Um 180 Grad drehen"
 
-#: ../src/transmageddon.py:218
+#: ../src/transmageddon.py:245
 msgid "Counterclockwise 90 degrees"
 msgstr "90 Grad gegen den Uhrzeigersinn"
 
-#: ../src/transmageddon.py:218
+#: ../src/transmageddon.py:245
 msgid "Horizontal flip"
 msgstr "Horizontal spiegeln"
 
-#: ../src/transmageddon.py:219
+#: ../src/transmageddon.py:246
 msgid "Vertical flip"
 msgstr "Vertikal spiegeln"
 
-#: ../src/transmageddon.py:219
+#: ../src/transmageddon.py:246
 msgid "Upper left diagonal flip"
 msgstr "Links oben diagonal spiegeln"
 
-#: ../src/transmageddon.py:220
+#: ../src/transmageddon.py:247
 msgid "Upper right diagnonal flip"
 msgstr "Rechts oben diagonal spiegeln"
 
-#: ../src/transmageddon.py:322
+#: ../src/transmageddon.py:351
 #, python-format
 msgid "%(min)d:%(sec)02d"
 msgstr "%(min)d:%(sec)02d"
 
-#: ../src/transmageddon.py:328
+#: ../src/transmageddon.py:357
 msgid "Estimated time remaining: "
 msgstr "Geschätzte verbleibende Zeit:"
 
-#: ../src/transmageddon.py:330 ../src/transmageddon.py:368
-#: ../src/transmageddon.py:581
+#: ../src/transmageddon.py:359 ../src/transmageddon.py:391
+#: ../src/transmageddon.py:611
 msgid "Pass "
 msgstr "Durchlauf "
 
-#: ../src/transmageddon.py:353
+#: ../src/transmageddon.py:376
 msgid "File saved to "
 msgstr "Datei gespeichert in "
 
-#: ../src/transmageddon.py:362
+#: ../src/transmageddon.py:385
 msgid "Done Transcoding"
 msgstr "Umwandlung beendet"
 
-#: ../src/transmageddon.py:370
+#: ../src/transmageddon.py:393
 msgid "Start next pass"
 msgstr "Nächsten Durchlauf starten"
 
-#: ../src/transmageddon.py:507
+#: ../src/transmageddon.py:535
 msgid "Plugins not found, choose different codecs."
 msgstr "Plugins wurden nicht gefunden, bitte andere Codecs wählen."
 
-#: ../src/transmageddon.py:515
+#: ../src/transmageddon.py:543
 msgid "Codec installation aborted."
 msgstr "Codec-Installation wurde abgebrochen."
 
-#: ../src/transmageddon.py:523
+#: ../src/transmageddon.py:551
 msgid "Missing plugin installation failed: "
 msgstr "Installation des fehlenden Plugins ist fehlgeschlagen: "
 
-#: ../src/transmageddon.py:576
+#: ../src/transmageddon.py:606
 msgid "Writing "
 msgstr "Wird geschrieben "
+
+#: ../src/transmageddon.py:712
+msgid "No audio parser, passthrough not available"
+msgstr "Kein Audio-Parser, Durchschleifen nicht möglich"
+
+#: ../src/transmageddon.py:718
+msgid "No video parser, passthrough not available"
+msgstr "Kein Video-Parser, Durchschleifen nicht möglich"
+
+#: ../src/transmageddon.py:724
+msgid "Uknown error"
+msgstr "Unbekannter Fehler"
 
 #: ../src/utils.py:73
 #, python-format
