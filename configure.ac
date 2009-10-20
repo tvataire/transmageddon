@@ -10,6 +10,9 @@ AC_INIT(transmageddon, 0.14,
 dnl initialize automake
 AM_INIT_AUTOMAKE
 
+dnl enable maintainer mode option
+AM_MAINTAINER_MODE
+
 dnl define PACKAGE_VERSION_* variables
 AS_VERSION
 

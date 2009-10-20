@@ -21,7 +21,7 @@ then
 fi
 . common/gst-autogen.sh
 
-CONFIGURE_DEF_OPT=''
+CONFIGURE_DEF_OPT='--enable-maintainer-mode'
 
 autogen_options $@
 
