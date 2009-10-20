@@ -76,7 +76,6 @@ src/about.py
 src/Makefile
 presets/Makefile
 profiles/Makefile
-debian/Makefile
 po/Makefile.in
 transmageddon.spec
 transmageddon.desktop.in
