@@ -580,6 +580,7 @@ class TransmageddonUI (gtk.glade.XML):
            for x in fail_info:
                missing.append(gst.pbutils.missing_encoder_installer_detail_new(x))
            context = gst.pbutils.InstallPluginsContext ()
+           context.set_xid(self.TopWindow.get_window().xid)
            strmissing = str(missing)
            gst.pbutils.install_plugins_async (missing, context, self.donemessage, "NULL")
 
