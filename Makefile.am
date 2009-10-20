@@ -11,6 +11,8 @@ desktop_DATA = $(desktop_in_files:.desktop.in.in=.desktop)
 icondir = $(datadir)/pixmaps
 icon_DATA = transmageddon.svg
 
+man_MANS = transmageddon.1
+
 transmageddondir = $(datadir)/transmageddon
 transmageddon_DATA = transmageddon.svg
 
