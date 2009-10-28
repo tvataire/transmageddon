@@ -1,0 +1,334 @@
+# Czech translation for transmageddon.
+# Copyright (C) 2009 transmageddon's COPYRIGHT HOLDER
+# This file is distributed under the same license as the transmageddon package.
+# Marek Černocký <marek@manet.cz>, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: transmageddon master\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=transmageddon&component=General\n"
+"POT-Creation-Date: 2009-10-20 15:25+0000\n"
+"PO-Revision-Date: 2009-10-14 12:04+0100\n"
+"Last-Translator: Marek Černocký <marek@manet.cz>\n"
+"Language-Team: Czech <gnome-cs-list@gnome.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Poedit-Language: Czech\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: ../src/about.py.in:44
+msgid "translator-credits"
+msgstr "Marek Černocký <marek@manet.cz>"
+
+#: ../src/presets.py:77
+#, python-format
+msgid "Not a valid integer or fraction: %(value)s!"
+msgstr "Neplatné celé číslo nebo podíl: %(value)s!"
+
+#: ../src/presets.py:410
+#, python-format
+msgid "Loaded device %(device)s (%(presets)d presets)"
+msgstr "Načteno zařízení %(device)s (%(presets)d přítomno)"
+
+#: ../src/presets.py:477
+#, python-format
+msgid "Fetching %(location)s"
+msgstr "Získává se %(location)s"
+
+#: ../src/presets.py:484
+#, python-format
+msgid "Writing to %(file)s"
+msgstr "Zapisuje se do %(file)s"
+
+#: ../src/presets.py:489
+#, python-format
+msgid "There was an error fetching and installing %(location)s: %(error)s"
+msgstr "Vyskytla se chyba při získávání a instalaci %(location)s: %(error)s"
+
+#: ../src/presets.py:506
+msgid "Checking for device preset updates..."
+msgstr "Vyhledávají se aktualizace přednastavených zařízení…"
+
+#: ../src/presets.py:526
+#, python-format
+msgid "Device preset %(name)s is up to date"
+msgstr "Přednastavené zařízení %(name)s je aktuální"
+
+#: ../src/presets.py:530
+#, python-format
+msgid "Found updated device preset %(name)s"
+msgstr "Nalezeno aktualizované přednastavené zařízení %(name)s"
+
+#: ../src/presets.py:536 ../src/presets.py:549
+#, python-format
+msgid "Error installing preset %(name)s from %(location)s: %(error)s"
+msgstr "Chyba při instalaci přednastaveného %(name)s z %(location)s: %(error)s"
+
+#: ../src/presets.py:543
+#, python-format
+msgid "Found new device preset %(name)s"
+msgstr "Nalezeno nové přednastavené zařízení %(name)s"
+
+#: ../src/presets.py:556
+#, python-format
+msgid "Malformed plugin version line %(line)s"
+msgstr "Poškozená verze zásuvného modulu na řádku %(line)s"
+
+#: ../src/presets.py:560
+#, python-format
+msgid "There was a problem accessing %(location)spresets.txt!"
+msgstr "Vyskytl se problém s přístupem k %(location)spresets.txt!"
+
+#: ../src/presets.py:582
+msgid "All device presets are up to date!"
+msgstr "Všechna přednastavená zařízení jsou aktuální!"
+
+#: ../src/transmageddon.glade.h:1
+msgid "<b>Choose Audio Codec</b>:"
+msgstr "<b>Zvolte zvukový kodek</b>:"
+
+#: ../src/transmageddon.glade.h:2
+msgid "<b>Choose Input File:</b>"
+msgstr "<b>Zvolte vstupní soubor:</b>"
+
+#: ../src/transmageddon.glade.h:3
+msgid "<b>Choose Video Codec</b>:"
+msgstr "<b>Zvolte obrazový kodek</b>:"
+
+#: ../src/transmageddon.glade.h:4
+msgid "<b>Output Format:</b>"
+msgstr "<b>Výstupní formát:</b>"
+
+#: ../src/transmageddon.glade.h:5
+msgid "<b>Presets:</b>"
+msgstr "<b>Přednastavené:</b>"
+
+#: ../src/transmageddon.glade.h:6
+msgid "<small>Audio Channels:</small>"
+msgstr "<small>Zvukové kanály:</small>"
+
+#: ../src/transmageddon.glade.h:7
+msgid "<small>Audio codec:</small>"
+msgstr "<small>Zvukový kodek:</small>"
+
+#: ../src/transmageddon.glade.h:8
+msgid "<small>Rotate the video image if needed</small>"
+msgstr "<small>Otočit snímky videa, pokud je zapotřebí</small>"
+
+#: ../src/transmageddon.glade.h:9
+msgid "<small>Video codec:</small>"
+msgstr "<small>Obrazový kodek:</small>"
+
+#: ../src/transmageddon.glade.h:10
+msgid "<small>Video height&#47;width:</small>"
+msgstr "<small>Výška &#47; šířka videa:</small>"
+
+#: ../src/transmageddon.glade.h:11
+msgid "AA_C"
+msgstr "AA_C"
+
+#: ../src/transmageddon.glade.h:12
+msgid "AC_3"
+msgstr "AC_3"
+
+#: ../src/transmageddon.glade.h:13
+msgid "AMR-N_B"
+msgstr "AMR-N_B"
+
+#: ../src/transmageddon.glade.h:14
+msgid "Celt _Ultra"
+msgstr "Celt _Ultra"
+
+#: ../src/transmageddon.glade.h:15
+msgid "F_LAC"
+msgstr "F_LAC"
+
+#: ../src/transmageddon.glade.h:16
+msgid "H263_plus"
+msgstr "H263_plus"
+
+#: ../src/transmageddon.glade.h:17
+msgid "H2_64"
+msgstr "H2_64"
+
+#: ../src/transmageddon.glade.h:18
+msgid "MPEG_2"
+msgstr "MPEG_2"
+
+#: ../src/transmageddon.glade.h:19
+msgid "MPEG_4/DivX5"
+msgstr "MPEG_4/DivX5"
+
+#: ../src/transmageddon.glade.h:20
+msgid "Theo_ra"
+msgstr "Theo_ra"
+
+#: ../src/transmageddon.glade.h:21
+msgid "Transmageddon"
+msgstr "Transmageddon"
+
+#: ../src/transmageddon.glade.h:22
+msgid "V_orbis"
+msgstr "V_orbis"
+
+#: ../src/transmageddon.glade.h:23
+msgid "W_indowsMediaAudio 2"
+msgstr "W_indowsMediaAudio 2"
+
+#: ../src/transmageddon.glade.h:24
+msgid "_Audio passthrough"
+msgstr "Procházení _zvuku"
+
+#: ../src/transmageddon.glade.h:25
+msgid "_Dirac"
+msgstr "_Dirac"
+
+#: ../src/transmageddon.glade.h:26
+msgid "_Edit"
+msgstr "_Upravit"
+
+#: ../src/transmageddon.glade.h:27
+msgid "_File"
+msgstr "_Soubor"
+
+#: ../src/transmageddon.glade.h:28
+msgid "_Help"
+msgstr "_Nápověda"
+
+#: ../src/transmageddon.glade.h:29
+msgid "_Speex"
+msgstr "_Speex"
+
+#: ../src/transmageddon.glade.h:30
+msgid "_Transcode"
+msgstr "_Překódovat"
+
+#: ../src/transmageddon.glade.h:31
+msgid "_Video passthrough"
+msgstr "Procházení _obraz"
+
+#: ../src/transmageddon.glade.h:32
+msgid "_View"
+msgstr "_Zobrazit"
+
+#: ../src/transmageddon.glade.h:33
+msgid "_WindowsMediaVideo2"
+msgstr "_WindowsMediaVideo2"
+
+#: ../src/transmageddon.glade.h:34
+msgid "_mp3"
+msgstr "_mp3"
+
+#: ../src/transmageddon.glade.h:35
+msgid "_xvid"
+msgstr "_xvid"
+
+#: ../src/transmageddon.py:226 ../src/transmageddon.py:489
+#: ../src/transmageddon.py:610 ../src/transmageddon.py:631
+#: ../src/transmageddon.py:639 ../src/transmageddon.py:713
+msgid "Transcoding Progress"
+msgstr "Průběh překódování"
+
+#. Populate the rotatation box
+#: ../src/transmageddon.py:245
+msgid "No rotation (default)"
+msgstr "Bez otáčení (výchozí)"
+
+#: ../src/transmageddon.py:245
+msgid "Clockwise 90 degrees"
+msgstr "Otočit o 90 stupňů ve směru hodin"
+
+#: ../src/transmageddon.py:245
+msgid "Rotate 180 degrees"
+msgstr "Otočit o 180 stupňů"
+
+#: ../src/transmageddon.py:246
+msgid "Counterclockwise 90 degrees"
+msgstr "Otočit o 90 stupňů proti směru hodin"
+
+#: ../src/transmageddon.py:246
+msgid "Horizontal flip"
+msgstr "Překlopit vodorovně"
+
+#: ../src/transmageddon.py:247
+msgid "Vertical flip"
+msgstr "Překlopit svisle"
+
+#: ../src/transmageddon.py:247
+msgid "Upper left diagonal flip"
+msgstr "Překlopit diagonálně zleva nahoře"
+
+#: ../src/transmageddon.py:248
+msgid "Upper right diagnonal flip"
+msgstr "Překlopit diagonálně zprava nahoře"
+
+#: ../src/transmageddon.py:352
+#, python-format
+msgid "%(min)d:%(sec)02d"
+msgstr "%(min)d:%(sec)02d"
+
+#: ../src/transmageddon.py:358
+msgid "Estimated time remaining: "
+msgstr "Odhad zbývajícího času:"
+
+#: ../src/transmageddon.py:360 ../src/transmageddon.py:392
+#: ../src/transmageddon.py:613
+msgid "Pass "
+msgstr "Průchod"
+
+#: ../src/transmageddon.py:377
+msgid "File saved to "
+msgstr "Soubor uložen do "
+
+#: ../src/transmageddon.py:386
+msgid "Done Transcoding"
+msgstr "Překódování dokončeno"
+
+#: ../src/transmageddon.py:394
+msgid "Start next pass"
+msgstr "Začátek dalšího průchodu"
+
+#: ../src/transmageddon.py:536
+msgid "Plugins not found, choose different codecs."
+msgstr "Zásuvné moduly nenalezeny, zvolte jiný kodek."
+
+#: ../src/transmageddon.py:544
+msgid "Codec installation aborted."
+msgstr "Instalace kodeku zrušena."
+
+#: ../src/transmageddon.py:552
+msgid "Missing plugin installation failed: "
+msgstr "Nezdařila se instalace chybějícího zásuvného modulu: "
+
+#: ../src/transmageddon.py:608
+msgid "Writing "
+msgstr "Zapisuje se "
+
+#: ../src/transmageddon.py:715
+msgid "No audio parser, passthrough not available"
+msgstr "Schází analyzátor zvuku, procházení není možné"
+
+#: ../src/transmageddon.py:722
+msgid "No video parser, passthrough not available"
+msgstr "Schází analyzátor obrazu, procházení není možné"
+
+#: ../src/transmageddon.py:729
+msgid "Uknown error"
+msgstr "Neznámá chyba"
+
+#: ../src/utils.py:73
+#, python-format
+msgid "Can't find %(path)s in any known prefix!"
+msgstr "%(path)s nelze najít v žádném známé předponě!"
+
+#: ../transmageddon.desktop.in.in.h:1
+msgid "Transmageddon Video Transcoder"
+msgstr "Převodník videa Transmageddon"
+
+#: ../transmageddon.desktop.in.in.h:2
+msgid "Video format conversion tool"
+msgstr "Nástroj na převod formátů videa"
+
