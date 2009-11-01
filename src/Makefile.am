@@ -5,7 +5,7 @@ transmageddondir = $(datadir)/transmageddon
 transmageddon_PYTHON = \
 	transmageddon.py \
 	transcoder_engine.py \
-	transmageddon.glade \
+	transmageddon.ui \
 	codecfinder.py \
         discoverer.py \
 	presets.py \

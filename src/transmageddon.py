@@ -42,7 +42,6 @@ try:
    pygtk.require("2.0")
    import glib
    import gtk
-   import gtk.glade
    import pygst
    pygst.require("0.10")
    import gst
@@ -117,43 +116,47 @@ supported_container_map = {
     'ASF':        [ 'wma2','wmv2','mp3']
 }
 
-class TransmageddonUI (gtk.glade.XML):
-   """This class loads the Glade file of the UI"""
+class TransmageddonUI:
+   """This class loads the GtkBuilder file of the UI"""
    def __init__(self):
        #Set up i18n
-       for module in gtk.glade, gettext:
-           module.bindtextdomain("transmageddon","../../share/locale")
-           module.textdomain("transmageddon")
+       gettext.bindtextdomain("transmageddon","../../share/locale")
+       gettext.textdomain("transmageddon")
+
+       self.builder = gtk.Builder()
+
+       self.builder.set_translation_domain("transmageddon")
 
        #Set the Glade file
-       self.gladefile = "transmageddon.glade"
-       gtk.glade.XML.__init__ (self, self.gladefile)
+       self.uifile = "transmageddon.ui"
+       self.builder.add_from_file(self.uifile)
+       self.builder.connect_signals(self) # Initialize User Interface
 
        #Define functionality of our button and main window
-       self.TopWindow = self.get_widget("TopWindow")
-       self.FileChooser = self.get_widget("FileChooser")
-       self.videoinformation = self.get_widget("videoinformation")
-       self.audioinformation = self.get_widget("audioinformation")
-       self.videocodec = self.get_widget("videocodec")
-       self.audiocodec = self.get_widget("audiocodec")
-       self.CodecBox = self.get_widget("CodecBox")
-       self.presetchoice = self.get_widget("presetchoice")
-       self.containerchoice = self.get_widget("containerchoice")
-       self.rotationchoice = self.get_widget("rotationchoice")
+       self.TopWindow = self.builder.get_object("TopWindow")
+       self.FileChooser = self.builder.get_object("FileChooser")
+       self.videoinformation = self.builder.get_object("videoinformation")
+       self.audioinformation = self.builder.get_object("audioinformation")
+       self.videocodec = self.builder.get_object("videocodec")
+       self.audiocodec = self.builder.get_object("audiocodec")
+       self.CodecBox = self.builder.get_object("CodecBox")
+       self.presetchoice = self.builder.get_object("presetchoice")
+       self.containerchoice = self.builder.get_object("containerchoice")
+       self.rotationchoice = self.builder.get_object("rotationchoice")
        self.codec_buttons = dict()
        for c in supported_audio_codecs:
-           self.codec_buttons[c] = self.get_widget(c+"button")
+           self.codec_buttons[c] = self.builder.get_object(c+"button")
            self.codec_buttons[c].connect("clicked",
                                          self.on_audiobutton_pressed, c)
        for c in supported_video_codecs:
-           self.codec_buttons[c] = self.get_widget(c+"button")
+           self.codec_buttons[c] = self.builder.get_object(c+"button")
            self.codec_buttons[c].connect("clicked",
                                          self.on_videobutton_pressed, c)
 
-       self.transcodebutton = self.get_widget("transcodebutton")
-       self.ProgressBar = self.get_widget("ProgressBar")
-       self.cancelbutton = self.get_widget("cancelbutton")
-       self.StatusBar = self.get_widget("StatusBar")
+       self.transcodebutton = self.builder.get_object("transcodebutton")
+       self.ProgressBar = self.builder.get_object("ProgressBar")
+       self.cancelbutton = self.builder.get_object("cancelbutton")
+       self.StatusBar = self.builder.get_object("StatusBar")
 
        self.TopWindow.connect("destroy", gtk.main_quit)
        
@@ -172,13 +175,11 @@ class TransmageddonUI (gtk.glade.XML):
        def on_drag_data_received(widget, context, x, y, selection, target_type, timestamp):
            if target_type == TARGET_TYPE_URI_LIST:
                uri = selection.data.strip('\r\n\x00')
-               self.get_widget ("FileChooser").set_uri(uri)
+               self.builder.get_object ("FileChooser").set_uri(uri)
 
        self.TopWindow.connect('drag_data_received', on_drag_data_received)
        self.TopWindow.drag_dest_set( gtk.DEST_DEFAULT_MOTION |
            gtk.DEST_DEFAULT_HIGHLIGHT | gtk.DEST_DEFAULT_DROP, dnd_list, gtk.gdk.ACTION_COPY)
-
-       self.signal_autoconnect(self) # Initialize User Interface
 
        self.start_time = False
        self.multipass = False
@@ -239,34 +240,50 @@ class TransmageddonUI (gtk.glade.XML):
 
        # Populate the Container format combobox
        self.lst = supported_containers
+       liststore = gtk.ListStore(gobject.TYPE_STRING)
        for i in self.lst:
-           self.containerchoice.append_text(i)
+           liststore.append([i])
+       self.containerchoice.set_model(liststore)
+       cell = gtk.CellRendererText()
+       self.containerchoice.pack_start(cell, True)
+       self.containerchoice.add_attribute(cell, "text", 0)
 
        # Populate the rotatation box
        self.rotationlist = [_("No rotation (default)"), _("Clockwise 90 degrees"), _("Rotate 180 degrees"), 
                            _("Counterclockwise 90 degrees"), _("Horizontal flip"),
                            _("Vertical flip"), _("Upper left diagonal flip"),
                            _("Upper right diagnonal flip") ]
+       liststore = gtk.ListStore(gobject.TYPE_STRING)
        for y in self.rotationlist: 
-           self.rotationchoice.append_text(y)
+           liststore.append([y])
+       self.rotationchoice.set_model(liststore)
+       cell = gtk.CellRendererText()
+       self.rotationchoice.pack_start(cell, True)
+       self.rotationchoice.add_attribute(cell, "text", 0)
 
        self.rotationchoice.set_active(0)
-       self.rotationvalue == int(0) 
+       self.rotationvalue = int(0) 
       
        # Populate Device Presets combobox
        devicelist = []
        shortname = []
+       liststore = gtk.ListStore(gobject.TYPE_STRING)
        for x, (name, device) in enumerate(sorted(presets.get().items(),
                                    lambda x, y: cmp(x[1].make + x[1].model,
                                                     y[1].make + y[1].model))):
-           iter = self.presetchoice.append_text(str(device))
+           liststore.append([str(device)])
            devicelist.append(str(device))
            shortname.append(str(name))
 
        #for (name, device) in (presets.get().items()):
        #    shortname.append(str(name))
-       self.presetchoices = dict(zip(devicelist, shortname))     
-       self.presetchoice.prepend_text("No Presets")
+       self.presetchoices = dict(zip(devicelist, shortname))
+       liststore.prepend(["No Presets"])
+
+       self.presetchoice.set_model(liststore)
+       cell = gtk.CellRendererText()
+       self.presetchoice.pack_start(cell, True)
+       self.presetchoice.add_attribute(cell, "text", 0)
 
        self.waiting_for_signal="False"
 
@@ -479,7 +496,7 @@ class TransmageddonUI (gtk.glade.XML):
 
    # define the behaviour of the other buttons
    def on_FileChooser_file_set(self, widget):
-       self.filename = self.get_widget ("FileChooser").get_filename()
+       self.filename = self.builder.get_object ("FileChooser").get_filename()
        self.audiodata = {}
        if self.filename is not None: 
            codecinfo = self.mediacheck(self.filename)
@@ -490,8 +507,8 @@ class TransmageddonUI (gtk.glade.XML):
            self.ProgressBar.set_text(_("Transcoding Progress"))
 
    def _start_transcoding(self): 
-       filechoice = self.get_widget ("FileChooser").get_uri()
-       self.filename = self.get_widget ("FileChooser").get_filename()
+       filechoice = self.builder.get_object ("FileChooser").get_uri()
+       self.filename = self.builder.get_object ("FileChooser").get_filename()
        vheight = self.videodata['videoheight']
        vwidth = self.videodata['videowidth']
        ratenum = self.videodata['fratenum']
@@ -505,7 +522,7 @@ class TransmageddonUI (gtk.glade.XML):
            audiocodec = codecfinder.codecmap[self.AudioCodec]
        else:
            audiocodec = gst.Caps.to_string(self.asourcecaps)
-       container = self.get_widget ("containerchoice").get_active_text ()
+       container = self.builder.get_object ("containerchoice").get_active_text ()
        self._transcoder = transcoder_engine.Transcoder(filechoice, self.filename, self.videodirectory, container, 
                                                        audiocodec, videocodec, self.devicename, 
                                                        vheight, vwidth, ratenum, ratednom, achannels, 
@@ -553,7 +570,7 @@ class TransmageddonUI (gtk.glade.XML):
            self.StatusBar.push(context_id, _("Missing plugin installation failed: ")) + gst.pbutils.InstallPluginsReturn()
 
    def check_for_elements(self):
-       containerchoice = self.get_widget ("containerchoice").get_active_text ()
+       containerchoice = self.builder.get_object ("containerchoice").get_active_text ()
        containerstatus = codecfinder.get_muxer_element(codecfinder.containermap[containerchoice])
        # print "containerstatus is " + str(containerstatus)
        if self.AudioCodec != "apass":
@@ -602,7 +619,7 @@ class TransmageddonUI (gtk.glade.XML):
        # Remove suffix from inbound filename so we can reuse it together with suffix to create outbound filename
        self.nosuffix = os.path.splitext(os.path.basename(self.filename))[0]
        # pick output suffix
-       container = self.get_widget ("containerchoice").get_active_text ()
+       container = self.builder.get_object ("containerchoice").get_active_text ()
        self.ContainerFormatSuffix = codecfinder.csuffixmap[container]
        self.outputfilename = str(self.nosuffix+self.timestamp+self.ContainerFormatSuffix)
        context_id = self.StatusBar.get_context_id("EOS")
@@ -638,7 +655,7 @@ class TransmageddonUI (gtk.glade.XML):
        self.rotationchoice.set_sensitive(True)
        self.ProgressBar.set_fraction(0.0)
        self.ProgressBar.set_text(_("Transcoding Progress"))
-       self.container = self.get_widget ("containerchoice").get_active_text ()
+       self.container = self.builder.get_object ("containerchoice").get_active_text ()
        codecs = supported_container_map[self.container]
        self.AudioCodec = codecs[0]
        self.VideoCodec = codecs[1]
@@ -653,7 +670,7 @@ class TransmageddonUI (gtk.glade.XML):
            self.check_for_passthrough(self.container)
 
    def on_presetchoice_changed(self, widget):
-       presetchoice = self.get_widget ("presetchoice").get_active_text ()
+       presetchoice = self.builder.get_object ("presetchoice").get_active_text ()
        self.ProgressBar.set_fraction(0.0)
        if presetchoice == "No Presets":
            self.devicename = "nopreset"
@@ -662,7 +679,7 @@ class TransmageddonUI (gtk.glade.XML):
            self.multipass = False
            self.passcounter = False
            self.rotationchoice.set_sensitive(True)
-           if self.get_widget("containerchoice").get_active_text():
+           if self.builder.get_object("containerchoice").get_active_text():
                self.CodecBox.set_sensitive(True)
                self.transcodebutton.set_sensitive(True)
        else:
@@ -673,7 +690,7 @@ class TransmageddonUI (gtk.glade.XML):
            self.containerchoice.set_sensitive(False)
            self.CodecBox.set_sensitive(False)
            self.rotationchoice.set_sensitive(False)
-           if self.get_widget("containerchoice").get_active_text():
+           if self.builder.get_object("containerchoice").get_active_text():
                self.transcodebutton.set_sensitive(True)
 
    def on_rotationchoice_changed(self, widget):
