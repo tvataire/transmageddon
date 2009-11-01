@@ -125,8 +125,6 @@ class TransmageddonUI:
 
        self.builder = gtk.Builder()
 
-       self.builder.set_translation_domain("transmageddon")
-
        #Set the Glade file
        self.uifile = "transmageddon.ui"
        self.builder.add_from_file(self.uifile)
@@ -240,26 +238,17 @@ class TransmageddonUI:
 
        # Populate the Container format combobox
        self.lst = supported_containers
-       liststore = gtk.ListStore(gobject.TYPE_STRING)
        for i in self.lst:
-           liststore.append([i])
-       self.containerchoice.set_model(liststore)
-       cell = gtk.CellRendererText()
-       self.containerchoice.pack_start(cell, True)
-       self.containerchoice.add_attribute(cell, "text", 0)
+           self.containerchoice.append_text(i)
 
        # Populate the rotatation box
        self.rotationlist = [_("No rotation (default)"), _("Clockwise 90 degrees"), _("Rotate 180 degrees"), 
                            _("Counterclockwise 90 degrees"), _("Horizontal flip"),
                            _("Vertical flip"), _("Upper left diagonal flip"),
                            _("Upper right diagnonal flip") ]
-       liststore = gtk.ListStore(gobject.TYPE_STRING)
+
        for y in self.rotationlist: 
-           liststore.append([y])
-       self.rotationchoice.set_model(liststore)
-       cell = gtk.CellRendererText()
-       self.rotationchoice.pack_start(cell, True)
-       self.rotationchoice.add_attribute(cell, "text", 0)
+           self.rotationchoice.append_text(y)
 
        self.rotationchoice.set_active(0)
        self.rotationvalue = int(0) 
@@ -267,23 +256,17 @@ class TransmageddonUI:
        # Populate Device Presets combobox
        devicelist = []
        shortname = []
-       liststore = gtk.ListStore(gobject.TYPE_STRING)
-       for x, (name, device) in enumerate(sorted(presets.get().items(),
-                                   lambda x, y: cmp(x[1].make + x[1].model,
-                                                    y[1].make + y[1].model))):
-           liststore.append([str(device)])
+       preset_list = sorted(presets.get().items(),
+                            key = (lambda x: x[1].make + x[1].model))
+       for x, (name, device) in enumerate(preset_list):
+           self.presetchoice.append_text(str(device))
            devicelist.append(str(device))
            shortname.append(str(name))
 
        #for (name, device) in (presets.get().items()):
        #    shortname.append(str(name))
        self.presetchoices = dict(zip(devicelist, shortname))
-       liststore.prepend(["No Presets"])
-
-       self.presetchoice.set_model(liststore)
-       cell = gtk.CellRendererText()
-       self.presetchoice.pack_start(cell, True)
-       self.presetchoice.add_attribute(cell, "text", 0)
+       self.presetchoice.prepend_text("No Presets")
 
        self.waiting_for_signal="False"
 
