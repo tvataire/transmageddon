@@ -26,6 +26,7 @@ EXTRA_DIST = \
 	RELEASE \
 	ABOUT-NLS \
 	transmageddon.svg \
+        transmageddon.1 \
 	$(desktop_in_files) \
 	$(INTLTOOL)
 
