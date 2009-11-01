@@ -13,7 +13,8 @@ Authors = ["Christian Schaller <uraeus@gnome.org>",
            "Jordi Mas <jmas@softcatala.org>",
            "Stuart Langridge <sil@kryogenix.org>",
            "Tom Parker <palfrey@tevp.neta>",
-           "Arun Raghavan <arunsr@gnome.org>"
+           "Arun Raghavan <arunsr@gnome.org>",
+           "Laszlo Pandy <laszlok2@gmail.com>"
            ]
 
 Artists = ["Emily and Liam <liam@fightingcrane.com>"]
