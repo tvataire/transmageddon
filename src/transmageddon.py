@@ -47,8 +47,9 @@ try:
    pygst.require("0.10")
    import gst
    import gst.pbutils
-except:
+except Exception, e:
    print "failed to import required modules"
+   print e
    sys.exit(1)
 
 major, minor, patch = gobject.pygobject_version

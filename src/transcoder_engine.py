@@ -27,7 +27,9 @@ try:
    import glib
    pygst.require("0.10")
    import gst
-except: 
+except Exception, e:
+   print "failed to import required modules"
+   print e
    sys.exit(1)
 
 class Transcoder(gobject.GObject):

@@ -11,7 +11,8 @@ Authors = ["Christian Schaller <uraeus@gnome.org>",
            "Michal Schmidt <mschmidt@redhat.com>",
            "Stephane Maniaci <stephane.maniaci@gmail.com>",
            "Jordi Mas <jmas@softcatala.org>",
-           "Stuart Langridge <sil@kryogenix.org>"
+           "Stuart Langridge <sil@kryogenix.org>",
+           "Tom Parker <palfrey@tevp.neta>"
            ]
 
 Artists = ["Emily and Liam <liam@fightingcrane.com>"]
