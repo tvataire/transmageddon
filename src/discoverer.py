@@ -316,6 +316,7 @@ class Discoverer(gst.Pipeline):
         else:
            # print "autoplug continue returns " + str(caps)
            c = caps[0].get_name()
+           # print "c is " + str(c)
            if c.startswith("audio/"):
                if c.startswith("audio/x-raw") == False:
                    # print "discoverer: c is audio " + str(c)
@@ -331,7 +332,7 @@ class Discoverer(gst.Pipeline):
                                        aresult += ","+attr+"="+str(caps[0][attr])
                            self.inputaudiocaps = aresult
                            # print "discoverer: self.inputaudiocaps " + str(self.inputaudiocaps)
-           elif c.startswith("video/"):
+           elif c.startswith("video/") or c.startswith("image/"):
               if c.startswith("video/x-raw-yuv") == False or c.startswith("video/x-raw-rgb") == False:
                   if caps.is_fixed():
                       blacklist = ['height','width','framerate','depth','codec_data','pixel-aspect-ratio','format']
