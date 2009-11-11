@@ -1,5 +1,4 @@
-This list is completely unordered. Nothing about the ordering in this list should
-cause anyone to make any kind of assumptions about priorties.
+This list is completely unordered. Nothing about the ordering in this list should cause anyone to make any kind of assumptions about priorties.
 
 * AVC HD support.
   Variation of MPEG TS with H264 and AC3 audio.
@@ -49,7 +48,8 @@ cause anyone to make any kind of assumptions about priorties.
   profiles they need. Should be done in collaboration with Arista.
 
 * Subtitles
-  Support muxing in Subtitles into AVI and MPEG4 files. Need GStreamer work for it to happen.
+  Support muxing in Subtitles into AVI and MPEG4 files. Need GStreamer work 
+  for it to happen. Support encoding subtitles as part of the video image.
 
 * Add thumbnail support
   Automatically create a jpeg thumbnail for devices such as the PSP
@@ -61,3 +61,5 @@ cause anyone to make any kind of assumptions about priorties.
   iii) start transcode once dvb-daemon says recording is done
 
 * Add black borders based on aspect-ratio
+
+* Support multiple audio tracks. Probably want to wait for new discoverer for that.
