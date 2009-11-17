@@ -1,0 +1,338 @@
+# Chinese (China) translation for transmageddon.
+# Copyright (C) 2009 transmageddon's COPYRIGHT HOLDER
+# This file is distributed under the same license as the transmageddon package.
+# Zhang Miao <mymzhang@gmail.com>, 2009
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: transmageddon master\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=transmageddon&component=General\n"
+"POT-Creation-Date: 2009-10-20 15:25+0000\n"
+"PO-Revision-Date: 2009-11-17 15:59+0800\n"
+"Last-Translator: Zhang Miao <mymzhang@gmail.com>\n"
+"Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../src/about.py.in:44
+msgid "translator-credits"
+msgstr "Zhang Miao <mymzhang@gmail.com>, 2009"
+
+#: ../src/presets.py:77
+#, python-format
+msgid "Not a valid integer or fraction: %(value)s!"
+msgstr "不是有效的整数或分数： %(value)s！"
+
+#: ../src/presets.py:410
+#, python-format
+msgid "Loaded device %(device)s (%(presets)d presets)"
+msgstr "载入设备 %(device)s (%(presets)d 预置)"
+
+#: ../src/presets.py:477
+#, python-format
+msgid "Fetching %(location)s"
+msgstr "读取 %(location)s"
+
+#: ../src/presets.py:484
+#, python-format
+msgid "Writing to %(file)s"
+msgstr "写入 %(file)s"
+
+#: ../src/presets.py:489
+#, python-format
+msgid "There was an error fetching and installing %(location)s: %(error)s"
+msgstr "读取与安装 %(location)s 时发生错误：%(error)s"
+
+#: ../src/presets.py:506
+#, fuzzy
+msgid "Checking for device preset updates..."
+msgstr "检查设备预置更新..."
+
+#: ../src/presets.py:526
+#, fuzzy, python-format
+msgid "Device preset %(name)s is up to date"
+msgstr "预置设备 %(name)s 已是最新"
+
+#: ../src/presets.py:530
+#, fuzzy, python-format
+msgid "Found updated device preset %(name)s"
+msgstr "找到已经更新的预置设备 %(name)s"
+
+#: ../src/presets.py:536 ../src/presets.py:549
+#, fuzzy, python-format
+msgid "Error installing preset %(name)s from %(location)s: %(error)s"
+msgstr "从 %(location)s 时安装预置 %(name)s 时出错：%(error)s"
+
+#: ../src/presets.py:543
+#, fuzzy, python-format
+msgid "Found new device preset %(name)s"
+msgstr "发现新的设备预置%(name)s"
+
+#: ../src/presets.py:556
+#, fuzzy, python-format
+msgid "Malformed plugin version line %(line)s"
+msgstr "变形插件版本%(line)s"
+
+#: ../src/presets.py:560
+#, python-format
+msgid "There was a problem accessing %(location)spresets.txt!"
+msgstr "存取 %(location)spresets.txt 时发生错误！"
+
+#: ../src/presets.py:582
+msgid "All device presets are up to date!"
+msgstr "所有预置设备已是最新！"
+
+#: ../src/transmageddon.glade.h:1
+msgid "<b>Choose Audio Codec</b>:"
+msgstr "<b>选择音频编码器</b>:"
+
+#: ../src/transmageddon.glade.h:2
+msgid "<b>Choose Input File:</b>"
+msgstr "<b>选择输入文件：</b>"
+
+#: ../src/transmageddon.glade.h:3
+msgid "<b>Choose Video Codec</b>:"
+msgstr "<b>选择视频编码器</b>:"
+
+#: ../src/transmageddon.glade.h:4
+msgid "<b>Output Format:</b>"
+msgstr "<b>输出格式：</b>"
+
+#: ../src/transmageddon.glade.h:5
+msgid "<b>Presets:</b>"
+msgstr "<b>预置：</b>"
+
+#: ../src/transmageddon.glade.h:6
+msgid "<small>Audio Channels:</small>"
+msgstr "<small>音频通道：</small>"
+
+#: ../src/transmageddon.glade.h:7
+msgid "<small>Audio codec:</small>"
+msgstr "<small>音频编码器：</small>"
+
+#: ../src/transmageddon.glade.h:8
+msgid "<small>Rotate the video image if needed</small>"
+msgstr "<small>如果需要的话，旋转视频图像</small>"
+
+#: ../src/transmageddon.glade.h:9
+msgid "<small>Video codec:</small>"
+msgstr "<small>视频编码器：</small>"
+
+#: ../src/transmageddon.glade.h:10
+msgid "<small>Video height&#47;width:</small>"
+msgstr "<small>视频高度&#47;宽度：</small>"
+
+#: ../src/transmageddon.glade.h:11
+msgid "AA_C"
+msgstr "AA_C"
+
+#: ../src/transmageddon.glade.h:12
+msgid "AC_3"
+msgstr "AC_3"
+
+#: ../src/transmageddon.glade.h:13
+msgid "AMR-N_B"
+msgstr "AMR-N_B"
+
+#: ../src/transmageddon.glade.h:14
+msgid "Celt _Ultra"
+msgstr "Celt _Ultra"
+
+#: ../src/transmageddon.glade.h:15
+msgid "F_LAC"
+msgstr "F_LAC"
+
+#: ../src/transmageddon.glade.h:16
+msgid "H263_plus"
+msgstr "H263_plus"
+
+#: ../src/transmageddon.glade.h:17
+msgid "H2_64"
+msgstr "H2_64"
+
+#: ../src/transmageddon.glade.h:18
+msgid "MPEG_2"
+msgstr "MPEG_2"
+
+#: ../src/transmageddon.glade.h:19
+msgid "MPEG_4/DivX5"
+msgstr "MPEG_4/DivX5"
+
+#: ../src/transmageddon.glade.h:20
+msgid "Theo_ra"
+msgstr "Theo_ra"
+
+#: ../src/transmageddon.glade.h:21
+msgid "Transmageddon"
+msgstr "Transmageddon"
+
+#: ../src/transmageddon.glade.h:22
+msgid "V_orbis"
+msgstr "V_orbis"
+
+#: ../src/transmageddon.glade.h:23
+msgid "W_indowsMediaAudio 2"
+msgstr "W_indowsMediaAudio 2"
+
+#: ../src/transmageddon.glade.h:24
+#, fuzzy
+msgid "_Audio passthrough"
+msgstr "音频转移(_A)"
+
+#: ../src/transmageddon.glade.h:25
+msgid "_Dirac"
+msgstr "_Dirac"
+
+#: ../src/transmageddon.glade.h:26
+msgid "_Edit"
+msgstr "编辑(_E)"
+
+#: ../src/transmageddon.glade.h:27
+msgid "_File"
+msgstr "文件(_F)"
+
+#: ../src/transmageddon.glade.h:28
+msgid "_Help"
+msgstr "帮助(_H)"
+
+#: ../src/transmageddon.glade.h:29
+msgid "_Speex"
+msgstr "_Speex"
+
+#: ../src/transmageddon.glade.h:30
+msgid "_Transcode"
+msgstr "转码(_T)"
+
+#: ../src/transmageddon.glade.h:31
+#, fuzzy
+msgid "_Video passthrough"
+msgstr "视频转移(_V)"
+
+#: ../src/transmageddon.glade.h:32
+msgid "_View"
+msgstr "视图(_V)"
+
+#: ../src/transmageddon.glade.h:33
+msgid "_WindowsMediaVideo2"
+msgstr "_WindowsMediaVideo2"
+
+#: ../src/transmageddon.glade.h:34
+msgid "_mp3"
+msgstr "_mp3"
+
+#: ../src/transmageddon.glade.h:35
+msgid "_xvid"
+msgstr "_xvid"
+
+#: ../src/transmageddon.py:226 ../src/transmageddon.py:489
+#: ../src/transmageddon.py:610 ../src/transmageddon.py:631
+#: ../src/transmageddon.py:639 ../src/transmageddon.py:713
+msgid "Transcoding Progress"
+msgstr "转码进展"
+
+#. Populate the rotatation box
+#: ../src/transmageddon.py:245
+msgid "No rotation (default)"
+msgstr "无旋转(默认)"
+
+#: ../src/transmageddon.py:245
+msgid "Clockwise 90 degrees"
+msgstr "顺时针 90 度"
+
+#: ../src/transmageddon.py:245
+msgid "Rotate 180 degrees"
+msgstr "旋转 180 度"
+
+#: ../src/transmageddon.py:246
+msgid "Counterclockwise 90 degrees"
+msgstr "逆时针 90 度"
+
+#: ../src/transmageddon.py:246
+msgid "Horizontal flip"
+msgstr "水平翻转"
+
+#: ../src/transmageddon.py:247
+msgid "Vertical flip"
+msgstr "垂直翻转"
+
+#: ../src/transmageddon.py:247
+msgid "Upper left diagonal flip"
+msgstr "左上对角翻转"
+
+#: ../src/transmageddon.py:248
+msgid "Upper right diagnonal flip"
+msgstr "右上对角翻转"
+
+#: ../src/transmageddon.py:352
+#, python-format
+msgid "%(min)d:%(sec)02d"
+msgstr "%(min)d:%(sec)02d"
+
+#: ../src/transmageddon.py:358
+msgid "Estimated time remaining: "
+msgstr "预计剩余时间："
+
+#: ../src/transmageddon.py:360 ../src/transmageddon.py:392
+#: ../src/transmageddon.py:613
+#, fuzzy
+msgid "Pass "
+msgstr "通路"
+
+#: ../src/transmageddon.py:377
+msgid "File saved to "
+msgstr "文件保存到"
+
+#: ../src/transmageddon.py:386
+msgid "Done Transcoding"
+msgstr "转码完成"
+
+#: ../src/transmageddon.py:394
+#, fuzzy
+msgid "Start next pass"
+msgstr "启动下一通路"
+
+#: ../src/transmageddon.py:536
+msgid "Plugins not found, choose different codecs."
+msgstr "插件未找到，选择不同编码器。"
+
+#: ../src/transmageddon.py:544
+msgid "Codec installation aborted."
+msgstr "编码器安装中止。"
+
+#: ../src/transmageddon.py:552
+msgid "Missing plugin installation failed: "
+msgstr "缺少的插件安装失败："
+
+#: ../src/transmageddon.py:608
+msgid "Writing "
+msgstr "写入"
+
+#: ../src/transmageddon.py:715
+#, fuzzy
+msgid "No audio parser, passthrough not available"
+msgstr "无音频解析器，转移不可用"
+
+#: ../src/transmageddon.py:722
+#, fuzzy
+msgid "No video parser, passthrough not available"
+msgstr "无视频解析器，转移不可用"
+
+#: ../src/transmageddon.py:729
+msgid "Uknown error"
+msgstr "未知错误"
+
+#: ../src/utils.py:73
+#, fuzzy, python-format
+msgid "Can't find %(path)s in any known prefix!"
+msgstr "无法在已知前缀中找到 %(path)s！"
+
+#: ../transmageddon.desktop.in.in.h:1
+msgid "Transmageddon Video Transcoder"
+msgstr "Transmageddon 视频转码器"
+
+#: ../transmageddon.desktop.in.in.h:2
+msgid "Video format conversion tool"
+msgstr "视频格式转换工具"
