@@ -1,6 +1,6 @@
 src/about.py.in
 src/presets.py
-src/transmageddon.glade
+[type: gettext/glade]src/transmageddon.ui
 src/transmageddon.py
 src/utils.py
 transmageddon.desktop.in.in
