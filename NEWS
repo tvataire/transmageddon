@@ -1,3 +1,7 @@
+0.15
+  Convert to gtkbuilder
+  Add which style checking for graphwiz binary
+
 0.14
   Error handling added for when a parser is missing
   Add icon to about dialog
