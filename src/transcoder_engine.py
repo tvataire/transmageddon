@@ -40,7 +40,7 @@ class Transcoder(gobject.GObject):
             'got-error' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,))
                     }
 
-   def __init__(self, FILECHOSEN, FILENAME, DESTDIR, CONTAINERCHOICE, AUDIOCODECVALUE, VIDEOCODECVALUE, PRESET, 
+   def __init__(self, FILECHOSEN, FILENAME, DESTDIR, CONTAINERCHOICE, AUDIOCODECVALUE, VIDEOCODECVALUE, VSRCCAPS, PRESET, 
                       OHEIGHT, OWIDTH, FRATENUM, FRATEDEN, ACHANNELS, MULTIPASS, PASSCOUNTER, OUTPUTNAME, 
                       TIMESTAMP, ROTATIONVALUE, AUDIOPASSTOGGLE, VIDEOPASSTOGGLE):
        gobject.GObject.__init__(self)
@@ -54,6 +54,7 @@ class Transcoder(gobject.GObject):
        self.stoptoggle=False
        self.audiocaps = AUDIOCODECVALUE
        self.videocaps = VIDEOCODECVALUE
+       self.vsrccaps = VSRCCAPS
        self.audiopasstoggle = AUDIOPASSTOGGLE
        # print "audiopass toggle is " + str(self.audiopasstoggle)
        self.videopasstoggle = VIDEOPASSTOGGLE
@@ -73,7 +74,6 @@ class Transcoder(gobject.GObject):
        self.fratenum = FRATENUM
        self.frateden = FRATEDEN
        self.achannels = ACHANNELS
-       print "transcoder_engine achannels is " + str(self.achannels)
        self.blackborderflag = False
        self.multipass = MULTIPASS
        self.passcounter = PASSCOUNTER
@@ -320,8 +320,8 @@ class Transcoder(gobject.GObject):
                return False
        return True
 
-   def OnDynamicPad(self, dbin, sink_pad):
-       c = sink_pad.get_caps().to_string()
+   def OnDynamicPad(self, dbin, src_pad):
+       c = src_pad.get_caps().to_string()
        if c.startswith("audio/"):
            if self.stoptoggle==True:
                bus = self.pipeline.get_bus()
@@ -343,7 +343,7 @@ class Transcoder(gobject.GObject):
                                self.audioencoder.load_preset(x)
                    self.audioresampler = gst.element_factory_make("audioresample")
                    self.pipeline.add(self.audioresampler)
-                   sink_pad.link(self.audioconverter.get_pad("sink"))
+                   src_pad.link(self.audioconverter.get_pad("sink"))
 
                    # Check if we are using a preset
                    if self.preset != "nopreset":
@@ -379,8 +379,8 @@ class Transcoder(gobject.GObject):
                # No parser if output is framed
                parsedcaps = gst.caps_from_string(self.audiocaps+",parsed=true")
                framedcaps = gst.caps_from_string(self.audiocaps+",framed=true")
-               if (sink_pad.get_caps().is_subset(parsedcaps)) or (sink_pad.get_caps().is_subset(framedcaps)):
-                   sink_pad.link(self.multiqueueaudiosinkpad)
+               if (src_pad.get_caps().is_subset(parsedcaps)) or (src_pad.get_caps().is_subset(framedcaps)):
+                   src_pad.link(self.multiqueueaudiosinkpad)
                    self.multiqueueaudiosrcpad.link(self.containermuxeraudiosinkpad)
                    self.gstmultiqueue.set_state(gst.STATE_PAUSED)
                else:
@@ -410,7 +410,7 @@ class Transcoder(gobject.GObject):
                    self.pipeline.add(self.audioparse)
 
                    # print "audiopad " + str(self.multiqueueaudiosinkpad)
-                   sink_pad.link(self.audioparse.get_static_pad("sink"))
+                   src_pad.link(self.audioparse.get_static_pad("sink"))
                    self.audioparse.get_static_pad("src").link(self.multiqueueaudiosinkpad)                    
                    self.multiqueueaudiosrcpad.link(self.containermuxeraudiosinkpad)
                    self.audioparse.set_state(gst.STATE_PAUSED)
@@ -422,6 +422,15 @@ class Transcoder(gobject.GObject):
                bus.post(gst.message_new_application(self.pipeline, gst.Structure('STOP TRANSCODER')))
                return
            if self.videopasstoggle == False:
+               # check for interlaced media and create deinterlace element if needed
+               if self.vsrccaps[0]['interlaced']:
+                   print "content is interlaced"
+                   self.deinterlacer = gst.element_factory_make("deinterlace", "deinterlace")
+                   self.pipeline.add(self.deinterlacer)
+
+                   self.colorspaceconverter2 = gst.element_factory_make("ffmpegcolorspace")
+                   self.pipeline.add(self.colorspaceconverter2)
+
                # print "Got an video cap"
                self.colorspaceconverter = gst.element_factory_make("ffmpegcolorspace")
                self.pipeline.add(self.colorspaceconverter)
@@ -490,11 +499,16 @@ class Transcoder(gobject.GObject):
                        elif (self.multipass != False) and (self.passcounter == int(0)):
                            self.videoencoder.load_preset("Pass " + str(self.multipass))
                            self.videoencoder.set_property("multipass-cache-file", self.cachefile)
-             
-               # needs to be moved to before multiqueu ? if (self.multipass == False) or (self.passcounter == int(0)):
-               sink_pad.link(self.colorspaceconverter.get_pad("sink"))
+
+               src_pad.link(self.colorspaceconverter.get_pad("sink"))
                if self.preset != "nopreset":
-                   self.colorspaceconverter.link(self.videoflipper)
+                   if self.vsrccaps[0]['interlaced']:
+                       print "content is interlaced final"
+                       self.colorspaceconverter.link(self.deinterlacer)
+                       self.deinterlacer.link(self.colorspaceconverter2)
+                       self.colorspaceconverter2.link(self.videoflipper)
+                   else:
+                       self.colorspaceconverter.link(self.videoflipper)
                    self.videoflipper.link(self.videorate)
                    self.videorate.link(self.videoscaler)
                    self.videoscaler.link(self.vcapsfilter)
@@ -506,7 +520,13 @@ class Transcoder(gobject.GObject):
                        self.vcapsfilter.link(self.colorspaceconvert2)
                    self.colorspaceconvert2.link(self.videoencoder)
                else:
-                   self.colorspaceconverter.link(self.videoflipper)
+                   if self.vsrccaps[0]['interlaced']:
+                       print "content is interlaced final"
+                       self.colorspaceconverter.link(self.deinterlacer)
+                       self.deinterlacer.link(self.colorspaceconverter2)
+                       self.colorspaceconverter2.link(self.videoflipper)
+                   else:
+                       self.colorspaceconverter.link(self.videoflipper)
                    self.videoflipper.link(self.videoencoder)
                self.videoencoder.link(self.vcapsfilter2)
                if (self.multipass == False) or (self.passcounter == int(0)):
@@ -514,7 +534,9 @@ class Transcoder(gobject.GObject):
                else:
                    self.vcapsfilter2.link(self.multipassfakesink)
                self.colorspaceconverter.set_state(gst.STATE_PAUSED)
-               self.videoflipper.set_state(gst.STATE_PAUSED)  
+               self.videoflipper.set_state(gst.STATE_PAUSED)
+               self.deinterlacer.set_state(gst.STATE_PAUSED)
+               self.colorspaceconverter2.set_state(gst.STATE_PAUSED)
                if self.preset != "nopreset":
                    self.videoscaler.set_state(gst.STATE_PAUSED)
                    self.videorate.set_state(gst.STATE_PAUSED)
@@ -534,8 +556,8 @@ class Transcoder(gobject.GObject):
                # Code for passthrough mode
                vparsedcaps = gst.caps_from_string(self.videocaps+",parsed=true")
                vframedcaps = gst.caps_from_string(self.videocaps+",framed=true")
-               if (sink_pad.get_caps().is_subset(vparsedcaps)) or (sink_pad.get_caps().is_subset(vframedcaps)):
-                   sink_pad.link(self.multiqueuevideosinkpad)
+               if (src_pad.get_caps().is_subset(vparsedcaps)) or (src_pad.get_caps().is_subset(vframedcaps)):
+                   src_pad.link(self.multiqueuevideosinkpad)
                    self.multiqueuevideosrcpad.link(self.containermuxervideosinkpad)
                    self.gstmultiqueue.set_state(gst.STATE_PAUSED)
                else:
@@ -566,7 +588,7 @@ class Transcoder(gobject.GObject):
 
                    self.videoparse = gst.element_factory_make(self.vparserelement)
                    self.pipeline.add(self.videoparse)
-                   sink_pad.link(self.videoparse.get_static_pad("sink"))
+                   src_pad.link(self.videoparse.get_static_pad("sink"))
                    self.videoparse.get_static_pad("src").link(self.multiqueuevideosinkpad)
                    self.videoparse.set_state(gst.STATE_PAUSED)                    
                    self.multiqueuevideosrcpad.link(self.containermuxervideosinkpad)

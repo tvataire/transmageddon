@@ -507,7 +507,7 @@ class TransmageddonUI:
            audiocodec = gst.Caps.to_string(self.asourcecaps)
        container = self.builder.get_object ("containerchoice").get_active_text ()
        self._transcoder = transcoder_engine.Transcoder(filechoice, self.filename, self.videodirectory, container, 
-                                                       audiocodec, videocodec, self.devicename, 
+                                                       audiocodec, videocodec, self.vsourcecaps, self.devicename, 
                                                        vheight, vwidth, ratenum, ratednom, achannels, 
                                                        self.multipass, self.passcounter, self.outputfilename,
                                                        self.timestamp, self.rotationvalue, self.audiopasstoggle, self.videopasstoggle)
