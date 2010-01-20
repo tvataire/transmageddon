@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: transmageddon\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=transmageddon&component=General\n"
-"POT-Creation-Date: 2009-10-28 22:27+0000\n"
-"PO-Revision-Date: 2010-01-20 19:50+0100\n"
-"Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
+"POT-Creation-Date: 2010-01-20 18:56+0000\n"
+"PO-Revision-Date: 2010-01-20 20:15+0100\n"
+"Last-Translator: Andrej Žnidaršič <andrej.znidarsic@gmail.com>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,7 +20,7 @@ msgstr ""
 "X-Poedit-Language: Slovenian\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: ../src/about.py.in:44
+#: ../src/about.py.in:47
 msgid "translator-credits"
 msgstr "Andrej Žnidaršič <andrej.znidarsic@gmail.com>"
 
@@ -88,152 +88,144 @@ msgstr "Prišlo je do napake med dostopom do %(location)spresets.txt!"
 msgid "All device presets are up to date!"
 msgstr "Vse prednastavljene naprave so posodobljene!"
 
-#: ../src/transmageddon.glade.h:1
+#: ../src/transmageddon.ui.h:1
 msgid "<b>Choose Audio Codec</b>:"
 msgstr "<b>Izbor zvočnega kodeka</b>:"
 
-#: ../src/transmageddon.glade.h:2
+#: ../src/transmageddon.ui.h:2
 msgid "<b>Choose Input File:</b>"
 msgstr "<b>Izbor vhodne datoteke:</b>"
 
-#: ../src/transmageddon.glade.h:3
+#: ../src/transmageddon.ui.h:3
 msgid "<b>Choose Video Codec</b>:"
 msgstr "<b>Izbor video kodeka</b>:"
 
-#: ../src/transmageddon.glade.h:4
+#: ../src/transmageddon.ui.h:4
 msgid "<b>Output Format:</b>"
 msgstr "<b>Zapis odvoda:</b>"
 
-#: ../src/transmageddon.glade.h:5
+#: ../src/transmageddon.ui.h:5
 msgid "<b>Presets:</b>"
 msgstr "<b>Predloge:</b>"
 
-#: ../src/transmageddon.glade.h:6
+#: ../src/transmageddon.ui.h:6
 msgid "<small>Audio Channels:</small>"
 msgstr "<small>Zvočni kanali:</small>"
 
-#: ../src/transmageddon.glade.h:7
+#: ../src/transmageddon.ui.h:7
 msgid "<small>Audio codec:</small>"
 msgstr "<small>Zvočni kodek:</small>"
 
-#: ../src/transmageddon.glade.h:8
+#: ../src/transmageddon.ui.h:8
 msgid "<small>Rotate the video image if needed</small>"
 msgstr "<small>Zavrti sliko posnetka, kadar je treba</small>"
 
-#: ../src/transmageddon.glade.h:9
+#: ../src/transmageddon.ui.h:9
 msgid "<small>Video codec:</small>"
 msgstr "<small>Video kodek:</small>"
 
-#: ../src/transmageddon.glade.h:10
+#: ../src/transmageddon.ui.h:10
 msgid "<small>Video height&#47;width:</small>"
 msgstr "<small>Višina video&#47;širina:</small>"
 
-#: ../src/transmageddon.glade.h:11
+#: ../src/transmageddon.ui.h:11
 msgid "AA_C"
 msgstr "AA_C"
 
-#: ../src/transmageddon.glade.h:12
+#: ../src/transmageddon.ui.h:12
 msgid "AC_3"
 msgstr "AC_3"
 
-#: ../src/transmageddon.glade.h:13
+#: ../src/transmageddon.ui.h:13
 msgid "AMR-N_B"
 msgstr "AMR-N_B"
 
-#: ../src/transmageddon.glade.h:14
+#: ../src/transmageddon.ui.h:14
 msgid "Celt _Ultra"
 msgstr "Celt _Ultra"
 
-#: ../src/transmageddon.glade.h:15
+#: ../src/transmageddon.ui.h:15
 msgid "F_LAC"
 msgstr "F_LAC"
 
-#: ../src/transmageddon.glade.h:16
+#: ../src/transmageddon.ui.h:16
 msgid "H263_plus"
 msgstr "H263_plus"
 
-#: ../src/transmageddon.glade.h:17
+#: ../src/transmageddon.ui.h:17
 msgid "H2_64"
 msgstr "H2_64"
 
-#: ../src/transmageddon.glade.h:18
+#: ../src/transmageddon.ui.h:18
 msgid "MPEG_2"
 msgstr "MPEG_2"
 
-#: ../src/transmageddon.glade.h:19
+#: ../src/transmageddon.ui.h:19
 msgid "MPEG_4/DivX5"
 msgstr "MPEG_4/DivX5"
 
-#: ../src/transmageddon.glade.h:20
+#: ../src/transmageddon.ui.h:20
 msgid "Theo_ra"
 msgstr "Theo_ra"
 
-#: ../src/transmageddon.glade.h:21
+#: ../src/transmageddon.ui.h:21
 msgid "Transmageddon"
 msgstr "Transmageddon"
 
-#: ../src/transmageddon.glade.h:22
+#: ../src/transmageddon.ui.h:22
 msgid "V_orbis"
 msgstr "V_orbis"
 
-#: ../src/transmageddon.glade.h:23
+#: ../src/transmageddon.ui.h:23
 msgid "W_indowsMediaAudio 2"
 msgstr "W_indowsMediaAudio 2"
 
-#: ../src/transmageddon.glade.h:24
+#: ../src/transmageddon.ui.h:24
 msgid "_Audio passthrough"
 msgstr "_Zvočni prepuščanje"
 
-#: ../src/transmageddon.glade.h:25
+#: ../src/transmageddon.ui.h:25
+msgid "_Debug"
+msgstr "_Razhrošči"
+
+#: ../src/transmageddon.ui.h:26
 msgid "_Dirac"
 msgstr "_Dirac"
 
-#: ../src/transmageddon.glade.h:26
-msgid "_Edit"
-msgstr "_Uredi"
-
-#: ../src/transmageddon.glade.h:27
-msgid "_File"
-msgstr "_Datoteka"
-
-#: ../src/transmageddon.glade.h:28
+#: ../src/transmageddon.ui.h:27
 msgid "_Help"
 msgstr "Pomo_č"
 
-#: ../src/transmageddon.glade.h:29
+#: ../src/transmageddon.ui.h:28
 msgid "_Speex"
 msgstr "_Speex"
 
-#: ../src/transmageddon.glade.h:30
+#: ../src/transmageddon.ui.h:29
 msgid "_Transcode"
 msgstr "_Pretvorba"
 
-#: ../src/transmageddon.glade.h:31
+#: ../src/transmageddon.ui.h:30
 msgid "_Video passthrough"
 msgstr "_Video prepuščanje"
 
-#: ../src/transmageddon.glade.h:32
-msgid "_View"
-msgstr "_Pogled"
-
-#: ../src/transmageddon.glade.h:33
+#: ../src/transmageddon.ui.h:31
 msgid "_WindowsMediaVideo2"
 msgstr "_WindowsMediaVideo2"
 
-#: ../src/transmageddon.glade.h:34
+#: ../src/transmageddon.ui.h:32
 msgid "_mp3"
 msgstr "_mp3"
 
-#: ../src/transmageddon.glade.h:35
+#: ../src/transmageddon.ui.h:33
 msgid "_xvid"
 msgstr "_xvid"
 
 #: ../src/transmageddon.py:226
-#: ../src/transmageddon.py:489
-#: ../src/transmageddon.py:610
-#: ../src/transmageddon.py:631
-#: ../src/transmageddon.py:639
-#: ../src/transmageddon.py:713
+#: ../src/transmageddon.py:490
+#: ../src/transmageddon.py:611
+#: ../src/transmageddon.py:632
+#: ../src/transmageddon.py:640
+#: ../src/transmageddon.py:714
 msgid "Transcoding Progress"
 msgstr "Napredek pretvorbe"
 
@@ -270,58 +262,58 @@ msgstr "Zrcaljenje zgornje leve diagonale"
 msgid "Upper right diagnonal flip"
 msgstr "Zrcaljenje zgornje desne diagonale"
 
-#: ../src/transmageddon.py:352
+#: ../src/transmageddon.py:353
 #, python-format
 msgid "%(min)d:%(sec)02d"
 msgstr "%(min)d:%(sec)02d"
 
-#: ../src/transmageddon.py:358
+#: ../src/transmageddon.py:359
 msgid "Estimated time remaining: "
 msgstr "Predviden preostali čas:"
 
-#: ../src/transmageddon.py:360
-#: ../src/transmageddon.py:392
-#: ../src/transmageddon.py:613
+#: ../src/transmageddon.py:361
+#: ../src/transmageddon.py:393
+#: ../src/transmageddon.py:614
 msgid "Pass "
 msgstr "Prehod"
 
-#: ../src/transmageddon.py:377
+#: ../src/transmageddon.py:378
 msgid "File saved to "
 msgstr "Datoteka je shranjena v"
 
-#: ../src/transmageddon.py:386
+#: ../src/transmageddon.py:387
 msgid "Done Transcoding"
 msgstr "Pretvorba je končana."
 
-#: ../src/transmageddon.py:394
+#: ../src/transmageddon.py:395
 msgid "Start next pass"
 msgstr "Začetek naslednjega prehoda"
 
-#: ../src/transmageddon.py:536
+#: ../src/transmageddon.py:537
 msgid "Plugins not found, choose different codecs."
 msgstr "Vstavkov ni mogoče najti; izberite druge kodeke."
 
-#: ../src/transmageddon.py:544
+#: ../src/transmageddon.py:545
 msgid "Codec installation aborted."
 msgstr "Namestitev kodeka je preklicana."
 
-#: ../src/transmageddon.py:552
+#: ../src/transmageddon.py:553
 msgid "Missing plugin installation failed: "
 msgstr "Namestitev manjkajočega vstavka je spodletela:"
 
-#: ../src/transmageddon.py:608
+#: ../src/transmageddon.py:609
 msgid "Writing "
 msgstr "Zapisovanje"
 
-#: ../src/transmageddon.py:715
+#: ../src/transmageddon.py:716
 msgid "No audio parser, passthrough not available"
 msgstr "Ni razčlenjevalnika zvoka, prepuščanje ni na voljo"
 
-#: ../src/transmageddon.py:722
+#: ../src/transmageddon.py:723
 msgid "No video parser, passthrough not available"
 msgstr "Ni razčlenjevalnika videa, prepuščanje ni na voljo"
 
-#: ../src/transmageddon.py:729
+#: ../src/transmageddon.py:730
 msgid "Uknown error"
 msgstr "Neznana napaka"
 
@@ -337,4 +329,11 @@ msgstr "Transmageddon pretvornik video posnetkov"
 #: ../transmageddon.desktop.in.in.h:2
 msgid "Video format conversion tool"
 msgstr "Orodje za pretvorbo video zapisov"
+
+#~ msgid "_Edit"
+#~ msgstr "_Uredi"
+#~ msgid "_File"
+#~ msgstr "_Datoteka"
+#~ msgid "_View"
+#~ msgstr "_Pogled"
 
