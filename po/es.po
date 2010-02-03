@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=transmageddon&component=General\n"
 "POT-Creation-Date: 2010-01-31 17:28+0000\n"
-"PO-Revision-Date: 2010-02-01 07:46+0100\n"
+"PO-Revision-Date: 2010-02-03 08:02+0100\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -29,7 +29,7 @@ msgstr "No es un entero o fracción válida: %(value)s"
 #: ../src/presets.py:410
 #, python-format
 msgid "Loaded device %(device)s (%(presets)d presets)"
-msgstr "Dispositivo %(device)s cargado (%(presets)d presintonías)"
+msgstr "Dispositivo %(device)s cargado (%(presets)d preconfiguraciones)"
 
 #: ../src/presets.py:477
 #, python-format
@@ -44,31 +44,32 @@ msgstr "Escribiendo al archivo %(file)s"
 #: ../src/presets.py:489
 #, python-format
 msgid "There was an error fetching and installing %(location)s: %(error)s"
-msgstr ""
+msgstr "Hubo un error al obtener e instalar %(location)s: %(error)s"
 
 #: ../src/presets.py:506
 msgid "Checking for device preset updates..."
-msgstr ""
+msgstr "Comprobando actualizaciones de preconfiguraciones del dispositivo…"
 
 #: ../src/presets.py:526
 #, python-format
 msgid "Device preset %(name)s is up to date"
-msgstr ""
+msgstr "La preconfiguración %(name)s del dispositivo está actualizada"
 
 #: ../src/presets.py:530
 #, python-format
 msgid "Found updated device preset %(name)s"
-msgstr ""
+msgstr "Se encontró actualizada la preconfiguración %(name)s del dispositivo"
 
 #: ../src/presets.py:536 ../src/presets.py:549
 #, python-format
 msgid "Error installing preset %(name)s from %(location)s: %(error)s"
 msgstr ""
+"Error al instalar la preconfiguración %(name)s desde %(location)s: %(error)s"
 
 #: ../src/presets.py:543
 #, python-format
 msgid "Found new device preset %(name)s"
-msgstr ""
+msgstr "Se encontró un nuevo dispositivo preconfigurado %(name)s"
 
 #: ../src/presets.py:556
 #, python-format
@@ -82,7 +83,7 @@ msgstr "Hubo un problema al acceder a %(location)spresets.txt"
 
 #: ../src/presets.py:582
 msgid "All device presets are up to date!"
-msgstr ""
+msgstr "Todas las preconfiguraciones de los dispositivos están actualizadas"
 
 #: ../src/transmageddon.ui.h:1
 msgid "<b>Choose Audio Codec</b>:"
@@ -102,7 +103,7 @@ msgstr "<b>Formato de salida:</b>"
 
 #: ../src/transmageddon.ui.h:5
 msgid "<b>Presets:</b>"
-msgstr "<b>Presintonías:</b>"
+msgstr "<b>Preconfiguraciones:</b>"
 
 #: ../src/transmageddon.ui.h:6
 msgid "<small>Audio Channels:</small>"
@@ -249,11 +250,11 @@ msgstr "Giro vertical"
 
 #: ../src/transmageddon.py:247
 msgid "Upper left diagonal flip"
-msgstr ""
+msgstr "Volteo diagonal desde la parte superior izquierda"
 
 #: ../src/transmageddon.py:248
 msgid "Upper right diagnonal flip"
-msgstr ""
+msgstr "Volteo diagonal desde la parte superior derecha"
 
 #: ../src/transmageddon.py:353
 #, python-format
@@ -291,7 +292,7 @@ msgstr "Se abortó la instalación del códec."
 
 #: ../src/transmageddon.py:553
 msgid "Missing plugin installation failed: "
-msgstr ""
+msgstr "Falló por la falta de instalación de un complemento"
 
 #: ../src/transmageddon.py:609
 msgid "Writing "
