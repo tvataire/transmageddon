@@ -1,0 +1,337 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"PO-Revision-Date: 2010-03-14 11:34+0100\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+# Norwegian (bokmål dialect) translation of transmageddon.
+# Copyright (C) 1998-2004, 2005 Free Software Foundation, Inc.
+# Kjartan Maraas <kmaraas@gnome.org>, 1998-2010.
+# Terance Edward Sola <terance@lyse.net>, 2005.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: transmageddon\n"
+"Report-Msgid-Bugs-To:\n"
+"POT-Creation-Date: 2010-03-14 11:26+0100\n"
+"PO-Revision-Date: 2010-01-20 00:52+0100\n"
+"Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
+"Language-Team: Norwegian Bokmål <i18n-nb@lister.ping.uio.no>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../src/about.py.in:47
+msgid "translator-credits"
+msgstr "Kjartan Maraas <kmaraas@gnome.org>"
+
+#: ../src/presets.py:77
+#, python-format
+msgid "Not a valid integer or fraction: %(value)s!"
+msgstr ""
+
+#: ../src/presets.py:410
+#, python-format
+msgid "Loaded device %(device)s (%(presets)d presets)"
+msgstr ""
+
+#: ../src/presets.py:477
+#, python-format
+msgid "Fetching %(location)s"
+msgstr "Henter %(location)s"
+
+#: ../src/presets.py:484
+#, python-format
+msgid "Writing to %(file)s"
+msgstr "Skriver til %(file)s»"
+
+#: ../src/presets.py:489
+#, fuzzy, python-format
+msgid "There was an error fetching and installing %(location)s: %(error)s"
+msgstr "En feil oppsto under start av %s: %s"
+
+#: ../src/presets.py:506
+msgid "Checking for device preset updates..."
+msgstr ""
+
+#: ../src/presets.py:526
+#, python-format
+msgid "Device preset %(name)s is up to date"
+msgstr ""
+
+#: ../src/presets.py:530
+#, python-format
+msgid "Found updated device preset %(name)s"
+msgstr ""
+
+#: ../src/presets.py:536 ../src/presets.py:549
+#, python-format
+msgid "Error installing preset %(name)s from %(location)s: %(error)s"
+msgstr ""
+
+#: ../src/presets.py:543
+#, python-format
+msgid "Found new device preset %(name)s"
+msgstr ""
+
+#: ../src/presets.py:556
+#, python-format
+msgid "Malformed plugin version line %(line)s"
+msgstr ""
+
+#: ../src/presets.py:560
+#, python-format
+msgid "There was a problem accessing %(location)spresets.txt!"
+msgstr ""
+
+#: ../src/presets.py:582
+msgid "All device presets are up to date!"
+msgstr ""
+
+#: ../src/transmageddon.ui.h:1
+msgid "<b>Choose Audio Codec</b>:"
+msgstr "<b>Velg audiokodek</b>:"
+
+#: ../src/transmageddon.ui.h:2
+msgid "<b>Choose Input File:</b>"
+msgstr "<b>Velg inndatafil:</b>"
+
+#: ../src/transmageddon.ui.h:3
+msgid "<b>Choose Video Codec</b>:"
+msgstr "<b>Velg videokodek</b>:"
+
+#: ../src/transmageddon.ui.h:4
+msgid "<b>Output Format:</b>"
+msgstr "<b>Utdataformat:</b>"
+
+#: ../src/transmageddon.ui.h:5
+msgid "<b>Presets:</b>"
+msgstr "<b>Forhåndsinnstillinger:</b>"
+
+#: ../src/transmageddon.ui.h:6
+msgid "<small>Audio Channels:</small>"
+msgstr "<small>Lydkanaler:</small>"
+
+#: ../src/transmageddon.ui.h:7
+msgid "<small>Audio codec:</small>"
+msgstr "<small>Lydkodek:</small>"
+
+#: ../src/transmageddon.ui.h:8
+msgid "<small>Rotate the video image if needed</small>"
+msgstr "<small>Roter bildet hvis nødvendig</small>"
+
+#: ../src/transmageddon.ui.h:9
+msgid "<small>Video codec:</small>"
+msgstr "<small>Videokodek:</small>"
+
+#: ../src/transmageddon.ui.h:10
+msgid "<small>Video height&#47;width:</small>"
+msgstr "<small>Høyde/bredde på video</small>"
+
+#: ../src/transmageddon.ui.h:11
+msgid "AA_C"
+msgstr "AA_C"
+
+#: ../src/transmageddon.ui.h:12
+msgid "AC_3"
+msgstr "AC_3"
+
+#: ../src/transmageddon.ui.h:13
+msgid "AMR-N_B"
+msgstr "AMR-N_B"
+
+#: ../src/transmageddon.ui.h:14
+msgid "Celt _Ultra"
+msgstr "Celt _ultra"
+
+#: ../src/transmageddon.ui.h:15
+msgid "F_LAC"
+msgstr "F_LAC"
+
+#: ../src/transmageddon.ui.h:16
+msgid "H263_plus"
+msgstr "H263_plus"
+
+#: ../src/transmageddon.ui.h:17
+msgid "H2_64"
+msgstr "H2_64"
+
+#: ../src/transmageddon.ui.h:18
+msgid "MPEG_2"
+msgstr "MPEG_2"
+
+#: ../src/transmageddon.ui.h:19
+msgid "MPEG_4/DivX5"
+msgstr "MPEG_4/DivX5"
+
+#: ../src/transmageddon.ui.h:20
+msgid "Theo_ra"
+msgstr "Theo_ra"
+
+#: ../src/transmageddon.ui.h:21
+msgid "Transmageddon"
+msgstr "Transmageddon"
+
+#: ../src/transmageddon.ui.h:22
+msgid "V_orbis"
+msgstr "V_orbis"
+
+#: ../src/transmageddon.ui.h:23
+msgid "W_indowsMediaAudio 2"
+msgstr "W_indowsMediaAudio 2"
+
+#: ../src/transmageddon.ui.h:24
+msgid "_Audio passthrough"
+msgstr ""
+
+#: ../src/transmageddon.ui.h:25
+msgid "_Debug"
+msgstr "_Feilsøk"
+
+#: ../src/transmageddon.ui.h:26
+msgid "_Dirac"
+msgstr "_Dirac"
+
+#: ../src/transmageddon.ui.h:27
+msgid "_Help"
+msgstr "_Hjelp"
+
+#: ../src/transmageddon.ui.h:28
+msgid "_Speex"
+msgstr "_Speex"
+
+#: ../src/transmageddon.ui.h:29
+msgid "_Transcode"
+msgstr "_Konverter"
+
+#: ../src/transmageddon.ui.h:30
+msgid "_Video passthrough"
+msgstr ""
+
+#: ../src/transmageddon.ui.h:31
+msgid "_WindowsMediaVideo2"
+msgstr "_WindowsMediaVideo2"
+
+#: ../src/transmageddon.ui.h:32
+msgid "_mp3"
+msgstr "_mp3"
+
+#: ../src/transmageddon.ui.h:33
+msgid "_xvid"
+msgstr "_xvid"
+
+#: ../src/transmageddon.py:226 ../src/transmageddon.py:490
+#: ../src/transmageddon.py:611 ../src/transmageddon.py:632
+#: ../src/transmageddon.py:640 ../src/transmageddon.py:714
+msgid "Transcoding Progress"
+msgstr "Fremgang for konvertering"
+
+#. Populate the rotatation box
+#: ../src/transmageddon.py:245
+msgid "No rotation (default)"
+msgstr "Ingen rotering (forvalg)"
+
+#: ../src/transmageddon.py:245
+msgid "Clockwise 90 degrees"
+msgstr "Med klokken 90 grader"
+
+#: ../src/transmageddon.py:245
+msgid "Rotate 180 degrees"
+msgstr "Roter 180 grader"
+
+#: ../src/transmageddon.py:246
+msgid "Counterclockwise 90 degrees"
+msgstr "Mot klokken 90 grader"
+
+#: ../src/transmageddon.py:246
+msgid "Horizontal flip"
+msgstr "Vend horisontalt"
+
+#: ../src/transmageddon.py:247
+msgid "Vertical flip"
+msgstr "Vend vertikalt"
+
+#: ../src/transmageddon.py:247
+msgid "Upper left diagonal flip"
+msgstr ""
+
+#: ../src/transmageddon.py:248
+msgid "Upper right diagnonal flip"
+msgstr ""
+
+#: ../src/transmageddon.py:353
+#, python-format
+msgid "%(min)d:%(sec)02d"
+msgstr "%(min)d.%(sec)02d"
+
+#: ../src/transmageddon.py:359
+msgid "Estimated time remaining: "
+msgstr "Estimert gjenværende tid: "
+
+#: ../src/transmageddon.py:361 ../src/transmageddon.py:393
+#: ../src/transmageddon.py:614
+msgid "Pass "
+msgstr "Runde "
+
+#: ../src/transmageddon.py:378
+msgid "File saved to "
+msgstr "Fil lagret til "
+
+#: ../src/transmageddon.py:387
+msgid "Done Transcoding"
+msgstr "Konvertering fullført"
+
+#: ../src/transmageddon.py:395
+msgid "Start next pass"
+msgstr "Start neste runde"
+
+#: ../src/transmageddon.py:537
+msgid "Plugins not found, choose different codecs."
+msgstr ""
+
+#: ../src/transmageddon.py:545
+msgid "Codec installation aborted."
+msgstr ""
+
+#: ../src/transmageddon.py:553
+msgid "Missing plugin installation failed: "
+msgstr ""
+
+#: ../src/transmageddon.py:609
+msgid "Writing "
+msgstr "Skriver "
+
+#: ../src/transmageddon.py:716
+msgid "No audio parser, passthrough not available"
+msgstr ""
+
+#: ../src/transmageddon.py:723
+msgid "No video parser, passthrough not available"
+msgstr ""
+
+#: ../src/transmageddon.py:730
+msgid "Uknown error"
+msgstr "Ukjent feil"
+
+#: ../src/utils.py:73
+#, python-format
+msgid "Can't find %(path)s in any known prefix!"
+msgstr ""
+
+#: ../transmageddon.desktop.in.in.h:1
+msgid "Transmageddon Video Transcoder"
+msgstr "Transmageddon videotranskoder"
+
+#: ../transmageddon.desktop.in.in.h:2
+msgid "Video format conversion tool"
+msgstr "Verktøy for å konvertere videoformater"
