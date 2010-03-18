@@ -2,28 +2,31 @@
 # Copyright (C) 2009 transmageddon's COPYRIGHT HOLDER
 # This file is distributed under the same license as the transmageddon package.
 # Luca Ferretti <elle.uca@libero.it>, 2009.
+# Sergio Zanchetta <primes2h@ubuntu.com>, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: transmageddon master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=transmageddon&component=General\n"
-"POT-Creation-Date: 2009-11-26 20:47+0000\n"
-"PO-Revision-Date: 2009-10-17 11:49+0200\n"
-"Last-Translator: Luca Ferretti <elle.uca@libero.it>\n"
+"POT-Creation-Date: 2010-02-04 22:26+0000\n"
+"PO-Revision-Date: 2010-03-03 14:04+0100\n"
+"Last-Translator: Sergio Zanchetta <primes2h@ubuntu.com>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8-bit\n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../src/about.py.in:47
 msgid "translator-credits"
-msgstr "Luca Ferretti <elle.uca@libero.it>"
+msgstr ""
+"Luca Ferretti <elle.uca@libero.it>\n"
+"Sergio Zanchetta <primes2h@ubuntu.com>"
 
 #: ../src/presets.py:77
 #, python-format
 msgid "Not a valid integer or fraction: %(value)s!"
-msgstr "Non è un intero o una frazione valida: %(value)s!"
+msgstr "Non è un intero o una frazione valida: %(value)s."
 
 #: ../src/presets.py:410
 #, python-format
@@ -74,16 +77,16 @@ msgstr "Trovata la nuova preselezione di dispositivo %(name)s"
 #: ../src/presets.py:556
 #, python-format
 msgid "Malformed plugin version line %(line)s"
-msgstr ""
+msgstr "Versione mal definita del plugin alla riga %(line)s"
 
 #: ../src/presets.py:560
 #, python-format
 msgid "There was a problem accessing %(location)spresets.txt!"
-msgstr "Si è verificato un problema nell'accedere a %(location)spresets.txt!"
+msgstr "Si è verificato un problema nell'accedere a %(location)spresets.txt."
 
 #: ../src/presets.py:582
 msgid "All device presets are up to date!"
-msgstr "Tutte le preselezioni di dispositivo sono aggiornate!"
+msgstr "Tutte le preselezioni di dispositivo sono aggiornate."
 
 #: ../src/transmageddon.ui.h:1
 msgid "<b>Choose Audio Codec</b>:"
@@ -179,11 +182,11 @@ msgstr "W_indowsMediaAudio 2"
 
 #: ../src/transmageddon.ui.h:24
 msgid "_Audio passthrough"
-msgstr ""
+msgstr "Filtro _audio"
 
 #: ../src/transmageddon.ui.h:25
 msgid "_Debug"
-msgstr ""
+msgstr "_Debug"
 
 #: ../src/transmageddon.ui.h:26
 msgid "_Dirac"
@@ -203,7 +206,7 @@ msgstr "_Transcodifica"
 
 #: ../src/transmageddon.ui.h:30
 msgid "_Video passthrough"
-msgstr ""
+msgstr "Filtro _video"
 
 #: ../src/transmageddon.ui.h:31
 msgid "_WindowsMediaVideo2"
@@ -242,19 +245,19 @@ msgstr "Senso antiorario, 90 gradi"
 
 #: ../src/transmageddon.py:246
 msgid "Horizontal flip"
-msgstr ""
+msgstr "Riflessione orizzontale"
 
 #: ../src/transmageddon.py:247
 msgid "Vertical flip"
-msgstr ""
+msgstr "Riflessione verticale"
 
 #: ../src/transmageddon.py:247
 msgid "Upper left diagonal flip"
-msgstr ""
+msgstr "Riflessione diagonale, in alto a sinistra"
 
 #: ../src/transmageddon.py:248
 msgid "Upper right diagnonal flip"
-msgstr ""
+msgstr "Riflessione diagonale, in alto a destra"
 
 #: ../src/transmageddon.py:353
 #, python-format
@@ -263,13 +266,12 @@ msgstr "%(min)d.%(sec)02d"
 
 #: ../src/transmageddon.py:359
 msgid "Estimated time remaining: "
-msgstr "Tempo rimanente stimato"
+msgstr "Tempo rimanente stimato: "
 
 #: ../src/transmageddon.py:361 ../src/transmageddon.py:393
 #: ../src/transmageddon.py:614
-#, fuzzy
 msgid "Pass "
-msgstr "Passaggio"
+msgstr "Passaggio "
 
 #: ../src/transmageddon.py:378
 msgid "File saved to "
@@ -280,7 +282,6 @@ msgid "Done Transcoding"
 msgstr "Transcodifica completata"
 
 #: ../src/transmageddon.py:395
-#, fuzzy
 msgid "Start next pass"
 msgstr "Avvio passaggio successivo"
 
@@ -302,11 +303,11 @@ msgstr "Scrittura"
 
 #: ../src/transmageddon.py:716
 msgid "No audio parser, passthrough not available"
-msgstr ""
+msgstr "Nessun analizzatore audio, filtro non disponibile"
 
 #: ../src/transmageddon.py:723
 msgid "No video parser, passthrough not available"
-msgstr ""
+msgstr "Nessun analizzatore video, filtro non disponibile"
 
 #: ../src/transmageddon.py:730
 msgid "Uknown error"
@@ -315,7 +316,7 @@ msgstr "Errore sconosciuto"
 #: ../src/utils.py:73
 #, python-format
 msgid "Can't find %(path)s in any known prefix!"
-msgstr "Impossibile trovare %(path)s in ogni prefisso conosciuto!"
+msgstr "Impossibile trovare %(path)s in ogni prefisso conosciuto."
 
 #: ../transmageddon.desktop.in.in.h:1
 msgid "Transmageddon Video Transcoder"
@@ -324,12 +325,3 @@ msgstr "Transcodificatore video Transmageddon"
 #: ../transmageddon.desktop.in.in.h:2
 msgid "Video format conversion tool"
 msgstr "Strumento di conversione tra formati video"
-
-#~ msgid "_Edit"
-#~ msgstr "_Modifica"
-
-#~ msgid "_File"
-#~ msgstr "_File"
-
-#~ msgid "_View"
-#~ msgstr "_Visualizza"
