@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: transmageddon master\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-03-28 12:34+0300\n"
-"PO-Revision-Date: 2010-03-28 12:34+0300\n"
+"PO-Revision-Date: 2010-03-28 12:35+0300\n"
 "Last-Translator: Gintautas Miliauskas <gintautas@miliauskas.lt>\n"
 "Language-Team: Lithuanian <gnome-lt@lists.akl.lt>\n"
 "MIME-Version: 1.0\n"
@@ -63,7 +63,7 @@ msgstr "Rasta atnaujinta įrenginio konfigūracija %(name)s"
 #: ../src/presets.py:536 ../src/presets.py:549
 #, python-format
 msgid "Error installing preset %(name)s from %(location)s: %(error)s"
-msgstr "Klaida diegiant konfigūraciją %(name]s iš %(location)s: %(error)s"
+msgstr "Klaida diegiant konfigūraciją %(name)s iš %(location)s: %(error)s"
 
 #: ../src/presets.py:543
 #, python-format
