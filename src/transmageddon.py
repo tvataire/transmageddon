@@ -266,7 +266,7 @@ class TransmageddonUI:
        #for (name, device) in (presets.get().items()):
        #    shortname.append(str(name))
        self.presetchoices = dict(zip(devicelist, shortname))
-       self.presetchoice.prepend_text("No Presets")
+       self.presetchoice.prepend_text(_("No Presets"))
 
        self.waiting_for_signal="False"
 
@@ -356,9 +356,12 @@ class TransmageddonUI:
                    }
                if percent_remain > 0.5:
                    if self.passcounter == int(0):
-                       self.ProgressBar.set_text(_("Estimated time remaining: ") + str(time_rem))
+                       self.ProgressBar.set_text(_("Estimated time remaining: %(time)s") % {'time': str(time_rem)})
                    else:
-                       self.ProgressBar.set_text(_("Pass " + str(self.passcounter) + " time remaining: ") + str(time_rem))
+                       self.ProgressBar.set_text(_("Pass %(count)d time remaining: %(time)s") % {
+                           'count': self.passcounter,
+                           'time': str(time_rem),
+                           })
                return True
            else:
                self.ProgressBar.set_fraction(0.0)
@@ -375,7 +378,7 @@ class TransmageddonUI:
    def _on_eos(self, source):
        context_id = self.StatusBar.get_context_id("EOS")
        if (self.multipass ==  False) or (self.passcounter == int(0)):
-           self.StatusBar.push(context_id, (_("File saved to ") + self.videodirectory))
+           self.StatusBar.push(context_id, (_("File saved to %(dir)s") % {'dir': self.videodirectory}))
            self.FileChooser.set_sensitive(True)
            self.containerchoice.set_sensitive(True)
            self.CodecBox.set_sensitive(True)
@@ -390,7 +393,7 @@ class TransmageddonUI:
            self.multipass = False
            self.passcounter = False
        else:
-           self.StatusBar.push(context_id, (_("Pass " + str(self.passcounter) + " Complete")))
+           self.StatusBar.push(context_id, (_("Pass %(count)d Complete") % {'count': self.passcounter}))
            self.start_time = False
            self.ProgressBar.set_text(_("Start next pass"))
            if self.passcounter == (self.multipass-1):
@@ -408,16 +411,16 @@ class TransmageddonUI:
        if d.is_video:
            self.videodata = { 'videowidth' : d.videowidth, 'videoheight' : d.videoheight, 'videotype' : d.inputvideocaps,
                               'videolenght' : d.videolength, 'fratenum' : d.videorate.num, 'frateden' :  d.videorate.denom }
-           self.videoinformation.set_markup(''.join(('<small>', 'Video width&#47;height: ', str(self.videodata['videowidth']), 
+           self.videoinformation.set_markup(''.join(('<small>', _('Video width&#47;height: '), str(self.videodata['videowidth']), 
                                             "x", str(self.videodata['videoheight']), '</small>')))
-           self.videocodec.set_markup(''.join(('<small>', 'Video codec: ', 
-                                       str(gst.pbutils.get_codec_description(self.videodata['videotype'])), 
+           self.videocodec.set_markup(''.join(('<small>', _('Video codec: %(codec)s') % {'codec':
+                                       str(gst.pbutils.get_codec_description(self.videodata['videotype']))},
                                       '</small>')))
        if d.is_audio:
            self.audiodata = { 'audiochannels' : d.audiochannels, 'samplerate' : d.audiorate, 'audiotype' : d.inputaudiocaps }
-           self.audioinformation.set_markup(''.join(('<small>', 'Audio channels: ', str(self.audiodata['audiochannels']), '</small>')))
-           self.audiocodec.set_markup(''.join(('<small>','Audio codec: ',
-                                      str(gst.pbutils.get_codec_description(self.audiodata['audiotype'])),'</small>')))
+           self.audioinformation.set_markup(''.join(('<small>', _('Audio channels: %(chans)s') % {'chans': str(self.audiodata['audiochannels'])}, '</small>')))
+           self.audiocodec.set_markup(''.join(('<small>', _('Audio codec: %(codec)s') % {'codec':
+                                      str(gst.pbutils.get_codec_description(self.audiodata['audiotype']))}, '</small>')))
        self.discover_done=True
        if self.waiting_for_signal == True:
            if self.containertoggle == True:
@@ -606,12 +609,12 @@ class TransmageddonUI:
        self.ContainerFormatSuffix = codecfinder.csuffixmap[container]
        self.outputfilename = str(self.nosuffix+self.timestamp+self.ContainerFormatSuffix)
        context_id = self.StatusBar.get_context_id("EOS")
-       self.StatusBar.push(context_id, (_("Writing " + self.outputfilename)))
+       self.StatusBar.push(context_id, (_("Writing %(filename)s") % {'filename': self.outputfilename}))
        if self.multipass == False:
            self.ProgressBar.set_text(_("Transcoding Progress"))
        else:
            self.passcounter=int(1)
-           self.ProgressBar.set_text(_("Pass " + str(self.passcounter) + " Progress"))
+           self.ProgressBar.set_text(_("Pass %(count)d Progress") % {'count': self.passcounter})
        if self.audiodata.has_key("samplerate"):
            self.check_for_elements()
            if self.missingtoggle==False:
