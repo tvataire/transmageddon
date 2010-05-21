@@ -73,7 +73,7 @@ class Transcoder(gobject.GObject):
        self.fratenum = FRATENUM
        self.frateden = FRATEDEN
        self.achannels = ACHANNELS
-       print "transcoder_engine achannels is " + str(self.achannels)
+       # print "transcoder_engine achannels is " + str(self.achannels)
        self.blackborderflag = False
        self.multipass = MULTIPASS
        self.passcounter = PASSCOUNTER

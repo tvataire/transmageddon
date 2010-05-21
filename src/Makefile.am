@@ -10,7 +10,8 @@ transmageddon_PYTHON = \
         discoverer.py \
 	presets.py \
 	utils.py \
-	about.py
+	about.py \
+        which.py
 
 BUILT_SOURCES=
 

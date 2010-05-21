@@ -37,11 +37,11 @@ containermap = { 'Ogg' : "application/ogg",'Matroska' : "video/x-matroska", 'MXF
                         'Quicktime' : "video/quicktime,variant=apple", 'MPEG4' : "video/quicktime,variant=iso", 
                         'MPEG PS' : "video/mpeg,mpegversion=2,systemstream=true", 
                         'MPEG TS' : "video/mpegts", 'FLV' : "video/x-flv", '3GPP' : "video/quicktime,variant=3gpp",
-                        'ASF' : "video/x-ms-asf" }
+                        'ASF' : "video/x-ms-asf", 'WebM' : "video/webm" }
 
 csuffixmap =   { 'Ogg' : ".ogg", 'Matroska' : ".mkv", 'MXF' : ".mxf", 'AVI' : ".avi", 'Quicktime' : ".mov",
                         'MPEG4' : ".mp4", 'MPEG PS' : ".mpg", 'MPEG TS' : ".ts", 'FLV' : ".flv", '3GPP' : ".3gp",
-                 'ASF' : ".asf" }
+                 'ASF' : ".asf", 'WebM' : ".webm" }
 
 codecmap = {     'vorbis' : "audio/x-vorbis", 'flac' : "audio/x-flac", 'mp3' : "audio/mpeg, mpegversion=(int)1, layer=(int)3", 
                         'aac' : "audio/mpeg,mpegversion=4", 'ac3' : "audio/x-ac3", 'speex' : "audio/x-speex", 
@@ -51,7 +51,7 @@ codecmap = {     'vorbis' : "audio/x-vorbis", 'flac' : "audio/x-flac", 'mp3' : "
                         'xvid' : "video/x-xvid", 'dnxhd' : "video/x-dnxhd", 'wmv2' : "video/x-wmv,wmvversion=2",
                         'dnxhd' : "video/x-dnxhd", 'divx5' : "video/x-divx,divxversion=5", 
                         'divx4' : "video/x-divx,divxversion=4", 'amrnb' : "audio/AMR", 
-                        'h263p' : "video/x-h263,variant=itu,h263version=h263p"}
+                        'h263p' : "video/x-h263,variant=itu,h263version=h263p", 'vp8' : "video/x-vp8"}
 #####
 #This code checks for available muxers and return a unique caps string
 #for each. It also creates a python dictionary mapping the caps strings 

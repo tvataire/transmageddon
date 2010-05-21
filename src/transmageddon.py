@@ -70,7 +70,8 @@ supported_containers = [
         "MPEG4",
         "3GPP",
         "MXF",
-        "ASF"
+        "ASF",
+        "WebM"
 ]
 
 supported_audio_codecs = [
@@ -95,25 +96,27 @@ supported_video_codecs = [
        "mpeg4",
        "xvid",
        "h263p",
-       "wmv2"
+       "wmv2",
+       "vp8"
 ]
 
 # Maps containers to the codecs they support.  The first two elements are
 # "special" in that they are the default audio/video selections for that
 # container.
 supported_container_map = {
-    'Ogg':        [ 'vorbis', 'theora', 'flac', 'speex', 'celt', 'dirac' ],
+    'Ogg':        [ 'vorbis', 'theora', 'flac', 'speex', 'celt', 'dirac', 'vp8' ],
     'MXF':        [ 'mp3', 'h264', 'aac', 'ac3', 'mpeg2', 'mpeg4' ],
-    'Matroska':   [ 'flac', 'dirac', 'aac', 'ac3', 'theora', 'mp3', 'h264',
+    'Matroska':   [ 'flac', 'dirac', 'aac', 'ac3', 'theora', 'mp3', 'h264', 'vp8',
     'mpeg4', 'mpeg2', 'xvid', 'vorbis', 'h263p' ],
-    'AVI':        [ 'mp3', 'h264', 'dirac', 'ac3', 'mpeg2', 'mpeg4', 'xvid','wma2','wmv2' ],
-    'Quicktime':  [ 'aac', 'h264', 'ac3', 'dirac', 'mp3', 'mpeg2', 'mpeg4' ],
+    'AVI':        [ 'mp3', 'h264', 'dirac', 'ac3', 'mpeg2', 'mpeg4', 'xvid','wma2','wmv2', 'vp8' ],
+    'Quicktime':  [ 'aac', 'h264', 'ac3', 'dirac', 'mp3', 'mpeg2', 'mpeg4', 'vp8' ],
     'MPEG4':      [ 'aac', 'h264', 'mp3', 'mpeg2', 'mpeg4' ],
     '3GPP':       [ 'aac', 'h264', 'mp3', 'mpeg2', 'mpeg4','amrnb','h263p' ],
     'MPEG PS':    [ 'mp3', 'mpeg2', 'ac3', 'h264', 'aac', 'mpeg4' ],
     'MPEG TS':    [ 'mp3', 'h264', 'ac3', 'mpeg2', 'aac', 'mpeg4', 'dirac' ],
     'FLV':        [ 'mp3', 'h264' ],
-    'ASF':        [ 'wma2','wmv2','mp3']
+    'ASF':        [ 'wma2','wmv2','mp3'],
+    'WebM':       [ 'vorbis','vp8']
 }
 
 class TransmageddonUI:
