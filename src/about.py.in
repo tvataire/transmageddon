@@ -14,7 +14,8 @@ Authors = ["Christian Schaller <uraeus@gnome.org>",
            "Stuart Langridge <sil@kryogenix.org>",
            "Tom Parker <palfrey@tevp.neta>",
            "Arun Raghavan <arunsr@gnome.org>",
-           "Laszlo Pandy <laszlok2@gmail.com>"
+           "Laszlo Pandy <laszlok2@gmail.com>",
+           "Claude Paroz <claude@2xlibre.net>"
            ]
 
 Artists = ["Emily and Liam <liam@fightingcrane.com>"]

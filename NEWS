@@ -1,8 +1,13 @@
-0.15
+0.16 - 21-05-2010
+  Add WebM support
+  fix handling of image based video formats like jpeg/jp2k
+  Misc smaller bugfixes
+
+0.15 - 01-11-2009
   Convert to gtkbuilder
   Add which style checking for graphwiz binary
 
-0.14
+0.14 - 11-10-2009
   Error handling added for when a parser is missing
   Add icon to about dialog
   Make debug graphic system actually work
@@ -10,11 +15,11 @@
   Ensure pipeline doesn't start until plugins downloaded
   Add Google G1 and Sony PSP profiles
 
-0.13
+0.13 - 14-09-2009
   Fix bad bug in presets caused by addition of MPEG PS
   Add drag and drop support
 
-0.12
+0.12 - 12-09-2009
   Add keyboard bindings for UI
   Add support for passthrough mode
   Add easy debug graph generation
@@ -22,25 +27,28 @@
   Improved robustness for lack of XDG directories
   Add ASF support
 
-0.11
+0.11 - 27-06-2009
   Add multipass encoding support
   Add support to flip video in non-preset mode
   Add version check for pygobject
   Add support for handling pixel aspect ratio
   Clean up more profiles
 
-0.10 Profiles and presets:
+0.10 - 20-05-2009 
+   Profiles and presets:
    Adding first stab at profiles and presets support
    i18n support
    Workaround for older pygobject versions (2.17.1 strongly recommended)
    code in place now doing rescaling, black borders etc.
 
-0.9: Mostly UI polish:
+0.9 - 03-05-2009
+   Mostly UI polish:
    Add an about dialog
    Add time estimation before completion
    Use the new pygobject bindings for XDG dir (we now require pygobject 2.17.0)
    Use the new Caps name for Quicktime/MP4/3GPP (require Git Master gst-plugins-bad)
-0.8: Minor fixes: 
+0.8 - 28-04-2009 
+   Minor fixes: 
    correct MPEG4/Div5 so it actually works
    add MXF support
    add DNxHD
