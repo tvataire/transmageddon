@@ -127,6 +127,9 @@ class TransmageddonUI:
        gettext.textdomain("transmageddon")
 
        self.builder = gtk.Builder()
+       # Set the translation domain of builder
+       # please note the call *right after* the builder is created
+       self.builder.set_translation_domain("transmageddon")
 
        #Set the Glade file
        self.uifile = "transmageddon.ui"
