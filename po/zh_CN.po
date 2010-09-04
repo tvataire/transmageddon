@@ -8,16 +8,17 @@ msgstr ""
 "Project-Id-Version: transmageddon master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=transmageddon&component=General\n"
-"POT-Creation-Date: 2009-12-29 11:47+0000\n"
-"PO-Revision-Date: 2010-01-24 14:10+0800\n"
-"Last-Translator: luojie <lililjlj@gmail.com>\n"
+"POT-Creation-Date: 2010-08-19 19:34+0000\n"
+"PO-Revision-Date: 2010-09-05 04:36+0800\n"
+"Last-Translator: YunQiang Su <wzssyqa@gmail.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../src/about.py.in:47
+#: ../src/about.py.in:48
 msgid "translator-credits"
 msgstr ""
 "Zhang Miao <mymzhang@gmail.com>, 2009\n"
@@ -188,126 +189,166 @@ msgstr "调试(_D)"
 
 #: ../src/transmageddon.ui.h:26
 msgid "_Dirac"
-msgstr ""
+msgstr "_Dirac"
 
 #: ../src/transmageddon.ui.h:27
 msgid "_Help"
 msgstr "帮助(_H)"
 
 #: ../src/transmageddon.ui.h:28
+msgid "_On2 VP8"
+msgstr "_On2 VP8"
+
+#: ../src/transmageddon.ui.h:29
 msgid "_Speex"
 msgstr "_Speex"
 
-#: ../src/transmageddon.ui.h:29
+#: ../src/transmageddon.ui.h:30
 msgid "_Transcode"
 msgstr "转码(_T)"
 
-#: ../src/transmageddon.ui.h:30
+#: ../src/transmageddon.ui.h:31
 msgid "_Video passthrough"
 msgstr "视频通路(_V)"
 
-#: ../src/transmageddon.ui.h:31
+#: ../src/transmageddon.ui.h:32
 msgid "_WindowsMediaVideo2"
 msgstr "_WindowsMediaVideo2"
 
-#: ../src/transmageddon.ui.h:32
+#: ../src/transmageddon.ui.h:33
 msgid "_mp3"
 msgstr "_mp3"
 
-#: ../src/transmageddon.ui.h:33
+#: ../src/transmageddon.ui.h:34
 msgid "_xvid"
 msgstr "_xvid"
 
-#: ../src/transmageddon.py:226 ../src/transmageddon.py:490
-#: ../src/transmageddon.py:611 ../src/transmageddon.py:632
-#: ../src/transmageddon.py:640 ../src/transmageddon.py:714
+#: ../src/transmageddon.py:232 ../src/transmageddon.py:499
+#: ../src/transmageddon.py:620 ../src/transmageddon.py:641
+#: ../src/transmageddon.py:649 ../src/transmageddon.py:723
 msgid "Transcoding Progress"
 msgstr "转码进展"
 
 #. Populate the rotatation box
-#: ../src/transmageddon.py:245
+#: ../src/transmageddon.py:251
 msgid "No rotation (default)"
 msgstr "无旋转(默认)"
 
-#: ../src/transmageddon.py:245
+#: ../src/transmageddon.py:251
 msgid "Clockwise 90 degrees"
 msgstr "顺时针 90 度"
 
-#: ../src/transmageddon.py:245
+#: ../src/transmageddon.py:251
 msgid "Rotate 180 degrees"
 msgstr "旋转 180 度"
 
-#: ../src/transmageddon.py:246
+#: ../src/transmageddon.py:252
 msgid "Counterclockwise 90 degrees"
 msgstr "逆时针 90 度"
 
-#: ../src/transmageddon.py:246
+#: ../src/transmageddon.py:252
 msgid "Horizontal flip"
 msgstr "水平翻转"
 
-#: ../src/transmageddon.py:247
+#: ../src/transmageddon.py:253
 msgid "Vertical flip"
 msgstr "垂直翻转"
 
-#: ../src/transmageddon.py:247
+#: ../src/transmageddon.py:253
 msgid "Upper left diagonal flip"
 msgstr "左上对角翻转"
 
-#: ../src/transmageddon.py:248
+#: ../src/transmageddon.py:254
 msgid "Upper right diagnonal flip"
 msgstr "右上对角翻转"
 
-#: ../src/transmageddon.py:353
+#: ../src/transmageddon.py:275
+msgid "No Presets"
+msgstr "未预置"
+
+#: ../src/transmageddon.py:359
 #, python-format
 msgid "%(min)d:%(sec)02d"
 msgstr "%(min)d:%(sec)02d"
 
-#: ../src/transmageddon.py:359
-msgid "Estimated time remaining: "
-msgstr "预计剩余时间："
+#: ../src/transmageddon.py:365
+#, python-format
+msgid "Estimated time remaining: %(time)s"
+msgstr "预计剩余时间：%(time)s"
 
-#: ../src/transmageddon.py:361 ../src/transmageddon.py:393
-#: ../src/transmageddon.py:614
-msgid "Pass "
-msgstr ""
-
-#: ../src/transmageddon.py:378
-msgid "File saved to "
-msgstr "文件保存到"
+#: ../src/transmageddon.py:367
+#, python-format
+msgid "Pass %(count)d time remaining: %(time)s"
+msgstr "完成 %(count)d，剩余时间：%(time)s"
 
 #: ../src/transmageddon.py:387
+#, python-format
+msgid "File saved to %(dir)s"
+msgstr "文件保存到 %(dir)s"
+
+#: ../src/transmageddon.py:396
 msgid "Done Transcoding"
 msgstr "转码完成"
 
-#: ../src/transmageddon.py:395
-msgid "Start next pass"
-msgstr ""
+#: ../src/transmageddon.py:402
+#, python-format
+msgid "Pass %(count)d Complete"
+msgstr "完成 %(count)d"
 
-#: ../src/transmageddon.py:537
+#: ../src/transmageddon.py:404
+msgid "Start next pass"
+msgstr "开始下一个转换"
+
+#: ../src/transmageddon.py:420
+msgid "Video width&#47;height: "
+msgstr "视频宽度&#47;高度："
+
+#: ../src/transmageddon.py:422
+#, python-format
+msgid "Video codec: %(codec)s"
+msgstr "视频编码：%(codec)s"
+
+#: ../src/transmageddon.py:427
+#, python-format
+msgid "Audio channels: %(chans)s"
+msgstr "声道：%(chans)s"
+
+#: ../src/transmageddon.py:428
+#, python-format
+msgid "Audio codec: %(codec)s"
+msgstr "音频编码：%(codec)s"
+
+#: ../src/transmageddon.py:546
 msgid "Plugins not found, choose different codecs."
 msgstr "插件未找到，选择不同编码器。"
 
-#: ../src/transmageddon.py:545
+#: ../src/transmageddon.py:554
 msgid "Codec installation aborted."
 msgstr "编码器安装中止。"
 
-#: ../src/transmageddon.py:553
+#: ../src/transmageddon.py:562
 msgid "Missing plugin installation failed: "
 msgstr "缺少的插件安装失败："
 
-#: ../src/transmageddon.py:609
-msgid "Writing "
-msgstr "写入"
+#: ../src/transmageddon.py:618
+#, python-format
+msgid "Writing %(filename)s"
+msgstr "写入 %(filename)s"
 
-#: ../src/transmageddon.py:716
+#: ../src/transmageddon.py:623
+#, python-format
+msgid "Pass %(count)d Progress"
+msgstr "正在进行 %(count)d"
+
+#: ../src/transmageddon.py:725
 msgid "No audio parser, passthrough not available"
 msgstr "无音频解析器，通路不可用"
 
-#: ../src/transmageddon.py:723
+#: ../src/transmageddon.py:732
 msgid "No video parser, passthrough not available"
 msgstr "无视频解析器，通路不可用"
 
-#: ../src/transmageddon.py:730
+#: ../src/transmageddon.py:739
 msgid "Uknown error"
 msgstr "未知错误"
 
@@ -323,6 +364,9 @@ msgstr "Transmageddon 视频转码工具"
 #: ../transmageddon.desktop.in.in.h:2
 msgid "Video format conversion tool"
 msgstr "视频格式转换工具"
+
+#~ msgid "Writing "
+#~ msgstr "写入"
 
 #~ msgid "_Edit"
 #~ msgstr "编辑(_E)"
