@@ -1,0 +1,366 @@
+# Thai translation of transmageddon.
+# Copyright (C) 2010 Free Software Foundation, Inc.
+# This file is distributed under the same license as the transmageddon package.
+# Anuchit Chalothorn <anuchit@redlinesoft.net>, 2010.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Transmageddon\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=transmageddon&component=General\n"
+"POT-Creation-Date: 2010-11-03 17:33+0000\n"
+"PO-Revision-Date: 2010-11-16 20:53+0700\n"
+"Last-Translator: Anuchit Chalothorn <anuchit@redlinesoft.net>\n"
+"Language-Team: Thai L10N <thai-l10n@googlegroups.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Poedit-Language: Thai\n"
+"X-Poedit-Country: THAILAND\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: ../src/about.py.in:48
+msgid "translator-credits"
+msgstr "Anuchit Chalothorn <anuchit@redlinesoft.net>"
+
+#: ../src/presets.py:77
+#, python-format
+msgid "Not a valid integer or fraction: %(value)s!"
+msgstr "ไม่ใช่จำนวนเต็มหรือเศษส่วนที่ถูกต้อง: %(value)s!"
+
+#: ../src/presets.py:410
+#, python-format
+msgid "Loaded device %(device)s (%(presets)d presets)"
+msgstr "โหลดอุปกรณ์ %(device)s แล้ว (ค่าตั้งต้น %(presets)d ค่า)"
+
+#: ../src/presets.py:477
+#, python-format
+msgid "Fetching %(location)s"
+msgstr "กำลังดึงข้อมูล %(location)s"
+
+#: ../src/presets.py:484
+#, python-format
+msgid "Writing to %(file)s"
+msgstr "กำลังเขียนลงที่ %(file)s"
+
+#: ../src/presets.py:489
+#, python-format
+msgid "There was an error fetching and installing %(location)s: %(error)s"
+msgstr "เกิดข้อผิดพลาดขณะดึงข้อมูลและติดตั้ง %(location)s: %(error)s"
+
+#: ../src/presets.py:506
+msgid "Checking for device preset updates..."
+msgstr "กำลังตรวจสอบข้อมูลล่าสุดของค่าตั้งต้นของอุปกรณ์..."
+
+#: ../src/presets.py:526
+#, python-format
+msgid "Device preset %(name)s is up to date"
+msgstr "ค่าตั้งต้นอุปกรณ์ %(name)s เป็นข้อมูลล่าสุดอยู่แล้ว"
+
+#: ../src/presets.py:530
+#, python-format
+msgid "Found updated device preset %(name)s"
+msgstr "พบข้อมูลใหม่ของค่าตั้งต้นอุปกรณ์ %(name)s"
+
+#: ../src/presets.py:536 ../src/presets.py:549
+#, python-format
+msgid "Error installing preset %(name)s from %(location)s: %(error)s"
+msgstr "เกิดข้อผิดพลาดขณะติดตั้งค่าตั้งต้น %(name)s จาก %(location)s: %(error)s"
+
+#: ../src/presets.py:543
+#, python-format
+msgid "Found new device preset %(name)s"
+msgstr "พบค่าตั้งต้นอุปกรณ์ค่าใหม่ %(name)s"
+
+#: ../src/presets.py:556
+#, python-format
+msgid "Malformed plugin version line %(line)s"
+msgstr "บรรทัดข้อมูลรุ่นของปลั๊กอินผิดรูปแบบ %(line)s"
+
+#: ../src/presets.py:560
+#, python-format
+msgid "There was a problem accessing %(location)spresets.txt!"
+msgstr "เกิดปัญหาขณะเข้าใช้ %(location)spresets.txt!"
+
+#: ../src/presets.py:582
+msgid "All device presets are up to date!"
+msgstr "ค่าตั้งต้นอุปกรณ์ทุกค่าเป็นค่าล่าสุดอยู่แล้ว!"
+
+#: ../src/transmageddon.ui.h:1
+msgid "<b>Choose Audio Codec</b>:"
+msgstr "<b>เลือกตัวแปลงสัญญาณเสียง</b>:"
+
+#: ../src/transmageddon.ui.h:2
+msgid "<b>Choose Input File:</b>"
+msgstr "<b>เลือกแฟ้มข้อมูลเข้า:</b>"
+
+#: ../src/transmageddon.ui.h:3
+msgid "<b>Choose Video Codec</b>:"
+msgstr "<b>เลือกตัวแปลงวีดิทัศน์</b>:"
+
+#: ../src/transmageddon.ui.h:4
+msgid "<b>Output Format:</b>"
+msgstr "<b>รูปแบบข้อมูลออก:</b>"
+
+#: ../src/transmageddon.ui.h:5
+msgid "<b>Presets:</b>"
+msgstr "<b>ค่าตั้งต้น:</b>"
+
+#: ../src/transmageddon.ui.h:6
+msgid "<small>Audio Channels:</small>"
+msgstr "<small>ช่องสัญญาณเสียง:</small>"
+
+#: ../src/transmageddon.ui.h:7
+msgid "<small>Audio codec:</small>"
+msgstr "<small>ตัวแปลงสัญญาณเสียง:</small>"
+
+#: ../src/transmageddon.ui.h:8
+msgid "<small>Rotate the video image if needed</small>"
+msgstr "<small>หมุนภาพวีดิทัศน์ถ้าจำเป็น</small>"
+
+#: ../src/transmageddon.ui.h:9
+msgid "<small>Video codec:</small>"
+msgstr "<small>ตัวแปลงสัญญาณวีดิทัศน์:</small>"
+
+#: ../src/transmageddon.ui.h:10
+msgid "<small>Video height&#47;width:</small>"
+msgstr "<small>วีดิทัศน์ สูง&#47;กว้าง:</small>"
+
+#: ../src/transmageddon.ui.h:11
+msgid "AA_C"
+msgstr "AA_C"
+
+#: ../src/transmageddon.ui.h:12
+msgid "AC_3"
+msgstr "AC_3"
+
+#: ../src/transmageddon.ui.h:13
+msgid "AMR-N_B"
+msgstr "AMR-N_B"
+
+#: ../src/transmageddon.ui.h:14
+msgid "Celt _Ultra"
+msgstr "Celt _Ultra"
+
+#: ../src/transmageddon.ui.h:15
+msgid "F_LAC"
+msgstr "F_LAC"
+
+#: ../src/transmageddon.ui.h:16
+msgid "H263_plus"
+msgstr "H263_plus"
+
+#: ../src/transmageddon.ui.h:17
+msgid "H2_64"
+msgstr "H2_64"
+
+#: ../src/transmageddon.ui.h:18
+msgid "MPEG_2"
+msgstr "MPEG_2"
+
+#: ../src/transmageddon.ui.h:19
+msgid "MPEG_4/DivX5"
+msgstr "MPEG_4/DivX5"
+
+#: ../src/transmageddon.ui.h:20
+msgid "Theo_ra"
+msgstr "Theo_ra"
+
+#: ../src/transmageddon.ui.h:21
+msgid "Transmageddon"
+msgstr "Transmageddon"
+
+#: ../src/transmageddon.ui.h:22
+msgid "V_orbis"
+msgstr "V_orbis"
+
+#: ../src/transmageddon.ui.h:23
+msgid "W_indowsMediaAudio 2"
+msgstr "W_indowsMediaAudio 2"
+
+#: ../src/transmageddon.ui.h:24
+msgid "_Audio passthrough"
+msgstr "ปล่อยสัญญาณเ_สียงผ่าน"
+
+#: ../src/transmageddon.ui.h:25
+msgid "_Debug"
+msgstr "_ดีบั๊ก"
+
+#: ../src/transmageddon.ui.h:26
+msgid "_Dirac"
+msgstr "_Dirac"
+
+#: ../src/transmageddon.ui.h:27
+msgid "_Help"
+msgstr "_วิธีใช้"
+
+#: ../src/transmageddon.ui.h:28
+msgid "_On2 VP8"
+msgstr "_On2 VP8"
+
+#: ../src/transmageddon.ui.h:29
+msgid "_Speex"
+msgstr "_Speex"
+
+#: ../src/transmageddon.ui.h:30
+msgid "_Transcode"
+msgstr "แ_ปลง"
+
+#: ../src/transmageddon.ui.h:31
+msgid "_Video passthrough"
+msgstr "ปล่อยสัญญาณ_วีดิทัศน์ผ่าน"
+
+#: ../src/transmageddon.ui.h:32
+msgid "_WindowsMediaVideo2"
+msgstr "_WindowsMediaVideo2"
+
+#: ../src/transmageddon.ui.h:33
+msgid "_mp3"
+msgstr "_mp3"
+
+#: ../src/transmageddon.ui.h:34
+msgid "_xvid"
+msgstr "_xvid"
+
+#: ../src/transmageddon.py:232 ../src/transmageddon.py:499
+#: ../src/transmageddon.py:620 ../src/transmageddon.py:641
+#: ../src/transmageddon.py:649 ../src/transmageddon.py:723
+msgid "Transcoding Progress"
+msgstr "ความคืบหน้าของการแปลง"
+
+#. Populate the rotatation box
+#: ../src/transmageddon.py:251
+msgid "No rotation (default)"
+msgstr "ไม่หมุน (ค่าปริยาย)"
+
+#: ../src/transmageddon.py:251
+msgid "Clockwise 90 degrees"
+msgstr "ตามเข็มนาฬิกา 90 องศา"
+
+#: ../src/transmageddon.py:251
+msgid "Rotate 180 degrees"
+msgstr "หมุน 180 องศา"
+
+#: ../src/transmageddon.py:252
+msgid "Counterclockwise 90 degrees"
+msgstr "ทวนเข็มนาฬิกา 90 องศา"
+
+#: ../src/transmageddon.py:252
+msgid "Horizontal flip"
+msgstr "พลิกแนวนอน"
+
+#: ../src/transmageddon.py:253
+msgid "Vertical flip"
+msgstr "พลิกแนวตั้ง"
+
+#: ../src/transmageddon.py:253
+msgid "Upper left diagonal flip"
+msgstr "พลิกทแยงมุมจากซ้ายบน"
+
+#: ../src/transmageddon.py:254
+msgid "Upper right diagnonal flip"
+msgstr "พลิกทแยงมุมจากขวาบน"
+
+#: ../src/transmageddon.py:275
+msgid "No Presets"
+msgstr "ไม่ตั้งค่าตั้งต้น"
+
+#: ../src/transmageddon.py:359
+#, python-format
+msgid "%(min)d:%(sec)02d"
+msgstr "%(min)d:%(sec)02d"
+
+#: ../src/transmageddon.py:365
+#, python-format
+msgid "Estimated time remaining: %(time)s"
+msgstr "เวลาที่เหลือโดยประมาณ: %(time)s"
+
+#: ../src/transmageddon.py:367
+#, python-format
+msgid "Pass %(count)d time remaining: %(time)s"
+msgstr "รอบที่ %(count)d เวลาที่เหลือโดยประมาณ: %(time)s"
+
+#: ../src/transmageddon.py:387
+#, python-format
+msgid "File saved to %(dir)s"
+msgstr "บันทึกแฟ้มลงที่ %(dir)s"
+
+#: ../src/transmageddon.py:396
+msgid "Done Transcoding"
+msgstr "แปลงเสร็จเรียบร้อยแล้ว"
+
+#: ../src/transmageddon.py:402
+#, python-format
+msgid "Pass %(count)d Complete"
+msgstr "รอบที่ %(count)d เสร็จสิ้น"
+
+#: ../src/transmageddon.py:404
+msgid "Start next pass"
+msgstr "เริ่มรอบถัดไป"
+
+#: ../src/transmageddon.py:420
+msgid "Video width&#47;height: "
+msgstr "วีดิทัศน์ กว้าง&#47;สูง: "
+
+#: ../src/transmageddon.py:422
+#, python-format
+msgid "Video codec: %(codec)s"
+msgstr "ตัวแปลงสัญญาณวีดิทัศน์: %(codec)s"
+
+#: ../src/transmageddon.py:427
+#, python-format
+msgid "Audio channels: %(chans)s"
+msgstr "ช่องเสียง: %(chans)s"
+
+#: ../src/transmageddon.py:428
+#, python-format
+msgid "Audio codec: %(codec)s"
+msgstr "ตัวแปลงสัญญาณเสียง: %(codec)s"
+
+#: ../src/transmageddon.py:546
+msgid "Plugins not found, choose different codecs."
+msgstr "ไม่พบปลั๊กอิน กรุณาเลือกตัวแปลงสัญญาณอื่น"
+
+#: ../src/transmageddon.py:554
+msgid "Codec installation aborted."
+msgstr "ยกเลิกการติดตั้งตัวแปลงสัญญาณ"
+
+#: ../src/transmageddon.py:562
+msgid "Missing plugin installation failed: "
+msgstr "ติดตั้งปลั๊กอินที่ขาดไม่สำเร็จ: "
+
+#: ../src/transmageddon.py:618
+#, python-format
+msgid "Writing %(filename)s"
+msgstr "กำลังเขียน %(filename)s"
+
+#: ../src/transmageddon.py:623
+#, python-format
+msgid "Pass %(count)d Progress"
+msgstr "ความคืบหน้ารอบที่ %(count)d "
+
+#: ../src/transmageddon.py:725
+msgid "No audio parser, passthrough not available"
+msgstr "ไม่มีตัวแจงอ่านข้อมูลเสียง ไม่สามารถปล่อยสัญญาณผ่านได้"
+
+#: ../src/transmageddon.py:732
+msgid "No video parser, passthrough not available"
+msgstr "ไม่มีตัวแจงอ่านข้อมูลวีดิทัศน์ ไม่สามารถปล่อยสัญญาณผ่านได้"
+
+#: ../src/transmageddon.py:739
+msgid "Uknown error"
+msgstr "ข้อผิดพลาดไม่ทราบสาเหตุ"
+
+#: ../src/utils.py:73
+#, python-format
+msgid "Can't find %(path)s in any known prefix!"
+msgstr "ไม่พบ %(path)s ในพาธใดๆ ที่รู้จัก!"
+
+#: ../transmageddon.desktop.in.in.h:1
+msgid "Transmageddon Video Transcoder"
+msgstr "โปรแกรมแปลงสัญญาณวีดิทัศน์ Transmageddon"
+
+#: ../transmageddon.desktop.in.in.h:2
+msgid "Video format conversion tool"
+msgstr "เครื่องมือแปลงฟอร์แมตวีดิทัศน์"
