@@ -33,7 +33,6 @@ import about
 import presets
 import utils
 import datetime
-import discoverer
 from gettext import gettext as _
 import gettext
 
@@ -130,6 +129,11 @@ class TransmageddonUI:
        # Set the translation domain of builder
        # please note the call *right after* the builder is created
        self.builder.set_translation_domain("transmageddon")
+
+       #initialize discoverer
+       self.discovered = gst.pbutils.Discoverer(5000000000)
+       self.discovered.connect('discovered', self.succeed)
+       self.discovered.start()
 
        #Set the Glade file
        self.uifile = "transmageddon.ui"
@@ -413,40 +417,66 @@ class TransmageddonUI:
    # Use the pygst extension 'discoverer' to get information about the incoming media. Probably need to get codec data in another way.
    # this code is probably more complex than it needs to be currently
  
-   def succeed(self, d):
-       if d.is_video:
-           self.videodata = { 'videowidth' : d.videowidth, 'videoheight' : d.videoheight, 'videotype' : d.inputvideocaps,
-                              'videolenght' : d.videolength, 'fratenum' : d.videorate.num, 'frateden' :  d.videorate.denom }
-           self.videoinformation.set_markup(''.join(('<small>', _('Video width&#47;height: '), str(self.videodata['videowidth']), 
-                                            "x", str(self.videodata['videoheight']), '</small>')))
-           self.videocodec.set_markup(''.join(('<small>', _('Video codec: %(codec)s') % {'codec':
-                                       str(gst.pbutils.get_codec_description(self.videodata['videotype']))},
+   def succeed(self, discoverer, info, error):
+       print 'INFO' + str(info)
+       print 'ERROR '  + str(error)
+       print 'DISCOVERER ' + str(discoverer)
+       result=gst.pbutils.DiscovererInfo.get_result(info)
+       streaminfo=info.get_stream_info()
+       print streaminfo
+       container = streaminfo.get_caps()
+       print container
+       seekbool = info.get_seekable()
+       print seekbool
+
+       audiostreamcounter=-1
+       audiostreams=[]
+       for i in info.get_stream_list():
+           audiostreamcounter=audiostreamcounter+1
+           if isinstance(i, gst.pbutils.DiscovererAudioInfo):
+               audiocaps=i.get_caps()
+               audiostreams.append(gst.pbutils.get_codec_description(audiocaps))
+               audiotags=i.get_tags()
+               audiochannels=i.get_channels()
+               print audiochannels
+#               self.audiodata = { 'audiochannels' : d.audiochannels, 'samplerate' : d.audiorate, 'audiotype' : d.inputaudiocaps }
+               self.audioinformation.set_markup(''.join(('<small>', 'Audio channels: ', str(audiochannels) ,'</small>')))
+               self.audiocodec.set_markup(''.join(('<small>','Audio codec: ', str(gst.pbutils.get_codec_description(audiocaps)),'</small>')))
+
+           if isinstance(i, gst.pbutils.DiscovererVideoInfo):
+               videocaps=i.get_caps()
+               videotags=i.get_tags()
+               interlacedbool = i.is_interlaced()
+               if interlacedbool is True:
+                   self.interlaced ="Yes"
+               else:
+                   self.interlaced="No"
+               videoheight=i.get_height()
+               videowidth=i.get_width()
+
+#           self.videodata = { 'videowidth' : d.videowidth, 'videoheight' : d.videoheight, 'videotype' : d.inputvideocaps,
+#                              'videolenght' : d.videolength, 'fratenum' : d.videorate.num, 'frateden' :  d.videorate.denom }
+               self.videoinformation.set_markup(''.join(('<small>', 'Video width&#47;height: ', str(videowidth),
+                                            "x", str(videoheight), '</small>')))
+               self.videocodec.set_markup(''.join(('<small>', 'Video codec: ',
+                                       str(gst.pbutils.get_codec_description(videocaps)),
                                       '</small>')))
-       if d.is_audio:
-           self.audiodata = { 'audiochannels' : d.audiochannels, 'samplerate' : d.audiorate, 'audiotype' : d.inputaudiocaps }
-           self.audioinformation.set_markup(''.join(('<small>', _('Audio channels: %(chans)s') % {'chans': str(self.audiodata['audiochannels'])}, '</small>')))
-           self.audiocodec.set_markup(''.join(('<small>', _('Audio codec: %(codec)s') % {'codec':
-                                      str(gst.pbutils.get_codec_description(self.audiodata['audiotype']))}, '</small>')))
-       self.discover_done=True
-       if self.waiting_for_signal == True:
-           if self.containertoggle == True:
-               if self.container != False:
-                   self.check_for_passthrough(self.container)
-           else:
-               self.check_for_elements()
-               if self.missingtoggle==False:
-                   self._start_transcoding()
-       if self.container != False:
-           self.check_for_passthrough(self.container)
+#
+
+#       self.discover_done=True
+#       if self.waiting_for_signal == True:
+#           if self.containertoggle == True:
+#               if self.container != False:
+#                   self.check_for_passthrough(self.container)
+#           else:
+#               self.check_for_elements()
+#               if self.missingtoggle==False:
+#                   self._start_transcoding()
+#       if self.container != False:
+#           self.check_for_passthrough(self.container)
 
    def discover(self, path):
-       self.videodata ={}
-       def discovered(d, is_media):
-           if is_media:
-               self.succeed(d)
-       d = discoverer.Discoverer(path)
-       d.connect('discovered', discovered)
-       d.discover()
+       self.discovered.discover_uri_async("file://"+path)
 
    def mediacheck(self, FileChosen):
        uri = urlparse (FileChosen)
