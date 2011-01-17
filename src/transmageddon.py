@@ -418,33 +418,29 @@ class TransmageddonUI:
    # this code is probably more complex than it needs to be currently
  
    def succeed(self, discoverer, info, error):
-       print 'INFO' + str(info)
-       print 'ERROR '  + str(error)
-       print 'DISCOVERER ' + str(discoverer)
        result=gst.pbutils.DiscovererInfo.get_result(info)
        streaminfo=info.get_stream_info()
-       print streaminfo
        container = streaminfo.get_caps()
-       print container
        seekbool = info.get_seekable()
-       print seekbool
+       clipduration=info.get_duration()
 
        audiostreamcounter=-1
        audiostreams=[]
        for i in info.get_stream_list():
            audiostreamcounter=audiostreamcounter+1
            if isinstance(i, gst.pbutils.DiscovererAudioInfo):
-               audiocaps=i.get_caps()
-               audiostreams.append(gst.pbutils.get_codec_description(audiocaps))
+               inputaudiocaps=i.get_caps()
+               audiostreams.append(gst.pbutils.get_codec_description(inputaudiocaps))
                audiotags=i.get_tags()
                audiochannels=i.get_channels()
-               print audiochannels
-#               self.audiodata = { 'audiochannels' : d.audiochannels, 'samplerate' : d.audiorate, 'audiotype' : d.inputaudiocaps }
+               samplerate=i.get_sample_rate()
+
+               self.audiodata = { 'audiochannels' : audiochannels, 'samplerate' : samplerate, 'audiotype' : inputaudiocaps, 'clipduration' : clipduration }
                self.audioinformation.set_markup(''.join(('<small>', 'Audio channels: ', str(audiochannels) ,'</small>')))
-               self.audiocodec.set_markup(''.join(('<small>','Audio codec: ', str(gst.pbutils.get_codec_description(audiocaps)),'</small>')))
+               self.audiocodec.set_markup(''.join(('<small>','Audio codec: ', str(gst.pbutils.get_codec_description(inputaudiocaps)),'</small>')))
 
            if isinstance(i, gst.pbutils.DiscovererVideoInfo):
-               videocaps=i.get_caps()
+               inputvideocaps=i.get_caps()
                videotags=i.get_tags()
                interlacedbool = i.is_interlaced()
                if interlacedbool is True:
@@ -453,27 +449,29 @@ class TransmageddonUI:
                    self.interlaced="No"
                videoheight=i.get_height()
                videowidth=i.get_width()
+               videodenom=i.get_framerate_denom()
+               videonum=i.get_framerate_num()
 
-#           self.videodata = { 'videowidth' : d.videowidth, 'videoheight' : d.videoheight, 'videotype' : d.inputvideocaps,
-#                              'videolenght' : d.videolength, 'fratenum' : d.videorate.num, 'frateden' :  d.videorate.denom }
+               self.videodata = { 'videowidth' : videowidth, 'videoheight' : videoheight, 'videotype' : inputvideocaps,
+                              'fratenum' : videonum, 'frateden' :  videodenom }
                self.videoinformation.set_markup(''.join(('<small>', 'Video width&#47;height: ', str(videowidth),
                                             "x", str(videoheight), '</small>')))
                self.videocodec.set_markup(''.join(('<small>', 'Video codec: ',
-                                       str(gst.pbutils.get_codec_description(videocaps)),
+                                       str(gst.pbutils.get_codec_description(inputvideocaps)),
                                       '</small>')))
 #
 
-#       self.discover_done=True
-#       if self.waiting_for_signal == True:
-#           if self.containertoggle == True:
-#               if self.container != False:
-#                   self.check_for_passthrough(self.container)
-#           else:
-#               self.check_for_elements()
-#               if self.missingtoggle==False:
-#                   self._start_transcoding()
-#       if self.container != False:
-#           self.check_for_passthrough(self.container)
+           self.discover_done=True
+           if self.waiting_for_signal == True:
+               if self.containertoggle == True:
+                   if self.container != False:
+                       self.check_for_passthrough(self.container)
+               else:
+                   self.check_for_elements()
+                   if self.missingtoggle==False:
+                       self._start_transcoding()
+           if self.container != False:
+               self.check_for_passthrough(self.container)
 
    def discover(self, path):
        self.discovered.discover_uri_async("file://"+path)
@@ -500,11 +498,11 @@ class TransmageddonUI:
                if (x.direction == gst.PAD_SINK):
                    sourcecaps = x.get_caps()
                    if videointersect == ("EMPTY"):
-                       videointersect = sourcecaps.intersect(gst.caps_from_string(self.videodata['videotype']))
+                       videointersect = sourcecaps.intersect(self.videodata['videotype'])
                        if videointersect != ("EMPTY"):
                            self.vsourcecaps = videointersect
                    if audiointersect == ("EMPTY"):
-                       audiointersect = sourcecaps.intersect(gst.caps_from_string(self.audiodata['audiotype']))
+                       audiointersect = sourcecaps.intersect(self.audiodata['audiotype'])
                        if audiointersect != ("EMPTY"):
                            self.asourcecaps = audiointersect
            if videointersect == ("EMPTY"):
