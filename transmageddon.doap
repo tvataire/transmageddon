@@ -13,7 +13,7 @@
   <maintainer>
     <foaf:Person>
       <foaf:name>Christian F.K. Schaller</foaf:name>
-      <gnome:userid>Uraeus</gnome:userid>
+      <gnome:userid>uraeus</gnome:userid>
     </foaf:Person>
   </maintainer>
 </Project>
