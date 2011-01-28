@@ -6,7 +6,7 @@
 # License as published by the Free Software Foundation; either
 # version 2 of the License, or (at your option) any later version.
 #
-# This library is distributed in the hope that it will be useful,
+# This librarmy is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # Library General Public License for more details.
@@ -144,6 +144,12 @@ class Transcoder(gobject.GObject):
 
            self.pipeline.add(self.containermuxer)
 
+           # Add a tag setting Transmageddon as the application used for creating file if supported by format
+	   GstTagSetterType = gobject.type_from_name("GstTagSetter")
+	   if GstTagSetterType in gobject.type_interfaces(self.containermuxer):
+	       taglist=gst.TagList()
+	       taglist[gst.TAG_APPLICATION_NAME] = "Transmageddon"
+               self.containermuxer.merge_tags(taglist, gst.TAG_MERGE_APPEND)
 
            self.transcodefileoutput = gst.element_factory_make("filesink", "transcodefileoutput")
            self.transcodefileoutput.set_property("location", (DESTDIR+"/"+self.outputfilename))

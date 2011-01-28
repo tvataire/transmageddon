@@ -1,8 +1,5 @@
 This list is completely unordered. Nothing about the ordering in this list should cause anyone to make any kind of assumptions about priorties.
 
-* AVC HD support.
-  Variation of MPEG TS with H264 and AC3 audio.
-
 * Support non-muxed audio codec 
   Allow the outputting of non-muxed audio codecs (mp3 mostly). Not sure we really
   want this as it would add more options to the UI to do something which I doubt 
@@ -61,5 +58,8 @@ This list is completely unordered. Nothing about the ordering in this list shoul
   iii) start transcode once dvb-daemon says recording is done
 
 * Add black borders based on aspect-ratio
+
+* AVC HD support.
+  Variation of MPEG TS with H264 and AC3 audio
 
 * Support multiple audio tracks. Probably want to wait for new discoverer for that.
