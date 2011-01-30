@@ -87,7 +87,7 @@ supported_audio_codecs = [
 ]
 
 supported_video_codecs = [
-       "vpass",
+     # "vpass",
        "theora",
        "dirac",
        "h264",
@@ -102,20 +102,20 @@ supported_video_codecs = [
 # Maps containers to the codecs they support.  The first two elements are
 # "special" in that they are the default audio/video selections for that
 # container.
-supported_container_map = {
-    'Ogg':        [ 'vorbis', 'theora', 'flac', 'speex', 'celt', 'dirac', 'vp8' ],
-    'MXF':        [ 'mp3', 'h264', 'aac', 'ac3', 'mpeg2', 'mpeg4' ],
-    'Matroska':   [ 'flac', 'dirac', 'aac', 'ac3', 'theora', 'mp3', 'h264', 'vp8',
-    'mpeg4', 'mpeg2', 'xvid', 'vorbis', 'h263p' ],
-    'AVI':        [ 'mp3', 'h264', 'dirac', 'ac3', 'mpeg2', 'mpeg4', 'xvid','wma2','wmv2', 'vp8' ],
-    'Quicktime':  [ 'aac', 'h264', 'ac3', 'dirac', 'mp3', 'mpeg2', 'mpeg4', 'vp8' ],
-    'MPEG4':      [ 'aac', 'h264', 'mp3', 'mpeg2', 'mpeg4' ],
-    '3GPP':       [ 'aac', 'h264', 'mp3', 'mpeg2', 'mpeg4','amrnb','h263p' ],
-    'MPEG PS':    [ 'mp3', 'mpeg2', 'ac3', 'h264', 'aac', 'mpeg4' ],
-    'MPEG TS':    [ 'mp3', 'h264', 'ac3', 'mpeg2', 'aac', 'mpeg4', 'dirac' ],
-    'FLV':        [ 'mp3', 'h264' ],
-    'ASF':        [ 'wma2','wmv2','mp3'],
-    'WebM':       [ 'vorbis','vp8']
+supported_video_container_map = {
+    'Ogg':        [ 'Theora', 'Dirac', 'On2 vp8' ],
+    'MXF':        [ 'H264', 'MPEG2', 'MPEG4' ],
+    'Matroska':   [ 'Dirac', 'Theora', 'H264', 'On2 vp8',
+    'MPEG4', 'MPEG2', 'xvid', 'H263+' ],
+    'AVI':        [ 'H264', 'Dirac', 'MPEG2', 'MPEG4', 'xvid','Windows Media Video 2', 'On2 vp8' ],
+    'Quicktime':  [ 'H264', 'Dirac', 'MPEG2', 'MPEG4', 'On2 vp8' ],
+    'MPEG4':      [ 'H264', 'MPEG2', 'MPEG4' ],
+    '3GPP':       [ 'H264', 'MPEG2', 'MPEG4', 'H263+' ],
+    'MPEG PS':    [ 'MPEG2','H264', 'MPEG4' ],
+    'MPEG TS':    [ 'H264', 'MPEG2', 'MPEG4', 'Dirac' ],
+    'FLV':        [ 'H264' ],
+    'ASF':        [ 'Windows Media Video 2' ],
+    'WebM':       [ 'On2 vp8']
 }
 
 supported_audio_container_map = {
@@ -155,13 +155,14 @@ class TransmageddonUI:
        self.uifile = "transmageddon.ui"
        self.builder.add_from_file(self.uifile)
        self.builder.connect_signals(self) # Initialize User Interface
-       self.rows=[]
-       def new_vbox(audiostreams,extra = []):
-           audiostreams=1
+       self.audiorows=[] # set up the lists for holding the codec combobuttons
+       self.videorows=[]
+       def dynamic_comboboxes_audio(streams,extra = []):
+           streams=1
            vbox = gtk.VBox()
 
            x=-1
-           while x < (audiostreams-1):
+           while x < (streams-1):
                x=x+1
                # print "x is " + str(x)
                store = gtk.ListStore(gobject.TYPE_STRING, *extra)
@@ -169,8 +170,25 @@ class TransmageddonUI:
                text_cell = gtk.CellRendererText()
                combo.pack_start(text_cell, True)
                combo.add_attribute(text_cell, 'text', 0)
-               self.rows.append(combo)
-               vbox.add(self.rows[x])
+               self.audiorows.append(combo)
+               vbox.add(self.audiorows[x])
+           return vbox
+
+       def dynamic_comboboxes_video(streams,extra = []):
+           streams=1
+           vbox = gtk.VBox()
+
+           x=-1
+           while x < (streams-1):
+               x=x+1
+               # print "x is " + str(x)
+               store = gtk.ListStore(gobject.TYPE_STRING, *extra)
+               combo = gtk.ComboBox(store)
+               text_cell = gtk.CellRendererText()
+               combo.pack_start(text_cell, True)
+               combo.add_attribute(text_cell, 'text', 0)
+               self.videorows.append(combo)
+               vbox.add(self.videorows[x])
            return vbox
 
        #Define functionality of our button and main window
@@ -180,28 +198,21 @@ class TransmageddonUI:
        self.audioinformation = self.builder.get_object("audioinformation")
        self.videocodec = self.builder.get_object("videocodec")
        self.audiocodec = self.builder.get_object("audiocodec")
-       self.vbox = new_vbox([gobject.TYPE_PYOBJECT])
+       self.audiobox = dynamic_comboboxes_audio([gobject.TYPE_PYOBJECT])
+       self.videobox = dynamic_comboboxes_video([gobject.TYPE_PYOBJECT])
        self.CodecBox = self.builder.get_object("CodecBox")
        self.presetchoice = self.builder.get_object("presetchoice")
        self.containerchoice = self.builder.get_object("containerchoice")
        self.rotationchoice = self.builder.get_object("rotationchoice")
-       self.codec_buttons = dict()
-       # for c in supported_audio_codecs:
-       #    self.codec_buttons[c] = self.builder.get_object(c+"button")
-       #    self.codec_buttons[c].connect("clicked",
-       #                                  self.on_audiobutton_pressed, c)
-       for c in supported_video_codecs:
-           self.codec_buttons[c] = self.builder.get_object(c+"button")
-           self.codec_buttons[c].connect("clicked",
-                                         self.on_videobutton_pressed, c)
-
        self.transcodebutton = self.builder.get_object("transcodebutton")
        self.ProgressBar = self.builder.get_object("ProgressBar")
        self.cancelbutton = self.builder.get_object("cancelbutton")
        self.StatusBar = self.builder.get_object("StatusBar")
-       self.CodecBox.attach(self.vbox, 0, 1, 1, 2, yoptions = gtk.FILL)
+       self.CodecBox.attach(self.audiobox, 0, 1, 1, 2, yoptions = gtk.FILL)
+       self.CodecBox.attach(self.videobox, 2, 3, 1, 2, yoptions = gtk.FILL)
        self.CodecBox.show_all()
-       self.rows[0].connect("changed", self.on_audiocodec_changed)
+       self.audiorows[0].connect("changed", self.on_audiocodec_changed)
+       self.videorows[0].connect("changed", self.on_videocodec_changed)
        self.TopWindow.connect("destroy", gtk.main_quit)
        def get_file_path_from_dnd_dropped_uri(self, uri):
            # get the path to file
@@ -277,6 +288,7 @@ class TransmageddonUI:
        self.discover_done=False # lets us know that discover is finished
        self.missingtoggle=False
        self.oldaudiocodec={}
+       self.oldvideocodec={}
 
        self.p_duration = gst.CLOCK_TIME_NONE
        self.p_time = gst.FORMAT_TIME
@@ -353,7 +365,7 @@ class TransmageddonUI:
             print "failed to set container format"
        # print "preset.acodec.name is " + str(preset.acodec.name)
        self.AudioCodec=self.reverse_lookup(str(preset.acodec.name))
-       self.codec_buttons[self.reverse_lookup(str(preset.vcodec.name))].set_active(True)
+       self.VideoCodec=self.reverse_lookup(str(preset.vcodec.name))
 
        # Check for number of passes
        passes = preset.vcodec.passes
@@ -436,7 +448,8 @@ class TransmageddonUI:
            self.start_time = False
            self.multipass = False
            self.passcounter = False
-           self.audiopasstoggle=True
+           self.audiopasstoggle=False
+           self.videopasstoggle=False
        else:
            self.StatusBar.push(context_id, (_("Pass %(count)d Complete") % {'count': self.passcounter}))
            self.start_time = False
@@ -540,12 +553,11 @@ class TransmageddonUI:
                        audiointersect = sourcecaps.intersect(self.audiodata['audiotype'])
                        if audiointersect != ("EMPTY"):
                            self.asourcecaps = audiointersect
-           if videointersect == ("EMPTY"):
-               self.codec_buttons["vpass"].set_sensitive(False)
-           else:
-               self.codec_buttons["vpass"].set_sensitive(True)
+           if videointersect != ("EMPTY"):
+               self.videorows[0].append_text("Video passthrough")
+               self.oldvideocodec.append("Video passthrough")
            if audiointersect != ("EMPTY"):
-               self.rows[0].append_text("Audio passthrough")
+               self.audiorows[0].append_text("Audio passthrough")
                self.oldaudiocodec.append("Audio passthrough")
 
    # define the behaviour of the other buttons
@@ -631,10 +643,9 @@ class TransmageddonUI:
            audiostatus = codecfinder.get_audio_encoder_element(codecfinder.codecmap[self.AudioCodec])
        else:
            audiostatus = "Audio passthrough"
-       if self.VideoCodec != "vpass":
+       if self.VideoCodec != "Video passthrough":
            videostatus = codecfinder.get_video_encoder_element(codecfinder.codecmap[self.VideoCodec])
-       else:
-           videostatus= "vpass"
+
 
        if not containerstatus or not videostatus or not audiostatus:
            self.missingtoggle=True
@@ -711,24 +722,25 @@ class TransmageddonUI:
        self.ProgressBar.set_fraction(0.0)
        self.ProgressBar.set_text(_("Transcoding Progress"))
        self.container = self.builder.get_object ("containerchoice").get_active_text ()
-       codecs = supported_container_map[self.container]
-       self.AudioCodec = codecs[0]
-       self.VideoCodec = codecs[1]
        self.transcodebutton.set_sensitive(True)
-       # for b in self.codec_buttons.values():
-       #    b.set_sensitive(False)
-       #for c in codecs:
-       #    self.codec_buttons[c].set_sensitive(True)
        audio_codecs = supported_audio_container_map[self.container]
        for c in self.oldaudiocodec:
-           self.rows[0].remove_text(0)
+           self.audiorows[0].remove_text(0)
        for c in audio_codecs:
-           self.rows[0].append_text(c)
-           self.rows[0].set_sensitive(True)
-           self.rows[0].set_active(0)
+           self.audiorows[0].append_text(c)
+           self.audiorows[0].set_sensitive(True)
+           self.audiorows[0].set_active(0)
        self.oldaudiocodec=audio_codecs
-       # self.codec_buttons[self.AudioCodec].set_active(True)
-       self.codec_buttons[self.VideoCodec].set_active(True)
+
+       video_codecs = supported_video_container_map[self.container]
+       for c in self.oldvideocodec:
+           self.videorows[0].remove_text(0)
+       for c in video_codecs:
+           self.videorows[0].append_text(c)
+           self.videorows[0].set_sensitive(True)
+           self.videorows[0].set_active(0)
+       self.oldvideocodec=video_codecs
+
        if self.discover_done == True:
            self.check_for_passthrough(self.container)
 
@@ -760,19 +772,20 @@ class TransmageddonUI:
        self.rotationvalue = self.rotationchoice.get_active()
 
    def on_audiocodec_changed(self, widget):
-       self.AudioCodec = self.rows[0].get_active_text ()
-       # print "self.AudioCodec is " + str(self.AudioCodec)
+       self.AudioCodec = self.audiorows[0].get_active_text()
        if self.AudioCodec == "Audio passthrough":
            self.audiopasstoggle=True
 
-   #def on_audiobutton_pressed(self, widget, codec):
-   #    self.AudioCodec = codec
-   #    if self.AudioCodec == "apass":
-   #        self.audiopasstoggle=True
+
+   def on_videocodec_changed(self, widget):
+       self.VideoCodec = self.videorows[0].get_active_text()
+       if self.VideoCodec == "Video passthrough":
+           self.videopasstoggle=True
+
 
    def on_videobutton_pressed(self, widget, codec):
        self.VideoCodec = codec
-       if self.VideoCodec == "vpass":
+       if self.VideoCodec == "Video passthrough":
            self.videopasstoggle=True
            self.rotationchoice.set_sensitive(False)
            self.rotationchoice.set_active(0)
@@ -800,17 +813,13 @@ class TransmageddonUI:
            self.ProgressBar.set_text(_("Transcoding Progress"))
            if error_string=="noaudioparser":
                error_message = _("No audio parser, passthrough not available")
-               # self.codec_buttons["apass"].set_sensitive(False)
                codecs = supported_container_map[self.container]
                self.AudioCodec = codecs[0]
-               self.codec_buttons[self.AudioCodec].set_active(True)
                self.audiopasstoggle = False
            elif error_string=="novideoparser":
                error_message= _("No video parser, passthrough not available")
-               self.codec_buttons["vpass"].set_sensitive(False)
                codecs = supported_container_map[self.container]
                self.VideoCodec = codecs[1]
-               self.codec_buttons[self.VideoCodec].set_active(True)
                self.videopasstoggle = False
            else:
                error_message=_("Uknown error")
