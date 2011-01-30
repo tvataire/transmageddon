@@ -1,6 +1,8 @@
 0.17
   Port to new plugins-base discoverer
-  Add setting of Transmageddon as encoding application name if supported
+  Add tag setting of Transmageddon as encoding application name if supported
+  Replace radiobutton lists with a combobox instead
+  Misc robusnessfixes for cancelling transcodings
 
 0.16 - 21-05-2010
   Add WebM support

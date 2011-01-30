@@ -199,7 +199,7 @@ class TransmageddonUI:
        self.ProgressBar = self.builder.get_object("ProgressBar")
        self.cancelbutton = self.builder.get_object("cancelbutton")
        self.StatusBar = self.builder.get_object("StatusBar")
-       self.CodecBox.attach(self.vbox, 0, 1, 1, 3, yoptions = gtk.FILL)
+       self.CodecBox.attach(self.vbox, 0, 1, 1, 2, yoptions = gtk.FILL)
        self.CodecBox.show_all()
        self.rows[0].connect("changed", self.on_audiocodec_changed)
        self.TopWindow.connect("destroy", gtk.main_quit)
@@ -352,7 +352,7 @@ class TransmageddonUI:
        else:
             print "failed to set container format"
        # print "preset.acodec.name is " + str(preset.acodec.name)
-       self.codec_buttons[self.reverse_lookup(str(preset.acodec.name))].set_active(True)
+       self.AudioCodec=self.reverse_lookup(str(preset.acodec.name))
        self.codec_buttons[self.reverse_lookup(str(preset.vcodec.name))].set_active(True)
 
        # Check for number of passes
@@ -436,6 +436,7 @@ class TransmageddonUI:
            self.start_time = False
            self.multipass = False
            self.passcounter = False
+           self.audiopasstoggle=True
        else:
            self.StatusBar.push(context_id, (_("Pass %(count)d Complete") % {'count': self.passcounter}))
            self.start_time = False
@@ -543,11 +544,7 @@ class TransmageddonUI:
                self.codec_buttons["vpass"].set_sensitive(False)
            else:
                self.codec_buttons["vpass"].set_sensitive(True)
-           if audiointersect == ("EMPTY"):
-               # self.codec_buttons["apass"].set_sensitive(False)
-               print "no passthrough"
-           else:
-               # self.codec_buttons["apass"].set_sensitive(True)
+           if audiointersect != ("EMPTY"):
                self.rows[0].append_text("Audio passthrough")
                self.oldaudiocodec.append("Audio passthrough")
 
@@ -706,6 +703,7 @@ class TransmageddonUI:
        self.ProgressBar.set_text(_("Transcoding Progress"))
        context_id = self.StatusBar.get_context_id("EOS")
        self.StatusBar.pop(context_id)
+       self.audiopasstoggle=False
 
    def on_containerchoice_changed(self, widget):
        self.CodecBox.set_sensitive(True)

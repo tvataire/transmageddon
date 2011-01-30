@@ -839,13 +839,7 @@
                   <placeholder/>
                 </child>
                 <child>
-                  <object class="GtkLabel" id="label3">
-                    <property name="visible">True</property>
-                  </object>
-                  <packing>
-                    <property name="top_attach">1</property>
-                    <property name="bottom_attach">2</property>
-                  </packing>
+                  <placeholder/>
                 </child>
               </object>
               <packing>
