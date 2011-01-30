@@ -432,15 +432,6 @@
                 <property name="n_rows">12</property>
                 <property name="n_columns">3</property>
                 <child>
-                  <object class="GtkLabel" id="label3">
-                    <property name="visible">True</property>
-                  </object>
-                  <packing>
-                    <property name="top_attach">11</property>
-                    <property name="bottom_attach">12</property>
-                  </packing>
-                </child>
-                <child>
                   <object class="GtkLabel" id="label2">
                     <property name="visible">True</property>
                   </object>
@@ -607,74 +598,6 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkRadioButton" id="celtbutton">
-                    <property name="label" translatable="yes">Celt _Ultra</property>
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">False</property>
-                    <property name="use_underline">True</property>
-                    <property name="active">True</property>
-                    <property name="draw_indicator">True</property>
-                    <property name="group">vorbisbutton</property>
-                  </object>
-                  <packing>
-                    <property name="top_attach">8</property>
-                    <property name="bottom_attach">9</property>
-                    <property name="y_padding">3</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkRadioButton" id="speexbutton">
-                    <property name="label" translatable="yes">_Speex</property>
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">False</property>
-                    <property name="use_underline">True</property>
-                    <property name="active">True</property>
-                    <property name="draw_indicator">True</property>
-                    <property name="group">vorbisbutton</property>
-                  </object>
-                  <packing>
-                    <property name="top_attach">7</property>
-                    <property name="bottom_attach">8</property>
-                    <property name="y_padding">3</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkRadioButton" id="ac3button">
-                    <property name="label" translatable="yes">AC_3</property>
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">False</property>
-                    <property name="use_underline">True</property>
-                    <property name="active">True</property>
-                    <property name="draw_indicator">True</property>
-                    <property name="group">vorbisbutton</property>
-                  </object>
-                  <packing>
-                    <property name="top_attach">6</property>
-                    <property name="bottom_attach">7</property>
-                    <property name="y_padding">3</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkRadioButton" id="aacbutton">
-                    <property name="label" translatable="yes">AA_C</property>
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">False</property>
-                    <property name="use_underline">True</property>
-                    <property name="active">True</property>
-                    <property name="draw_indicator">True</property>
-                    <property name="group">vorbisbutton</property>
-                  </object>
-                  <packing>
-                    <property name="top_attach">5</property>
-                    <property name="bottom_attach">6</property>
-                    <property name="y_padding">3</property>
-                  </packing>
-                </child>
-                <child>
                   <object class="GtkRadioButton" id="h264button">
                     <property name="label" translatable="yes">H2_64</property>
                     <property name="visible">True</property>
@@ -688,23 +611,6 @@
                   <packing>
                     <property name="left_attach">2</property>
                     <property name="right_attach">3</property>
-                    <property name="top_attach">4</property>
-                    <property name="bottom_attach">5</property>
-                    <property name="y_padding">3</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkRadioButton" id="mp3button">
-                    <property name="label" translatable="yes">_mp3</property>
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">False</property>
-                    <property name="use_underline">True</property>
-                    <property name="active">True</property>
-                    <property name="draw_indicator">True</property>
-                    <property name="group">vorbisbutton</property>
-                  </object>
-                  <packing>
                     <property name="top_attach">4</property>
                     <property name="bottom_attach">5</property>
                     <property name="y_padding">3</property>
@@ -730,23 +636,6 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkRadioButton" id="flacbutton">
-                    <property name="label" translatable="yes">F_LAC</property>
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">False</property>
-                    <property name="use_underline">True</property>
-                    <property name="active">True</property>
-                    <property name="draw_indicator">True</property>
-                    <property name="group">vorbisbutton</property>
-                  </object>
-                  <packing>
-                    <property name="top_attach">3</property>
-                    <property name="bottom_attach">4</property>
-                    <property name="y_padding">3</property>
-                  </packing>
-                </child>
-                <child>
                   <object class="GtkRadioButton" id="theorabutton">
                     <property name="label" translatable="yes">Theo_ra</property>
                     <property name="visible">True</property>
@@ -759,22 +648,6 @@
                   <packing>
                     <property name="left_attach">2</property>
                     <property name="right_attach">3</property>
-                    <property name="top_attach">2</property>
-                    <property name="bottom_attach">3</property>
-                    <property name="y_padding">3</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkRadioButton" id="vorbisbutton">
-                    <property name="label" translatable="yes">V_orbis</property>
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">False</property>
-                    <property name="use_underline">True</property>
-                    <property name="active">True</property>
-                    <property name="draw_indicator">True</property>
-                  </object>
-                  <packing>
                     <property name="top_attach">2</property>
                     <property name="bottom_attach">3</property>
                     <property name="y_padding">3</property>
@@ -832,23 +705,6 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkRadioButton" id="amrnbbutton">
-                    <property name="label" translatable="yes">AMR-N_B</property>
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">False</property>
-                    <property name="relief">none</property>
-                    <property name="use_underline">True</property>
-                    <property name="draw_indicator">True</property>
-                    <property name="group">vorbisbutton</property>
-                  </object>
-                  <packing>
-                    <property name="top_attach">9</property>
-                    <property name="bottom_attach">10</property>
-                    <property name="y_padding">3</property>
-                  </packing>
-                </child>
-                <child>
                   <object class="GtkRadioButton" id="h263pbutton">
                     <property name="label" translatable="yes">H263_plus</property>
                     <property name="visible">True</property>
@@ -864,22 +720,6 @@
                     <property name="right_attach">3</property>
                     <property name="top_attach">8</property>
                     <property name="bottom_attach">9</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkRadioButton" id="apassbutton">
-                    <property name="label" translatable="yes">_Audio passthrough</property>
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">False</property>
-                    <property name="use_underline">True</property>
-                    <property name="active">True</property>
-                    <property name="draw_indicator">True</property>
-                    <property name="group">vorbisbutton</property>
-                  </object>
-                  <packing>
-                    <property name="top_attach">1</property>
-                    <property name="bottom_attach">2</property>
                   </packing>
                 </child>
                 <child>
@@ -911,23 +751,6 @@
                     <property name="top_attach">1</property>
                     <property name="bottom_attach">2</property>
                     <property name="x_options"></property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkRadioButton" id="wma2button">
-                    <property name="label" translatable="yes">W_indowsMediaAudio 2</property>
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">False</property>
-                    <property name="relief">none</property>
-                    <property name="use_underline">True</property>
-                    <property name="draw_indicator">True</property>
-                    <property name="group">vorbisbutton</property>
-                  </object>
-                  <packing>
-                    <property name="top_attach">10</property>
-                    <property name="bottom_attach">11</property>
-                    <property name="y_padding">3</property>
                   </packing>
                 </child>
                 <child>
@@ -977,6 +800,51 @@
                     <property name="right_attach">3</property>
                     <property name="top_attach">10</property>
                     <property name="bottom_attach">11</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="label1">
+                    <property name="visible">True</property>
+                  </object>
+                  <packing>
+                    <property name="top_attach">11</property>
+                    <property name="bottom_attach">12</property>
+                  </packing>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="label3">
+                    <property name="visible">True</property>
+                  </object>
+                  <packing>
+                    <property name="top_attach">1</property>
+                    <property name="bottom_attach">2</property>
                   </packing>
                 </child>
               </object>

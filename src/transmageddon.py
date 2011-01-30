@@ -74,7 +74,7 @@ supported_containers = [
 ]
 
 supported_audio_codecs = [
-       "apass",
+     #  "apass",
        "vorbis",
        "flac",
        "mp3",
@@ -118,6 +118,22 @@ supported_container_map = {
     'WebM':       [ 'vorbis','vp8']
 }
 
+supported_audio_container_map = {
+    'Ogg':        [ 'Vorbis', 'FLAC', 'Speex', 'Celt Ultra' ],
+    'MXF':        [ 'mp3', 'AAC', 'AC3' ],
+    'Matroska':   [ 'FLAC', 'AAC', 'ac3', 'Vorbis' ],
+    'AVI':        [ 'mp3', 'AC3', 'Windows Media Audio 2' ],
+    'Quicktime':  [ 'AAC', 'AC3', 'mp3' ],
+    'MPEG4':      [ 'AAC', 'mp3' ],
+    '3GPP':       [ 'AAC', 'mp3', 'AMR-NB' ],
+    'MPEG PS':    [ 'mp3', 'AC3', 'AAC' ],
+    'MPEG TS':    [ 'mp3', 'AC3', 'AAC' ],
+    'FLV':        [ 'mp3' ],
+    'ASF':        [ 'Windows Media Audio 2', 'mp3'],
+    'WebM':       [ 'Vorbis']
+}
+
+
 class TransmageddonUI:
    """This class loads the GtkBuilder file of the UI"""
    def __init__(self):
@@ -139,6 +155,23 @@ class TransmageddonUI:
        self.uifile = "transmageddon.ui"
        self.builder.add_from_file(self.uifile)
        self.builder.connect_signals(self) # Initialize User Interface
+       self.rows=[]
+       def new_vbox(audiostreams,extra = []):
+           audiostreams=1
+           vbox = gtk.VBox()
+
+           x=-1
+           while x < (audiostreams-1):
+               x=x+1
+               # print "x is " + str(x)
+               store = gtk.ListStore(gobject.TYPE_STRING, *extra)
+               combo = gtk.ComboBox(store)
+               text_cell = gtk.CellRendererText()
+               combo.pack_start(text_cell, True)
+               combo.add_attribute(text_cell, 'text', 0)
+               self.rows.append(combo)
+               vbox.add(self.rows[x])
+           return vbox
 
        #Define functionality of our button and main window
        self.TopWindow = self.builder.get_object("TopWindow")
@@ -147,15 +180,16 @@ class TransmageddonUI:
        self.audioinformation = self.builder.get_object("audioinformation")
        self.videocodec = self.builder.get_object("videocodec")
        self.audiocodec = self.builder.get_object("audiocodec")
+       self.vbox = new_vbox([gobject.TYPE_PYOBJECT])
        self.CodecBox = self.builder.get_object("CodecBox")
        self.presetchoice = self.builder.get_object("presetchoice")
        self.containerchoice = self.builder.get_object("containerchoice")
        self.rotationchoice = self.builder.get_object("rotationchoice")
        self.codec_buttons = dict()
-       for c in supported_audio_codecs:
-           self.codec_buttons[c] = self.builder.get_object(c+"button")
-           self.codec_buttons[c].connect("clicked",
-                                         self.on_audiobutton_pressed, c)
+       # for c in supported_audio_codecs:
+       #    self.codec_buttons[c] = self.builder.get_object(c+"button")
+       #    self.codec_buttons[c].connect("clicked",
+       #                                  self.on_audiobutton_pressed, c)
        for c in supported_video_codecs:
            self.codec_buttons[c] = self.builder.get_object(c+"button")
            self.codec_buttons[c].connect("clicked",
@@ -165,9 +199,10 @@ class TransmageddonUI:
        self.ProgressBar = self.builder.get_object("ProgressBar")
        self.cancelbutton = self.builder.get_object("cancelbutton")
        self.StatusBar = self.builder.get_object("StatusBar")
-
+       self.CodecBox.attach(self.vbox, 0, 1, 1, 3, yoptions = gtk.FILL)
+       self.CodecBox.show_all()
+       self.rows[0].connect("changed", self.on_audiocodec_changed)
        self.TopWindow.connect("destroy", gtk.main_quit)
-       
        def get_file_path_from_dnd_dropped_uri(self, uri):
            # get the path to file
            path = ""
@@ -177,7 +212,6 @@ class TransmageddonUI:
                path = uri[7:] # 7 is len('file://')
            elif uri.startswith('file:'): # xffm
                path = uri[5:] # 5 is len('file:')
-
            return path
 
        def on_drag_data_received(widget, context, x, y, selection, target_type, timestamp):
@@ -227,8 +261,8 @@ class TransmageddonUI:
        self.presetchoice.set_sensitive(False)
        self.containerchoice.set_sensitive(False)
        self.rotationchoice.set_sensitive(False)
-       self.codec_buttons["apass"].set_sensitive(False)
-       self.codec_buttons["vpass"].set_sensitive(False)
+       # self.codec_buttons["apass"].set_sensitive(False)
+       # self.codec_buttons["vpass"].set_sensitive(False)
 
        # set default values for various variables
        self.AudioCodec = "vorbis"
@@ -242,6 +276,7 @@ class TransmageddonUI:
        self.containertoggle=False # this toggle is used to not check for encoders with pbutils
        self.discover_done=False # lets us know that discover is finished
        self.missingtoggle=False
+       self.oldaudiocodec={}
 
        self.p_duration = gst.CLOCK_TIME_NONE
        self.p_time = gst.FORMAT_TIME
@@ -319,7 +354,6 @@ class TransmageddonUI:
        # print "preset.acodec.name is " + str(preset.acodec.name)
        self.codec_buttons[self.reverse_lookup(str(preset.acodec.name))].set_active(True)
        self.codec_buttons[self.reverse_lookup(str(preset.vcodec.name))].set_active(True)
-
 
        # Check for number of passes
        passes = preset.vcodec.passes
@@ -510,9 +544,12 @@ class TransmageddonUI:
            else:
                self.codec_buttons["vpass"].set_sensitive(True)
            if audiointersect == ("EMPTY"):
-               self.codec_buttons["apass"].set_sensitive(False)
+               # self.codec_buttons["apass"].set_sensitive(False)
+               print "no passthrough"
            else:
-               self.codec_buttons["apass"].set_sensitive(True)
+               # self.codec_buttons["apass"].set_sensitive(True)
+               self.rows[0].append_text("Audio passthrough")
+               self.oldaudiocodec.append("Audio passthrough")
 
    # define the behaviour of the other buttons
    def on_FileChooser_file_set(self, widget):
@@ -593,10 +630,10 @@ class TransmageddonUI:
        containerchoice = self.builder.get_object ("containerchoice").get_active_text ()
        containerstatus = codecfinder.get_muxer_element(codecfinder.containermap[containerchoice])
        # print "containerstatus is " + str(containerstatus)
-       if self.AudioCodec != "apass":
+       if self.AudioCodec != "Audio passthrough":
            audiostatus = codecfinder.get_audio_encoder_element(codecfinder.codecmap[self.AudioCodec])
        else:
-           audiostatus = "apass"
+           audiostatus = "Audio passthrough"
        if self.VideoCodec != "vpass":
            videostatus = codecfinder.get_video_encoder_element(codecfinder.codecmap[self.VideoCodec])
        else:
@@ -680,11 +717,19 @@ class TransmageddonUI:
        self.AudioCodec = codecs[0]
        self.VideoCodec = codecs[1]
        self.transcodebutton.set_sensitive(True)
-       for b in self.codec_buttons.values():
-           b.set_sensitive(False)
-       for c in codecs:
-           self.codec_buttons[c].set_sensitive(True)
-       self.codec_buttons[self.AudioCodec].set_active(True)
+       # for b in self.codec_buttons.values():
+       #    b.set_sensitive(False)
+       #for c in codecs:
+       #    self.codec_buttons[c].set_sensitive(True)
+       audio_codecs = supported_audio_container_map[self.container]
+       for c in self.oldaudiocodec:
+           self.rows[0].remove_text(0)
+       for c in audio_codecs:
+           self.rows[0].append_text(c)
+           self.rows[0].set_sensitive(True)
+           self.rows[0].set_active(0)
+       self.oldaudiocodec=audio_codecs
+       # self.codec_buttons[self.AudioCodec].set_active(True)
        self.codec_buttons[self.VideoCodec].set_active(True)
        if self.discover_done == True:
            self.check_for_passthrough(self.container)
@@ -716,10 +761,16 @@ class TransmageddonUI:
    def on_rotationchoice_changed(self, widget):
        self.rotationvalue = self.rotationchoice.get_active()
 
-   def on_audiobutton_pressed(self, widget, codec):
-       self.AudioCodec = codec
-       if self.AudioCodec == "apass":
+   def on_audiocodec_changed(self, widget):
+       self.AudioCodec = self.rows[0].get_active_text ()
+       # print "self.AudioCodec is " + str(self.AudioCodec)
+       if self.AudioCodec == "Audio passthrough":
            self.audiopasstoggle=True
+
+   #def on_audiobutton_pressed(self, widget, codec):
+   #    self.AudioCodec = codec
+   #    if self.AudioCodec == "apass":
+   #        self.audiopasstoggle=True
 
    def on_videobutton_pressed(self, widget, codec):
        self.VideoCodec = codec
@@ -751,7 +802,7 @@ class TransmageddonUI:
            self.ProgressBar.set_text(_("Transcoding Progress"))
            if error_string=="noaudioparser":
                error_message = _("No audio parser, passthrough not available")
-               self.codec_buttons["apass"].set_sensitive(False)
+               # self.codec_buttons["apass"].set_sensitive(False)
                codecs = supported_container_map[self.container]
                self.AudioCodec = codecs[0]
                self.codec_buttons[self.AudioCodec].set_active(True)
