@@ -429,112 +429,10 @@
             <child>
               <object class="GtkTable" id="CodecBox">
                 <property name="visible">True</property>
-                <property name="n_rows">12</property>
+                <property name="n_rows">4</property>
                 <property name="n_columns">3</property>
                 <child>
-                  <object class="GtkLabel" id="label2">
-                    <property name="visible">True</property>
-                  </object>
-                  <packing>
-                    <property name="left_attach">2</property>
-                    <property name="right_attach">3</property>
-                    <property name="top_attach">11</property>
-                    <property name="bottom_attach">12</property>
-                  </packing>
-                </child>
-                <child>
                   <object class="GtkLabel" id="vspacer15">
-                    <property name="width_request">12</property>
-                    <property name="visible">True</property>
-                  </object>
-                  <packing>
-                    <property name="left_attach">1</property>
-                    <property name="right_attach">2</property>
-                    <property name="top_attach">11</property>
-                    <property name="bottom_attach">12</property>
-                    <property name="x_options"></property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="vspacer16">
-                    <property name="width_request">12</property>
-                    <property name="visible">True</property>
-                  </object>
-                  <packing>
-                    <property name="left_attach">1</property>
-                    <property name="right_attach">2</property>
-                    <property name="top_attach">9</property>
-                    <property name="bottom_attach">10</property>
-                    <property name="x_options"></property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="vspacer17">
-                    <property name="width_request">12</property>
-                    <property name="visible">True</property>
-                  </object>
-                  <packing>
-                    <property name="left_attach">1</property>
-                    <property name="right_attach">2</property>
-                    <property name="top_attach">8</property>
-                    <property name="bottom_attach">9</property>
-                    <property name="x_options"></property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="vspacer18">
-                    <property name="width_request">12</property>
-                    <property name="visible">True</property>
-                  </object>
-                  <packing>
-                    <property name="left_attach">1</property>
-                    <property name="right_attach">2</property>
-                    <property name="top_attach">7</property>
-                    <property name="bottom_attach">8</property>
-                    <property name="x_options"></property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="vspacer19">
-                    <property name="width_request">12</property>
-                    <property name="visible">True</property>
-                  </object>
-                  <packing>
-                    <property name="left_attach">1</property>
-                    <property name="right_attach">2</property>
-                    <property name="top_attach">6</property>
-                    <property name="bottom_attach">7</property>
-                    <property name="x_options"></property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="vspacer20">
-                    <property name="width_request">12</property>
-                    <property name="visible">True</property>
-                  </object>
-                  <packing>
-                    <property name="left_attach">1</property>
-                    <property name="right_attach">2</property>
-                    <property name="top_attach">5</property>
-                    <property name="bottom_attach">6</property>
-                    <property name="x_options"></property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="vspacer21">
-                    <property name="width_request">12</property>
-                    <property name="visible">True</property>
-                  </object>
-                  <packing>
-                    <property name="left_attach">1</property>
-                    <property name="right_attach">2</property>
-                    <property name="top_attach">4</property>
-                    <property name="bottom_attach">5</property>
-                    <property name="x_options"></property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="vspacer22">
                     <property name="width_request">12</property>
                     <property name="visible">True</property>
                   </object>
@@ -573,18 +471,6 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel" id="label14">
-                    <property name="visible">True</property>
-                    <property name="xalign">0</property>
-                    <property name="label" translatable="yes">&lt;b&gt;Choose Video Codec&lt;/b&gt;:</property>
-                    <property name="use_markup">True</property>
-                  </object>
-                  <packing>
-                    <property name="left_attach">2</property>
-                    <property name="right_attach">3</property>
-                  </packing>
-                </child>
-                <child>
                   <object class="GtkLabel" id="label15">
                     <property name="visible">True</property>
                     <property name="xalign">0</property>
@@ -606,74 +492,36 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel" id="vspacer11">
-                    <property name="width_request">12</property>
-                    <property name="visible">True</property>
-                  </object>
-                  <packing>
-                    <property name="left_attach">1</property>
-                    <property name="right_attach">2</property>
-                    <property name="top_attach">10</property>
-                    <property name="bottom_attach">11</property>
-                    <property name="x_options"></property>
-                  </packing>
-                </child>
-                <child>
                   <object class="GtkLabel" id="label1">
                     <property name="visible">True</property>
                   </object>
                   <packing>
-                    <property name="top_attach">11</property>
-                    <property name="bottom_attach">12</property>
+                    <property name="top_attach">3</property>
+                    <property name="bottom_attach">4</property>
                   </packing>
                 </child>
                 <child>
-                  <placeholder/>
+                  <object class="GtkLabel" id="label2">
+                    <property name="visible">True</property>
+                  </object>
+                  <packing>
+                    <property name="left_attach">2</property>
+                    <property name="right_attach">3</property>
+                    <property name="top_attach">3</property>
+                    <property name="bottom_attach">4</property>
+                  </packing>
                 </child>
                 <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
+                  <object class="GtkLabel" id="label14">
+                    <property name="visible">True</property>
+                    <property name="xalign">0</property>
+                    <property name="label" translatable="yes">&lt;b&gt;Choose Video Codec&lt;/b&gt;:</property>
+                    <property name="use_markup">True</property>
+                  </object>
+                  <packing>
+                    <property name="left_attach">2</property>
+                    <property name="right_attach">3</property>
+                  </packing>
                 </child>
                 <child>
                   <placeholder/>
