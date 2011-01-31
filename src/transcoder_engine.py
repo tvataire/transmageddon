@@ -42,7 +42,7 @@ class Transcoder(gobject.GObject):
 
    def __init__(self, FILECHOSEN, FILENAME, DESTDIR, CONTAINERCHOICE, AUDIOCODECVALUE, VIDEOCODECVALUE, PRESET, 
                       OHEIGHT, OWIDTH, FRATENUM, FRATEDEN, ACHANNELS, MULTIPASS, PASSCOUNTER, OUTPUTNAME, 
-                      TIMESTAMP, ROTATIONVALUE, AUDIOPASSTOGGLE, VIDEOPASSTOGGLE):
+                      TIMESTAMP, ROTATIONVALUE, AUDIOPASSTOGGLE, VIDEOPASSTOGGLE, INTERLACED):
        gobject.GObject.__init__(self)
 
        # Choose plugin based on Container name
@@ -55,7 +55,8 @@ class Transcoder(gobject.GObject):
        self.audiocaps = AUDIOCODECVALUE
        self.videocaps = VIDEOCODECVALUE
        self.audiopasstoggle = AUDIOPASSTOGGLE
-       # print "audiopass toggle is " + str(self.audiopasstoggle)
+       self.interlaced = INTERLACED
+       print "self.interlaced is " + str(self.interlaced)
        self.videopasstoggle = VIDEOPASSTOGGLE
        self.doaudio= False
        if self.audiopasstoggle == False:
@@ -123,7 +124,7 @@ class Transcoder(gobject.GObject):
            # print "remuxcaps is " + str(self.remuxcaps)
            self.uridecoder.set_property("caps", self.remuxcaps)
        self.pipeline.add(self.uridecoder)
-       
+
        if (self.multipass == False) or (self.passcounter == int(0)):
            self.containermuxer = gst.element_factory_make(self.ContainerFormatPlugin, "containermuxer")
            videointersect = ("EMPTY")
@@ -431,6 +432,19 @@ class Transcoder(gobject.GObject):
                # print "Got an video cap"
                self.colorspaceconverter = gst.element_factory_make("ffmpegcolorspace")
                self.pipeline.add(self.colorspaceconverter)
+               print "checking for deinterlacer"
+               if self.interlaced == True:
+                   self.deinterlacer = gst.element_factory_make("deinterlace", "deinterlacer")
+                   print "deinterlacer added"
+                   self.pipeline.add(self.deinterlacer)
+                   self.deintercaps = gst.Caps()
+                   self.deintercaps.append_structure(gst.Structure("video/x-raw-yuv"))
+                   for vcap in self.deintercaps:
+                       vcap["format"] = "YV12"
+                   self.deintercapsfilter = gst.element_factory_make("capsfilter")
+                   self.deintercapsfilter.set_property("caps", self.deintercaps)
+                   self.pipeline.add(self.deintercapsfilter)
+
 
                self.videoflipper = gst.element_factory_make("videoflip")
                self.videoflipper.set_property("method", self.rotationvalue)
@@ -484,6 +498,7 @@ class Transcoder(gobject.GObject):
                        self.pipeline.add(self.colorspaceconvert3)
                self.videoencoder = gst.element_factory_make(self.VideoEncoderPlugin)
                self.pipeline.add(self.videoencoder)
+
                if self.preset != "nopreset":
                    GstPresetType = gobject.type_from_name("GstPreset")
                    if GstPresetType in gobject.type_interfaces(self.videoencoder):
@@ -496,12 +511,16 @@ class Transcoder(gobject.GObject):
                        elif (self.multipass != False) and (self.passcounter == int(0)):
                            self.videoencoder.load_preset("Pass " + str(self.multipass))
                            self.videoencoder.set_property("multipass-cache-file", self.cachefile)
-             
-               # needs to be moved to before multiqueu ? if (self.multipass == False) or (self.passcounter == int(0)):
-               sink_pad.link(self.colorspaceconverter.get_pad("sink"))
-               if self.preset != "nopreset":
+               if self.interlaced:
+                   print "still deinterlacing"
+                   sink_pad.link(self.deinterlacer.get_pad("sink"))
+                   self.deinterlacer.link(self.colorspaceconverter)
+                   self.colorspaceconverter.link(self.videoencoder)
+               else:
+                   sink_pad.link(self.colorspaceconverter.get_pad("sink"))
                    self.colorspaceconverter.link(self.videoflipper)
                    self.videoflipper.link(self.videorate)
+               if self.preset != "nopreset":
                    self.videorate.link(self.videoscaler)
                    self.videoscaler.link(self.vcapsfilter)
                    if self.blackborderflag == True:
@@ -511,9 +530,9 @@ class Transcoder(gobject.GObject):
                    else:
                        self.vcapsfilter.link(self.colorspaceconvert2)
                    self.colorspaceconvert2.link(self.videoencoder)
-               else:
-                   self.colorspaceconverter.link(self.videoflipper)
-                   self.videoflipper.link(self.videoencoder)
+               #else:
+                   # self.colorspaceconverter.link(self.videoflipper)
+                   # self.videoflipper.link(self.videoencoder)
                self.videoencoder.link(self.vcapsfilter2)
                if (self.multipass == False) or (self.passcounter == int(0)):
                    self.vcapsfilter2.get_static_pad("src").link(self.multiqueuevideosinkpad)

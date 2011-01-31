@@ -492,9 +492,9 @@ class TransmageddonUI:
                videotags=i.get_tags()
                interlacedbool = i.is_interlaced()
                if interlacedbool is True:
-                   self.interlaced ="Yes"
+                   self.interlaced=True
                else:
-                   self.interlaced="No"
+                   self.interlaced=False
                videoheight=i.get_height()
                videowidth=i.get_width()
                videodenom=i.get_framerate_denom()
@@ -593,7 +593,7 @@ class TransmageddonUI:
                                                        audiocodec, videocodec, self.devicename, 
                                                        vheight, vwidth, ratenum, ratednom, achannels, 
                                                        self.multipass, self.passcounter, self.outputfilename,
-                                                       self.timestamp, self.rotationvalue, self.audiopasstoggle, self.videopasstoggle)
+                                                       self.timestamp, self.rotationvalue, self.audiopasstoggle, self.videopasstoggle, self.interlaced)
        self._transcoder.connect("ready-for-querying", self.ProgressBarUpdate)
        self._transcoder.connect("got-eos", self._on_eos)
        self._transcoder.connect("got-error", self.show_error) 
