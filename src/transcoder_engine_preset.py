@@ -124,38 +124,42 @@ class Transcoder(gobject.GObject):
            self.uridecoder.set_property("caps", self.remuxcaps)
        self.pipeline.add(self.uridecoder)
 
-       self.containermuxer = gst.element_factory_make(self.ContainerFormatPlugin, "containermuxer")
-       videointersect = ("EMPTY")
-       audiointersect = ("EMPTY")   
-       factory = gst.registry_get_default().lookup_feature(self.ContainerFormatPlugin)
-       for x in factory.get_static_pad_templates():
-           if (x.direction == gst.PAD_SINK):
-               sourcecaps = x.get_caps()
-               if videointersect == ("EMPTY"): 
-                   videointersect = sourcecaps.intersect(gst.caps_from_string(self.videocaps))
-                   if videointersect != ("EMPTY"):
-                   # print "pad is X which is " + str(x)
-                       self.containermuxervideosinkpad = self.containermuxer.get_request_pad(x.name_template)
-               if audiointersect == ("EMPTY"):
-                   audiointersect = sourcecaps.intersect(gst.caps_from_string(self.audiocaps))
-                   if audiointersect != ("EMPTY"):
-                       self.containermuxeraudiosinkpad = self.containermuxer.get_request_pad(x.name_template)
-       self.pipeline.add(self.containermuxer)
+       if (self.multipass == False) or (self.passcounter == int(0)):
+           self.containermuxer = gst.element_factory_make(self.ContainerFormatPlugin, "containermuxer")
+           videointersect = ("EMPTY")
+           audiointersect = ("EMPTY")   
+           factory = gst.registry_get_default().lookup_feature(self.ContainerFormatPlugin)
+           for x in factory.get_static_pad_templates():
+               if (x.direction == gst.PAD_SINK):
+                   sourcecaps = x.get_caps()
+                   if videointersect == ("EMPTY"): 
+                       videointersect = sourcecaps.intersect(gst.caps_from_string(self.videocaps))
+                       if videointersect != ("EMPTY"):
+                           # print "pad is X which is " + str(x)
+                           self.containermuxervideosinkpad = self.containermuxer.get_request_pad(x.name_template)
+                   if audiointersect == ("EMPTY"):
+                       audiointersect = sourcecaps.intersect(gst.caps_from_string(self.audiocaps))
+                       if audiointersect != ("EMPTY"):
+                           self.containermuxeraudiosinkpad = self.containermuxer.get_request_pad(x.name_template)
 
-       # Add a tag setting Transmageddon as the application used for creating file if supported by format
-       GstTagSetterType = gobject.type_from_name("GstTagSetter")
-       if GstTagSetterType in gobject.type_interfaces(self.containermuxer):
-           taglist=gst.TagList()
-           taglist[gst.TAG_APPLICATION_NAME] = "Transmageddon"
-           self.containermuxer.merge_tags(taglist, gst.TAG_MERGE_APPEND)
+           self.pipeline.add(self.containermuxer)
 
-       self.transcodefileoutput = gst.element_factory_make("filesink", "transcodefileoutput")
-       self.transcodefileoutput.set_property("location", (DESTDIR+"/"+self.outputfilename))
-       self.pipeline.add(self.transcodefileoutput)
+           # Add a tag setting Transmageddon as the application used for creating file if supported by format
+	   GstTagSetterType = gobject.type_from_name("GstTagSetter")
+	   if GstTagSetterType in gobject.type_interfaces(self.containermuxer):
+	       taglist=gst.TagList()
+	       taglist[gst.TAG_APPLICATION_NAME] = "Transmageddon"
+               self.containermuxer.merge_tags(taglist, gst.TAG_MERGE_APPEND)
 
-       self.containermuxer.link(self.transcodefileoutput)
-       # print "reached end of first pipeline bulk, next step dynamic audio/video pads"
-   
+           self.transcodefileoutput = gst.element_factory_make("filesink", "transcodefileoutput")
+           self.transcodefileoutput.set_property("location", (DESTDIR+"/"+self.outputfilename))
+           self.pipeline.add(self.transcodefileoutput)
+
+           self.containermuxer.link(self.transcodefileoutput)
+           # print "reached end of first pipeline bulk, next step dynamic audio/video pads"
+       else:
+           self.multipassfakesink = gst.element_factory_make("fakesink", "multipassfakesink")
+           self.pipeline.add(self.multipassfakesink)    
 
        self.uridecoder.set_state(gst.STATE_PAUSED)
        # print "setting uridcodebin to paused"
@@ -163,12 +167,108 @@ class Transcoder(gobject.GObject):
 
        self.uridecoder.connect("no-more-pads", self.noMorePads) # we need to wait on this one before going further
        # print "connecting to no-more-pads"
+       # Get hold of all needed data from the XML profile files. 
+   def provide_presets(self):
+       devices = presets.get()
+       device = devices[self.preset]
+       preset = device.presets["Normal"]
+       
+       # Check for black border boolean
+       border = preset.vcodec.border
+       if border == "Y":
+           self.blackborderflag = True
+       else:
+           self.blackborderflag = False
+
+       # Check for audio samplerate
+       self.samplerate = int(preset.acodec.samplerate)
+
+       # calculate number of channels
+       chanmin, chanmax = preset.acodec.channels
+       if int(self.achannels) < int(chanmax):
+           if int(self.achannels) > int(chanmin): 
+               self.channels = int(self.achannels)
+           else:
+               self.channels = int(chanmin)
+       else:
+           self.channels = int(chanmax)
+       # Check if rescaling is needed and calculate new video width/height keeping aspect ratio
+       # Also add black borders if needed
+       wmin, wmax  =  preset.vcodec.width
+       hmin, hmax = preset.vcodec.height
+       width, height = self.owidth, self.oheight
+       # print "owidth is " + str(self.owidth) + " oheight is " + str(self.oheight)
+       self.vpreset = []       
+       voutput = preset.vcodec.presets[0].split(", ")
+       for x in voutput:
+           self.vpreset.append(x)
+       self.apreset = []
+       aoutput = preset.acodec.presets[0].split(", ")
+       for x in aoutput:
+           self.apreset.append(x)
+         
+       # Get Display aspect ratio
+       pixelaspectratio = preset.vcodec.aspectratio[0]
+
+       # Scale width / height down
+       if self.owidth > wmax:
+           width = wmax
+           height = int((float(wmax) / self.owidth) * self.oheight)
+       if height > hmax:
+           height = hmax
+           width = int((float(hmax) / self.oheight) * self.owidth)
 
        # Some encoders like x264enc are not able to handle odd height or widths
-      # if width % 2:
-        #   width += 1
-      # if height % 2:
-       #    height += 1
+       if width % 2:
+           width += 1
+       if height % 2:
+           height += 1
+
+       # Add any required padding
+       if self.blackborderflag == True:
+           if width < wmin and height < hmin:
+               wpx = (wmin - width) / 2
+               hpx = (hmin - height) / 2
+               self.vbox['left'] = -wpx
+               self.vbox['right'] = -wpx
+               self.vbox['top'] = -hpx
+               self.vbox['bottom'] = -hpx
+           elif width < wmin:
+               # print "adding width borders"
+               px = (wmin - width) / 2
+               self.vbox['left'] = -px
+               self.vbox['right'] = -px
+               self.vbox['top'] = -0
+               self.vbox['bottom'] = -0
+           elif height < hmin:
+               # print " adding height borders"
+               px = (hmin - height) / 2
+               self.vbox['top'] = -px
+               self.vbox['bottom'] = -px
+               self.vbox['left'] = -int(0)
+               self.vbox['right'] = -int(0)
+           else:
+               self.vbox['top'] = -int(0)
+               self.vbox['bottom'] = -int(0)
+               self.vbox['left'] = -int(0)
+               self.vbox['right'] = -int(0)
+
+       # Setup video framerate and add to caps - 
+       # FIXME: Is minimum framerate really worthwhile checking for?
+       # =================================================================
+       rmin = preset.vcodec.rate[0].num / float(preset.vcodec.rate[0].denom)
+       rmax = preset.vcodec.rate[1].num / float(preset.vcodec.rate[1].denom)
+       rmaxtest = preset.vcodec.rate[1]
+       orate = self.fratenum / self.frateden 
+       if orate > rmax:
+           num = preset.vcodec.rate[1].num
+           denom = preset.vcodec.rate[1].denom
+       elif orate < rmin:
+           num = preset.vcodec.rate[0].num
+           denom = preset.vcodec.rate[0].denom
+       else:
+           num = self.fratenum
+           denom = self.frateden
 
        if self.rotationvalue == 1 or self.rotationvalue == 3:
            # print "switching height and with around"
@@ -178,7 +278,7 @@ class Transcoder(gobject.GObject):
            width = nwidth
 
        # print "final height " + str(height) + " final width " + str(width)
-     #  return height, width, num, denom, pixelaspectratio
+       return height, width, num, denom, pixelaspectratio
 
    def noMorePads(self, dbin):
        if (self.multipass == False) or (self.passcounter == int(0)):
@@ -241,16 +341,31 @@ class Transcoder(gobject.GObject):
                    self.pipeline.add(self.audioconverter)
                    self.audioencoder = gst.element_factory_make(self.AudioEncoderPlugin)
                    self.pipeline.add(self.audioencoder)
-           
+                   self.provide_presets()
+                   GstPresetType = gobject.type_from_name("GstPreset")
+                   if GstPresetType in gobject.type_interfaces(self.audioencoder):
+                       for x in self.apreset:
+                           self.audioencoder.load_preset(x)
                    self.audioresampler = gst.element_factory_make("audioresample")
                    self.pipeline.add(self.audioresampler)
                    sink_pad.link(self.audioconverter.get_pad("sink"))
+                   self.acaps = gst.Caps()
+                   self.acaps.append_structure(gst.Structure("audio/x-raw-float"))
+                   self.acaps.append_structure(gst.Structure("audio/x-raw-int"))
+                   for acap in self.acaps:
+                       acap["rate"] = self.samplerate
+                       acap["channels"] = self.channels
 
+                   self.acapsfilter = gst.element_factory_make("capsfilter")
+                   self.acapsfilter.set_property("caps", self.acaps)
+                   self.pipeline.add(self.acapsfilter)
                    self.audioconverter.link(self.audioresampler)
-                   self.audioresampler.link(self.audioencoder)
+                   self.audioresampler.link(self.acapsfilter)
+                   self.acapsfilter.link(self.audioencoder)
 
                    self.audioencoder.get_static_pad("src").link(self.multiqueueaudiosinkpad)
                    self.audioconverter.set_state(gst.STATE_PAUSED)
+                   self.acapsfilter.set_state(gst.STATE_PAUSED)
                    self.audioresampler.set_state(gst.STATE_PAUSED)
                    self.audioencoder.set_state(gst.STATE_PAUSED)
                    self.gstmultiqueue.set_state(gst.STATE_PAUSED)
@@ -308,52 +423,111 @@ class Transcoder(gobject.GObject):
                # print "Got an video cap"
                self.colorspaceconverter = gst.element_factory_make("ffmpegcolorspace")
                self.pipeline.add(self.colorspaceconverter)
-               # checking for deinterlacer
                if self.interlaced == True:
                    self.deinterlacer = gst.element_factory_make("deinterlace", "deinterlacer")
                    self.pipeline.add(self.deinterlacer)
-               self.videoflipper = gst.element_factory_make("videoflip")
-               self.videoflipper.set_property("method", self.rotationvalue)
-               self.pipeline.add(self.videoflipper)
 
                self.vcaps2 = gst.Caps()
                self.vcaps2 = gst.caps_from_string(self.videocaps)
-               if self.preset != "nopreset":
-                   height, width, num, denom, pixelaspectratio = self.provide_presets()
-                   for vcap in self.vcaps2:
-                       if pixelaspectratio != gst.Fraction(0, 0):
-                           vcap["pixel-aspect-ratio"] = pixelaspectratio
+               height, width, num, denom, pixelaspectratio = self.provide_presets()
+               for vcap in self.vcaps2:
+                   if pixelaspectratio != gst.Fraction(0, 0):
+                       vcap["pixel-aspect-ratio"] = pixelaspectratio
                self.vcapsfilter2 = gst.element_factory_make("capsfilter")
                self.vcapsfilter2.set_property("caps", self.vcaps2)
                self.pipeline.add(self.vcapsfilter2)
 
- 
+               self.colorspaceconvert2 = gst.element_factory_make("ffmpegcolorspace")
+               self.pipeline.add(self.colorspaceconvert2)
+           
+               self.vcaps = gst.Caps()
+               self.vcaps.append_structure(gst.Structure("video/x-raw-rgb"))
+               self.vcaps.append_structure(gst.Structure("video/x-raw-yuv"))
+               height, width, num, denom, pixelaspectratio = self.provide_presets()
+               for vcap in self.vcaps:
+                   vcap["width"] = int(width)
+                   vcap["height"] = int(height)
+                   vcap["framerate"] = gst.Fraction(num, denom)
+                   if pixelaspectratio != gst.Fraction(0, 0):
+                      vcap["pixel-aspect-ratio"] = pixelaspectratio                   
+
+               self.vcapsfilter = gst.element_factory_make("capsfilter")
+               self.vcapsfilter.set_property("caps", self.vcaps)
+               self.pipeline.add(self.vcapsfilter)
+
+               self.videorate = gst.element_factory_make("videorate", "videorate")
+               self.pipeline.add(self.videorate)
+
+               self.videoscaler = gst.element_factory_make("videoscale", "videoscaler")
+               self.videoscaler.set_property("method", int(1))
+               self.pipeline.add(self.videoscaler)
+               if self.blackborderflag == True:
+                   self.videoboxer = gst.element_factory_make("videobox", "videoboxer")
+                   self.videoboxer.set_property("top", self.vbox["top"])
+                   self.videoboxer.set_property("bottom", self.vbox["bottom"])
+                   self.videoboxer.set_property("right", self.vbox["right"])
+                   self.videoboxer.set_property("left", self.vbox["left"])
+                   self.pipeline.add(self.videoboxer)
+               else:
+                   self.videoboxer = gst.element_factory_make("videobox", "videoboxer")
+                   self.pipeline.add(self.videoboxer)
+
+               self.colorspaceconvert3 = gst.element_factory_make("ffmpegcolorspace")
+               self.pipeline.add(self.colorspaceconvert3)
                self.videoencoder = gst.element_factory_make(self.VideoEncoderPlugin)
                self.pipeline.add(self.videoencoder)
 
-               # check if interlaced
+               GstPresetType = gobject.type_from_name("GstPreset")
+               if GstPresetType in gobject.type_interfaces(self.videoencoder):
+                   for x in self.vpreset:
+                       self.videoencoder.load_preset(x)
+                   if (self.multipass != False) and (self.passcounter != int(0)) :
+                       passvalue = "Pass "+ str(self.passcounter)
+                       bob = self.videoencoder.load_preset(passvalue)
+                       self.videoencoder.set_property("multipass-cache-file", self.cachefile)
+                   elif (self.multipass != False) and (self.passcounter == int(0)):
+                       self.videoencoder.load_preset("Pass " + str(self.multipass))
+                       self.videoencoder.set_property("multipass-cache-file", self.cachefile)
                if self.interlaced:
                    sink_pad.link(self.deinterlacer.get_pad("sink"))
-                   self.deinterlacer.link(self.videoflipper)
-                   self.videoflipper.link(self.colorspaceconverter)
-                   self.colorspaceconverter.link(self.videoencoder)
+                   self.deinterlacer.link(self.colorspaceconverter)
+                   self.colorspaceconverter.link(self.videorate)
                else:
                    sink_pad.link(self.colorspaceconverter.get_pad("sink"))
-                   self.colorspaceconverter.link(self.videoflipper)
-                   self.videoflipper.link(self.videoencoder)
+                   self.colorspaceconverter.link(self.videorate)
+                   
+               self.videorate.link(self.videoscaler)
 
+               #if self.blackborderflag == True:
+               self.videoscaler.link(self.vcapsfilter)
+               self.vcapsfilter.link(self.colorspaceconvert3)
+               self.colorspaceconvert3.link(self.videoboxer)
+               self.videoboxer.link(self.colorspaceconvert2)
+               # else:
+               #    self.videoscaler.link(self.vcapsfilter)
+               self.colorspaceconvert2.link(self.videoencoder)
+       
                self.videoencoder.link(self.vcapsfilter2)
-               self.vcapsfilter2.get_static_pad("src").link(self.multiqueuevideosinkpad)
-
+               if (self.multipass == False) or (self.passcounter == int(0)):
+                   self.vcapsfilter2.get_static_pad("src").link(self.multiqueuevideosinkpad)
+               else:
+                   self.vcapsfilter2.link(self.multipassfakesink)
                self.colorspaceconverter.set_state(gst.STATE_PAUSED)
-               if self.interlaced:
-                   self.deinterlacer.set_state(gst.STATE_PAUSED)
-               self.videoflipper.set_state(gst.STATE_PAUSED)  
-
+               self.deinterlacer.set_state(gst.STATE_PAUSED)
+               self.videoscaler.set_state(gst.STATE_PAUSED)
+               self.videorate.set_state(gst.STATE_PAUSED)
+               self.vcapsfilter.set_state(gst.STATE_PAUSED)
+               if (self.multipass != False) and (self.passcounter == int(1)):
+                   self.multipassfakesink.set_state(gst.STATE_PAUSED)
+               #if self.blackborderflag == True:
+               self.colorspaceconvert3.set_state(gst.STATE_PAUSED)
+               self.videoboxer.set_state(gst.STATE_PAUSED)
+               self.colorspaceconvert2.set_state(gst.STATE_PAUSED)
                self.vcapsfilter2.set_state(gst.STATE_PAUSED)
                self.videoencoder.set_state(gst.STATE_PAUSED)
-               self.gstmultiqueue.set_state(gst.STATE_PAUSED)
-               self.multiqueuevideosrcpad.link(self.containermuxervideosinkpad)
+               if self.multipass == False or (self.passcounter == int(0)):
+                   self.gstmultiqueue.set_state(gst.STATE_PAUSED)
+                   self.multiqueuevideosrcpad.link(self.containermuxervideosinkpad)
            else:
                # Code for passthrough mode
                vparsedcaps = gst.caps_from_string(self.videocaps+",parsed=true")
@@ -395,6 +569,7 @@ class Transcoder(gobject.GObject):
                    self.videoparse.set_state(gst.STATE_PAUSED)                    
                    self.multiqueuevideosrcpad.link(self.containermuxervideosinkpad)
                    self.gstmultiqueue.set_state(gst.STATE_PAUSED)
+
        else:
            raise Exception("Got a non-A/V pad!")
            # print "Got a non-A/V pad!"

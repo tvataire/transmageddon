@@ -26,6 +26,8 @@ os.putenv('GST_DEBUG_DUMP_DIR_DIR', '/tmp')
 import which
 import time
 import transcoder_engine
+import transcoder_engine_preset
+import transcoder_engine_audio
 import gobject; gobject.threads_init()
 from urlparse import urlparse
 import codecfinder
@@ -589,11 +591,22 @@ class TransmageddonUI:
        else:
            audiocodec = gst.Caps.to_string(self.asourcecaps)
        container = self.builder.get_object ("containerchoice").get_active_text ()
-       self._transcoder = transcoder_engine.Transcoder(filechoice, self.filename, self.videodirectory, container, 
+       print self.devicename
+       if self.devicename == "nopreset":
+           self._transcoder = transcoder_engine.Transcoder(filechoice, self.filename, self.videodirectory, container, 
                                                        audiocodec, videocodec, self.devicename, 
                                                        vheight, vwidth, ratenum, ratednom, achannels, 
                                                        self.multipass, self.passcounter, self.outputfilename,
-                                                       self.timestamp, self.rotationvalue, self.audiopasstoggle, self.videopasstoggle, self.interlaced)
+                                                       self.timestamp, self.rotationvalue, self.audiopasstoggle, 
+                                                       self.videopasstoggle, self.interlaced)
+       else:
+           self._transcoder = transcoder_engine_preset.Transcoder(filechoice, self.filename, self.videodirectory, container, 
+                                                       audiocodec, videocodec, self.devicename, 
+                                                       vheight, vwidth, ratenum, ratednom, achannels, 
+                                                       self.multipass, self.passcounter, self.outputfilename,
+                                                       self.timestamp, self.rotationvalue, self.audiopasstoggle, 
+                                                       self.videopasstoggle, self.interlaced)
+
        self._transcoder.connect("ready-for-querying", self.ProgressBarUpdate)
        self._transcoder.connect("got-eos", self._on_eos)
        self._transcoder.connect("got-error", self.show_error) 
