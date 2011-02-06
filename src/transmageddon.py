@@ -28,6 +28,7 @@ import time
 import transcoder_engine
 import transcoder_engine_preset
 import transcoder_engine_audio
+import transcoder_engine_encodebin
 import gobject; gobject.threads_init()
 from urlparse import urlparse
 import codecfinder
@@ -121,18 +122,19 @@ supported_video_container_map = {
 }
 
 supported_audio_container_map = {
-    'Ogg':        [ 'Vorbis', 'FLAC', 'Speex', 'Celt Ultra' ],
-    'MXF':        [ 'mp3', 'AAC', 'AC3' ],
-    'Matroska':   [ 'FLAC', 'AAC', 'ac3', 'Vorbis' ],
-    'AVI':        [ 'mp3', 'AC3', 'Windows Media Audio 2' ],
-    'Quicktime':  [ 'AAC', 'AC3', 'mp3' ],
-    'MPEG4':      [ 'AAC', 'mp3' ],
-    '3GPP':       [ 'AAC', 'mp3', 'AMR-NB' ],
-    'MPEG PS':    [ 'mp3', 'AC3', 'AAC' ],
-    'MPEG TS':    [ 'mp3', 'AC3', 'AAC' ],
-    'FLV':        [ 'mp3' ],
-    'ASF':        [ 'Windows Media Audio 2', 'mp3'],
-    'WebM':       [ 'Vorbis']
+    'Ogg':         [ 'Vorbis', 'FLAC', 'Speex', 'Celt Ultra' ],
+    'MXF':         [ 'mp3', 'AAC', 'AC3' ],
+    'Matroska':    [ 'FLAC', 'AAC', 'ac3', 'Vorbis' ],
+    'AVI':         [ 'mp3', 'AC3', 'Windows Media Audio 2' ],
+    'Quicktime':   [ 'AAC', 'AC3', 'mp3' ],
+    'MPEG4':       [ 'AAC', 'mp3' ],
+    '3GPP':        [ 'AAC', 'mp3', 'AMR-NB' ],
+    'MPEG PS':     [ 'mp3', 'AC3', 'AAC' ],
+    'MPEG TS':     [ 'mp3', 'AC3', 'AAC' ],
+    'FLV':         [ 'mp3' ],
+    'ASF':         [ 'Windows Media Audio 2', 'mp3'],
+    'WebM':        [ 'Vorbis'],
+    'No container':[ 'mp3','AAC','FLAC']
 }
 
 
@@ -291,6 +293,11 @@ class TransmageddonUI:
        self.missingtoggle=False
        self.oldaudiocodec={}
        self.oldvideocodec={}
+       self.interlaced=False
+       self.havevideo=False
+       self.haveaudio=False
+       self.devicename = "nopreset"
+       self.nocontaineroptiontoggle=False
 
        self.p_duration = gst.CLOCK_TIME_NONE
        self.p_time = gst.FORMAT_TIME
@@ -484,7 +491,7 @@ class TransmageddonUI:
                audiotags=i.get_tags()
                audiochannels=i.get_channels()
                samplerate=i.get_sample_rate()
-
+               self.haveaudio=True
                self.audiodata = { 'audiochannels' : audiochannels, 'samplerate' : samplerate, 'audiotype' : inputaudiocaps, 'clipduration' : clipduration }
                self.audioinformation.set_markup(''.join(('<small>', 'Audio channels: ', str(audiochannels) ,'</small>')))
                self.audiocodec.set_markup(''.join(('<small>','Audio codec: ', str(gst.pbutils.get_codec_description(inputaudiocaps)),'</small>')))
@@ -495,8 +502,7 @@ class TransmageddonUI:
                interlacedbool = i.is_interlaced()
                if interlacedbool is True:
                    self.interlaced=True
-               else:
-                   self.interlaced=False
+               self.havevideo=True
                videoheight=i.get_height()
                videowidth=i.get_width()
                videodenom=i.get_framerate_denom()
@@ -512,6 +518,10 @@ class TransmageddonUI:
 #
 
            self.discover_done=True
+           if self.havevideo==False:
+               self.videoinformation.set_markup(''.join(('<small>', "No Video", '</small>')))
+               self.videocodec.set_markup(''.join(('<small>', "",
+                                      '</small>')))
            if self.waiting_for_signal == True:
                if self.containertoggle == True:
                    if self.container != False:
@@ -535,32 +545,35 @@ class TransmageddonUI:
    def check_for_passthrough(self, containerchoice):
        videointersect = ("EMPTY")
        audiointersect = ("EMPTY")
-       # print "container is " + str(containerchoice)
-       container = codecfinder.containermap[containerchoice]
-       containerelement = codecfinder.get_muxer_element(container)
-       # print "container element is " + str(containerelement)
-       if containerelement == False:
-           self.containertoggle = True
-           self.check_for_elements()
-       else:
-           factory = gst.registry_get_default().lookup_feature(containerelement)
-           for x in factory.get_static_pad_templates():
-               if (x.direction == gst.PAD_SINK):
-                   sourcecaps = x.get_caps()
-                   if videointersect == ("EMPTY"):
-                       videointersect = sourcecaps.intersect(self.videodata['videotype'])
-                       if videointersect != ("EMPTY"):
-                           self.vsourcecaps = videointersect
-                   if audiointersect == ("EMPTY"):
-                       audiointersect = sourcecaps.intersect(self.audiodata['audiotype'])
-                       if audiointersect != ("EMPTY"):
-                           self.asourcecaps = audiointersect
-           if videointersect != ("EMPTY"):
-               self.videorows[0].append_text("Video passthrough")
-               self.oldvideocodec.append("Video passthrough")
-           if audiointersect != ("EMPTY"):
-               self.audiorows[0].append_text("Audio passthrough")
-               self.oldaudiocodec.append("Audio passthrough")
+       print "containerchoice is " + str(containerchoice)
+       if containerchoice != "No container":
+           # print "container is " + str(containerchoice)
+           container = codecfinder.containermap[containerchoice]
+           containerelement = codecfinder.get_muxer_element(container)
+           # print "container element is " + str(containerelement)
+           if containerelement == False:
+               self.containertoggle = True
+               self.check_for_elements()
+           else:
+               factory = gst.registry_get_default().lookup_feature(containerelement)
+               for x in factory.get_static_pad_templates():
+                   if (x.direction == gst.PAD_SINK):
+                       sourcecaps = x.get_caps()
+                       if self.havevideo==True:
+                          if videointersect == ("EMPTY"):
+                              videointersect = sourcecaps.intersect(self.videodata['videotype'])
+                              if videointersect != ("EMPTY"):
+                                  self.vsourcecaps = videointersect
+                       if audiointersect == ("EMPTY"):
+                           audiointersect = sourcecaps.intersect(self.audiodata['audiotype'])
+                           if audiointersect != ("EMPTY"):
+                               self.asourcecaps = audiointersect
+               if videointersect != ("EMPTY"):
+                   self.videorows[0].append_text("Video passthrough")
+                   self.oldvideocodec.append("Video passthrough")
+               if audiointersect != ("EMPTY"):
+                   self.audiorows[0].append_text("Audio passthrough")
+                   self.oldaudiocodec.append("Audio passthrough")
 
    # define the behaviour of the other buttons
    def on_FileChooser_file_set(self, widget):
@@ -569,37 +582,51 @@ class TransmageddonUI:
        if self.filename is not None: 
            codecinfo = self.mediacheck(self.filename)
            self.containerchoice.set_sensitive(True)
-           self.presetchoice.set_sensitive(True)
-           self.presetchoice.set_active(0)
            self.ProgressBar.set_fraction(0.0)
            self.ProgressBar.set_text(_("Transcoding Progress"))
+           if (self.havevideo==False and self.nocontaineroptiontoggle==False):
+               self.containerchoice.append_text("No container")
+               self.nocontaineroptiontoggle=True
+           else:
+               self.presetchoice.set_sensitive(True)
+               self.presetchoice.set_active(0)
+               self.containerchoice.remove_text(13)
+               self.nocontaineroptiontoggle=False
 
    def _start_transcoding(self): 
        filechoice = self.builder.get_object ("FileChooser").get_uri()
        self.filename = self.builder.get_object ("FileChooser").get_filename()
-       vheight = self.videodata['videoheight']
-       vwidth = self.videodata['videowidth']
-       ratenum = self.videodata['fratenum']
-       ratednom = self.videodata['frateden']
+       if self.havevideo:
+           vheight = self.videodata['videoheight']
+           vwidth = self.videodata['videowidth']
+           ratenum = self.videodata['fratenum']
+           ratednom = self.videodata['frateden']
+           if self.videopasstoggle == False:
+               videocodec = codecfinder.codecmap[self.VideoCodec]
+           else:
+               videocodec = gst.Caps.to_string(self.vsourcecaps)
        achannels = self.audiodata['audiochannels']
-       if self.videopasstoggle == False:
-           videocodec = codecfinder.codecmap[self.VideoCodec]
-       else:
-           videocodec = gst.Caps.to_string(self.vsourcecaps)
        if self.audiopasstoggle == False:
            audiocodec = codecfinder.codecmap[self.AudioCodec]
        else:
            audiocodec = gst.Caps.to_string(self.asourcecaps)
        container = self.builder.get_object ("containerchoice").get_active_text ()
-       print self.devicename
        if self.devicename == "nopreset":
-           self._transcoder = transcoder_engine.Transcoder(filechoice, self.filename, self.videodirectory, container, 
+           if self.havevideo: 
+               # non-preset transcoding with audio and video
+               self._transcoder = transcoder_engine_encodebin.Transcoder(filechoice, self.filename, self.videodirectory, container, 
                                                        audiocodec, videocodec, self.devicename, 
                                                        vheight, vwidth, ratenum, ratednom, achannels, 
                                                        self.multipass, self.passcounter, self.outputfilename,
                                                        self.timestamp, self.rotationvalue, self.audiopasstoggle, 
                                                        self.videopasstoggle, self.interlaced)
+           else:
+               # non-preset transcoding with audio only
+               self._transcoder = transcoder_engine_audio.Transcoder(filechoice, self.filename, self.videodirectory, container, 
+                                                       audiocodec, achannels, self.outputfilename,
+                                                       self.timestamp, self.audiopasstoggle)
        else:
+           # transcoding with preset
            self._transcoder = transcoder_engine_preset.Transcoder(filechoice, self.filename, self.videodirectory, container, 
                                                        audiocodec, videocodec, self.devicename, 
                                                        vheight, vwidth, ratenum, ratednom, achannels, 
@@ -650,15 +677,20 @@ class TransmageddonUI:
 
    def check_for_elements(self):
        containerchoice = self.builder.get_object ("containerchoice").get_active_text ()
-       containerstatus = codecfinder.get_muxer_element(codecfinder.containermap[containerchoice])
+       if containerchoice == "No container":
+           containerstatus=True
+       else:
+           containerstatus = codecfinder.get_muxer_element(codecfinder.containermap[containerchoice])
        # print "containerstatus is " + str(containerstatus)
        if self.AudioCodec != "Audio passthrough":
            audiostatus = codecfinder.get_audio_encoder_element(codecfinder.codecmap[self.AudioCodec])
        else:
            audiostatus = "Audio passthrough"
-       if self.VideoCodec != "Video passthrough":
-           videostatus = codecfinder.get_video_encoder_element(codecfinder.codecmap[self.VideoCodec])
-
+       if self.havevideo:
+           if self.VideoCodec != "Video passthrough":
+               videostatus = codecfinder.get_video_encoder_element(codecfinder.codecmap[self.VideoCodec])
+       else:
+           videostatus=True    
 
        if not containerstatus or not videostatus or not audiostatus:
            self.missingtoggle=True
@@ -709,6 +741,7 @@ class TransmageddonUI:
            self.ProgressBar.set_text(_("Pass %(count)d Progress") % {'count': self.passcounter})
        if self.audiodata.has_key("samplerate"):
            self.check_for_elements()
+           print "missingtoggle is " + str(self.missingtoggle)
            if self.missingtoggle==False:
                self._start_transcoding()
        else:
@@ -731,7 +764,6 @@ class TransmageddonUI:
 
    def on_containerchoice_changed(self, widget):
        self.CodecBox.set_sensitive(True)
-       self.rotationchoice.set_sensitive(True)
        self.ProgressBar.set_fraction(0.0)
        self.ProgressBar.set_text(_("Transcoding Progress"))
        self.container = self.builder.get_object ("containerchoice").get_active_text ()
@@ -744,15 +776,16 @@ class TransmageddonUI:
            self.audiorows[0].set_sensitive(True)
            self.audiorows[0].set_active(0)
        self.oldaudiocodec=audio_codecs
-
-       video_codecs = supported_video_container_map[self.container]
-       for c in self.oldvideocodec:
-           self.videorows[0].remove_text(0)
-       for c in video_codecs:
-           self.videorows[0].append_text(c)
-           self.videorows[0].set_sensitive(True)
-           self.videorows[0].set_active(0)
-       self.oldvideocodec=video_codecs
+       if self.havevideo==True:
+           self.rotationchoice.set_sensitive(True)
+           video_codecs = supported_video_container_map[self.container]
+           for c in self.oldvideocodec:
+               self.videorows[0].remove_text(0)
+           for c in video_codecs:
+               self.videorows[0].append_text(c)
+               self.videorows[0].set_sensitive(True)
+               self.videorows[0].set_active(0)
+           self.oldvideocodec=video_codecs
 
        if self.discover_done == True:
            self.check_for_passthrough(self.container)
