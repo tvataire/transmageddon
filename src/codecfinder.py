@@ -37,11 +37,15 @@ containermap = { 'Ogg' : "application/ogg",'Matroska' : "video/x-matroska", 'MXF
                         'Quicktime' : "video/quicktime,variant=apple", 'MPEG4' : "video/quicktime,variant=iso", 
                         'MPEG PS' : "video/mpeg,mpegversion=2,systemstream=true", 
                         'MPEG TS' : "video/mpegts", 'FLV' : "video/x-flv", '3GPP' : "video/quicktime,variant=3gpp",
-                        'ASF' : "video/x-ms-asf", 'WebM' : "video/webm" }
+                        'ASF' : "video/x-ms-asf", 'WebM' : "video/webm", 'No container' : False }
 
 csuffixmap =   { 'Ogg' : ".ogg", 'Matroska' : ".mkv", 'MXF' : ".mxf", 'AVI' : ".avi", 'Quicktime' : ".mov",
                         'MPEG4' : ".mp4", 'MPEG PS' : ".mpg", 'MPEG TS' : ".ts", 'FLV' : ".flv", '3GPP' : ".3gp",
-                 'ASF' : ".asf", 'WebM' : ".webm" }
+                 'ASF' : ".asf", 'WebM' : ".webm", 'No container' : ".mp3" }
+
+audiosuffixmap =   { 'Ogg' : ".ogg", 'Matroska' : ".mkv", 'MXF' : ".mxf", 'AVI' : ".avi", 'Quicktime' : ".m4a",
+                        'MPEG4' : ".mp4", 'MPEG PS' : ".mpg", 'MPEG TS' : ".ts", 'FLV' : ".flv", '3GPP' : ".3gp",
+                      'ASF' : ".wma", 'WebM' : ".webm", 'No container' : ".mp3" }
 
 codecmap = {     'Vorbis' : "audio/x-vorbis", 'FLAC' : "audio/x-flac", 'mp3' : "audio/mpeg, mpegversion=(int)1, layer=(int)3", 
                         'AAC' : "audio/mpeg,mpegversion=4", 'AC3' : "audio/x-ac3", 'Speex' : "audio/x-speex", 

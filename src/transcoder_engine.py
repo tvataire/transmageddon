@@ -96,13 +96,10 @@ class Transcoder(gobject.GObject):
 
        self.gstmultiqueue = gst.element_factory_make("multiqueue")
        self.multiqueueaudiosinkpad = self.gstmultiqueue.get_request_pad("sink0")
-       # print "self.multiqueueaudiosinkpad " + str(self.multiqueueaudiosinkpad)
        self.multiqueuevideosinkpad = self.gstmultiqueue.get_request_pad("sink1")
-       # print "self.multiqueuevideosinkpad " + str(self.multiqueuevideosinkpad)
        self.multiqueueaudiosrcpad = self.gstmultiqueue.get_pad("src0")
-       # print "self.multiqueueaudiosrcpad " + str(self.multiqueueaudiosrcpad)
        self.multiqueuevideosrcpad = self.gstmultiqueue.get_pad("src1")
-       # print "self.multiqueuevideosrcpad " + str(self.multiqueuevideosrcpad)
+
        self.pipeline.add(self.gstmultiqueue) 
 
        # print "audiopass toggle is " + str(self.audiopasstoggle)

@@ -96,9 +96,9 @@ class Transcoder(gobject.GObject):
 
        # self.pipeline.add(self.gstmultiqueue) 
 
-       self.encodebinprofile = gst.pbutils.EncodingContainerProfile ("ogg", None , gst.Caps("application/ogg"), None)
-       self.videoprofile = gst.pbutils.EncodingVideoProfile (gst.Caps("video/x-theora"), None, gst.caps_new_any(), 0)
-       self.audioprofile = gst.pbutils.EncodingAudioProfile (gst.Caps("audio/x-vorbis"), None, gst.caps_new_any(), 0)
+       self.encodebinprofile = gst.pbutils.EncodingContainerProfile ("ogg", None , gst.Caps(self.containercaps), None)
+       self.videoprofile = gst.pbutils.EncodingVideoProfile (gst.Caps(self.videocaps), None, gst.caps_new_any(), 0)
+       self.audioprofile = gst.pbutils.EncodingAudioProfile (gst.Caps(self.audiocaps), None, gst.caps_new_any(), 0)
        self.encodebinprofile.add_profile(self.videoprofile)
        self.encodebinprofile.add_profile(self.audioprofile)
 
@@ -194,17 +194,9 @@ class Transcoder(gobject.GObject):
            self.pipeline.remove(self.uridecoder)
        return True
 
-   def list_compat(self, a1, b1):
-       for x1 in a1:
-           if not x1 in b1:
-               return False
-       return True
-
    def OnDynamicPad(self, uridecodebin, src_pad):
        c = src_pad.get_caps().to_string()
-       print "c is " + str(c)
        sinkpad = self.encodebin.emit("request-pad", src_pad.get_caps())
-       print "action signal returned", sinkpad
        src_pad.link(sinkpad)
 
    def Pipeline (self, state):
