@@ -135,11 +135,7 @@ class Transcoder(gobject.GObject):
            nwidth = height
            nheight = width
            height = nheight
-           width = nwidth   
-
-       #self.videoflipper = gst.element_factory_make("videoflip")
-       #self.videoflipper.set_property("method", self.rotationvalue)
-       #self.pipeline.add(self.videoflipper)
+           width = nwidth
 
        #self.fakesink = gst.element_factory_make("fakesink", "fakesink")
        #self.pipeline.add(self.fakesink) 
