@@ -26,9 +26,6 @@ os.putenv('GST_DEBUG_DUMP_DIR_DIR', '/tmp')
 import which
 import time
 import transcoder_engine
-import transcoder_engine_preset
-import transcoder_engine_audio
-import transcoder_engine_encodebin
 import gobject; gobject.threads_init()
 from urlparse import urlparse
 import codecfinder
@@ -611,23 +608,8 @@ class TransmageddonUI:
        else:
            audiocodec = gst.Caps.to_string(self.asourcecaps)
        container = self.builder.get_object ("containerchoice").get_active_text ()
-       if self.devicename == "nopreset":
-           if self.havevideo: 
-               # non-preset transcoding with audio and video
-               self._transcoder = transcoder_engine_encodebin.Transcoder(filechoice, self.filename, self.videodirectory, container, 
-                                                       audiocodec, videocodec, self.devicename, 
-                                                       vheight, vwidth, ratenum, ratednom, achannels, 
-                                                       self.multipass, self.passcounter, self.outputfilename,
-                                                       self.timestamp, self.rotationvalue, self.audiopasstoggle, 
-                                                       self.videopasstoggle, self.interlaced)
-           else:
-               # non-preset transcoding with audio only
-               self._transcoder = transcoder_engine_audio.Transcoder(filechoice, self.filename, self.videodirectory, container, 
-                                                       audiocodec, achannels, self.outputfilename,
-                                                       self.timestamp, self.audiopasstoggle)
-       else:
-           # transcoding with preset
-           self._transcoder = transcoder_engine_preset.Transcoder(filechoice, self.filename, self.videodirectory, container, 
+       # non-preset transcoding with audio and video
+       self._transcoder = transcoder_engine.Transcoder(filechoice, self.filename, self.videodirectory, container, 
                                                        audiocodec, videocodec, self.devicename, 
                                                        vheight, vwidth, ratenum, ratednom, achannels, 
                                                        self.multipass, self.passcounter, self.outputfilename,
