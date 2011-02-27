@@ -205,12 +205,15 @@ class Transcoder(gobject.GObject):
           #print "c is " + str(c)
           src_pad.link(sinkpad)
        elif c.startswith("video/"):
-           self.videoflipper = gst.element_factory_make("videoflip")
-           self.videoflipper.set_property("method", self.rotationvalue)
-           self.pipeline.add(self.videoflipper)
-           src_pad.link(self.videoflipper.get_static_pad("sink"))
-           self.videoflipper.get_static_pad("src").link(sinkpad)
-           self.videoflipper.set_state(gst.STATE_PAUSED)
+           if self.videopasstoggle==False:
+               self.videoflipper = gst.element_factory_make("videoflip")
+               self.videoflipper.set_property("method", self.rotationvalue)
+               self.pipeline.add(self.videoflipper)
+               src_pad.link(self.videoflipper.get_static_pad("sink"))
+               self.videoflipper.get_static_pad("src").link(sinkpad)
+               self.videoflipper.set_state(gst.STATE_PAUSED)
+           else:
+               src_pad.link(sinkpad)
 
    def Pipeline (self, state):
        if state == ("playing"):

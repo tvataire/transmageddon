@@ -663,16 +663,16 @@ class TransmageddonUI:
            containerstatus=True
        else:
            containerstatus = codecfinder.get_muxer_element(codecfinder.containermap[containerchoice])
-       # print "containerstatus is " + str(containerstatus)
-       if self.AudioCodec != "Audio passthrough":
+
+       if self.audiopasstoggle != True:
            audiostatus = codecfinder.get_audio_encoder_element(codecfinder.codecmap[self.AudioCodec])
        else:
-           audiostatus = "Audio passthrough"
+           audiostatus=True
        if self.havevideo:
-           if self.VideoCodec != "Video passthrough":
+           if self.videopasstoggle != True:
                videostatus = codecfinder.get_video_encoder_element(codecfinder.codecmap[self.VideoCodec])
-       else:
-           videostatus=True    
+           else:
+               videostatus=True
 
        if not containerstatus or not videostatus or not audiostatus:
            self.missingtoggle=True
