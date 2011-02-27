@@ -104,6 +104,7 @@ class Transcoder(gobject.GObject):
 
        self.encodebin = gst.element_factory_make ("encodebin", None)
        self.encodebin.set_property("profile", self.encodebinprofile)
+       self.encodebin.set_property("avoid-reencoding", True)
        self.pipeline.add(self.encodebin)
 
        self.remuxcaps = gst.Caps()
@@ -202,7 +203,6 @@ class Transcoder(gobject.GObject):
        sinkpad = self.encodebin.emit("request-pad", src_pad.get_caps())
        c = sinkpad.get_caps().to_string()
        if c.startswith("audio/"):
-          #print "c is " + str(c)
           src_pad.link(sinkpad)
        elif c.startswith("video/"):
            if self.videopasstoggle==False:
