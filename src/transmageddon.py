@@ -273,8 +273,6 @@ class TransmageddonUI:
        self.presetchoice.set_sensitive(False)
        self.containerchoice.set_sensitive(False)
        self.rotationchoice.set_sensitive(False)
-       # self.codec_buttons["apass"].set_sensitive(False)
-       # self.codec_buttons["vpass"].set_sensitive(False)
 
        # set default values for various variables
        self.AudioCodec = "vorbis"
@@ -446,7 +444,7 @@ class TransmageddonUI:
            self.CodecBox.set_sensitive(True)
            self.presetchoice.set_sensitive(True)
            self.cancelbutton.set_sensitive(False)
-           self.transcodebutton.set_sensitive(False)
+           self.transcodebutton.set_sensitive(True)
            self.rotationchoice.set_sensitive(True)
            self.start_time = False
            self.ProgressBar.set_text(_("Done Transcoding"))
@@ -737,6 +735,7 @@ class TransmageddonUI:
        self.rotationchoice.set_sensitive(True)
        self.presetchoice.set_active(0)
        self.cancelbutton.set_sensitive(False)
+       self.transcodebutton.set_sensitive(True)
        self._cancel_encoding = transcoder_engine.Transcoder.Pipeline(self._transcoder,"null")
        self.ProgressBar.set_fraction(0.0)
        self.ProgressBar.set_text(_("Transcoding Progress"))

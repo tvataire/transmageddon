@@ -51,16 +51,16 @@ class Transcoder(gobject.GObject):
        # Choose plugin based on Codec Name
        # or switch to remuxing mode if any of the values are set to 'pastr'
        self.stoptoggle=False
-       self.audiocaps = AUDIOCODECVALUE
-       self.videocaps = VIDEOCODECVALUE
+       self.audiocaps = gst.Caps(AUDIOCODECVALUE)
+       self.videocaps = gst.Caps(VIDEOCODECVALUE)
        self.audiopasstoggle = AUDIOPASSTOGGLE
        self.interlaced = INTERLACED
        self.videopasstoggle = VIDEOPASSTOGGLE
        self.doaudio= False
-       if self.audiopasstoggle == False:
-           self.AudioEncoderPlugin = codecfinder.get_audio_encoder_element(self.audiocaps)
-       if self.videopasstoggle == False:
-           self.VideoEncoderPlugin = codecfinder.get_video_encoder_element(self.videocaps)
+       # if self.audiopasstoggle == False:
+       #    self.AudioEncoderPlugin = codecfinder.get_audio_encoder_element(self.audiocaps)
+       #if self.videopasstoggle == False:
+       #    self.VideoEncoderPlugin = codecfinder.get_video_encoder_element(self.videocaps)
        self.preset = PRESET
        self.oheight = OHEIGHT
        self.owidth = OWIDTH
@@ -80,6 +80,20 @@ class Transcoder(gobject.GObject):
        if self.multipass != False:
            self.cachefile = (str(glib.get_user_cache_dir())+"/"+"multipass-cache-file"+self.timestamp+".log")
 
+       #gather preset data if relevant
+       if self.preset != "nopreset":
+           height, width, num, denom, pixelaspectratio = self.provide_presets()
+           for acap in self.audiocaps:
+               acap["rate"] = self.samplerate
+               acap["channels"] = self.channels
+           for vcap in self.videocaps:
+               vcap["height"] = height
+               vcap["width"] = width
+               vcap["framerate"] = gst.Fraction(num, denom)
+               if pixelaspectratio != gst.Fraction(0, 0):
+                   vcap["pixel-aspect-ratio"] = pixelaspectratio
+
+
        # Create transcoding pipeline
        self.pipeline = gst.Pipeline("TranscodingPipeline")
        self.pipeline.set_state(gst.STATE_PAUSED)
@@ -88,17 +102,11 @@ class Transcoder(gobject.GObject):
        self.uridecoder.set_property("uri", FILECHOSEN)
        self.uridecoder.connect("pad-added", self.OnDynamicPad)
 
-       # self.gstmultiqueue = gst.element_factory_make("multiqueue")
-       # self.multiqueueaudiosinkpad = self.gstmultiqueue.get_request_pad("sink0")
-       # self.multiqueuevideosinkpad = self.gstmultiqueue.get_request_pad("sink1")
-       # self.multiqueueaudiosrcpad = self.gstmultiqueue.get_pad("src0")
-       # self.multiqueuevideosrcpad = self.gstmultiqueue.get_pad("src1")
-
-       # self.pipeline.add(self.gstmultiqueue) 
-
        self.encodebinprofile = gst.pbutils.EncodingContainerProfile ("ogg", None , gst.Caps(self.containercaps), None)
-       self.videoprofile = gst.pbutils.EncodingVideoProfile (gst.Caps(self.videocaps), None, gst.caps_new_any(), 0)
-       self.audioprofile = gst.pbutils.EncodingAudioProfile (gst.Caps(self.audiocaps), None, gst.caps_new_any(), 0)
+       print "self.videocaps is " + str(self.videocaps)
+       print "self.audiocaps is " + str(self.audiocaps) 
+       self.videoprofile = gst.pbutils.EncodingVideoProfile (self.videocaps, None, gst.caps_new_any(), 0)
+       self.audioprofile = gst.pbutils.EncodingAudioProfile (self.audiocaps, None, gst.caps_new_any(), 0)
        self.encodebinprofile.add_profile(self.videoprofile)
        self.encodebinprofile.add_profile(self.audioprofile)
 
@@ -136,10 +144,7 @@ class Transcoder(gobject.GObject):
            nwidth = height
            nheight = width
            height = nheight
-           width = nwidth
-
-       #self.fakesink = gst.element_factory_make("fakesink", "fakesink")
-       #self.pipeline.add(self.fakesink) 
+           width = nwidth 
 
        self.uridecoder.set_state(gst.STATE_PAUSED)
        self.encodebin.set_state(gst.STATE_PAUSED)
@@ -149,15 +154,113 @@ class Transcoder(gobject.GObject):
        self.uridecoder.connect("no-more-pads", self.noMorePads) # we need to wait on this one before going further
        # print "connecting to no-more-pads"
 
-       # Some encoders like x264enc are not able to handle odd height or widths
-      # if width % 2:
-        #   width += 1
-      # if height % 2:
-       #    height += 1
+   # Gather preset values and create preset elements
+   def provide_presets(self):
+       print "providing presets"
+       devices = presets.get()
+       device = devices[self.preset]
+       preset = device.presets["Normal"]
+       
+       # Check for black border boolean
+       border = preset.vcodec.border
+       if border == "Y":
+           self.blackborderflag = True
+       else:
+           self.blackborderflag = False
 
+       # Check for audio samplerate
+       self.samplerate = int(preset.acodec.samplerate)
+
+       # calculate number of channels
+       chanmin, chanmax = preset.acodec.channels
+       if int(self.achannels) < int(chanmax):
+           if int(self.achannels) > int(chanmin): 
+               self.channels = int(self.achannels)
+           else:
+               self.channels = int(chanmin)
+       else:
+           self.channels = int(chanmax)
+
+       # Check if rescaling is needed and calculate new video width/height keeping aspect ratio
+       # Also add black borders if needed
+       wmin, wmax  =  preset.vcodec.width
+       hmin, hmax = preset.vcodec.height
+       width, height = self.owidth, self.oheight
+       # print "owidth is " + str(self.owidth) + " oheight is " + str(self.oheight)
+       self.vpreset = []       
+       voutput = preset.vcodec.presets[0].split(", ")
+       for x in voutput:
+           self.vpreset.append(x)
+       self.apreset = []
+       aoutput = preset.acodec.presets[0].split(", ")
+       for x in aoutput:
+           self.apreset.append(x)
+         
+       # Get Display aspect ratio
+       pixelaspectratio = preset.vcodec.aspectratio[0]
+
+       # Scale width / height down
+       if self.owidth > wmax:
+           width = wmax
+           height = int((float(wmax) / self.owidth) * self.oheight)
+       if height > hmax:
+           height = hmax
+           width = int((float(hmax) / self.oheight) * self.owidth)
+
+       # Some encoders like x264enc are not able to handle odd height or widths
+       if width % 2:
+           width += 1
+       if height % 2:
+           height += 1
+
+       # Add any required padding
+       if self.blackborderflag == True:
+           if width < wmin and height < hmin:
+               wpx = (wmin - width) / 2
+               hpx = (hmin - height) / 2
+               self.vbox['left'] = -wpx
+               self.vbox['right'] = -wpx
+               self.vbox['top'] = -hpx
+               self.vbox['bottom'] = -hpx
+           elif width < wmin:
+               # print "adding width borders"
+               px = (wmin - width) / 2
+               self.vbox['left'] = -px
+               self.vbox['right'] = -px
+               self.vbox['top'] = -0
+               self.vbox['bottom'] = -0
+           elif height < hmin:
+               # print " adding height borders"
+               px = (hmin - height) / 2
+               self.vbox['top'] = -px
+               self.vbox['bottom'] = -px
+               self.vbox['left'] = -int(0)
+               self.vbox['right'] = -int(0)
+           else:
+               self.vbox['top'] = -int(0)
+               self.vbox['bottom'] = -int(0)
+               self.vbox['left'] = -int(0)
+               self.vbox['right'] = -int(0)
+
+       # Setup video framerate and add to caps - 
+       # FIXME: Is minimum framerate really worthwhile checking for?
+       # =================================================================
+       rmin = preset.vcodec.rate[0].num / float(preset.vcodec.rate[0].denom)
+       rmax = preset.vcodec.rate[1].num / float(preset.vcodec.rate[1].denom)
+       rmaxtest = preset.vcodec.rate[1]
+       orate = self.fratenum / self.frateden 
+       if orate > rmax:
+           num = preset.vcodec.rate[1].num
+           denom = preset.vcodec.rate[1].denom
+       elif orate < rmin:
+           num = preset.vcodec.rate[0].num
+           denom = preset.vcodec.rate[0].denom
+       else:
+           num = self.fratenum
+           denom = self.frateden
 
        # print "final height " + str(height) + " final width " + str(width)
-     #  return height, width, num, denom, pixelaspectratio
+       return height, width, num, denom, pixelaspectratio
 
    def noMorePads(self, dbin):
        if (self.multipass == False) or (self.passcounter == int(0)):
