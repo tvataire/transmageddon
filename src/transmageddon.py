@@ -783,7 +783,6 @@ class TransmageddonUI:
                self.audiorows[0].set_sensitive(True)
                self.audiorows[0].set_active(0)
            print "self.audiocodecs has just been populated and is " + str(self.audiocodecs)
-
        self.oldaudiocodec=audio_codecs
        print "self.audiocodecs is " + str(self.audiocodecs)
        if self.havevideo==True:
@@ -794,12 +793,18 @@ class TransmageddonUI:
                self.houseclean=True
                self.videorows[0].remove_text(0)
            self.houseclean=False
-           for c in video_codecs:
-               self.videocodecs.append(gst.Caps(codecfinder.codecmap[c]))
-           for c in video_codecs: # I can't update the menu with loop append
-               self.videorows[0].append_text(c)
-               self.videorows[0].set_sensitive(True)
+           if self.usingpreset==True:
+               print "setting preset codec into drop down list"
+               self.videorows[0].append_text(str(gst.pbutils.get_codec_description(self.presetvideocodec)))
+               print "preset codec name is " + str(gst.pbutils.get_codec_description(self.presetvideocodec))
                self.videorows[0].set_active(0)
+           else:
+               for c in video_codecs:
+                   self.videocodecs.append(gst.Caps(codecfinder.codecmap[c]))
+               for c in video_codecs: # I can't update the menu with loop append
+                   self.videorows[0].append_text(c)
+                   self.videorows[0].set_sensitive(True)
+                   self.videorows[0].set_active(0)
 
            self.oldvideocodec=video_codecs
            print "self.videocodecs is " + str(self.videocodecs)
@@ -851,13 +856,15 @@ class TransmageddonUI:
            print "self.AudioCodec is (from preset) " + str(self.AudioCodec)
 
    def on_videocodec_changed(self, widget):
-       if self.houseclean == False:
+       if (self.houseclean == False and self.usingpreset==False):
            self.VideoCodec = self.videocodecs[self.videorows[0].get_active()]
            print "self.VideoCodec is " + str(self.VideoCodec)
            print self.videorows[0].get_active()
            if self.videorows[0].get_active() == self.videopassmenuno:
                self.videopasstoggle=True
                print " you choose video passthrough"
+       elif self.usingpreset==True:
+           self.VideoCodec = gst.Caps(self.presetvideocodec)
 
 
    def on_videobutton_pressed(self, widget, codec):
