@@ -297,6 +297,9 @@ class TransmageddonUI:
        self.nocontaineroptiontoggle=False
        self.audiopassmenuno=1 # create variables to store passthrough options slot in the menu
        self.videopassmenuno=1
+       self.usingpreset=False # create toggle so I can split codepath depending on if I using a preset or not
+       self.presetaudiocodec="None"
+       self.presetvideocodec="None"
 
        self.p_duration = gst.CLOCK_TIME_NONE
        self.p_time = gst.FORMAT_TIME
@@ -345,6 +348,10 @@ class TransmageddonUI:
        devices = presets.get()
        device = devices[devicename]
        preset = device.presets["Normal"]
+       self.usingpreset=True
+       print "preset.acodec.name is " + str(preset.acodec.name)
+       self.presetaudiocodec=preset.acodec.name
+       self.presetvideocodec=preset.vcodec.name
        if preset.container == "application/ogg":
            self.containerchoice.set_active(0)
        elif preset.container == "video/x-matroska":
@@ -369,17 +376,15 @@ class TransmageddonUI:
            self.containerchoice.set_active(10)
        else:
             print "failed to set container format"
-       print "preset.acodec.name is " + str(preset.acodec.name)
-       # self.AudioCodec=preset.acodec.name
-       # self.VideoCodec=preset.vcodec.name
+
 
        # Check for number of passes
-       passes = preset.vcodec.passes
-       if passes == "0":
-          self.multipass = False
-       else:
-          self.multipass = int(passes)
-          self.passcounter = int(0)
+       # passes = preset.vcodec.passes
+       #if passes == "0":
+       self.multipass = False
+       #else:
+       #   self.multipass = int(passes)
+       #   self.passcounter = int(0)
 
    # Create query on uridecoder to get values to populate progressbar 
    # Notes:
@@ -765,13 +770,19 @@ class TransmageddonUI:
            self.houseclean=True
            self.audiorows[0].remove_text(0)
        self.houseclean=False
-       for c in audio_codecs:
-           self.audiocodecs.append(gst.Caps(codecfinder.codecmap[c]))
-       for c in audio_codecs:
-           self.audiorows[0].append_text(c)
-           self.audiorows[0].set_sensitive(True)
+       if self.usingpreset==True:
+           print "setting preset codec into drop down list"
+           self.audiorows[0].append_text(str(gst.pbutils.get_codec_description(self.presetaudiocodec)))
+           print "preset codec name is " + str(gst.pbutils.get_codec_description(self.presetaudiocodec))
            self.audiorows[0].set_active(0)
-       print "self.audiocodecs has just been populated and is " + str(self.audiocodecs)
+       else:
+           for c in audio_codecs:
+               self.audiocodecs.append(gst.Caps(codecfinder.codecmap[c]))
+           for c in audio_codecs:
+               self.audiorows[0].append_text(c)
+               self.audiorows[0].set_sensitive(True)
+               self.audiorows[0].set_active(0)
+           print "self.audiocodecs has just been populated and is " + str(self.audiocodecs)
 
        self.oldaudiocodec=audio_codecs
        print "self.audiocodecs is " + str(self.audiocodecs)
@@ -800,6 +811,7 @@ class TransmageddonUI:
        presetchoice = self.builder.get_object ("presetchoice").get_active_text ()
        self.ProgressBar.set_fraction(0.0)
        if presetchoice == "No Presets":
+           self.usingpreset=False
            self.devicename = "nopreset"
            self.containerchoice.set_sensitive(True)
            self.start_time = False
@@ -810,9 +822,9 @@ class TransmageddonUI:
                self.CodecBox.set_sensitive(True)
                self.transcodebutton.set_sensitive(True)
        else:
+           self.usingpreset=True
            self.ProgressBar.set_fraction(0.0)
            self.devicename= self.presetchoices[presetchoice]
-           # print "self.devicename is " + str(self.devicename)
            self.provide_presets(self.devicename)
            self.containerchoice.set_sensitive(False)
            self.CodecBox.set_sensitive(False)
@@ -827,15 +839,16 @@ class TransmageddonUI:
        print "self.AudioCodec is " + str(self.AudioCodec)
        print "self.audiorows is " + str(self.audiorows[0].get_active())
        print "self.audiocodecs is here " + str(self.audiocodecs)
-       if self.houseclean == False:
+       if (self.houseclean == False and self.usingpreset==False):
            self.AudioCodec = self.audiocodecs[self.audiorows[0].get_active()]
            print "self.AudioCodec is " + str(self.AudioCodec)
            print self.audiorows[0].get_active()
            if self.audiorows[0].get_active() ==  self.audiopassmenuno:
                self.audiopasstoggle=True
                print "you choose audio passthrough"
-       
-
+       elif self.usingpreset==True:
+           self.AudioCodec = gst.Caps(self.presetaudiocodec)    
+           print "self.AudioCodec is (from preset) " + str(self.AudioCodec)
 
    def on_videocodec_changed(self, widget):
        if self.houseclean == False:
