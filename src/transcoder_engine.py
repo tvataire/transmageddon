@@ -46,7 +46,7 @@ class Transcoder(gobject.GObject):
        gobject.GObject.__init__(self)
 
        # Choose plugin based on Container name
-       self.containercaps = codecfinder.containermap[CONTAINERCHOICE]
+       self.containercaps = gst.Caps(codecfinder.containermap[CONTAINERCHOICE])
 
        # Choose plugin based on Codec Name
        # or switch to remuxing mode if any of the values are set to 'pastr'
@@ -102,7 +102,8 @@ class Transcoder(gobject.GObject):
        self.uridecoder.set_property("uri", FILECHOSEN)
        self.uridecoder.connect("pad-added", self.OnDynamicPad)
 
-       self.encodebinprofile = gst.pbutils.EncodingContainerProfile ("ogg", None , gst.Caps(self.containercaps), None)
+       self.encodebinprofile = gst.pbutils.EncodingContainerProfile ("containerformat", None , self.containercaps, None)
+       print "self.containercaps is " + str(self.containercaps)
        print "self.videocaps is " + str(self.videocaps)
        print "self.audiocaps is " + str(self.audiocaps) 
        self.videoprofile = gst.pbutils.EncodingVideoProfile (self.videocaps, None, gst.caps_new_any(), 0)
@@ -154,13 +155,24 @@ class Transcoder(gobject.GObject):
        self.uridecoder.connect("no-more-pads", self.noMorePads) # we need to wait on this one before going further
        # print "connecting to no-more-pads"
 
+   # Get all preset values
+   def reverse_lookup(self,v):
+       for k in codecfinder.codecmap:
+           if codecfinder.codecmap[k] == v:
+               return k
+
    # Gather preset values and create preset elements
    def provide_presets(self):
        print "providing presets"
        devices = presets.get()
        device = devices[self.preset]
        preset = device.presets["Normal"]
-       
+    
+       # set audio and video caps from preset file
+       self.audiocaps=gst.Caps(preset.acodec.name)
+       self.videocaps=gst.Caps(preset.vcodec.name)
+       print "preset audiocaps" + str(self.audiocaps)
+       print "preset videocaps" + str(self.videocaps)
        # Check for black border boolean
        border = preset.vcodec.border
        if border == "Y":

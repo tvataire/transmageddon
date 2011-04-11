@@ -80,7 +80,7 @@ def get_muxer_element(containercaps):
            muxers.append(fact.get_name())
            features.append(fact)
    muxerfeature = dict(zip(muxers, features))
-   incomingcaps = gst.caps_from_string(containercaps)
+   incomingcaps = containercaps
    for x in muxers:
            element = x
            factory = gst.registry_get_default().lookup_feature(str(x))
@@ -121,7 +121,7 @@ def get_audio_encoder_element(audioencodercaps):
                encoders.append(fact.get_name())
                features.append(fact)
    encoderfeature = dict(zip(encoders, features))
-   incomingcaps = gst.caps_from_string(audioencodercaps)
+   incomingcaps = audioencodercaps
    for x in encoders:
            element = x
            factory = gst.registry_get_default().lookup_feature(str(x))
@@ -164,7 +164,7 @@ def get_video_encoder_element(videoencodercaps):
            encoders.append(fact.get_name())
            features.append(fact)
    encoderfeature = dict(zip(encoders, features))
-   incomingcaps = gst.caps_from_string(videoencodercaps)
+   incomingcaps = videoencodercaps
    for x in encoders:
            element = x
            factory = gst.registry_get_default().lookup_feature(str(x))
