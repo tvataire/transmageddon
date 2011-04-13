@@ -873,6 +873,7 @@ class TransmageddonUI:
            self.videonovideomenuno=(len(self.videocodecs))-1
            if self.builder.get_object("containerchoice").get_active()==12:
                self.videorows[0].set_active(self.videonovideomenuno)
+               self.videorows[0].set_sensitive(False)
            if self.discover_done == True:
                self.check_for_passthrough(self.container)
 

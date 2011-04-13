@@ -47,16 +47,22 @@ class Transcoder(gobject.GObject):
 
        # Choose plugin based on Container name
        self.container = CONTAINERCHOICE
+       self.audiocaps = gst.Caps(AUDIOCODECVALUE)
        if self.container != False:
            self.containercaps = gst.Caps(codecfinder.containermap[CONTAINERCHOICE])
+       # special case mp3 which is a no-container format with a container (id3mux)
+       else:
+           if self.audiocaps.intersect(gst.Caps("audio/mpeg, mpegversion=1, layer=3")):
+               self.containercaps=gst.Caps("application/x-id3")
+               print "self.encodebinprofile is set to id3mux"
 
        # Choose plugin based on Codec Name
        # or switch to remuxing mode if any of the values are set to 'pastr'
        self.stoptoggle=False
-       self.audiocaps = gst.Caps(AUDIOCODECVALUE)
-       print "VIDEOCODECVALUE is " + str(VIDEOCODECVALUE)
-       if VIDEOCODECVALUE != False:
-          self.videocaps = gst.Caps(VIDEOCODECVALUE)
+       if VIDEOCODECVALUE==False:
+           self.videocaps="novid"
+       else:
+           self.videocaps = VIDEOCODECVALUE
        self.audiopasstoggle = AUDIOPASSTOGGLE
        self.interlaced = INTERLACED
        self.videopasstoggle = VIDEOPASSTOGGLE
@@ -113,14 +119,11 @@ class Transcoder(gobject.GObject):
 
        # first check if we have a container format, if not set up output for possible outputs
        if self.container==False:
-           print "self.audiocaps are here set to " + str(self.audiocaps)
-           if self.audiocaps.intersect(gst.Caps("audio/mpeg, mpegversion=1, layer=3")):
-               self.container=gst.Caps("application/x-id3")
-               self.encodebinprofile = gst.pbutils.EncodingContainerProfile ("id3mux", None, self.container, None)
-               print "self.encodebinprofile is set to id3mux"
-           elif self.audiocaps.intersect(gst.Caps("audio/mpeg, mpegversion=4")):
+           if self.audiocaps.intersect(gst.Caps("audio/mpeg, mpegversion=4")):
                print "they do intersect AAC"
                self.audiocaps=gst.Caps("audio/mpeg, mpegversion=4, stream-format=adts")
+           elif self.audiocaps.intersect(gst.Caps("audio/x-flac")):
+               self.audiocaps=gst.Caps("audio/x-flac")
        else:
            print "creating encoderbinprofile with muxer " + str(self.containercaps)
            self.encodebinprofile = gst.pbutils.EncodingContainerProfile ("containerformat", None , self.containercaps, None)
@@ -353,9 +356,13 @@ class Transcoder(gobject.GObject):
        # c = src_pad.get_caps().to_string()
        print "what is self.VideoCodec in transcoder engine " + str(self.videocaps)
        if (self.container==False):
-           sinkpad = self.encodebin.get_static_pad("audio_0")
-           print "using static audio pad " + str(sinkpad) 
-           src_pad.link(sinkpad)
+           a =  src_pad.get_caps().to_string()
+           if a.startswith("audio/"):
+               sinkpad = self.encodebin.get_static_pad("audio_0")
+               print "using static audio pad " + str(sinkpad) 
+               src_pad.link(sinkpad)
+           elif a.startswith("video/"):
+               src_pad.link(self.fakesink.get_static_pad("sink"))
        else:
            if self.videocaps == "novid":
                a =  src_pad.get_caps().to_string()
