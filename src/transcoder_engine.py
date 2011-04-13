@@ -184,7 +184,8 @@ class Transcoder(gobject.GObject):
            nheight = width
            height = nheight
            width = nwidth 
-       self.fakesink.set_state(gst.STATE_PAUSED)
+       if self.videocaps=="novid":
+           self.fakesink.set_state(gst.STATE_PAUSED)
        self.uridecoder.set_state(gst.STATE_PAUSED)
        self.encodebin.set_state(gst.STATE_PAUSED)
        # print "setting uridcodebin to paused"
