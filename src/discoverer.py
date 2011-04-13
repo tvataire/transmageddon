@@ -142,7 +142,8 @@ class Discoverer(gst.Pipeline):
         # callbacks
         self.typefind.connect("have-type", self._have_type_cb)
         self.dbin.connect("new-decoded-pad", self._new_decoded_pad_cb)
-        self.dbin.connect("autoplug-continue", self._decodebin_autoplug_continue_cb)
+        self.dbin.connect("autoplug-continue", \
+                self._decodebin_autoplug_continue_cb)
         self.dbin.connect("no-more-pads", self._no_more_pads_cb)
         self.dbin.connect("unknown-type", self._unknown_type_cb)
 
@@ -194,7 +195,8 @@ class Discoverer(gst.Pipeline):
         self.bus.connect("message", self._bus_message_cb)
 
         # 3s timeout
-        self._timeoutid = gobject.timeout_add(self._timeout, self._timed_out_or_eos)
+        self._timeoutid = gobject.timeout_add(self._timeout, \
+                self._timed_out_or_eos)
 
         self.info("setting to PLAY")
         if not self.set_state(gst.STATE_PLAYING):
@@ -221,27 +223,28 @@ class Discoverer(gst.Pipeline):
         print "Mime Type :\t", self.mimetype
         if not self.is_video and not self.is_audio:
             return
-        print "Length :\t", self._time_to_string(max(self.audiolength, self.videolength))
-        print "\tAudio:", self._time_to_string(self.audiolength), "\tVideo:", self._time_to_string(self.videolength)
+        print "Length :\t", self._time_to_string(max(self.audiolength, \
+                self.videolength))
+        print "\tAudio:", self._time_to_string(self.audiolength), "\tVideo:", \
+                self._time_to_string(self.videolength)
         if self.is_video and self.videorate:
             print "Video :"
             print "Incoming video format :" + str(self.inputvideocaps)
-            print "\t%d x %d @ %d/%d fps" % (self.videowidth,
-                                            self.videoheight,
-                                            self.videorate.num, self.videorate.denom)
+            print "\t%d x %d @ %d/%d fps" % (self.videowidth, \
+                                            self.videoheight, \
+                                            self.videorate.num, \
+                                            self.videorate.denom)
             if self.tags.has_key("video-codec"):
                 print "\tCodec :", self.tags.pop("video-codec")
         if self.is_audio:
             print "Audio :"
             print "Incoming audio format :" + str(self.inputaudiocaps)
             if self.audiofloat:
-                print "\t%d channels(s) : %dHz @ %dbits (float)" % (self.audiochannels,
-                                                                    self.audiorate,
-                                                                    self.audiowidth)
+                print "\t%d channels(s) : %dHz @ %dbits (float)" % \
+                        (self.audiochannels, self.audiorate, self.audiowidth)
             else:
-                print "\t%d channels(s) : %dHz @ %dbits (int)" % (self.audiochannels,
-                                                                  self.audiorate,
-                                                                  self.audiodepth)
+                print "\t%d channels(s) : %dHz @ %dbits (int)" % \
+                        (self.audiochannels, self.audiorate, self.audiodepth)
             if self.tags.has_key("audio-codec"):
                 print "\tCodec :", self.tags.pop("audio-codec")
         for stream in self.otherstreams:
@@ -322,20 +325,24 @@ class Discoverer(gst.Pipeline):
                    # print "discoverer: c is audio " + str(c)
                    # if caps[0].has_field("rate"):
                        if caps.is_fixed():
-                           blacklist = ['rate','channels','bitrate','block_align','mode','subbands'
-                                        ,'allocation','bitpool','blocks','width','depth'
-                                        ,'codec_data']
+                           blacklist = ['rate', 'channels', 'bitrate', \
+                                   'block_align', 'mode', 'subbands', \
+                                   'allocation', 'bitpool', 'blocks', 'width', \
+                                   'depth', 'codec_data']
                            for x in caps:
                                aresult = caps[0].get_name();
                                for attr in caps[0].keys():
                                    if attr not in blacklist:
                                        aresult += ","+attr+"="+str(caps[0][attr])
                            self.inputaudiocaps = aresult
-                           # print "discoverer: self.inputaudiocaps " + str(self.inputaudiocaps)
+                           # print "discoverer: self.inputaudiocaps " + \
+                           # str(self.inputaudiocaps)
            elif c.startswith("video/") or c.startswith("image/"):
-              if c.startswith("video/x-raw-yuv") == False or c.startswith("video/x-raw-rgb") == False:
+              if c.startswith("video/x-raw-yuv") == False or \
+                      c.startswith("video/x-raw-rgb") == False:
                   if caps.is_fixed():
-                      blacklist = ['height','width','framerate','depth','codec_data','pixel-aspect-ratio','format']
+                      blacklist = ['height', 'width', 'framerate', 'depth', \
+                              'codec_data', 'pixel-aspect-ratio', 'format']
                       for x in caps:
                            vresult = caps[0].get_name();
                            for attr in caps[0].keys():
@@ -362,8 +369,9 @@ class Discoverer(gst.Pipeline):
             return
         # we connect a fakesink to the new pad...
         pad.info("adding queue->fakesink")
-        fakesink = gst.element_factory_make("fakesink", "fakesink%d-%s" % 
-            (self.sinknumber, "audio" in caps.to_string() and "audio" or "video"))
+        fakesink = gst.element_factory_make("fakesink", "fakesink%d-%s" % \
+                (self.sinknumber, "audio" in caps.to_string() and \
+                "audio" or "video"))
         self.sinknumber += 1
         queue = gst.element_factory_make("queue")
         # we want the queue to buffer up to the specified amount of data 
