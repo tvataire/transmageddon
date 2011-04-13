@@ -821,8 +821,6 @@ class TransmageddonUI:
                self.container=False
                audio_codecs = [ 'mp3', 'AAC', 'FLAC' ]
                self.audiocodecs =[]
-               print "self.videonovideomenuno is " + str(self.videonovideomenuno)
-               self.videorows[0].set_active(self.videonovideomenuno)
            else:
                audio_codecs = supported_audio_container_map[self.container]
                self.audiocodecs =[]
@@ -867,12 +865,14 @@ class TransmageddonUI:
                            self.videorows[0].append_text(c)
                        self.videorows[0].set_sensitive(True)
                        self.videorows[0].set_active(0)
-                    # add a 'No Video option'
-                   self.videorows[0].append_text("No Video")
-                   self.videocodecs.append("novid")
-                   self.videonovideomenuno=(len(self.videocodecs))-1
                    self.oldvideocodec=video_codecs
-                   print "self.videocodecs is " + str(self.videocodecs)
+
+           # add a 'No Video option'
+           self.videorows[0].append_text("No Video")
+           self.videocodecs.append("novid")
+           self.videonovideomenuno=(len(self.videocodecs))-1
+           if self.builder.get_object("containerchoice").get_active()==12:
+               self.videorows[0].set_active(self.videonovideomenuno)
            if self.discover_done == True:
                self.check_for_passthrough(self.container)
 
