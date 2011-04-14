@@ -147,10 +147,10 @@ class Transcoder(gobject.GObject):
        self.encodebin.set_property("profile", self.encodebinprofile)
        self.encodebin.set_property("avoid-reencoding", True)
        self.pipeline.add(self.encodebin)
-       if self.videocaps=="novid":
-           self.fakesink = gst.element_factory_make("fakesink", "fakesink")
-           self.fakesink.set_property("sync", True)
-           self.pipeline.add(self.fakesink)
+      # if self.videocaps=="novid":
+      #     self.fakesink = gst.element_factory_make("fakesink", "fakesink")
+      #     self.fakesink.set_property("sync", True)
+      #     self.pipeline.add(self.fakesink)
 
        self.remuxcaps = gst.Caps()
        if self.audiopasstoggle:
@@ -186,8 +186,8 @@ class Transcoder(gobject.GObject):
        # print "reached end of first pipeline bulk, next step dynamic
        # audio/video pads"
 
-       if self.videocaps=="novid":
-           self.fakesink.set_state(gst.STATE_PAUSED)
+       #if self.videocaps=="novid":
+       #    self.fakesink.set_state(gst.STATE_PAUSED)
        self.uridecoder.set_state(gst.STATE_PAUSED)
        self.encodebin.set_state(gst.STATE_PAUSED)
        # print "setting uridcodebin to paused"
@@ -357,8 +357,8 @@ class Transcoder(gobject.GObject):
            if a.startswith("audio/"):
                sinkpad = self.encodebin.get_static_pad("audio_0")
                src_pad.link(sinkpad)
-           elif a.startswith("video/"):
-               src_pad.link(self.fakesink.get_static_pad("sink"))
+         #  elif a.startswith("video/"):
+         #      src_pad.link(self.fakesink.get_static_pad("sink"))
        else:
            if self.videocaps == "novid":
                a =  src_pad.get_caps().to_string()
@@ -367,8 +367,8 @@ class Transcoder(gobject.GObject):
                    c = sinkpad.get_caps().to_string()
                    if c.startswith("audio/"):
                        src_pad.link(sinkpad)
-               elif a.startswith("video/"):
-                   src_pad.link(self.fakesink.get_static_pad("sink"))
+               #elif a.startswith("video/"):
+               #    src_pad.link(self.fakesink.get_static_pad("sink"))
            else:
                sinkpad = self.encodebin.emit("request-pad", src_pad.get_caps())
                c = sinkpad.get_caps().to_string()
