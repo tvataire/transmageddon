@@ -44,7 +44,7 @@ containermap = { 'Ogg' : "application/ogg", \
         'MPEG TS' : "video/mpegts", \
         'FLV' : "video/x-flv", \
         '3GPP' : "video/quicktime,variant=3gpp", \
-        'ASF' : "video/x-ms-asf", \
+        'ASF' : "video/x-ms-asf, parsed=true", \
         'WebM' : "video/webm", \
         'No container' : False }
 
