@@ -55,7 +55,7 @@ class Transcoder(gobject.GObject):
            if self.audiocaps.intersect(gst.Caps("audio/mpeg, mpegversion=1, layer=3")):
                self.containercaps=gst.Caps("application/x-id3")
                self.container=gst.Caps("application/x-id3")
-               print "self.encodebinprofile is set to id3mux"
+
 
        # Choose plugin based on Codec Name
        # or switch to remuxing mode if any of the values are set to 'pastr'
@@ -67,12 +67,6 @@ class Transcoder(gobject.GObject):
        self.videopasstoggle = VIDEOPASSTOGGLE
        self.inputvideocaps = INPUTVIDEOCAPS
        self.doaudio= False
-       # if self.audiopasstoggle == False:
-       #    self.AudioEncoderPlugin = \
-       #            codecfinder.get_audio_encoder_element(self.audiocaps)
-       # if self.videopasstoggle == False:
-       #    self.VideoEncoderPlugin = \
-       #            codecfinder.get_video_encoder_element(self.videocaps)
        self.preset = PRESET
        self.oheight = OHEIGHT
        self.owidth = OWIDTH
@@ -130,10 +124,8 @@ class Transcoder(gobject.GObject):
            elif self.audiocaps.intersect(gst.Caps("audio/x-flac")):
                self.audiocaps=gst.Caps("audio/x-flac")
        else:
-           print "creating encoderbinprofile with muxer " + str(self.containercaps)
            self.encodebinprofile = gst.pbutils.EncodingContainerProfile ("containerformat", None , self.containercaps, None)
        if self.container==False:
-           print "setting encodebinprofile to audioprofile if no container"
            self.encodebinprofile = gst.pbutils.EncodingAudioProfile (self.audiocaps, None, gst.caps_new_any(), 0)
        else:
            self.audioprofile = gst.pbutils.EncodingAudioProfile (self.audiocaps, None, gst.caps_new_any(), 0)
@@ -142,15 +134,10 @@ class Transcoder(gobject.GObject):
            if (self.videocaps != False):
                self.videoprofile = gst.pbutils.EncodingVideoProfile (self.videocaps, None, gst.caps_new_any(), 0)
                self.encodebinprofile.add_profile(self.videoprofile)
-               print "creating videoprofile with caps " + str(self.videocaps)
        self.encodebin = gst.element_factory_make ("encodebin", None)
        self.encodebin.set_property("profile", self.encodebinprofile)
        self.encodebin.set_property("avoid-reencoding", True)
        self.pipeline.add(self.encodebin)
-      # if self.videocaps=="novid":
-      #     self.fakesink = gst.element_factory_make("fakesink", "fakesink")
-      #     self.fakesink.set_property("sync", True)
-      #     self.pipeline.add(self.fakesink)
 
        self.remuxcaps = gst.Caps()
        if self.audiopasstoggle:
@@ -171,7 +158,6 @@ class Transcoder(gobject.GObject):
 
 
        if (self.audiopasstoggle) or (self.videopasstoggle) or (self.videocaps=="novid"):
-           print "uridecodebin property caps set"
            self.uridecoder.set_property("caps", self.remuxcaps)
  
        self.pipeline.add(self.uridecoder)
@@ -183,11 +169,6 @@ class Transcoder(gobject.GObject):
        self.pipeline.add(self.transcodefileoutput)
        self.encodebin.link(self.transcodefileoutput)
 
-       # print "reached end of first pipeline bulk, next step dynamic
-       # audio/video pads"
-
-       #if self.videocaps=="novid":
-       #    self.fakesink.set_state(gst.STATE_PAUSED)
        self.uridecoder.set_state(gst.STATE_PAUSED)
        self.encodebin.set_state(gst.STATE_PAUSED)
        # print "setting uridcodebin to paused"
@@ -205,7 +186,6 @@ class Transcoder(gobject.GObject):
 
    # Gather preset values and create preset elements
    def provide_presets(self):
-       print "providing presets"
        devices = presets.get()
        device = devices[self.preset]
        preset = device.presets["Normal"]
@@ -234,7 +214,7 @@ class Transcoder(gobject.GObject):
        wmin, wmax  =  preset.vcodec.width
        hmin, hmax = preset.vcodec.height
        width, height = self.owidth, self.oheight
-       # print "owidth is " + str(self.owidth) + " oheight is " + str(self.oheight)
+
        self.vpreset = []       
        voutput = preset.vcodec.presets[0].split(", ")
        for x in voutput:
