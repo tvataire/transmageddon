@@ -54,15 +54,13 @@ class Transcoder(gobject.GObject):
        else:
            if self.audiocaps.intersect(gst.Caps("audio/mpeg, mpegversion=1, layer=3")):
                self.containercaps=gst.Caps("application/x-id3")
+               self.container=gst.Caps("application/x-id3")
                print "self.encodebinprofile is set to id3mux"
 
        # Choose plugin based on Codec Name
        # or switch to remuxing mode if any of the values are set to 'pastr'
        self.stoptoggle=False
-       if VIDEOCODECVALUE==False:
-           self.videocaps="novid"
-       else:
-           self.videocaps = VIDEOCODECVALUE
+       self.videocaps = VIDEOCODECVALUE # "novid" means we have a video file input, while False means we don't have any video
        self.audiopasstoggle = AUDIOPASSTOGGLE
        self.interlaced = INTERLACED
        self.videopasstoggle = VIDEOPASSTOGGLE
@@ -134,10 +132,12 @@ class Transcoder(gobject.GObject):
            print "adding audioprofile to muxer profile " + str(self.audiocaps)
            self.audioprofile = gst.pbutils.EncodingAudioProfile (self.audiocaps, None, gst.caps_new_any(), 0)
            self.encodebinprofile.add_profile(self.audioprofile)
+       print "What is self.videocaps?? " + str(self.videocaps)
        if self.videocaps != "novid":
-           print "not like novid"
-           self.videoprofile = gst.pbutils.EncodingVideoProfile (self.videocaps, None, gst.caps_new_any(), 0)
-           self.encodebinprofile.add_profile(self.videoprofile)
+           if (self.videocaps != False):
+               print "not like novid"
+               self.videoprofile = gst.pbutils.EncodingVideoProfile (self.videocaps, None, gst.caps_new_any(), 0)
+               self.encodebinprofile.add_profile(self.videoprofile)
        self.encodebin = gst.element_factory_make ("encodebin", None)
        self.encodebin.set_property("profile", self.encodebinprofile)
        self.encodebin.set_property("avoid-reencoding", True)
@@ -160,14 +160,15 @@ class Transcoder(gobject.GObject):
           self.remuxcaps.append_structure(gst.Structure("audio/x-raw-float"))
           self.remuxcaps.append_structure(gst.Structure("audio/x-raw-int"))
        if self.videocaps=="novid":
-          self.remuxcaps.append(self.inputvideocaps)
-          self.remuxcaps.append_structure(gst.Structure("audio/x-raw-float"))
-          self.remuxcaps.append_structure(gst.Structure("audio/x-raw-int"))
+          if self.inputvideocaps != None:
+              self.remuxcaps.append(self.inputvideocaps)
+              self.remuxcaps.append_structure(gst.Structure("audio/x-raw-float"))
+              self.remuxcaps.append_structure(gst.Structure("audio/x-raw-int"))
 
 
        if (self.audiopasstoggle) or (self.videopasstoggle) or (self.videocaps=="novid"):
-           # print "remuxcaps is " + str(self.remuxcaps)
-           self.uridecoder.set_property("caps", self.remuxcaps)
+           print "uridecodebin property caps set"
+          # self.uridecoder.set_property("caps", self.remuxcaps)
  
        self.pipeline.add(self.uridecoder)
 
