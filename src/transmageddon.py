@@ -924,10 +924,11 @@ class TransmageddonUI:
 
    def on_videocodec_changed(self, widget):
        if (self.houseclean == False and self.usingpreset==False):
+           print "self.container in videocodec changes is " + str(self.container)
            if self.container != False:
                self.VideoCodec = self.videocodecs[self.videorows[0].get_active()]
            else:
-               self.VideoCodec = False
+                   self.VideoCodec = "novid"
            print "self.VideoCodec is " + str(self.VideoCodec)
            print self.videorows[0].get_active()
            if self.videorows[0].get_active() == self.videopassmenuno:

@@ -60,7 +60,8 @@ class Transcoder(gobject.GObject):
        # Choose plugin based on Codec Name
        # or switch to remuxing mode if any of the values are set to 'pastr'
        self.stoptoggle=False
-       self.videocaps = VIDEOCODECVALUE # "novid" means we have a video file input, while False means we don't have any video
+       self.videocaps = VIDEOCODECVALUE # "novid" means we have a video file input, but do not want it
+                                        #  while False means we don't have any video
        self.audiopasstoggle = AUDIOPASSTOGGLE
        self.interlaced = INTERLACED
        self.videopasstoggle = VIDEOPASSTOGGLE
@@ -86,6 +87,13 @@ class Transcoder(gobject.GObject):
        self.timestamp = TIMESTAMP
        self.rotationvalue = int(ROTATIONVALUE)
        self.vbox = {}
+
+       # switching width and height around for rotationchoices where it makes sense
+       if self.rotationvalue == 1 or self.rotationvalue == 3:
+           nwidth = self.oheight
+           nheight = self.owidth
+           self.oheight = nheight
+           self.owidth = nwidth 
 
        # if needed create a variable to store the filename of the multipass \
        # statistics file
@@ -118,7 +126,6 @@ class Transcoder(gobject.GObject):
        # first check if we have a container format, if not set up output for possible outputs
        if self.container==False:
            if self.audiocaps.intersect(gst.Caps("audio/mpeg, mpegversion=4")):
-               print "they do intersect AAC"
                self.audiocaps=gst.Caps("audio/mpeg, mpegversion=4, stream-format=adts")
            elif self.audiocaps.intersect(gst.Caps("audio/x-flac")):
                self.audiocaps=gst.Caps("audio/x-flac")
@@ -129,20 +136,17 @@ class Transcoder(gobject.GObject):
            print "setting encodebinprofile to audioprofile if no container"
            self.encodebinprofile = gst.pbutils.EncodingAudioProfile (self.audiocaps, None, gst.caps_new_any(), 0)
        else:
-           print "adding audioprofile to muxer profile " + str(self.audiocaps)
            self.audioprofile = gst.pbutils.EncodingAudioProfile (self.audiocaps, None, gst.caps_new_any(), 0)
            self.encodebinprofile.add_profile(self.audioprofile)
-       print "What is self.videocaps?? " + str(self.videocaps)
        if self.videocaps != "novid":
            if (self.videocaps != False):
-               print "not like novid"
                self.videoprofile = gst.pbutils.EncodingVideoProfile (self.videocaps, None, gst.caps_new_any(), 0)
                self.encodebinprofile.add_profile(self.videoprofile)
+               print "creating videoprofile with caps " + str(self.videocaps)
        self.encodebin = gst.element_factory_make ("encodebin", None)
        self.encodebin.set_property("profile", self.encodebinprofile)
        self.encodebin.set_property("avoid-reencoding", True)
        self.pipeline.add(self.encodebin)
-
        if self.videocaps=="novid":
            self.fakesink = gst.element_factory_make("fakesink", "fakesink")
            self.fakesink.set_property("sync", True)
@@ -168,7 +172,7 @@ class Transcoder(gobject.GObject):
 
        if (self.audiopasstoggle) or (self.videopasstoggle) or (self.videocaps=="novid"):
            print "uridecodebin property caps set"
-          # self.uridecoder.set_property("caps", self.remuxcaps)
+           self.uridecoder.set_property("caps", self.remuxcaps)
  
        self.pipeline.add(self.uridecoder)
 
@@ -182,12 +186,6 @@ class Transcoder(gobject.GObject):
        # print "reached end of first pipeline bulk, next step dynamic
        # audio/video pads"
 
-       if self.rotationvalue == 1 or self.rotationvalue == 3:
-           # print "switching height and with around"
-           nwidth = height
-           nheight = width
-           height = nheight
-           width = nwidth 
        if self.videocaps=="novid":
            self.fakesink.set_state(gst.STATE_PAUSED)
        self.uridecoder.set_state(gst.STATE_PAUSED)
@@ -214,8 +212,6 @@ class Transcoder(gobject.GObject):
        # set audio and video caps from preset file
        self.audiocaps=gst.Caps(preset.acodec.name)
        self.videocaps=gst.Caps(preset.vcodec.name)
-       print "preset audiocaps" + str(self.audiocaps)
-       print "preset videocaps" + str(self.videocaps)
        # Check for black border boolean
        border = preset.vcodec.border
        if border == "Y":
@@ -263,6 +259,7 @@ class Transcoder(gobject.GObject):
            width += 1
        if height % 2:
            height += 1
+
 
        # Add any required padding
        if self.blackborderflag == True:
@@ -355,12 +352,10 @@ class Transcoder(gobject.GObject):
 
    def OnDynamicPad(self, uridecodebin, src_pad):
        # c = src_pad.get_caps().to_string()
-       print "what is self.VideoCodec in transcoder engine " + str(self.videocaps)
        if (self.container==False):
            a =  src_pad.get_caps().to_string()
            if a.startswith("audio/"):
                sinkpad = self.encodebin.get_static_pad("audio_0")
-               print "using static audio pad " + str(sinkpad) 
                src_pad.link(sinkpad)
            elif a.startswith("video/"):
                src_pad.link(self.fakesink.get_static_pad("sink"))
@@ -368,24 +363,20 @@ class Transcoder(gobject.GObject):
            if self.videocaps == "novid":
                a =  src_pad.get_caps().to_string()
                if a.startswith("audio/"):
-                   print "a starts with audio"
                    sinkpad = self.encodebin.emit("request-pad", src_pad.get_caps())
                    c = sinkpad.get_caps().to_string()
                    if c.startswith("audio/"):
-                       print "using dynamic pad for audio only"
                        src_pad.link(sinkpad)
                elif a.startswith("video/"):
-                   print " trying to link fakesink"
                    src_pad.link(self.fakesink.get_static_pad("sink"))
            else:
-               print "should not happen in audio only pipeline"
                sinkpad = self.encodebin.emit("request-pad", src_pad.get_caps())
                c = sinkpad.get_caps().to_string()
                if c.startswith("audio/"):
-                   print "using dynamic pad"
                    src_pad.link(sinkpad)
                elif c.startswith("video/"):
                    if self.videopasstoggle==False:
+                       print "self.rotationvalue is " + str(self.rotationvalue)
                        self.videoflipper = gst.element_factory_make("videoflip")
                        self.videoflipper.set_property("method", self.rotationvalue)
                        self.pipeline.add(self.videoflipper)
