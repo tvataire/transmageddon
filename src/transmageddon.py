@@ -730,7 +730,8 @@ class TransmageddonUI:
            audiostatus = codecfinder.get_audio_encoder_element(self.AudioCodec)
        else:
            audiostatus=True
-
+       if self.havevideo == False: # this flags help check if input is audio-only file
+           videostatus=True
        if not containerstatus or not videostatus or not audiostatus:
            self.missingtoggle=True
            fail_info = []
