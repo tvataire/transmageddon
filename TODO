@@ -1,10 +1,5 @@
 This list is completely unordered. Nothing about the ordering in this list should cause anyone to make any kind of assumptions about priorties.
 
-* Support non-muxed audio codec 
-  Allow the outputting of non-muxed audio codecs (mp3 mostly). Not sure we really
-  want this as it would add more options to the UI to do something which I doubt 
-  a lot of people care to use this application for.
-
 * More advanced features
   There are many things people might want to do. We want to avoid this application 
   becoming like a lot of other transcoder tools though, which got more buttons 
