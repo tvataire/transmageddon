@@ -1,24 +1,22 @@
-AC_PREREQ(2.52)
+AC_PREREQ([2.63])
 
 dnl initialize autoconf
 dnl when going to/from release please set the nano (fourth number) right !
 dnl releases only do Wall, cvs and prerelease does Werror too
-AC_INIT(transmageddon, 0.16,
-    http://www.linuxrising.org/transmageddon,
-    transmageddon)
+AC_INIT([transmageddon],
+        [0.16],
+        [https://bugzilla.gnome.org/enter_bug.cgi?product=transmageddon],
+        [transmageddon],
+        [http://www.linuxrising.org/transmageddon])
+
+AC_CONFIG_SRCDIR([src/transmageddon.py])
+AC_CONFIG_MACRO_DIR([m4])
 
 dnl initialize automake
-AM_INIT_AUTOMAKE
+AM_INIT_AUTOMAKE([1.11 no-dist-gzip dist-xz])
 
 dnl enable maintainer mode option
-AM_MAINTAINER_MODE
-
-dnl define PACKAGE_VERSION_* variables
-AS_VERSION
-
-dnl can autoconf find the source ?
-AC_CONFIG_SRCDIR([src/transmageddon.py])
-
+AM_MAINTAINER_MODE([enable])
 
 AC_SUBST_FILE(AUTHORS)
 AUTHORS=$srcdir/AUTHORS
@@ -34,9 +32,6 @@ dnl the runtime checks in pitivi/check.py
 AC_SUBST(PYGTK_REQ, 2.8.0)
 AC_SUBST(PYGST_REQ, 0.10.6)
 AC_SUBST(GST_REQ, 0.10.13.1)
-
-AM_INIT_AUTOMAKE($PACKAGE, $VERSION)
-AC_SUBST(ACLOCAL_AMFLAGS, "-I common/m4")
 
 AS_AC_EXPAND(LIBDIR, $libdir)
 AC_MSG_NOTICE(Storing library files in $LIBDIR)
@@ -67,7 +62,7 @@ AC_SUBST(CONFIGURED_PYTHONPATH)
 AC_CONFIG_FILES([bin/transmageddon], [chmod +x bin/transmageddon])
 
 dnl output stuff
-AC_OUTPUT(
+AC_CONFIG_FILES([
 Makefile
 bin/Makefile
 common/Makefile
@@ -79,4 +74,5 @@ profiles/Makefile
 po/Makefile.in
 transmageddon.spec
 transmageddon.desktop.in
-)
+])
+AC_OUTPUT

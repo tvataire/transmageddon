@@ -1,4 +1,4 @@
-AUTOMAKE_OPTIONS = dist-bzip2
+ACLOCAL_AMFLAGS = -I common/m4 ${ACLOCAL_FLAGS}
 
 SUBDIRS	= bin src common po presets profiles
 
