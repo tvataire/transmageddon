@@ -11,49 +11,13 @@
     <version>1.0</version>
     <icon>file://ipod.svg</icon>
     <default>Normal</default>
-    
-    <profile>
-        <name>Low</name>
-        <container>video/quicktime,variant=apple</container>
-        <extension>m4v</extension>
-        <audio>
-            <name>audio/mpeg,mpegversion=4</name>
-            <presets>
-                <preset>
-                    Quality Low, Profile Low Complexity
-                </preset>
-            </presets>
-            <channels>1, 2</channels>
-            <samplerate>44100</samplerate>
-        </audio>
-        <video>
-            <name>video/x-h264</name>
-            <border>Y</border>
-            <passes>0</passes>
-            <pixelaspectratio>0/0</pixelaspectratio>
-            <presets>
-                <preset>
-                    Quality Low, Profile Baseline
-                </preset>
-            </presets>
-            <width>320, 640</width>
-            <height>240, 480</height>
-            <framerate>1, 25</framerate>
-        </video>
-    </profile>
     <profile>
         <name>Normal</name>
         <container>video/quicktime,variant=apple</container>
         <extension>m4v</extension>
         <audio>
-            <name>audio/mpeg,mpegversion=4</name>
-            <presets>
-                <preset>
-                    Quality Normal, Profile Low Complexity
-                </preset>
-            </presets>
+            <name>audio/mpeg,mpegversion=4, base-profile=lc, rate=44100</name>
             <channels>1, 2</channels>
-            <samplerate>44100</samplerate>
         </audio>
         <video>
             <name>video/x-h264</name>
