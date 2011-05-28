@@ -99,7 +99,6 @@ class Transcoder(gobject.GObject):
        if self.preset != "nopreset":
            height, width, num, denom, pixelaspectratio = self.provide_presets()
            for acap in self.audiocaps:
-               acap["rate"] = self.samplerate
                acap["channels"] = self.channels
            for vcap in self.videocaps:
                vcap["height"] = height
@@ -138,6 +137,23 @@ class Transcoder(gobject.GObject):
        self.encodebin.set_property("profile", self.encodebinprofile)
        self.encodebin.set_property("avoid-reencoding", True)
        self.pipeline.add(self.encodebin)
+
+       if self.videopasstoggle==False:
+           self.videoflipper = gst.element_factory_make("videoflip")
+           self.videoflipper.set_property("method", self.rotationvalue)
+           self.pipeline.add(self.videoflipper)
+
+           self.deinterlacer = gst.element_factory_make("deinterlace")
+           self.pipeline.add(self.deinterlacer)
+
+           self.colorspaceconversion = gst.element_factory_make("ffmpegcolorspace")
+           self.pipeline.add(self.colorspaceconversion)
+                       
+           self.deinterlacer.link(self.colorspaceconversion)
+	   self.colorspaceconversion.link(self.videoflipper)
+           self.deinterlacer.set_state(gst.STATE_PAUSED)
+           self.colorspaceconversion.set_state(gst.STATE_PAUSED)
+           self.videoflipper.set_state(gst.STATE_PAUSED)
 
        self.remuxcaps = gst.Caps()
        if self.audiopasstoggle:
@@ -198,8 +214,6 @@ class Transcoder(gobject.GObject):
            self.blackborderflag = True
        else:
            self.blackborderflag = False
-       # Check for audio samplerate
-       self.samplerate = int(preset.acodec.samplerate)
        # calculate number of channels
        chanmin, chanmax = preset.acodec.channels
        if int(self.achannels) < int(chanmax):
@@ -215,14 +229,6 @@ class Transcoder(gobject.GObject):
        hmin, hmax = preset.vcodec.height
        width, height = self.owidth, self.oheight
 
-       self.vpreset = []       
-       voutput = preset.vcodec.presets[0].split(", ")
-       for x in voutput:
-           self.vpreset.append(x)
-       self.apreset = []
-       aoutput = preset.acodec.presets[0].split(", ")
-       for x in aoutput:
-           self.apreset.append(x)
        # Get Display aspect ratio
        pixelaspectratio = preset.vcodec.aspectratio[0]
 
@@ -356,13 +362,9 @@ class Transcoder(gobject.GObject):
                    src_pad.link(sinkpad)
                elif c.startswith("video/"):
                    if self.videopasstoggle==False:
-                       print "self.rotationvalue is " + str(self.rotationvalue)
-                       self.videoflipper = gst.element_factory_make("videoflip")
-                       self.videoflipper.set_property("method", self.rotationvalue)
-                       self.pipeline.add(self.videoflipper)
-                       src_pad.link(self.videoflipper.get_static_pad("sink"))
+                       src_pad.link(self.deinterlacer.get_static_pad("sink"))
                        self.videoflipper.get_static_pad("src").link(sinkpad)
-                       self.videoflipper.set_state(gst.STATE_PAUSED)
+                       
                    else:
                        src_pad.link(sinkpad)
 
