@@ -11,52 +11,19 @@
     <version>1.0</version>
     <icon>file://computer.svg</icon>
     <default>Normal</default>
-    
-    <profile>
-        <name>Low</name>
-        <container>application/ogg</container>
-        <extension>ogg</extension>
-        <audio>
-            <name>audio/x-vorbis</name>
-            <presets>
-                <preset>Quality Low</preset>
-            </presets>
-            <channels>1, 2</channels>
-            <samplerate>44100</samplerate>
-        </audio>
-        <video>
-            <name>video/x-theora</name>
-            <border>N</border>
-            <passes>0</passes>
-            <pixelaspectratio>0/0</pixelaspectratio>
-            <presets>
-                <preset>Quality Low</preset>
-            </presets> 
-            <width>320, 640</width>
-            <height>240, 480</height>
-            <framerate>1, 25</framerate>
-        </video>
-    </profile>
     <profile>
         <name>Normal</name>
         <container>application/ogg</container>
         <extension>ogg</extension>
         <audio>
-            <name>audio/x-vorbis</name>
-            <presets>
-                <preset>Quality Normal</preset>
-            </presets>
+            <name>audio/x-vorbis, rate=44100</name>
             <channels>1, 2</channels>
-            <samplerate>44100</samplerate>
         </audio>
         <video>
             <name>video/x-theora</name>
             <border>N</border>
             <passes>0</passes>
             <pixelaspectratio>0/0</pixelaspectratio>
-            <presets>
-                <preset>Quality Normal</preset>
-            </presets>
             <width>320, 1920</width>
             <height>240, 1080</height>
             <framerate>1, 30</framerate>
@@ -74,9 +41,6 @@
         </audio>
         <video>
             <name>video/x-theora</name>
-            <presets>
-                <preset>Quality Normal</preset>
-            </presets> 
             <width>320, 1920</width>
             <height>240, 1080</height>
             <framerate>1, 30</framerate>
@@ -97,9 +61,6 @@
             <border>N</border>
             <passes>0</passes>
             <pixelaspectratio>0/0</pixelaspectratio>
-            <presets>
-                <preset>Quality High</preset>
-            </presets>
             <width>320, 1920</width>
             <height>240, 1080</height>
             <framerate>1, 60</framerate>

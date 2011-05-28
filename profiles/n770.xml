@@ -13,47 +13,17 @@
     <default>Normal</default>
     
     <profile>
-        <name>Low</name> 
-        <container>video/x-msvideo</container>
-        <extension>avi</extension>
-        <audio>
-            <name>audio/mpeg,mpegversion=1,layer=3</name>
-            <presets>
-                <preset>
-                    CBR Quality Normal, Profile Constant Bitrate
-                </preset>
-            </presets>
-            <channels>1, 2</channels>
-            <samplerate>44100</samplerate>
-        </audio>
-        <video>
-            <name>video/mpeg,mpegversion=4</name>
-            <border>N</border>
-            <passes>0</passes>
-            <pixelaspectratio>0/0</pixelaspectratio>
-            <presets>
-                <preset>
-                    Quality Low, Profile Advanced Simple
-                </preset>
-            </presets>
-            <width>60, 352</width>
-            <height>60, 208</height>
-            <framerate>1, 15</framerate>
-        </video>
-    </profile>
-    <profile>
         <name>Normal</name>
         <container>video/x-msvideo</container>
         <extension>avi</extension>
         <audio>
-            <name>audio/mpeg,mpegversion=1,layer=3</name>
+            <name>audio/mpeg,mpegversion=1,layer=3, rate=44100</name>
             <presets>
                 <preset>
                     CBR Quality Low, Profile Constant Bitrate
                 </preset>
             </presets>
             <channels>1, 2</channels>
-            <samplerate>44100</samplerate>
         </audio>
         <video>
             <name>video/mpeg,mpegversion=4</name>

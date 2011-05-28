@@ -13,18 +13,12 @@
     <default>Normal (mpeg4)</default>
     
     <profile>
-        <name>Normal (h264)</name>
+        <name>Normal</name>
         <container>video/quicktime,variant=iso</container>
         <extension>mp4</extension>
         <audio>
-            <name>audio/mpeg,mpegversion=4</name>
-            <presets>
-                <preset>
-                    Quality Normal, Profile Low Complexity
-                </preset>
-            </presets>
+            <name>audio/mpeg,mpegversion=4, base-profile=lc, rate=48000</name>
             <channels>1, 2</channels>
-            <samplerate>48000</samplerate>
         </audio>
         <video>
             <name>video/x-h264</name>
@@ -46,14 +40,8 @@
         <container>video/quicktime,variant=iso</container>
         <extension>mp4</extension>
         <audio>
-            <name>audio/mpeg,mpegversion=4</name>
-            <presets>
-                <preset>
-                    Quality Normal, Profile Low Complexity
-                </preset>
-            </presets>
+            <name>audio/mpeg,mpegversion=4, base-profile=lc, rate=48000</name>
             <channels>1, 2</channels>
-            <samplerate>48000</samplerate>
         </audio>
         <video>
             <name>video/mpeg,mpegversion=4,systemstream=false,profile=simple</name>

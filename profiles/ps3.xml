@@ -13,31 +13,6 @@
     <default>Normal</default>
     
     <profile>
-        <name>Low</name>
-        <container>video/mpegts</container>
-        <extension>ts</extension>
-        <audio>
-            <name>audio/x-ac3</name>
-            <presets>
-                <preset>BD Quality Low</preset>
-            </presets>
-            <channels>1, 6</channels>
-            <samplerate>44100</samplerate>
-        </audio>
-        <video>
-            <name>video/x-h264</name>
-            <border>N</border>
-            <passes>0</passes>
-            <pixelaspectratio>0/0</pixelaspectratio>
-            <presets>
-                <preset>Quality Low, Profile Baseline</preset>
-            </presets> 
-            <width>320, 720</width>
-            <height>240, 480</height>
-            <framerate>1, 25</framerate>
-        </video>
-    </profile>
-    <profile>
         <name>Normal</name>
         <container>video/mpegts</container>
         <extension>ts</extension>

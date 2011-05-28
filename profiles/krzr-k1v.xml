@@ -11,60 +11,20 @@
     <version>1.0</version>
     <icon>file://phone.svg</icon>
     <default>Normal</default>
-    
-    <profile>
-        <name>Low</name> # This is a low quality output setting
-        <container>video/quicktime,variant=iso</container>
-        <extension>mp4</extension>
-        <audio>
-            <name>audio/mpeg,mpegversion=4</name>
-            <presets>
-                <preset>
-                    Quality Low, Profile Low Complexity
-                </preset>
-            </presets>
-            <channels>1, 1</channels>
-            <samplerate>44100</samplerate>
-        </audio>
-        <video>
-            <name>video/mpeg,mpegversion=4</name>
-            <border>Y</border>
-            <passes>0</passes>
-            <pixelaspectratio>12/11</pixelaspectratio>
-            <presets>
-                <preset>
-                    Quality Low, Profile Simple
-                </preset>
-            </presets>
-            <width>176, 176</width>
-            <height>144, 144</height>
-            <framerate>1,15</framerate>
-        </video>
-    </profile>
+
     <profile>
         <name>Normal</name>
         <container>video/quicktime,variant=iso</container>
         <extension>mp4</extension>
         <audio>
-            <name>audio/mpeg,mpegversion=4</name>
-            <presets>
-                <preset>
-                    Quality Low , Profile Low Complexity
-                </preset>
-            </presets>
+            <name>audio/mpeg,mpegversion=4, base-profile=lc, rate=44100</name>
             <channels>1, 2</channels>
-            <samplerate>44100</samplerate>
         </audio>
         <video>
             <name>video/mpeg,mpegversion=4</name>  
             <border>Y</border>
             <passes>0</passes>
             <pixelaspectratio>12/11</pixelaspectratio>
-            <presets>
-                <preset>
-                    Quality Low, Profile Simple
-                </preset>
-            </presets>
             <width>176, 176</width>
             <height>144, 144</height>
             <framerate>1,15</framerate>
