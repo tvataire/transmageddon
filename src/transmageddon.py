@@ -163,7 +163,7 @@ class TransmageddonUI:
        self.audiocodecs=[] # create lists to store the ordered lists of codecs
        self.videocodecs=[]
        def dynamic_comboboxes_audio(streams,extra = []):
-           streams=1
+           streams=1 # this will become a variable once we support multiple streams
            vbox = gtk.VBox()
 
            x=-1
@@ -289,13 +289,13 @@ class TransmageddonUI:
        self.container = False
        self.vsourcecaps = False
        self.asourcecaps = False
-       self.videopasstoggle=False
+       self.videopasstoggle=False # toggle for passthrough mode chosen
        self.audiopasstoggle=False
+       self.videopass=False # toggle for enabling adding of video passthrough on menu
+       self.audiopass=False
        self.containertoggle=False # used to not check for encoders with pbutils
        self.discover_done=False # lets us know that discover is finished
        self.missingtoggle=False
-       self.oldaudiocodec={}
-       self.oldvideocodec={}
        self.interlaced=False
        self.havevideo=False
        self.haveaudio=False
@@ -304,6 +304,7 @@ class TransmageddonUI:
        # create variables to store passthrough options slot in the menu
        self.audiopassmenuno=1
        self.videopassmenuno=1
+       self.videonovideomenuno=-2
        # create toggle so I can split codepath depending on if I using a preset
        # or not
        self.usingpreset=False
@@ -365,6 +366,7 @@ class TransmageddonUI:
        device = devices[devicename]
        preset = device.presets["Normal"]
        self.usingpreset=True
+       self.containerchoice.set_active(-1) # resetting to -1 to ensure population of menu triggers
        print "preset.acodec.name is " + str(preset.acodec.name)
        self.presetaudiocodec=preset.acodec.name
        self.presetvideocodec=preset.vcodec.name
@@ -538,6 +540,7 @@ class TransmageddonUI:
                if interlacedbool is True:
                    self.interlaced=True
                self.havevideo=True
+               self.populatemenuchoices() # run this to ensure video menu gets filled
                videoheight=i.get_height()
                videowidth=i.get_width()
                videodenom=i.get_framerate_denom()
@@ -580,8 +583,8 @@ class TransmageddonUI:
    def check_for_passthrough(self, containerchoice):
        videointersect = ("EMPTY")
        audiointersect = ("EMPTY")
-       print "containerchoice is " + str(containerchoice)
-       if containerchoice != False:
+       print "containerchoice during passthrough test is " + str(containerchoice)
+       if (containerchoice != False or self.usingpreset==False):
            # print "container is " + str(containerchoice)
            container = codecfinder.containermap[containerchoice]
            containerelement = codecfinder.get_muxer_element(container)
@@ -604,15 +607,15 @@ class TransmageddonUI:
                            if audiointersect != ("EMPTY"):
                                self.asourcecaps = audiointersect
                if videointersect != ("EMPTY"):
-                   self.videorows[0].append_text("Video passthrough")
-                   self.oldvideocodec.append("Video passthrough")
-                   self.videocodecs.append("pass")
-                   self.videopassmenuno=(len(self.videocodecs))-1
+                   self.videopass=True
+               else:
+                   self.videopass=False
+
                if audiointersect != ("EMPTY"):
-                   self.audiorows[0].append_text("Audio passthrough")
-                   self.oldaudiocodec.append("Audio passthrough")
-                   self.audiocodecs.append("pass")
-                   self.audiopassmenuno=(len(self.audiocodecs))-1
+                   self.audiopass=True
+               else:
+                   self.audiopass=False
+               
 
    # define the behaviour of the other buttons
    def on_FileChooser_file_set(self, widget):
@@ -620,7 +623,6 @@ class TransmageddonUI:
        self.audiodata = {}
        if self.filename is not None: 
            codecinfo = self.mediacheck(self.filename)
-           self.containerchoice.set_sensitive(True)
            self.ProgressBar.set_fraction(0.0)
            self.ProgressBar.set_text(_("Transcoding Progress"))
            if (self.havevideo==False and self.nocontaineroptiontoggle==False):
@@ -631,6 +633,7 @@ class TransmageddonUI:
                self.presetchoice.set_active(0)
                self.containerchoice.remove_text(13)
                self.nocontaineroptiontoggle=False
+           self.containerchoice.set_sensitive(True)
 
    def _start_transcoding(self): 
        filechoice = self.builder.get_object ("FileChooser").get_uri()
@@ -805,6 +808,81 @@ class TransmageddonUI:
        self.StatusBar.pop(context_id)
        self.audiopasstoggle=False
 
+   def populatemenuchoices(self):
+       # self.audiocodecs - contains list of whats in self.audiorows
+       # self.videocodecs - contains listof whats in self.videorows
+       # audio_codecs, video_codecs - temporary lists
+       
+       # verify that we got a container format set
+       print "we got self container " + str(self.container)
+       # clean up stuff from previous run
+       self.houseclean=True # set this to avoid triggering events when cleaning out menus
+       for c in self.audiocodecs: # 
+           self.audiorows[0].remove_text(0)
+       self.audiocodecs =[]
+       if self.havevideo==True:
+           if self.container != False:
+               for c in self.videocodecs:
+                   self.videorows[0].remove_text(0)
+               self.videocodecs=[]
+       self.houseclean=False
+      # end of housecleaning
+
+       # start filling audio
+
+       if self.usingpreset==True: # First fill menu based on presetvalue
+           print "adding preset value to audiomenu and setting it active"
+           self.audiorows[0].append_text(str(gst.pbutils.get_codec_description(self.presetaudiocodec)))
+           self.audiorows[0].set_active(0)
+           self.audiocodecs.append(self.presetaudiocodec)
+       else:
+           audio_codecs = []
+           audio_codecs = supported_audio_container_map[self.container]
+           for c in audio_codecs:
+               self.audiocodecs.append(gst.Caps(codecfinder.codecmap[c]))
+           for c in audio_codecs:
+               self.audiorows[0].append_text(c)
+               self.audiorows[0].set_sensitive(True)
+               self.audiorows[0].set_active(0)
+       # fill in with video
+       if self.havevideo==True:
+           if self.container != False:
+               if self.usingpreset==True:
+                   self.videorows[0].append_text(str(gst.pbutils.get_codec_description(self.presetvideocodec)))
+                   self.videorows[0].set_active(0)
+                   self.videocodecs.append(self.presetvideocodec)
+               else:
+                   video_codecs=[]
+                   video_codecs = supported_video_container_map[self.container]
+                   self.rotationchoice.set_sensitive(True)
+                   print "video_codecs is " + str(video_codecs)
+                   for c in video_codecs:
+                       self.videocodecs.append(gst.Caps(codecfinder.codecmap[c]))
+                   for c in video_codecs: # I can't update the menu with loop append
+                       self.videorows[0].append_text(c)
+                   self.videorows[0].set_sensitive(True)
+                   self.videorows[0].set_active(0)
+
+                   #add a 'No Video option'
+                   self.videorows[0].append_text(_("No Video"))
+                   self.videocodecs.append("novid")
+                   self.videonovideomenuno=(len(self.videocodecs))-1
+                   print "video no video menu number is " + str(self.videonovideomenuno)
+                   if self.builder.get_object("containerchoice").get_active()==12:
+                       self.videorows[0].set_active(self.videonovideomenuno)
+                       self.videorows[0].set_sensitive(False)
+                      
+                   # add the Passthrough option 
+                   if self.videopass==True:
+                       self.videorows[0].append_text(_("Video passthrough"))
+                       self.videocodecs.append("pass")
+                       self.videopassmenuno=(len(self.videocodecs))-1
+                   
+                   if self.audiopass==True:
+                       self.audiorows[0].append_text(_("Audio passthrough"))
+                       self.audiocodecs.append("pass")
+                       self.audiopassmenuno=(len(self.audiocodecs))-1
+
    def on_containerchoice_changed(self, widget):
        self.CodecBox.set_sensitive(True)
        self.ProgressBar.set_fraction(0.0)
@@ -812,72 +890,28 @@ class TransmageddonUI:
        if self.builder.get_object("containerchoice").get_active()!= -1:
            self.container = self.builder.get_object ("containerchoice").get_active_text ()
        if self.builder.get_object("containerchoice").get_active()!= -1:
-           self.transcodebutton.set_sensitive(True)
-           if self.builder.get_object("containerchoice").get_active()==12:
-               self.container=False
-               audio_codecs = [ 'mp3', 'AAC', 'FLAC' ]
-               self.audiocodecs =[]
-           else:
-               audio_codecs = supported_audio_container_map[self.container]
-               self.audiocodecs =[]
-           for c in self.oldaudiocodec:
-               self.houseclean=True
-               self.audiorows[0].remove_text(0)
-           self.houseclean=False
-           if self.usingpreset==True:
-               self.audiorows[0].append_text(str(gst.pbutils.get_codec_description(self.presetaudiocodec)))
-               self.audiorows[0].set_active(0)
-           else:
-               for c in audio_codecs:
-                   self.audiocodecs.append(gst.Caps(codecfinder.codecmap[c]))
-               for c in audio_codecs:
-                   self.audiorows[0].append_text(c)
-                   self.audiorows[0].set_sensitive(True)
-                   self.audiorows[0].set_active(0)
-           self.oldaudiocodec=audio_codecs
-           if self.havevideo==True:
-               if self.container != False:
-                   self.rotationchoice.set_sensitive(True)
-                   video_codecs = supported_video_container_map[self.container]
-                   self.videocodecs=[]
-                   for c in self.oldvideocodec:
-                       self.houseclean=True
-                       self.videorows[0].remove_text(0)
-                   self.houseclean=False
-                   if self.usingpreset==True:
-                       self.videorows[0].append_text(str(gst.pbutils.get_codec_description(self.presetvideocodec)))
-                       self.videorows[0].set_active(0)
-                   else:
-                       for c in video_codecs:
-                           self.videocodecs.append(gst.Caps(codecfinder.codecmap[c]))
-                       for c in video_codecs: # I can't update the menu with loop append
-                           self.videorows[0].append_text(c)
-                       self.videorows[0].set_sensitive(True)
-                       self.videorows[0].set_active(0)
-                   self.oldvideocodec=video_codecs
-
-           # add a 'No Video option'
-           self.videorows[0].append_text("No Video")
-           self.videocodecs.append("novid")
-           self.videonovideomenuno=(len(self.videocodecs))-1
-           if self.builder.get_object("containerchoice").get_active()==12:
-               self.videorows[0].set_active(self.videonovideomenuno)
-               self.videorows[0].set_sensitive(False)
+           print "checking for discover done"
+           print "discover done is " + str(self.discover_done)
            if self.discover_done == True:
                self.check_for_passthrough(self.container)
+           self.transcodebutton.set_sensitive(True)
+           self.populatemenuchoices()
 
    def on_presetchoice_changed(self, widget):
        presetchoice = self.builder.get_object ("presetchoice").get_active_text ()
        self.ProgressBar.set_fraction(0.0)
        if presetchoice == "No Presets":
+           print "no presets chosen"
            self.usingpreset=False
            self.devicename = "nopreset"
            self.containerchoice.set_sensitive(True)
+           self.containerchoice.set_active(0)
            self.start_time = False
            self.multipass = False
            self.passcounter = False
            self.rotationchoice.set_sensitive(True)
            if self.builder.get_object("containerchoice").get_active_text():
+               self.populatemenuchoices()
                self.CodecBox.set_sensitive(True)
                self.transcodebutton.set_sensitive(True)
        else:
