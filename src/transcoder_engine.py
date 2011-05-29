@@ -168,26 +168,26 @@ class Transcoder(gobject.GObject):
            self.colorspaceconversion.set_state(gst.STATE_PAUSED)
            self.videoflipper.set_state(gst.STATE_PAUSED)
 
-       #self.remuxcaps = gst.Caps()
-       #if self.audiopasstoggle:
-       #   self.remuxcaps.append(self.audiocaps)
-       #if self.videopasstoggle:
-       #   self.remuxcaps.append(self.videocaps)
-       #if self.audiopasstoggle and not self.videopasstoggle:
-       #   self.remuxcaps.append_structure(gst.Structure("video/x-raw-rgb"))
-       #   self.remuxcaps.append_structure(gst.Structure("video/x-raw-yuv"))
-       #if self.videopasstoggle and not self.audiopasstoggle:
-       #   self.remuxcaps.append_structure(gst.Structure("audio/x-raw-float"))
-       #   self.remuxcaps.append_structure(gst.Structure("audio/x-raw-int"))
-       #if self.videocaps=="novid":
-       #   if self.inputvideocaps != None:
-       #       self.remuxcaps.append(self.inputvideocaps)
-       #       self.remuxcaps.append_structure(gst.Structure("audio/x-raw-float"))
-       #       self.remuxcaps.append_structure(gst.Structure("audio/x-raw-int"))
+       self.remuxcaps = gst.Caps()
+       if self.audiopasstoggle:
+          self.remuxcaps.append(self.audiocaps)
+       if self.videopasstoggle:
+          self.remuxcaps.append(self.videocaps)
+       if self.audiopasstoggle and not self.videopasstoggle:
+          self.remuxcaps.append_structure(gst.Structure("video/x-raw-rgb"))
+          self.remuxcaps.append_structure(gst.Structure("video/x-raw-yuv"))
+       if self.videopasstoggle and not self.audiopasstoggle:
+          self.remuxcaps.append_structure(gst.Structure("audio/x-raw-float"))
+          self.remuxcaps.append_structure(gst.Structure("audio/x-raw-int"))
+       if self.videocaps=="novid":
+          if self.inputvideocaps != None:
+              self.remuxcaps.append(self.inputvideocaps)
+              self.remuxcaps.append_structure(gst.Structure("audio/x-raw-float"))
+              self.remuxcaps.append_structure(gst.Structure("audio/x-raw-int"))
 
 
-       #if (self.audiopasstoggle) or (self.videopasstoggle) or (self.videocaps=="novid"):
-       #    self.uridecoder.set_property("caps", self.remuxcaps)
+       if (self.audiopasstoggle) or (self.videopasstoggle) or (self.videocaps=="novid"):
+           self.uridecoder.set_property("caps", self.remuxcaps)
  
        self.pipeline.add(self.uridecoder)
 
