@@ -578,7 +578,7 @@ class TransmageddonUI:
        uri = urlparse (FileChosen)
        path = uri.path
        # print path
-       return self.discover(path)
+       self.discover(path)
    
    def check_for_passthrough(self, containerchoice):
        videointersect = ("EMPTY")
@@ -622,7 +622,7 @@ class TransmageddonUI:
        self.filename = self.builder.get_object ("FileChooser").get_filename()
        self.audiodata = {}
        if self.filename is not None: 
-           codecinfo = self.mediacheck(self.filename)
+           self.mediacheck(self.filename)
            self.ProgressBar.set_fraction(0.0)
            self.ProgressBar.set_text(_("Transcoding Progress"))
            if (self.havevideo==False and self.nocontaineroptiontoggle==False):
@@ -900,7 +900,7 @@ class TransmageddonUI:
    def on_presetchoice_changed(self, widget):
        presetchoice = self.builder.get_object ("presetchoice").get_active_text ()
        self.ProgressBar.set_fraction(0.0)
-       if presetchoice == "No Presets":
+       if presetchoice == _("No Presets"):
            print "no presets chosen"
            self.usingpreset=False
            self.devicename = "nopreset"
