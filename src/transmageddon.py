@@ -74,7 +74,6 @@ supported_containers = [
 ]
 
 supported_audio_codecs = [
-     #  "apass",
        "vorbis",
        "flac",
        "mp3",
@@ -392,8 +391,10 @@ class TransmageddonUI:
            self.containerchoice.set_active(9)
        elif preset.container == "video/x-ms-asf":
            self.containerchoice.set_active(10)
+       elif preset.container == "video/webm":
+           self.containerchoice.set_active(11)
        else:
-            print "failed to set container format"
+            print "failed to set container format from preset data"
 
 
        # Check for number of passes
