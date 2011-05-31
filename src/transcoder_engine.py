@@ -47,7 +47,7 @@ class Transcoder(gobject.GObject):
 
        # Choose plugin based on Container name
        self.container = CONTAINERCHOICE
-       self.audiocaps = gst.Caps(AUDIOCODECVALUE)
+       self.audiocaps = AUDIOCODECVALUE
        if self.container != False:
            self.containercaps = gst.Caps(codecfinder.containermap[CONTAINERCHOICE])
        # special case mp3 which is a no-container format with a container (id3mux)
@@ -99,11 +99,6 @@ class Transcoder(gobject.GObject):
        # gather preset data if relevant
        if self.preset != "nopreset":
            height, width, num, denom, pixelaspectratio = self.provide_presets()
-           print "height is " + str(height)
-           print "width is " + str(width)
-           print "num is " + str(num)
-           print "denom is " + str(denom)
-           print "pixelaspect is " + str(pixelaspectratio)
            for acap in self.audiocaps:
                acap["channels"] = self.channels
            for vcap in self.videocaps:
@@ -126,6 +121,7 @@ class Transcoder(gobject.GObject):
 
        # first check if we have a container format, if not set up output for possible outputs
        print "self.container is " + str(self.container)
+       print "self.container caps is " + str(self.containercaps)
        if self.container==False:
            if self.audiocaps.intersect(gst.Caps("audio/mpeg, mpegversion=4")):
                self.audiocaps=gst.Caps("audio/mpeg, mpegversion=4, stream-format=adts")
@@ -134,12 +130,14 @@ class Transcoder(gobject.GObject):
        else:
            print "self.containercaps are " + str(self.containercaps)
            self.encodebinprofile = gst.pbutils.EncodingContainerProfile ("containerformat", None , self.containercaps, None)
-       if self.container==False:
-           self.encodebinprofile = gst.pbutils.EncodingAudioProfile (self.audiocaps, None, gst.caps_new_any(), 0)
-       else:
-           print "audiocaps used to create encodebin is " + str(self.audiocaps)
-           self.audioprofile = gst.pbutils.EncodingAudioProfile (self.audiocaps, None, gst.caps_new_any(), 0)
-           self.encodebinprofile.add_profile(self.audioprofile)
+       print "audiocaps without audio is " + str(self.audiocaps)
+       if self.audiocaps != False:
+           if self.container==False:
+               self.encodebinprofile = gst.pbutils.EncodingAudioProfile (self.audiocaps, None, gst.caps_new_any(), 0)
+           else:
+               print "audiocaps used to create encodebin is " + str(self.audiocaps)
+               self.audioprofile = gst.pbutils.EncodingAudioProfile (self.audiocaps, None, gst.caps_new_any(), 0)
+               self.encodebinprofile.add_profile(self.audioprofile)
        if self.videocaps != "novid":
            if (self.videocaps != False):
                print "videcaps used to create encodebin is " + str(gst.Caps(self.videocaps))

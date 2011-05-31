@@ -52,9 +52,9 @@ This list is completely unordered. Nothing about the ordering in this list shoul
       turn up in directory
   iii) start transcode once dvb-daemon says recording is done
 
-* Add black borders based on aspect-ratio
-
 * AVC HD support.
   Variation of MPEG TS with H264 and AC3 audio
 
 * Support multiple audio tracks. Probably want to wait for new discoverer for that.
+
+* Batch transcoding - multiple files 'programmed up front'

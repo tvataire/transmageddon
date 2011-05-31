@@ -1,9 +1,12 @@
 0.17
-  Port to new plugins-base discoverer
+  Port to new plugins-base discoverer and encodebin
   Replace radiobutton lists with a combobox instead
   add support for audio only transcoding
   add support for outputting audio only from video+audio files
-    
+  Add deinterlacing
+  Support container free audio formats such as FLAC, mp3 and AAC
+  Add HTML5 and Nokia 9000 profile
+  add support for video only transcoding
 
 0.16 - 21-05-2010
   Add WebM support

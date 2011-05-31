@@ -161,6 +161,9 @@ class TransmageddonUI:
        self.videorows=[]
        self.audiocodecs=[] # create lists to store the ordered lists of codecs
        self.videocodecs=[]
+
+
+       # these dynamic comboboxes allow us to support files with multiple streams eventually
        def dynamic_comboboxes_audio(streams,extra = []):
            streams=1 # this will become a variable once we support multiple streams
            vbox = gtk.VBox()
@@ -533,6 +536,9 @@ class TransmageddonUI:
                self.audiocodec.set_markup(''.join(('<small>','Audio codec: ', \
                        str(gst.pbutils.get_codec_description(inputaudiocaps)), \
                        '</small>')))
+           if self.haveaudio==False:
+               self.audioinformation.set_markup(''.join(('<small>', "No Audio", '</small>')))
+               self.audiocodec.set_markup(''.join(('<small>', "",'</small>')))
 
            if isinstance(i, gst.pbutils.DiscovererVideoInfo):
                self.inputvideocaps=i.get_caps()
@@ -603,10 +609,11 @@ class TransmageddonUI:
                               videointersect = sourcecaps.intersect(self.videodata['videotype'])
                               if videointersect != ("EMPTY"):
                                   self.vsourcecaps = videointersect
-                       if audiointersect == ("EMPTY"):
-                           audiointersect = sourcecaps.intersect(self.audiodata['audiotype'])
-                           if audiointersect != ("EMPTY"):
-                               self.asourcecaps = audiointersect
+                       if self.haveaudio == True:
+                           if audiointersect == ("EMPTY"):
+                               audiointersect = sourcecaps.intersect(self.audiodata['audiotype'])
+                               if audiointersect != ("EMPTY"):
+                                   self.asourcecaps = audiointersect
                if videointersect != ("EMPTY"):
                    self.videopass=True
                else:
@@ -655,13 +662,16 @@ class TransmageddonUI:
            vwidth=False
            ratenum=False
            ratednom=False
-       achannels = self.audiodata['audiochannels']
-       if self.audiopasstoggle == False:
-
-           audiocodec = self.AudioCodec
+       if self.haveaudio:
+           achannels = self.audiodata['audiochannels']
+           if self.audiopasstoggle == False:
+               audiocodec = self.AudioCodec
+           else:
+               audiocodec = gst.Caps.to_string(self.asourcecaps)
        else:
-           audiocodec = gst.Caps.to_string(self.asourcecaps)
-       # non-preset transcoding with audio and video
+           print "realizing there is no audio before starting transcoding"
+           audiocodec=False
+           achannels=False
        self._transcoder = transcoder_engine.Transcoder(filechoice, self.filename, self.videodirectory, self.container, 
                                                        audiocodec, videocodec, self.devicename, 
                                                        vheight, vwidth, ratenum, ratednom, achannels, 
@@ -726,9 +736,11 @@ class TransmageddonUI:
                        videostatus = codecfinder.get_video_encoder_element(self.VideoCodec)
                else:
                    videostatus=True
-
-       if self.audiopasstoggle != True:
-           audiostatus = codecfinder.get_audio_encoder_element(self.AudioCodec)
+       if self.haveaudio:
+           if self.audiopasstoggle != True:
+               audiostatus = codecfinder.get_audio_encoder_element(self.AudioCodec)
+           else:
+               audiostatus=True
        else:
            audiostatus=True
        if self.havevideo == False: # this flags help check if input is audio-only file
@@ -780,17 +792,30 @@ class TransmageddonUI:
        self.outputfilename = str(self.nosuffix+self.timestamp+self.ContainerFormatSuffix)
        context_id = self.StatusBar.get_context_id("EOS")
        self.StatusBar.push(context_id, (_("Writing %(filename)s") % {'filename': self.outputfilename}))
+       print "basic setup done for transcodebutton"
        if self.multipass == False:
            self.ProgressBar.set_text(_("Transcoding Progress"))
        else:
            self.passcounter=int(1)
            self.ProgressBar.set_text(_("Pass %(count)d Progress") % {'count': self.passcounter})
-       if self.audiodata.has_key("samplerate"):
-           self.check_for_elements()
-           if self.missingtoggle==False:
-               self._start_transcoding()
-       else:
-           self.waiting_for_signal="True"
+       print "self.haveaudio is " +str(self.haveaudio)
+       print "self.havevideo is " +str(self.havevideo)
+       if self.haveaudio:
+           if self.audiodata.has_key("samplerate"):
+               self.check_for_elements()
+               if self.missingtoggle==False:
+                   print "reaching start transcoding with audio"
+                   self._start_transcoding()
+           else:
+               self.waiting_for_signal="True"
+       elif self.havevideo:
+           if self.videodata.has_key("videoheight"):
+               self.check_for_elements()
+               if self.missingtoggle==False:
+                   print "reaching start transcoding with video"
+                   self._start_transcoding()
+           else:
+               self.waiting_for_signal="True"
 
    def on_cancelbutton_clicked(self, widget):
        self.FileChooser.set_sensitive(True)
@@ -830,21 +855,23 @@ class TransmageddonUI:
       # end of housecleaning
 
        # start filling audio
-
-       if self.usingpreset==True: # First fill menu based on presetvalue
-           print "adding preset value to audiomenu and setting it active"
-           self.audiorows[0].append_text(str(gst.pbutils.get_codec_description(self.presetaudiocodec)))
-           self.audiorows[0].set_active(0)
-           self.audiocodecs.append(self.presetaudiocodec)
-       else:
-           audio_codecs = []
-           audio_codecs = supported_audio_container_map[self.container]
-           for c in audio_codecs:
-               self.audiocodecs.append(gst.Caps(codecfinder.codecmap[c]))
-           for c in audio_codecs:
-               self.audiorows[0].append_text(c)
+       if self.haveaudio==True:
+           if self.usingpreset==True: # First fill menu based on presetvalue
+               self.audiorows[0].append_text(str(gst.pbutils.get_codec_description(self.presetaudiocodec)))
+               self.audiorows[0].set_active(0)
+               self.audiocodecs.append(self.presetaudiocodec)
+           else:
+               audio_codecs = []
+               audio_codecs = supported_audio_container_map[self.container]
+               for c in audio_codecs:
+                   self.audiocodecs.append(gst.Caps(codecfinder.codecmap[c]))
+               for c in audio_codecs:
+                   self.audiorows[0].append_text(c)
                self.audiorows[0].set_sensitive(True)
                self.audiorows[0].set_active(0)
+       else:
+               self.audiorows[0].set_sensitive(False)
+
        # fill in with video
        if self.havevideo==True:
            if self.container != False:
@@ -890,6 +917,7 @@ class TransmageddonUI:
        self.ProgressBar.set_text(_("Transcoding Progress"))
        if self.builder.get_object("containerchoice").get_active()!= -1:
            self.container = self.builder.get_object ("containerchoice").get_active_text ()
+           print "self.container is " + str(self.container)
        if self.builder.get_object("containerchoice").get_active()!= -1:
            print "checking for discover done"
            print "discover done is " + str(self.discover_done)
