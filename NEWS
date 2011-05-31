@@ -7,6 +7,7 @@
   Support container free audio formats such as FLAC, mp3 and AAC
   Add HTML5 and Nokia 9000 profile
   add support for video only transcoding
+  add support for mpeg1 video and mpeg2 audio
 
 0.16 - 21-05-2010
   Add WebM support
