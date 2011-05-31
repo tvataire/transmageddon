@@ -111,8 +111,8 @@ supported_video_container_map = {
     'Quicktime':  [ 'H264', 'Dirac', 'MPEG2', 'MPEG4', 'On2 vp8' ],
     'MPEG4':      [ 'H264', 'MPEG2', 'MPEG4' ],
     '3GPP':       [ 'H264', 'MPEG2', 'MPEG4', 'H263+' ],
-    'MPEG PS':    [ 'MPEG2','H264', 'MPEG4' ],
-    'MPEG TS':    [ 'H264', 'MPEG2', 'MPEG4', 'Dirac' ],
+    'MPEG PS':    [ 'MPEG2', 'MPEG1', 'H264', 'MPEG4' ],
+    'MPEG TS':    [ 'MPEG2', 'MPEG1', 'H264', 'MPEG4', 'Dirac' ],
     'FLV':        [ 'H264' ],
     'ASF':        [ 'Windows Media Video 2' ],
     'WebM':       [ 'On2 vp8']
@@ -126,8 +126,8 @@ supported_audio_container_map = {
     'Quicktime':   [ 'AAC', 'AC3', 'mp3' ],
     'MPEG4':       [ 'AAC', 'mp3' ],
     '3GPP':        [ 'AAC', 'mp3', 'AMR-NB' ],
-    'MPEG PS':     [ 'mp3', 'AC3', 'AAC' ],
-    'MPEG TS':     [ 'mp3', 'AC3', 'AAC' ],
+    'MPEG PS':     [ 'mp3', 'AC3', 'AAC', 'mp2' ],
+    'MPEG TS':     [ 'mp3', 'AC3', 'AAC', 'mp2' ],
     'FLV':         [ 'mp3' ],
     'ASF':         [ 'Windows Media Audio 2', 'mp3'],
     'WebM':        [ 'Vorbis']

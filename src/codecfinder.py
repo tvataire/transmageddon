@@ -41,7 +41,7 @@ containermap = { 'Ogg' : "application/ogg", \
         'Quicktime' : "video/quicktime,variant=apple", \
         'MPEG4' : "video/quicktime,variant=iso", \
         'MPEG PS' : "video/mpeg,mpegversion=2,systemstream=true", \
-        'MPEG TS' : "video/mpegts", \
+        'MPEG TS' : "video/mpegts,systemstream=true", \
         'FLV' : "video/x-flv", \
         '3GPP' : "video/quicktime,variant=3gpp", \
         'ASF' : "video/x-ms-asf, parsed=true", \
@@ -97,7 +97,9 @@ codecmap = { 'Vorbis' : "audio/x-vorbis", \
         'divx4' : "video/x-divx,divxversion=4", \
         'AMR-NB' : "audio/AMR", \
         'H263+' : "video/x-h263,variant=itu,h263version=h263p", \
-        'On2 vp8' : "video/x-vp8"}
+        'On2 vp8' : "video/x-vp8", \
+        'mp2' : "audio/mpeg,mpegversion=(int)1, layer=(int)2", \
+        'MPEG1' : "video/mpeg,mpegversion=(int)1,systemstream=false"}
 
 #####
 #This code checks for available muxers and return a unique caps string
