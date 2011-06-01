@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: transmageddon master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=transmageddon&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2011-05-29 13:18+0000\n"
-"PO-Revision-Date: 2011-05-30 10:29+0200\n"
+"POT-Creation-Date: 2011-05-31 20:33+0000\n"
+"PO-Revision-Date: 2011-06-01 10:12+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -145,14 +145,14 @@ msgstr "Ay_uda"
 msgid "_Transcode"
 msgstr "_Transcode"
 
-#: ../src/transmageddon.py:288 ../src/transmageddon.py:627
-#: ../src/transmageddon.py:783 ../src/transmageddon.py:806
-#: ../src/transmageddon.py:889 ../src/transmageddon.py:969
+#: ../src/transmageddon.py:288 ../src/transmageddon.py:631
+#: ../src/transmageddon.py:789 ../src/transmageddon.py:820
+#: ../src/transmageddon.py:911 ../src/transmageddon.py:990
 msgid "Transcoding Progress"
 msgstr "Progreso de la transcodificación"
 
 #. add i18n "No container"option
-#: ../src/transmageddon.py:323
+#: ../src/transmageddon.py:323 ../src/transmageddon.py:633
 msgid "No container (Audio-only)"
 msgstr "Sin contenedor (sólo sonido)"
 
@@ -189,79 +189,82 @@ msgstr "Volteo diagonal desde la parte superior izquierda"
 msgid "Upper right diagnonal flip"
 msgstr "Volteo diagonal desde la parte superior derecha"
 
-#: ../src/transmageddon.py:354
+#: ../src/transmageddon.py:354 ../src/transmageddon.py:925
 msgid "No Presets"
 msgstr "Sin valores predefinidos"
 
-#: ../src/transmageddon.py:440
+#: ../src/transmageddon.py:441
 #, python-format
 msgid "%(min)d:%(sec)02d"
 msgstr "%(min)d:%(sec)02d"
 
-#: ../src/transmageddon.py:471
+#: ../src/transmageddon.py:472
 #, python-format
 msgid "File saved to %(dir)s"
 msgstr "Archivo guardado en %(dir)s"
 
-#: ../src/transmageddon.py:481
+#: ../src/transmageddon.py:482
 msgid "Done Transcoding"
 msgstr "Transcodificación finalizada"
 
-#: ../src/transmageddon.py:492
+#: ../src/transmageddon.py:493
 #, python-format
 msgid "Pass %(count)d Complete"
 msgstr "Pasada %(count)d completada"
 
-#: ../src/transmageddon.py:495
+#: ../src/transmageddon.py:496
 msgid "Start next pass"
 msgstr "Iniciar la siguiente pasada"
 
-#: ../src/transmageddon.py:695
+#: ../src/transmageddon.py:540
+#| msgid "No Video"
+msgid "No Audio"
+msgstr "Sin sonido"
+
+#. add a 'No Video option'
+#: ../src/transmageddon.py:565 ../src/transmageddon.py:890
+msgid "No Video"
+msgstr "No hay vídeo"
+
+#: ../src/transmageddon.py:699
 msgid "Plugins not found, choose different codecs."
 msgstr "No se encontraron los complementos, elija otros códecs."
 
-#: ../src/transmageddon.py:703
+#: ../src/transmageddon.py:707
 msgid "Codec installation aborted."
 msgstr "Se abortó la instalación del códec."
 
-#: ../src/transmageddon.py:711
+#: ../src/transmageddon.py:715
 msgid "Missing plugin installation failed: "
 msgstr "Falló por la falta de instalación de un complemento"
 
-#: ../src/transmageddon.py:781
+#: ../src/transmageddon.py:787
 #, python-format
 msgid "Writing %(filename)s"
 msgstr "Escribiendo %(filename)s"
 
-#: ../src/transmageddon.py:786
+#: ../src/transmageddon.py:792
 #, python-format
 msgid "Pass %(count)d Progress"
 msgstr "Progreso de la pasada %(count)d"
 
-#. add a 'No Video option'
-#: ../src/transmageddon.py:867
-msgid "No Video"
-msgstr "No hay vídeo"
-
-#: ../src/transmageddon.py:877
-#| msgid "_Video passthrough"
+#: ../src/transmageddon.py:899
 msgid "Video passthrough"
 msgstr "Pasada de vídeo"
 
-#: ../src/transmageddon.py:882
-#| msgid "_Audio passthrough"
+#: ../src/transmageddon.py:904
 msgid "Audio passthrough"
 msgstr "Pasada de sonido"
 
-#: ../src/transmageddon.py:971
+#: ../src/transmageddon.py:992
 msgid "No audio parser, passthrough not available"
 msgstr "No existe el analizador de sonido, la pasada no está disponible"
 
-#: ../src/transmageddon.py:976
+#: ../src/transmageddon.py:997
 msgid "No video parser, passthrough not available"
 msgstr "No existe el analizador de vídeo, la pasada no está disponible"
 
-#: ../src/transmageddon.py:981
+#: ../src/transmageddon.py:1002
 msgid "Uknown error"
 msgstr "Error desconocido"
 
