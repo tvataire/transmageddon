@@ -14,24 +14,16 @@
     
     <profile>
         <name>Normal</name>
-        <container>video/mpegts</container>
+        <container>video/mpegts,systemstream=true,packetsize=192</container>
         <extension>ts</extension>
         <audio>
-            <name>audio/x-ac3</name>
-            <presets>
-                <preset>BD Quality Low</preset>
-            </presets>
+            <name>audio/x-ac3, rate=44100</name>
             <channels>1, 6</channels>
-            <samplerate>44100</samplerate>
         </audio>
         <video>
-            <name>video/x-h264</name>
-            <border>N</border>
+            <name>video/x-h264, profile=constrained-baseline</name>
             <passes>2</passes>
             <pixelaspectratio>0/0</pixelaspectratio>
-            <presets>
-                <preset>Quality Normal, Profile Baseline</preset>
-            </presets>
             <width>320, 1920</width>
             <height>240, 1080</height>
             <framerate>1, 30</framerate>

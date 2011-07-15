@@ -20,15 +20,9 @@
             <channels>1, 2</channels>
         </audio>
         <video>
-            <name>video/x-h264</name>
-            <border>Y</border>
+            <name>video/x-h264, profile=constrained-baseline</name>
             <passes>2</passes>
             <pixelaspectratio>0/0</pixelaspectratio>
-            <presets>
-                <preset>
-                    Quality Normal, Profile Baseline
-                </preset>
-            </presets>
             <width>320, 640</width>
             <height>240, 480</height>
             <framerate>1, 30</framerate>

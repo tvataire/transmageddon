@@ -21,15 +21,9 @@
             <channels>1, 2</channels>
         </audio>
         <video>
-            <name>video/x-h264</name>
-            <border>N</border>
+            <name>video/x-h264, profile=constrained-baseline</name>
             <passes>0</passes>
             <pixelaspectratio>0/0</pixelaspectratio>
-            <presets>
-                <preset>
-                    Quality Normal, Profile Baseline
-                </preset>
-            </presets>
             <width>240, 352</width>
             <height>140, 208</height>
             <framerate>1, 23</framerate>

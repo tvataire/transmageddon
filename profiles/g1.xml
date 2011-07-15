@@ -12,59 +12,20 @@
     <icon>file://ipod.svg</icon>
     <default>Normal</default>
     
-    <profile>
-        <name>Low</name>
-        <container>video/quicktime,variant=iso</container>
-        <extension>mp4</extension>
-        <audio>
-            <name>audio/mpeg,mpegversion=iso</name>
-            <presets>
-                <preset>
-                    Quality Low, Profile Low Complexity
-                </preset>
-            </presets>
-            <channels>1, 2</channels>
-            <samplerate>44100</samplerate>
-        </audio>
-        <video>
-            <name>video/x-h264</name>
-            <border>Y</border>
-            <passes>0</passes>
-            <pixelaspectratio>0/0</pixelaspectratio>
-            <presets>
-                <preset>
-                    Quality Low, Profile Baseline
-                </preset>
-            </presets>
-            <width>320, 480</width>
-            <height>240, 320</height>
-            <framerate>1, 25</framerate>
-        </video>
-    </profile>
+   
     <profile>
         <name>Normal</name>
         <container>video/quicktime,variant=iso</container>
         <extension>mp4</extension>
         <audio>
-            <name>audio/mpeg,mpegversion=4</name>
-            <presets>
-                <preset>
-                    Quality Normal, Profile Low Complexity
-                </preset>
-            </presets>
+            <name>audio/mpeg,mpegversion=4, base-profile=lc</name>
             <channels>1, 2</channels>
             <samplerate>44100</samplerate>
         </audio>
         <video>
-            <name>video/x-h264</name>
-            <border>Y</border>
+            <name>video/x-h264, profile=constrained-baseline</name>
             <passes>2</passes>
             <pixelaspectratio>0/0</pixelaspectratio>
-            <presets>
-                <preset>
-                    Quality Normal, Profile Baseline
-                </preset>
-            </presets>
             <width>320, 480</width>
             <height>240, 320</height>
             <framerate>1, 30</framerate>

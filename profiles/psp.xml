@@ -21,13 +21,9 @@
             <channels>1, 2</channels>
         </audio>
         <video>
-            <name>video/x-h264</name>
-            <border>N</border>
+            <name>video/x-h264, profile=main</name>
             <passes>0</passes>
             <pixelaspectratio>0/0</pixelaspectratio>
-            <presets>
-                <preset>Quality Normal, Profile Main</preset>
-            </presets>
             <width>320	</width>
             <height>240</height>
             <framerate>1, 25</framerate>
