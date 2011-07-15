@@ -62,14 +62,16 @@ supported_containers = [
         "Ogg",
         "Matroska",
         "AVI",
-        "MPEG TS",
         "MPEG PS",
+        "MPEG TS",
+        "AVCHD/BD",
         "FLV",
         "Quicktime",
         "MPEG4",
         "3GPP",
         "MXF",
-        "ASF",
+        "ASF", 
+        "I can not get this item to show for some reason",
         "WebM"
 ]
 
@@ -112,7 +114,7 @@ supported_video_container_map = {
     '3GPP':       [ 'H264', 'MPEG2', 'MPEG4', 'H263+' ],
     'MPEG PS':    [ 'MPEG2', 'MPEG1', 'H264', 'MPEG4' ],
     'MPEG TS':    [ 'MPEG2', 'MPEG1', 'H264', 'MPEG4', 'Dirac' ],
-    'FLV':        [ 'H264' ],
+    'AVCHD/BD':   [ 'H264' ],
     'ASF':        [ 'Windows Media Video 2' ],
     'WebM':       [ 'On2 vp8']
 }
@@ -127,6 +129,7 @@ supported_audio_container_map = {
     '3GPP':        [ 'AAC', 'mp3', 'AMR-NB' ],
     'MPEG PS':     [ 'mp3', 'AC3', 'AAC', 'mp2' ],
     'MPEG TS':     [ 'mp3', 'AC3', 'AAC', 'mp2' ],
+    'AVCHD/BD':    [ 'AC3' ],
     'FLV':         [ 'mp3' ],
     'ASF':         [ 'Windows Media Audio 2', 'mp3'],
     'WebM':        [ 'Vorbis']
@@ -250,15 +253,22 @@ class TransmageddonUI:
        if 'get_user_special_dir' in glib.__dict__:
            self.videodirectory = \
                    glib.get_user_special_dir(glib.USER_DIRECTORY_VIDEOS)
+           self.audiodirectory = \
+                   glib.get_user_special_dir(glib.USER_DIRECTORY_MUSIC)
        else:
-           print "XDG video directory not available"
+           print "XDG video or audio directory not available"
            self.videodirectory = os.getenv('HOME')
+           self.audiodirectory = os.getenv('HOME')
        if self.videodirectory is None:
-           print "XDG video directory not available"
+           print "XDG video or audio directory not available"
            self.videodirectory = os.getenv('HOME')
+           self.audiodirectory = os.getenv('HOME')
        CheckDir = os.path.isdir(self.videodirectory)
        if CheckDir == (False):
            os.mkdir(self.videodirectory)
+       CheckDir = os.path.isdir(self.audiodirectory)
+       if CheckDir == (False):
+           os.mkdir(self.audiodirectory)
        self.FileChooser.set_current_folder(self.videodirectory)
 
        # Setting AppIcon
@@ -316,8 +326,7 @@ class TransmageddonUI:
        self.p_time = gst.FORMAT_TIME
 
        # Populate the Container format combobox
-       self.lst = supported_containers
-       for i in self.lst:
+       for i in supported_containers:
            self.containerchoice.append_text(i)
        # add i18n "No container"option
        self.containerchoice.append_text(_("No container (Audio-only)"))
@@ -375,9 +384,9 @@ class TransmageddonUI:
            self.containerchoice.set_active(1)
        elif preset.container == "video/x-msvideo":
            self.containerchoice.set_active(2)
-       elif preset.container == "video/mpegts":
-           self.containerchoice.set_active(3)
        elif preset.container == "video/mpeg,mpegversion=2,systemstream=true":
+           self.containerchoice.set_active(3)
+       elif preset.container == "video/mpegts,systemstream=true,packetsize=188":
            self.containerchoice.set_active(4)
        elif preset.container == "video/x-flv":
            self.containerchoice.set_active(5)
@@ -393,6 +402,8 @@ class TransmageddonUI:
            self.containerchoice.set_active(10)
        elif preset.container == "video/webm":
            self.containerchoice.set_active(11)
+       elif preset.container == "video/mpegts,systemstream=true,packetsize=192":
+           self.containerchoice.set_active(12)
        else:
             print "failed to set container format from preset data"
 
@@ -469,7 +480,11 @@ class TransmageddonUI:
    def _on_eos(self, source):
        context_id = self.StatusBar.get_context_id("EOS")
        if (self.multipass ==  False) or (self.passcounter == int(0)):
-           self.StatusBar.push(context_id, (_("File saved to %(dir)s") % \
+           if self.havevideo == False:
+               self.StatusBar.push(context_id, (_("File saved to %(dir)s") % \
+                   {'dir': self.audiodirectory}))
+           else:
+               self.StatusBar.push(context_id, (_("File saved to %(dir)s") % \
                    {'dir': self.videodirectory}))
            self.FileChooser.set_sensitive(True)
            self.containerchoice.set_sensitive(True)
@@ -630,7 +645,6 @@ class TransmageddonUI:
            self.ProgressBar.set_fraction(0.0)
            self.ProgressBar.set_text(_("Transcoding Progress"))
            if (self.havevideo==False and self.nocontaineroptiontoggle==False):
-               self.containerchoice.append_text(_("No container (Audio-only)"))
                self.nocontaineroptiontoggle=True
            else:
                self.presetchoice.set_sensitive(True)
@@ -651,7 +665,9 @@ class TransmageddonUI:
                videocodec = self.VideoCodec
            else:
                videocodec = gst.Caps.to_string(self.vsourcecaps)
+           outputdirectory=self.videodirectory
        else:
+           outputdirectory=self.audiodirectory
            videocodec=False
            vheight=False
            vwidth=False
@@ -666,7 +682,7 @@ class TransmageddonUI:
        else:
            audiocodec=False
            achannels=False
-       self._transcoder = transcoder_engine.Transcoder(filechoice, self.filename, self.videodirectory, self.container, 
+       self._transcoder = transcoder_engine.Transcoder(filechoice, self.filename, outputdirectory, self.container, 
                                                        audiocodec, videocodec, self.devicename, 
                                                        vheight, vwidth, ratenum, ratednom, achannels, 
                                                        self.multipass, self.passcounter, self.outputfilename,
@@ -778,8 +794,9 @@ class TransmageddonUI:
        self.nosuffix = os.path.splitext(os.path.basename(self.filename))[0]
        # pick output suffix
        container = self.builder.get_object ("containerchoice").get_active_text ()
-       if self.container==False:
-           self.ContainerFormatSuffix=".mp3"
+       if self.container==False: # deal with container less formats
+           print "self.audiocodec is " + str(self.AudioCodec)
+           self.ContainerFormatSuffix = codecfinder.nocontainersuffixmap[gst.Caps.to_string(self.AudioCodec)]
        else:
            self.ContainerFormatSuffix = codecfinder.csuffixmap[container]
        self.outputfilename = str(self.nosuffix+self.timestamp+self.ContainerFormatSuffix)
@@ -909,7 +926,8 @@ class TransmageddonUI:
        self.CodecBox.set_sensitive(True)
        self.ProgressBar.set_fraction(0.0)
        self.ProgressBar.set_text(_("Transcoding Progress"))
-       if self.builder.get_object("containerchoice").get_active() == 12:
+       if self.builder.get_object("containerchoice").get_active() == 13: # this need to be the number in the list
+                                                                         # of the no container option
                self.container = False
        else:
            if self.builder.get_object("containerchoice").get_active()!= -1:

@@ -41,7 +41,8 @@ containermap = { 'Ogg' : "application/ogg", \
         'Quicktime' : "video/quicktime,variant=apple", \
         'MPEG4' : "video/quicktime,variant=iso", \
         'MPEG PS' : "video/mpeg,mpegversion=2,systemstream=true", \
-        'MPEG TS' : "video/mpegts,systemstream=true", \
+        'MPEG TS' : "video/mpegts,systemstream=true,packetsize=188", \
+        'AVCHD/BD' : "video/mpegts,systemstream=true,packetsize=192",\
         'FLV' : "video/x-flv", \
         '3GPP' : "video/quicktime,variant=3gpp", \
         'ASF' : "video/x-ms-asf, parsed=true", \
@@ -73,8 +74,12 @@ audiosuffixmap =   { 'Ogg' : ".ogg", \
         'FLV' : ".flv", \
         '3GPP' : ".3gp", \
         'ASF' : ".wma", \
-        'WebM' : ".webm", \
-        'No container' : ".mp3" }
+        'WebM' : ".webm" }
+
+nocontainersuffixmap = {
+         'audio/mpeg, mpegversion=(int)1, layer=(int)3' : ".mp3", \
+         'audio/mpeg, mpegversion=(int)4, stream-format=(string)adts' : ".aac", \
+         'audio/x-flac' : ".flac" }
 
 codecmap = { 'Vorbis' : "audio/x-vorbis", \
         'FLAC' : "audio/x-flac", \
