@@ -795,10 +795,12 @@ class TransmageddonUI:
        # pick output suffix
        container = self.builder.get_object ("containerchoice").get_active_text ()
        if self.container==False: # deal with container less formats
-           print "self.audiocodec is " + str(self.AudioCodec)
            self.ContainerFormatSuffix = codecfinder.nocontainersuffixmap[gst.Caps.to_string(self.AudioCodec)]
        else:
-           self.ContainerFormatSuffix = codecfinder.csuffixmap[container]
+           if self.havevideo == False:
+               self.ContainerFormatSuffix = codecfinder.audiosuffixmap[container]
+           else:
+               self.ContainerFormatSuffix = codecfinder.csuffixmap[container]
        self.outputfilename = str(self.nosuffix+self.timestamp+self.ContainerFormatSuffix)
        context_id = self.StatusBar.get_context_id("EOS")
        self.StatusBar.push(context_id, (_("Writing %(filename)s") % {'filename': self.outputfilename}))

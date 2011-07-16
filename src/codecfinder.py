@@ -60,8 +60,7 @@ csuffixmap =   { 'Ogg' : ".ogg", \
         'FLV' : ".flv", \
         '3GPP' : ".3gp",
         'ASF' : ".asf", \
-        'WebM' : ".webm", \
-        'No container' : ".mp3" }
+        'WebM' : ".webm" }
 
 audiosuffixmap =   { 'Ogg' : ".ogg", \
         'Matroska' : ".mkv", \
