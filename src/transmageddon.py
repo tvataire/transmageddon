@@ -111,6 +111,7 @@ supported_video_container_map = {
                     'Windows Media Video 2', 'On2 vp8' ],
     'Quicktime':  [ 'H264', 'Dirac', 'MPEG2', 'MPEG4', 'On2 vp8' ],
     'MPEG4':      [ 'H264', 'MPEG2', 'MPEG4' ],
+    'FLV':        [ 'H264'],
     '3GPP':       [ 'H264', 'MPEG2', 'MPEG4', 'H263+' ],
     'MPEG PS':    [ 'MPEG2', 'MPEG1', 'H264', 'MPEG4' ],
     'MPEG TS':    [ 'MPEG2', 'MPEG1', 'H264', 'MPEG4', 'Dirac' ],
@@ -133,6 +134,7 @@ supported_audio_container_map = {
     'FLV':         [ 'mp3' ],
     'ASF':         [ 'Windows Media Audio 2', 'mp3'],
     'WebM':        [ 'Vorbis']
+
     # "No container" is 13th option here (0-12)
     # if adding more containers make sure to update code for 'No container as it is placement tied'
 }
@@ -321,7 +323,7 @@ class TransmageddonUI:
        self.presetaudiocodec="None"
        self.presetvideocodec="None"
        self.inputvideocaps=None # using this value to store videocodec name to feed uridecodebin to avoid decoding video when not keeping video
-
+       self.nocontainernumber = int(13) # this needs to be set to the number of the no container option in the menu (from 0)
        self.p_duration = gst.CLOCK_TIME_NONE
        self.p_time = gst.FORMAT_TIME
 
@@ -388,21 +390,21 @@ class TransmageddonUI:
            self.containerchoice.set_active(3)
        elif preset.container == "video/mpegts,systemstream=true,packetsize=188":
            self.containerchoice.set_active(4)
-       elif preset.container == "video/x-flv":
-           self.containerchoice.set_active(5)
-       elif preset.container == "video/quicktime,variant=apple":
-           self.containerchoice.set_active(6)
-       elif preset.container == "video/quicktime,variant=iso":
-           self.containerchoice.set_active(7)
-       elif preset.container == "video/quicktime,variant=3gpp":
-           self.containerchoice.set_active(8)
-       elif preset.container == "application/mxf":
-           self.containerchoice.set_active(9)
-       elif preset.container == "video/x-ms-asf":
-           self.containerchoice.set_active(10)
-       elif preset.container == "video/webm":
-           self.containerchoice.set_active(11)
        elif preset.container == "video/mpegts,systemstream=true,packetsize=192":
+           self.containerchoice.set_active(5)
+       elif preset.container == "video/x-flv":
+           self.containerchoice.set_active(6)
+       elif preset.container == "video/quicktime,variant=apple":
+           self.containerchoice.set_active(7)
+       elif preset.container == "video/quicktime,variant=iso":
+           self.containerchoice.set_active(8)
+       elif preset.container == "video/quicktime,variant=3gpp":
+           self.containerchoice.set_active(9)
+       elif preset.container == "application/mxf":
+           self.containerchoice.set_active(10)
+       elif preset.container == "video/x-ms-asf":
+           self.containerchoice.set_active(11)
+       elif preset.container == "video/webm":
            self.containerchoice.set_active(12)
        else:
             print "failed to set container format from preset data"
@@ -845,7 +847,7 @@ class TransmageddonUI:
        # self.audiocodecs - contains list of whats in self.audiorows
        # self.videocodecs - contains listof whats in self.videorows
        # audio_codecs, video_codecs - temporary lists
-       
+
        # clean up stuff from previous run
        self.houseclean=True # set this to avoid triggering events when cleaning out menus
        for c in self.audiocodecs: # 
@@ -909,7 +911,7 @@ class TransmageddonUI:
                    self.videorows[0].append_text(_("No Video"))
                    self.videocodecs.append("novid")
                    self.videonovideomenuno=(len(self.videocodecs))-1
-                   if self.builder.get_object("containerchoice").get_active()==12:
+                   if self.builder.get_object("containerchoice").get_active()==self.nocontainernumber:
                        self.videorows[0].set_active(self.videonovideomenuno)
                        self.videorows[0].set_sensitive(False)
                       
@@ -928,8 +930,8 @@ class TransmageddonUI:
        self.CodecBox.set_sensitive(True)
        self.ProgressBar.set_fraction(0.0)
        self.ProgressBar.set_text(_("Transcoding Progress"))
-       if self.builder.get_object("containerchoice").get_active() == 13: # this need to be the number in the list
-                                                                         # of the no container option
+       print "container menu number is " + str(self.builder.get_object("containerchoice").get_active())
+       if self.builder.get_object("containerchoice").get_active() == self.nocontainernumber:
                self.container = False
        else:
            if self.builder.get_object("containerchoice").get_active()!= -1:
