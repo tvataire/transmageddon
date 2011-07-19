@@ -1,22 +1,23 @@
 # Norwegian (bokmål dialect) translation of transmageddon.
 # Copyright (C) 1998-2004, 2005 Free Software Foundation, Inc.
-# Kjartan Maraas <kmaraas@gnome.org>, 1998-2010.
+# Kjartan Maraas <kmaraas@gnome.org>, 1998-2011.
 # Terance Edward Sola <terance@lyse.net>, 2005.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: transmageddon\n"
-"Report-Msgid-Bugs-To:\n"
-"POT-Creation-Date: 2010-03-14 11:26+0100\n"
-"PO-Revision-Date: 2010-01-20 00:52+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-07-19 11:30+0200\n"
+"PO-Revision-Date: 2011-07-19 11:33+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian Bokmål <i18n-nb@lister.ping.uio.no>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../src/about.py.in:47
+#: ../src/about.py.in:48
 msgid "translator-credits"
 msgstr "Kjartan Maraas <kmaraas@gnome.org>"
 
@@ -41,23 +42,23 @@ msgid "Writing to %(file)s"
 msgstr "Skriver til %(file)s»"
 
 #: ../src/presets.py:489
-#, fuzzy, python-format
+#, python-format
 msgid "There was an error fetching and installing %(location)s: %(error)s"
-msgstr "En feil oppsto under start av %s: %s"
+msgstr "En feil oppsto under henting og installering av %(location)s: %(error)s"
 
 #: ../src/presets.py:506
 msgid "Checking for device preset updates..."
-msgstr ""
+msgstr "Ser etter oppdateringer for enhetsinnstillinger …"
 
 #: ../src/presets.py:526
 #, python-format
 msgid "Device preset %(name)s is up to date"
-msgstr ""
+msgstr "Forhåndsinnstilling for enhet %(name)s er oppdatert"
 
 #: ../src/presets.py:530
 #, python-format
 msgid "Found updated device preset %(name)s"
-msgstr ""
+msgstr "Fant oppdatert forhåndsinnstilling for enhet %(name)s"
 
 #: ../src/presets.py:536 ../src/presets.py:549
 #, python-format
@@ -67,7 +68,7 @@ msgstr ""
 #: ../src/presets.py:543
 #, python-format
 msgid "Found new device preset %(name)s"
-msgstr ""
+msgstr "Fant ny forhåndsinnstilling for enhet %(name)s"
 
 #: ../src/presets.py:556
 #, python-format
@@ -81,7 +82,7 @@ msgstr ""
 
 #: ../src/presets.py:582
 msgid "All device presets are up to date!"
-msgstr ""
+msgstr "Alle forhåndsinnstillinger for enheter er oppdatert"
 
 #: ../src/transmageddon.ui.h:1
 msgid "<b>Choose Audio Codec</b>:"
@@ -124,187 +125,140 @@ msgid "<small>Video height&#47;width:</small>"
 msgstr "<small>Høyde/bredde på video</small>"
 
 #: ../src/transmageddon.ui.h:11
-msgid "AA_C"
-msgstr "AA_C"
-
-#: ../src/transmageddon.ui.h:12
-msgid "AC_3"
-msgstr "AC_3"
-
-#: ../src/transmageddon.ui.h:13
-msgid "AMR-N_B"
-msgstr "AMR-N_B"
-
-#: ../src/transmageddon.ui.h:14
-msgid "Celt _Ultra"
-msgstr "Celt _ultra"
-
-#: ../src/transmageddon.ui.h:15
-msgid "F_LAC"
-msgstr "F_LAC"
-
-#: ../src/transmageddon.ui.h:16
-msgid "H263_plus"
-msgstr "H263_plus"
-
-#: ../src/transmageddon.ui.h:17
-msgid "H2_64"
-msgstr "H2_64"
-
-#: ../src/transmageddon.ui.h:18
-msgid "MPEG_2"
-msgstr "MPEG_2"
-
-#: ../src/transmageddon.ui.h:19
-msgid "MPEG_4/DivX5"
-msgstr "MPEG_4/DivX5"
-
-#: ../src/transmageddon.ui.h:20
-msgid "Theo_ra"
-msgstr "Theo_ra"
-
-#: ../src/transmageddon.ui.h:21
 msgid "Transmageddon"
 msgstr "Transmageddon"
 
-#: ../src/transmageddon.ui.h:22
-msgid "V_orbis"
-msgstr "V_orbis"
-
-#: ../src/transmageddon.ui.h:23
-msgid "W_indowsMediaAudio 2"
-msgstr "W_indowsMediaAudio 2"
-
-#: ../src/transmageddon.ui.h:24
-msgid "_Audio passthrough"
-msgstr ""
-
-#: ../src/transmageddon.ui.h:25
+#: ../src/transmageddon.ui.h:12
 msgid "_Debug"
 msgstr "_Feilsøk"
 
-#: ../src/transmageddon.ui.h:26
-msgid "_Dirac"
-msgstr "_Dirac"
-
-#: ../src/transmageddon.ui.h:27
+#: ../src/transmageddon.ui.h:13
 msgid "_Help"
 msgstr "_Hjelp"
 
-#: ../src/transmageddon.ui.h:28
-msgid "_Speex"
-msgstr "_Speex"
-
-#: ../src/transmageddon.ui.h:29
+#: ../src/transmageddon.ui.h:14
 msgid "_Transcode"
 msgstr "_Konverter"
 
-#: ../src/transmageddon.ui.h:30
-msgid "_Video passthrough"
-msgstr ""
-
-#: ../src/transmageddon.ui.h:31
-msgid "_WindowsMediaVideo2"
-msgstr "_WindowsMediaVideo2"
-
-#: ../src/transmageddon.ui.h:32
-msgid "_mp3"
-msgstr "_mp3"
-
-#: ../src/transmageddon.ui.h:33
-msgid "_xvid"
-msgstr "_xvid"
-
-#: ../src/transmageddon.py:226 ../src/transmageddon.py:490
-#: ../src/transmageddon.py:611 ../src/transmageddon.py:632
-#: ../src/transmageddon.py:640 ../src/transmageddon.py:714
+#: ../src/transmageddon.py:300 ../src/transmageddon.py:648
+#: ../src/transmageddon.py:810 ../src/transmageddon.py:841
+#: ../src/transmageddon.py:932 ../src/transmageddon.py:1012
 msgid "Transcoding Progress"
 msgstr "Fremgang for konvertering"
 
+#. add i18n "No container"option
+#: ../src/transmageddon.py:334
+msgid "No container (Audio-only)"
+msgstr ""
+
 #. Populate the rotatation box
-#: ../src/transmageddon.py:245
+#: ../src/transmageddon.py:337
 msgid "No rotation (default)"
 msgstr "Ingen rotering (forvalg)"
 
-#: ../src/transmageddon.py:245
+#: ../src/transmageddon.py:338
 msgid "Clockwise 90 degrees"
 msgstr "Med klokken 90 grader"
 
-#: ../src/transmageddon.py:245
+#: ../src/transmageddon.py:339
 msgid "Rotate 180 degrees"
 msgstr "Roter 180 grader"
 
-#: ../src/transmageddon.py:246
+#: ../src/transmageddon.py:340
 msgid "Counterclockwise 90 degrees"
 msgstr "Mot klokken 90 grader"
 
-#: ../src/transmageddon.py:246
+#: ../src/transmageddon.py:341
 msgid "Horizontal flip"
 msgstr "Vend horisontalt"
 
-#: ../src/transmageddon.py:247
+#: ../src/transmageddon.py:342
 msgid "Vertical flip"
 msgstr "Vend vertikalt"
 
-#: ../src/transmageddon.py:247
+#: ../src/transmageddon.py:343
 msgid "Upper left diagonal flip"
 msgstr ""
 
-#: ../src/transmageddon.py:248
+#: ../src/transmageddon.py:344
 msgid "Upper right diagnonal flip"
 msgstr ""
 
-#: ../src/transmageddon.py:353
+#: ../src/transmageddon.py:365 ../src/transmageddon.py:947
+msgid "No Presets"
+msgstr ""
+
+#: ../src/transmageddon.py:454
 #, python-format
 msgid "%(min)d:%(sec)02d"
 msgstr "%(min)d.%(sec)02d"
 
-#: ../src/transmageddon.py:359
-msgid "Estimated time remaining: "
-msgstr "Estimert gjenværende tid: "
+#: ../src/transmageddon.py:486 ../src/transmageddon.py:489
+#, python-format
+msgid "File saved to %(dir)s"
+msgstr "Fil lagret til %(dir)s"
 
-#: ../src/transmageddon.py:361 ../src/transmageddon.py:393
-#: ../src/transmageddon.py:614
-msgid "Pass "
-msgstr "Runde "
-
-#: ../src/transmageddon.py:378
-msgid "File saved to "
-msgstr "Fil lagret til "
-
-#: ../src/transmageddon.py:387
+#: ../src/transmageddon.py:499
 msgid "Done Transcoding"
 msgstr "Konvertering fullført"
 
-#: ../src/transmageddon.py:395
+#: ../src/transmageddon.py:510
+#, python-format
+msgid "Pass %(count)d Complete"
+msgstr ""
+
+#: ../src/transmageddon.py:513
 msgid "Start next pass"
 msgstr "Start neste runde"
 
-#: ../src/transmageddon.py:537
+#: ../src/transmageddon.py:557
+msgid "No Audio"
+msgstr "Ingen lyd"
+
+#. add a 'No Video option'
+#: ../src/transmageddon.py:582 ../src/transmageddon.py:911
+msgid "No Video"
+msgstr "Ingen video"
+
+#: ../src/transmageddon.py:717
 msgid "Plugins not found, choose different codecs."
 msgstr ""
 
-#: ../src/transmageddon.py:545
+#: ../src/transmageddon.py:725
 msgid "Codec installation aborted."
-msgstr ""
+msgstr "Installasjon av kodek avbrutt."
 
-#: ../src/transmageddon.py:553
+#: ../src/transmageddon.py:733
 msgid "Missing plugin installation failed: "
+msgstr "Installasjon av manglende tillegg feilet: "
+
+#: ../src/transmageddon.py:808
+#, python-format
+msgid "Writing %(filename)s"
+msgstr "Skriver %(filename)s»"
+
+#: ../src/transmageddon.py:813
+#, fuzzy, python-format
+msgid "Pass %(count)d Progress"
+msgstr "Fremgang for konvertering"
+
+#: ../src/transmageddon.py:920
+msgid "Video passthrough"
 msgstr ""
 
-#: ../src/transmageddon.py:609
-msgid "Writing "
-msgstr "Skriver "
+#: ../src/transmageddon.py:925
+msgid "Audio passthrough"
+msgstr ""
 
-#: ../src/transmageddon.py:716
+#: ../src/transmageddon.py:1014
 msgid "No audio parser, passthrough not available"
 msgstr ""
 
-#: ../src/transmageddon.py:723
+#: ../src/transmageddon.py:1019
 msgid "No video parser, passthrough not available"
 msgstr ""
 
-#: ../src/transmageddon.py:730
+#: ../src/transmageddon.py:1024
 msgid "Uknown error"
 msgstr "Ukjent feil"
 
