@@ -138,6 +138,16 @@ class Transcoder(gobject.GObject):
        self.encodebin.set_property("avoid-reencoding", True)
        self.pipeline.add(self.encodebin)
        self.encodebin.set_state(gst.STATE_PAUSED)
+
+       # Grab element from encodebin which supports tagsetter interface and set app name to Transmageddon
+       GstTagSetterType = gobject.type_from_name("GstTagSetter")
+       tag_setting_element=self.encodebin.get_by_interface(GstTagSetterType)
+       if tag_setting_element != None:
+           taglist=gst.TagList()
+           taglist[gst.TAG_APPLICATION_NAME] = "Transmageddon transcoder"
+           tag_setting_element.merge_tags(taglist, gst.TAG_MERGE_APPEND)
+
+
        if self.videopasstoggle==False:
            if self.container != False:
                self.videoflipper = gst.element_factory_make("videoflip")
@@ -337,6 +347,7 @@ class Transcoder(gobject.GObject):
        return True
 
    def OnDynamicPad(self, uridecodebin, src_pad):
+       origin = src_pad.get_caps()
        if (self.container==False):
            a =  src_pad.get_caps().to_string()
            if a.startswith("audio/"):
@@ -344,15 +355,16 @@ class Transcoder(gobject.GObject):
                src_pad.link(sinkpad)
        else:
            if self.videocaps == "novid":
-               a =  src_pad.get_caps().to_string()
+               c = origin.to_string()
                if a.startswith("audio/"):
-                   sinkpad = self.encodebin.emit("request-pad", src_pad.get_caps())
-                   c = sinkpad.get_caps().to_string()
-                   if c.startswith("audio/"):
+                   sinkpad = self.encodebin.emit("request-pad", origin)
+                   d = sinkpad.get_caps().to_string()
+                   if d.startswith("audio/"):
                        src_pad.link(sinkpad)
            else:
-               sinkpad = self.encodebin.emit("request-pad", src_pad.get_caps())
-               c = sinkpad.get_caps().to_string()
+               c = origin.to_string()
+               if not c.startswith("text/"):
+                   sinkpad = self.encodebin.emit("request-pad", origin)
                if c.startswith("audio/"):
                    src_pad.link(sinkpad)
                elif c.startswith("video/"):
