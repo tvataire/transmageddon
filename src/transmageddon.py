@@ -594,9 +594,10 @@ class TransmageddonUI:
                self.check_for_passthrough(self.container)
        # set markup
 
-       self.audioinformation.set_markup(''.join(('<small>', \
+       if audiostreamcounter >= 0:
+           self.audioinformation.set_markup(''.join(('<small>', \
                        'Audio channels: ', str(audiochannels[0]), '</small>')))
-       self.audiocodec.set_markup(''.join(('<small>','Audio codec: ', \
+           self.audiocodec.set_markup(''.join(('<small>','Audio codec: ', \
                        str(gst.pbutils.get_codec_description(inputaudiocaps[audiostreamcounter])), \
                        '</small>')))
        self.videoinformation.set_markup(''.join(('<small>', 'Video width&#47;height: ', str(videowidth),
