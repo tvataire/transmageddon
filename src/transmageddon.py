@@ -537,6 +537,8 @@ class TransmageddonUI:
        samplerate=[]
        inputaudiocaps=[]
        markupaudioinfo=[]
+       videowidth = None
+       videoheight = None
 
        for i in info.get_stream_list():
            if isinstance(i, gst.pbutils.DiscovererAudioInfo):
@@ -600,9 +602,10 @@ class TransmageddonUI:
            self.audiocodec.set_markup(''.join(('<small>','Audio codec: ', \
                        str(gst.pbutils.get_codec_description(inputaudiocaps[audiostreamcounter])), \
                        '</small>')))
-       self.videoinformation.set_markup(''.join(('<small>', 'Video width&#47;height: ', str(videowidth),
+       if videowidth and videoheight:
+           self.videoinformation.set_markup(''.join(('<small>', 'Video width&#47;height: ', str(videowidth),
                                             "x", str(videoheight), '</small>')))
-       self.videocodec.set_markup(''.join(('<small>', 'Video codec: ',
+           self.videocodec.set_markup(''.join(('<small>', 'Video codec: ',
                                        str(gst.pbutils.get_codec_description(self.inputvideocaps)),
                                       '</small>')))
 
