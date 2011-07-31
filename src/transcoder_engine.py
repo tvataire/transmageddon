@@ -331,6 +331,7 @@ class Transcoder(gobject.GObject):
            print debug
            gst.DEBUG_BIN_TO_DOT_FILE (self.pipeline, gst.DEBUG_GRAPH_SHOW_ALL, \
                    'transmageddon.dot')
+           self.emit('got-error', err.message)
        elif mtype == gst.MESSAGE_ASYNC_DONE:
            self.emit('ready-for-querying')
        elif mtype == gst.MESSAGE_EOS:

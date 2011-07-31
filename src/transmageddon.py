@@ -1048,6 +1048,8 @@ class TransmageddonUI:
                self.videopasstoggle = False
            else:
                error_message=_("Uknown error")
+       else:
+         error_message = error_string
        context_id = self.StatusBar.get_context_id("EOS")
        self.StatusBar.push(context_id, error_message)
 
