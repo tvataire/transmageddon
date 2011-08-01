@@ -537,6 +537,8 @@ class TransmageddonUI:
        samplerate=[]
        inputaudiocaps=[]
        markupaudioinfo=[]
+       videowidth = None
+       videoheight = None
 
        for i in info.get_stream_list():
            if isinstance(i, gst.pbutils.DiscovererAudioInfo):
@@ -594,14 +596,16 @@ class TransmageddonUI:
                self.check_for_passthrough(self.container)
        # set markup
 
-       self.audioinformation.set_markup(''.join(('<small>', \
+       if audiostreamcounter >= 0:
+           self.audioinformation.set_markup(''.join(('<small>', \
                        'Audio channels: ', str(audiochannels[0]), '</small>')))
-       self.audiocodec.set_markup(''.join(('<small>','Audio codec: ', \
+           self.audiocodec.set_markup(''.join(('<small>','Audio codec: ', \
                        str(gst.pbutils.get_codec_description(inputaudiocaps[audiostreamcounter])), \
                        '</small>')))
-       self.videoinformation.set_markup(''.join(('<small>', 'Video width&#47;height: ', str(videowidth),
+       if videowidth and videoheight:
+           self.videoinformation.set_markup(''.join(('<small>', 'Video width&#47;height: ', str(videowidth),
                                             "x", str(videoheight), '</small>')))
-       self.videocodec.set_markup(''.join(('<small>', 'Video codec: ',
+           self.videocodec.set_markup(''.join(('<small>', 'Video codec: ',
                                        str(gst.pbutils.get_codec_description(self.inputvideocaps)),
                                       '</small>')))
 
@@ -1044,6 +1048,8 @@ class TransmageddonUI:
                self.videopasstoggle = False
            else:
                error_message=_("Uknown error")
+       else:
+         error_message = error_string
        context_id = self.StatusBar.get_context_id("EOS")
        self.StatusBar.push(context_id, error_message)
 
