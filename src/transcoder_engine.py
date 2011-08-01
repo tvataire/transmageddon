@@ -139,15 +139,6 @@ class Transcoder(gobject.GObject):
        self.pipeline.add(self.encodebin)
        self.encodebin.set_state(gst.STATE_PAUSED)
 
-       # Grab element from encodebin which supports tagsetter interface and set app name to Transmageddon
-       GstTagSetterType = gobject.type_from_name("GstTagSetter")
-       tag_setting_element=self.encodebin.get_by_interface(GstTagSetterType)
-       if tag_setting_element != None:
-           taglist=gst.TagList()
-           taglist[gst.TAG_APPLICATION_NAME] = "Transmageddon transcoder"
-           tag_setting_element.merge_tags(taglist, gst.TAG_MERGE_APPEND)
-
-
        if self.videopasstoggle==False:
            if self.container != False:
                self.videoflipper = gst.element_factory_make("videoflip")
@@ -374,6 +365,15 @@ class Transcoder(gobject.GObject):
                        
                    else:
                        src_pad.link(sinkpad)
+
+       # Grab element from encodebin which supports tagsetter interface and set app name to Transmageddon
+       GstTagSetterType = gobject.type_from_name("GstTagSetter")
+       tag_setting_element=self.encodebin.get_by_interface(GstTagSetterType)
+       if tag_setting_element != None:
+           print "tag setting element is " + str(tag_setting_element)	
+           taglist=gst.TagList()
+           taglist[gst.TAG_APPLICATION_NAME] = "Transmageddon transcoder"
+           tag_setting_element.merge_tags(taglist, gst.TAG_MERGE_APPEND)
 
    def Pipeline (self, state):
        if state == ("playing"):
