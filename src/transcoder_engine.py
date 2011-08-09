@@ -125,13 +125,13 @@ class Transcoder(gobject.GObject):
            self.encodebinprofile = gst.pbutils.EncodingContainerProfile ("containerformat", None , self.containercaps, None)
        if self.audiocaps != False:
            if self.container==False:
-               self.encodebinprofile = gst.pbutils.EncodingAudioProfile (self.audiocaps, None, gst.caps_new_any(), 0)
+               self.encodebinprofile = gst.pbutils.EncodingAudioProfile (self.audiocaps, "Quality Normal", gst.caps_new_any(), 0)
            else:
-               self.audioprofile = gst.pbutils.EncodingAudioProfile (self.audiocaps, None, gst.caps_new_any(), 0)
+               self.audioprofile = gst.pbutils.EncodingAudioProfile (self.audiocaps, "Quality Normal", gst.caps_new_any(), 0)
                self.encodebinprofile.add_profile(self.audioprofile)
        if self.videocaps != "novid":
            if (self.videocaps != False):
-               self.videoprofile = gst.pbutils.EncodingVideoProfile (gst.Caps(self.videocaps), None, gst.caps_new_any(), 0)
+               self.videoprofile = gst.pbutils.EncodingVideoProfile (gst.Caps(self.videocaps), "Quality Normal", gst.caps_new_any(), 0)
                self.encodebinprofile.add_profile(self.videoprofile)
        self.encodebin = gst.element_factory_make ("encodebin", None)
        self.encodebin.set_property("profile", self.encodebinprofile)
@@ -348,7 +348,7 @@ class Transcoder(gobject.GObject):
        else:
            if self.videocaps == "novid":
                c = origin.to_string()
-               if a.startswith("audio/"):
+               if c.startswith("audio/"):
                    sinkpad = self.encodebin.emit("request-pad", origin)
                    d = sinkpad.get_caps().to_string()
                    if d.startswith("audio/"):
