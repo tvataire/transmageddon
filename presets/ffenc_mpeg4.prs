@@ -2,14 +2,6 @@
 version=0.10
 element-name=ffenc_mpeg4
 
-[Profile Simple]
-_meta/comment=Simple Profile
-flags=0x00400004
-
-[Profile Advanced Simple]
-_meta/comment=Advanced Simple Profile
-flags=0x00400036
-
 [Quality Low]
 _meta/comment=Low quality
 pass=2
