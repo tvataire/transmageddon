@@ -55,6 +55,7 @@ rm -rf %{buildroot}
 %{_datadir}/transmageddon
 %{_datadir}/pixmaps/transmageddon.svg
 %{_datadir}/applications/transmageddon.desktop
+%{_datadir}/gstreamer-0.10/presets/*
 %{_mandir}/man1/transmageddon.1.gz
 
 %changelog

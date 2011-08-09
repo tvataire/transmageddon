@@ -70,6 +70,7 @@ common/m4/Makefile
 src/about.py
 src/Makefile
 profiles/Makefile
+presets/Makefile
 po/Makefile.in
 transmageddon.spec
 transmageddon.desktop.in
