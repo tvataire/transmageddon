@@ -1,6 +1,6 @@
 [_presets_]
 version=0.10
-element-name=theoraenc
+element-name=GstTheoraEnc
 
 [Quality Low]
 _meta/comment=Low quality
