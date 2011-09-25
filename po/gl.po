@@ -3,19 +3,21 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Marcos Lans <antiparvos@gmail.com>, 2010.
 # Fran Diéguez <frandieguez@ubuntu.com>, 2010.
+# Fran Dieguez <frandieguez@gnome.org>, 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: transmageddon.master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-05-24 13:12+0200\n"
-"PO-Revision-Date: 2010-05-24 13:12+0200\n"
-"Last-Translator: Fran Diéguez <frandieguez@ubuntu.com>\n"
-"Language-Team: Galician <gnome@g11.net>\n"
+"POT-Creation-Date: 2011-09-25 13:07+0200\n"
+"PO-Revision-Date: 2011-09-25 13:08+0200\n"
+"Last-Translator: Fran Dieguez <frandieguez@gnome.org>\n"
+"Language-Team: Galician <gnome-l10n-gl@gnome.org>\n"
+"Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n!=1);\\\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
 "X-Poedit-Language: Galician\n"
 "X-Generator: KBabel 1.11.4\n"
 
@@ -69,8 +71,8 @@ msgstr "Atopouse unha predefinición actualizada para o dispositivo %(name)s"
 #, python-format
 msgid "Error installing preset %(name)s from %(location)s: %(error)s"
 msgstr ""
-"Produciuse un erro na instalación da predefinición %(name)s desde %(location)"
-"s: %(error)s"
+"Produciuse un erro na instalación da predefinición %(name)s desde "
+"%(location)s: %(error)s"
 
 #: ../src/presets.py:543
 #, python-format
@@ -132,227 +134,140 @@ msgid "<small>Video height&#47;width:</small>"
 msgstr "<small>Altura e largura do vídeo:</small>"
 
 #: ../src/transmageddon.ui.h:11
-msgid "AA_C"
-msgstr "AA_C"
-
-#: ../src/transmageddon.ui.h:12
-msgid "AC_3"
-msgstr "AC_3"
-
-#: ../src/transmageddon.ui.h:13
-msgid "AMR-N_B"
-msgstr "AMR-N_B"
-
-#: ../src/transmageddon.ui.h:14
-msgid "Celt _Ultra"
-msgstr "Celt _Ultra"
-
-#: ../src/transmageddon.ui.h:15
-msgid "F_LAC"
-msgstr "F_LAC"
-
-#: ../src/transmageddon.ui.h:16
-msgid "H263_plus"
-msgstr "H263_plus"
-
-#: ../src/transmageddon.ui.h:17
-msgid "H2_64"
-msgstr "H2_64"
-
-#: ../src/transmageddon.ui.h:18
-msgid "MPEG_2"
-msgstr "MPEG_2"
-
-#: ../src/transmageddon.ui.h:19
-msgid "MPEG_4/DivX5"
-msgstr "MPEG_4/DivX5"
-
-#: ../src/transmageddon.ui.h:20
-msgid "Theo_ra"
-msgstr "Theo_ra"
-
-#: ../src/transmageddon.ui.h:21
 msgid "Transmageddon"
 msgstr "Transmageddon"
 
-#: ../src/transmageddon.ui.h:22
-msgid "V_orbis"
-msgstr "V_orbis"
-
-#: ../src/transmageddon.ui.h:23
-msgid "W_indowsMediaAudio 2"
-msgstr "W_indowsMediaAudio 2"
-
-#: ../src/transmageddon.ui.h:24
-msgid "_Audio passthrough"
-msgstr "P_aso directo ao audio"
-
-#: ../src/transmageddon.ui.h:25
+#: ../src/transmageddon.ui.h:12
 msgid "_Debug"
 msgstr "_Depurar"
 
-#: ../src/transmageddon.ui.h:26
-msgid "_Dirac"
-msgstr "_Dirac"
-
-#: ../src/transmageddon.ui.h:27
+#: ../src/transmageddon.ui.h:13
 msgid "_Help"
 msgstr "Ax_uda"
 
-#: ../src/transmageddon.ui.h:28
-msgid "_On2 VP8"
-msgstr "_On2 VP8"
-
-#: ../src/transmageddon.ui.h:29
-msgid "_Speex"
-msgstr "_Speex"
-
-#: ../src/transmageddon.ui.h:30
+#: ../src/transmageddon.ui.h:14
 msgid "_Transcode"
 msgstr "_Transcodificar"
 
-#: ../src/transmageddon.ui.h:31
-msgid "_Video passthrough"
-msgstr "P_aso directo ao vídeo"
-
-#: ../src/transmageddon.ui.h:32
-msgid "_WindowsMediaVideo2"
-msgstr "_WindowsMediaVideo2"
-
-#: ../src/transmageddon.ui.h:33
-msgid "_mp3"
-msgstr "_mp3"
-
-#: ../src/transmageddon.ui.h:34
-msgid "_xvid"
-msgstr "_xvid"
-
-#: ../src/transmageddon.py:229 ../src/transmageddon.py:496
-#: ../src/transmageddon.py:617 ../src/transmageddon.py:638
-#: ../src/transmageddon.py:646 ../src/transmageddon.py:720
+#: ../src/transmageddon.py:300 ../src/transmageddon.py:670
+#: ../src/transmageddon.py:836 ../src/transmageddon.py:867
+#: ../src/transmageddon.py:958 ../src/transmageddon.py:1038
 msgid "Transcoding Progress"
 msgstr "Progreso da transcodificación"
 
+#. add i18n "No container"option
+#: ../src/transmageddon.py:334
+msgid "No container (Audio-only)"
+msgstr "Sen contedor (só son)"
+
 #. Populate the rotatation box
-#: ../src/transmageddon.py:248
+#: ../src/transmageddon.py:337
 msgid "No rotation (default)"
 msgstr "Sen rotación (predefinido)"
 
-#: ../src/transmageddon.py:248
+#: ../src/transmageddon.py:338
 msgid "Clockwise 90 degrees"
 msgstr "90 graos en sentido horario"
 
-#: ../src/transmageddon.py:248
+#: ../src/transmageddon.py:339
 msgid "Rotate 180 degrees"
 msgstr "Rotar 180 graos"
 
-#: ../src/transmageddon.py:249
+#: ../src/transmageddon.py:340
 msgid "Counterclockwise 90 degrees"
 msgstr "90 graos en sentido antihorario"
 
-#: ../src/transmageddon.py:249
+#: ../src/transmageddon.py:341
 msgid "Horizontal flip"
 msgstr "Inversión horizontal"
 
-#: ../src/transmageddon.py:250
+#: ../src/transmageddon.py:342
 msgid "Vertical flip"
 msgstr "Inversión vertical"
 
-#: ../src/transmageddon.py:250
+#: ../src/transmageddon.py:343
 msgid "Upper left diagonal flip"
 msgstr "Inverter pola diagonal superior esquerda"
 
-#: ../src/transmageddon.py:251
+#: ../src/transmageddon.py:344
 msgid "Upper right diagnonal flip"
 msgstr "Inverter pola diagonal superior dereita"
 
-#: ../src/transmageddon.py:272
+#: ../src/transmageddon.py:365 ../src/transmageddon.py:973
 msgid "No Presets"
 msgstr "Non existen preconfiguracións"
 
-#: ../src/transmageddon.py:356
+#: ../src/transmageddon.py:454
 #, python-format
 msgid "%(min)d:%(sec)02d"
 msgstr "%(min)d:%(sec)02d"
 
-#: ../src/transmageddon.py:362
-#, python-format
-msgid "Estimated time remaining: %(time)s"
-msgstr "Tempo restante estimado: %(time)s"
-
-#: ../src/transmageddon.py:364
-#, python-format
-msgid "Pass %(count)d time remaining: %(time)s"
-msgstr "Tempo restante estimado do paso %(count)d: %(time)s"
-
-#: ../src/transmageddon.py:384
+#: ../src/transmageddon.py:486 ../src/transmageddon.py:489
 #, python-format
 msgid "File saved to %(dir)s"
 msgstr "O ficheiro gardouse en %(dir)s"
 
-#: ../src/transmageddon.py:393
+#: ../src/transmageddon.py:499
 msgid "Done Transcoding"
 msgstr "Feita a transcodificación"
 
-#: ../src/transmageddon.py:399
+#: ../src/transmageddon.py:510
 #, python-format
 msgid "Pass %(count)d Complete"
 msgstr "Paso %(count)d completado"
 
-#: ../src/transmageddon.py:401
+#: ../src/transmageddon.py:513
 msgid "Start next pass"
 msgstr "Iniciar o paso seguinte"
 
-#: ../src/transmageddon.py:417
-msgid "Video width&#47;height: "
-msgstr "Vídeo ancho&#47;alto: "
+#: ../src/transmageddon.py:563
+msgid "No Audio"
+msgstr "Sen son"
 
-#: ../src/transmageddon.py:419
-#, python-format
-msgid "Video codec: %(codec)s"
-msgstr "Códec de vídeo: %(codec)s"
+#. add a 'No Video option'
+#: ../src/transmageddon.py:584 ../src/transmageddon.py:937
+msgid "No Video"
+msgstr "Sen vídeo"
 
-#: ../src/transmageddon.py:424
-#, python-format
-msgid "Audio channels: %(chans)s"
-msgstr "Canles de audio: %(chans)s"
-
-#: ../src/transmageddon.py:425
-#, python-format
-msgid "Audio codec: %(codec)s"
-msgstr "Códec de audio: %(codec)s"
-
-#: ../src/transmageddon.py:543
+#: ../src/transmageddon.py:743
 msgid "Plugins not found, choose different codecs."
 msgstr "Non foi posíbel encontrar os engadido, escolla uns códecs distintos."
 
-#: ../src/transmageddon.py:551
+#: ../src/transmageddon.py:751
 msgid "Codec installation aborted."
 msgstr "Cancelouse a instalación do códec."
 
-#: ../src/transmageddon.py:559
+#: ../src/transmageddon.py:759
 msgid "Missing plugin installation failed: "
 msgstr "Produciuse un fallo na instalación do engadido que falta: "
 
-#: ../src/transmageddon.py:615
+#: ../src/transmageddon.py:834
 #, python-format
 msgid "Writing %(filename)s"
 msgstr "Escribindo en  %(filename)s"
 
-#: ../src/transmageddon.py:620
+#: ../src/transmageddon.py:839
 #, python-format
 msgid "Pass %(count)d Progress"
 msgstr "Proreso do paso %(count)d"
 
-#: ../src/transmageddon.py:722
+#: ../src/transmageddon.py:946
+msgid "Video passthrough"
+msgstr "Pasada de vídeo"
+
+#: ../src/transmageddon.py:951
+msgid "Audio passthrough"
+msgstr "Pasada de son"
+
+#: ../src/transmageddon.py:1040
 msgid "No audio parser, passthrough not available"
 msgstr "Non hai un analizador de audio, o paso directo non está dispoñíbel"
 
-#: ../src/transmageddon.py:729
+#: ../src/transmageddon.py:1045
 msgid "No video parser, passthrough not available"
 msgstr "Non hai un analizador de vídeo, o paso directo non está dispoñíbel"
 
-#: ../src/transmageddon.py:736
+#: ../src/transmageddon.py:1050
 msgid "Uknown error"
 msgstr "Erro descoñecido"
 
@@ -368,6 +283,78 @@ msgstr "Transcodificador de vídeo Transmageddon"
 #: ../transmageddon.desktop.in.in.h:2
 msgid "Video format conversion tool"
 msgstr "Ferramenta de conversión de formatos de vídeo"
+
+#~ msgid "AA_C"
+#~ msgstr "AA_C"
+
+#~ msgid "AC_3"
+#~ msgstr "AC_3"
+
+#~ msgid "AMR-N_B"
+#~ msgstr "AMR-N_B"
+
+#~ msgid "Celt _Ultra"
+#~ msgstr "Celt _Ultra"
+
+#~ msgid "F_LAC"
+#~ msgstr "F_LAC"
+
+#~ msgid "H263_plus"
+#~ msgstr "H263_plus"
+
+#~ msgid "H2_64"
+#~ msgstr "H2_64"
+
+#~ msgid "MPEG_2"
+#~ msgstr "MPEG_2"
+
+#~ msgid "MPEG_4/DivX5"
+#~ msgstr "MPEG_4/DivX5"
+
+#~ msgid "Theo_ra"
+#~ msgstr "Theo_ra"
+
+#~ msgid "V_orbis"
+#~ msgstr "V_orbis"
+
+#~ msgid "W_indowsMediaAudio 2"
+#~ msgstr "W_indowsMediaAudio 2"
+
+#~ msgid "_Dirac"
+#~ msgstr "_Dirac"
+
+#~ msgid "_On2 VP8"
+#~ msgstr "_On2 VP8"
+
+#~ msgid "_Speex"
+#~ msgstr "_Speex"
+
+#~ msgid "_WindowsMediaVideo2"
+#~ msgstr "_WindowsMediaVideo2"
+
+#~ msgid "_mp3"
+#~ msgstr "_mp3"
+
+#~ msgid "_xvid"
+#~ msgstr "_xvid"
+
+#~ msgid "Estimated time remaining: %(time)s"
+#~ msgstr "Tempo restante estimado: %(time)s"
+
+#~ msgid "Pass %(count)d time remaining: %(time)s"
+#~ msgstr "Tempo restante estimado do paso %(count)d: %(time)s"
+
+#~ msgid "Video width&#47;height: "
+#~ msgstr "Vídeo ancho&#47;alto: "
+
+#~ msgid "Video codec: %(codec)s"
+#~ msgstr "Códec de vídeo: %(codec)s"
+
+#~ msgid "Audio channels: %(chans)s"
+#~ msgstr "Canles de audio: %(chans)s"
+
+#~ msgid "Audio codec: %(codec)s"
+#~ msgstr "Códec de audio: %(codec)s"
 
 #~ msgid "Pass "
 #~ msgstr "Paso"
