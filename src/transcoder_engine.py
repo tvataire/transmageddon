@@ -116,6 +116,16 @@ class Transcoder(gobject.GObject):
        self.uridecoder.connect("pad-added", self.OnDynamicPad)
 
        # first check if we have a container format, if not set up output for possible outputs
+       #  should not be hardcoded
+
+       audiopreset=None
+       videopreset=None
+       # if self.preset != "nopreset": 
+           # print "got preset and will use Quality Normal"
+           # these values should not be hardcoded, but gotten from profile XML file
+           # audiopreset="Quality Normal"
+           #videopreset="Quality Normal"
+
        if self.container==False:
            if self.audiocaps.intersect(gst.Caps("audio/mpeg, mpegversion=4")):
                self.audiocaps=gst.Caps("audio/mpeg, mpegversion=4, stream-format=adts")
@@ -125,13 +135,13 @@ class Transcoder(gobject.GObject):
            self.encodebinprofile = gst.pbutils.EncodingContainerProfile ("containerformat", None , self.containercaps, None)
        if self.audiocaps != False:
            if self.container==False:
-               self.encodebinprofile = gst.pbutils.EncodingAudioProfile (self.audiocaps, "Quality Normal", gst.caps_new_any(), 0)
+               self.encodebinprofile = gst.pbutils.EncodingAudioProfile (gst.Caps(self.audiocaps), audiopreset, gst.caps_new_any(), 0)
            else:
-               self.audioprofile = gst.pbutils.EncodingAudioProfile (self.audiocaps, "Quality Normal", gst.caps_new_any(), 0)
+               self.audioprofile = gst.pbutils.EncodingAudioProfile (gst.Caps(self.audiocaps), audiopreset, gst.caps_new_any(), 0)
                self.encodebinprofile.add_profile(self.audioprofile)
        if self.videocaps != "novid":
            if (self.videocaps != False):
-               self.videoprofile = gst.pbutils.EncodingVideoProfile (gst.Caps(self.videocaps), "Quality Normal", gst.caps_new_any(), 0)
+               self.videoprofile = gst.pbutils.EncodingVideoProfile (gst.Caps(self.videocaps), videopreset, gst.caps_new_any(), 0)
                self.encodebinprofile.add_profile(self.videoprofile)
        self.encodebin = gst.element_factory_make ("encodebin", None)
        self.encodebin.set_property("profile", self.encodebinprofile)
@@ -341,7 +351,7 @@ class Transcoder(gobject.GObject):
    def OnDynamicPad(self, uridecodebin, src_pad):
        origin = src_pad.get_caps()
        if (self.container==False):
-           a =  src_pad.get_caps().to_string()
+           a =  origin.get_caps().to_string()
            if a.startswith("audio/"):
                sinkpad = self.encodebin.get_static_pad("audio_0")
                src_pad.link(sinkpad)
@@ -365,13 +375,19 @@ class Transcoder(gobject.GObject):
                        self.videoflipper.get_static_pad("src").link(sinkpad)
                        
                    else:
+                       srccaps=src_pad.get_caps()
+                       srcstring=srccaps.to_string()
+                       #print "source pad is " + str(srcstring)
+                       sinkcaps=sinkpad.get_caps()
+                       sinkstring=sinkcaps.to_string()
+                       #print "sinkpad is " + str(sinkstring)
                        src_pad.link(sinkpad)
 
-       # Grab element from encodebin which supports tagsetter interface and set app name to Transmageddon
+       # Grab element from encodebin which supports tagsetter interface and set app name
+       # to Transmageddon
        GstTagSetterType = gobject.type_from_name("GstTagSetter")
        tag_setting_element=self.encodebin.get_by_interface(GstTagSetterType)
        if tag_setting_element != None:
-           print "tag setting element is " + str(tag_setting_element)	
            taglist=gst.TagList()
            taglist[gst.TAG_APPLICATION_NAME] = "Transmageddon transcoder"
            tag_setting_element.merge_tags(taglist, gst.TAG_MERGE_APPEND)

@@ -59,20 +59,20 @@ TARGET_TYPE_URI_LIST = 80
 dnd_list = [ ( 'text/uri-list', 0, TARGET_TYPE_URI_LIST ) ]
 
 supported_containers = [
-        "Ogg",
-        "Matroska",
-        "AVI",
-        "MPEG PS",
-        "MPEG TS",
-        "AVCHD/BD",
-        "FLV",
-        "Quicktime",
-        "MPEG4",
-        "3GPP",
-        "MXF",
-        "ASF", 
+        "Ogg",		#0
+        "Matroska",	#1
+        "AVI",		#2
+        "MPEG PS",	#3
+        "MPEG TS",	#4
+        "AVCHD/BD",	#5
+        "FLV",		#6
+        "Quicktime",	#7
+        "MPEG4",	#8
+        "3GPP",		#9
+        "MXF",		#10
+        "ASF", 		#11
         "I can not get this item to show for some reason",
-        "WebM"
+        "WebM"		#12
 ]
 
 supported_audio_codecs = [
@@ -165,7 +165,9 @@ class TransmageddonUI:
        self.videorows=[]
        self.audiocodecs=[] # create lists to store the ordered lists of codecs
        self.videocodecs=[]
-
+	
+       # set flag so we remove bogus value from menu only once
+       self.bogus=0
 
        # these dynamic comboboxes allow us to support files with multiple streams eventually
        def dynamic_comboboxes_audio(streams,extra = []):
@@ -429,22 +431,26 @@ class TransmageddonUI:
        try:
            position, format = \
                    self._transcoder.uridecoder.query_position(gst.FORMAT_TIME)
+           # print "position is " + str(position)
        except:
            position = gst.CLOCK_TIME_NONE
 
        try:
            duration, format = \
                    self._transcoder.uridecoder.query_duration(gst.FORMAT_TIME)
+           # print "duration is " + str(duration)
        except:
            duration = gst.CLOCK_TIME_NONE
        if position != gst.CLOCK_TIME_NONE:
            value = float(position) / duration
+           # print "value is " + str(value)
            if float(value) < (1.0) and float(value) >= 0:
                self.ProgressBar.set_fraction(value)
                percent = (value*100)
                timespent = time.time() - self.start_time
                percent_remain = (100-percent)
-               # print percent_remain
+               # print "percent remain " + str(percent_remain)
+               # print "percentage is " + str(percent)
                if percent != 0:
                    rem = (timespent / percent) * percent_remain
                else: 
@@ -470,6 +476,7 @@ class TransmageddonUI:
                self.ProgressBar.set_fraction(0.0)
                return False
        else:
+           print "complete progress measuering failure"
            return False
 
    # Call gobject.timeout_add with a value of 500millisecond to regularly poll
@@ -539,7 +546,6 @@ class TransmageddonUI:
        markupaudioinfo=[]
        videowidth = None
        videoheight = None
-
        for i in info.get_stream_list():
            if isinstance(i, gst.pbutils.DiscovererAudioInfo):
                audiostreamcounter=audiostreamcounter+1
@@ -558,7 +564,6 @@ class TransmageddonUI:
 
                self.containerchoice.set_active(-1) # set this here to ensure it happens even with quick audio-only
                self.containerchoice.set_active(0)
-
            if self.haveaudio==False:
                self.audioinformation.set_markup(''.join(('<small>', _("No Audio"), '</small>')))
                self.audiocodec.set_markup(''.join(('<small>', "",'</small>')))
@@ -665,6 +670,8 @@ class TransmageddonUI:
        self.filename = self.builder.get_object ("FileChooser").get_filename()
        self.audiodata = {}
        if self.filename is not None: 
+           self.haveaudio=False #make sure to reset these for each file
+           self.havevideo=False #
            self.mediacheck(self.filename)
            self.ProgressBar.set_fraction(0.0)
            self.ProgressBar.set_text(_("Transcoding Progress"))
@@ -673,7 +680,11 @@ class TransmageddonUI:
            else:
                self.presetchoice.set_sensitive(True)
                self.presetchoice.set_active(0)
-               self.containerchoice.remove_text(12)
+
+               # removing bogus text from supported_containers
+               if self.bogus==0:
+                   self.containerchoice.remove_text(12)
+                   self.bogus=1
                self.nocontaineroptiontoggle=False
            self.containerchoice.set_sensitive(True)
 
@@ -791,9 +802,9 @@ class TransmageddonUI:
            if containerstatus == False: 
                fail_info.append(gst.caps_from_string(codecfinder.containermap[containerchoice]))
            if audiostatus == False:
-               fail_info.append(gst.caps_from_string(self.AudioCodec))
+               fail_info.append(self.AudioCodec)
            if videostatus == False:
-               fail_info.append(gst.caps_from_string (self.VideoCodec))
+               fail_info.append(self.VideoCodec)
            missing = []
            for x in fail_info:
                missing.append(gst.pbutils.missing_encoder_installer_detail_new(x))
