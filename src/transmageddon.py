@@ -476,7 +476,6 @@ class TransmageddonUI:
                self.ProgressBar.set_fraction(0.0)
                return False
        else:
-           print "complete progress measuering failure"
            return False
 
    # Call gobject.timeout_add with a value of 500millisecond to regularly poll

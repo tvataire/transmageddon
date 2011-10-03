@@ -22,10 +22,11 @@
         </audio>
         <video>
             <name>video/x-h264, profile=main</name>
+            <border>Y</border>
             <passes>0</passes>
             <pixelaspectratio>0/0</pixelaspectratio>
-            <width>320	</width>
-            <height>240</height>
+            <width>320, 320	</width>
+            <height>240, 240</height>
             <framerate>1, 25</framerate>
         </video>
     </profile>

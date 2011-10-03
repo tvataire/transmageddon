@@ -120,11 +120,11 @@ class Transcoder(gobject.GObject):
 
        audiopreset=None
        videopreset=None
-       # if self.preset != "nopreset": 
+       if self.preset != "nopreset": 
            # print "got preset and will use Quality Normal"
            # these values should not be hardcoded, but gotten from profile XML file
-           # audiopreset="Quality Normal"
-           #videopreset="Quality Normal"
+           audiopreset="Quality Normal"
+           videopreset="Quality Normal"
 
        if self.container==False:
            if self.audiocaps.intersect(gst.Caps("audio/mpeg, mpegversion=4")):
@@ -261,32 +261,8 @@ class Transcoder(gobject.GObject):
 
        # Add any required padding
        if self.blackborderflag == True:
-           if width < wmin and height < hmin:
-               wpx = (wmin - width) / 2
-               hpx = (hmin - height) / 2
-               self.vbox['left'] = -wpx
-               self.vbox['right'] = -wpx
-               self.vbox['top'] = -hpx
-               self.vbox['bottom'] = -hpx
-           elif width < wmin:
-               # print "adding width borders"
-               px = (wmin - width) / 2
-               self.vbox['left'] = -px
-               self.vbox['right'] = -px
-               self.vbox['top'] = -0
-               self.vbox['bottom'] = -0
-           elif height < hmin:
-               # print " adding height borders"
-               px = (hmin - height) / 2
-               self.vbox['top'] = -px
-               self.vbox['bottom'] = -px
-               self.vbox['left'] = -int(0)
-               self.vbox['right'] = -int(0)
-           else:
-               self.vbox['top'] = -int(0)
-               self.vbox['bottom'] = -int(0)
-               self.vbox['left'] = -int(0)
-               self.vbox['right'] = -int(0)
+           width=wmax
+           height=hmax
 
        # Setup video framerate and add to caps - 
        # FIXME: Is minimum framerate really worthwhile checking for?
