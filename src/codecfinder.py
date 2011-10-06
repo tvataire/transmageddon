@@ -57,6 +57,7 @@ csuffixmap =   { 'Ogg' : ".ogg", \
         'MPEG4' : ".mp4", \
         'MPEG PS' : ".mpg", \
         'MPEG TS' : ".ts", \
+        'AVCHD/BD' : ".m2ts", \
         'FLV' : ".flv", \
         '3GPP' : ".3gp",
         'ASF' : ".asf", \
