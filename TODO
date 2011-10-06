@@ -34,11 +34,10 @@ This list is completely unordered. Nothing about the ordering in this list shoul
 * Add a lot of testing for the data coming from the XML profiles. People can currently 
   hang the application quite easily by feeding it non-valid data through the XML profiles.
 
-* Profiles
-  These work now, but it is clear that unless we want a 1 million item drop down list we 
-  need to set up some kind of online repository where people can search and download the
-  profiles they need. Should be done in collaboration with Arista.
-
+* Profiles generator
+  Would be great to create something which analyzed a media file and created a profile to 
+  match it. 
+  
 * Subtitles
   Support muxing in Subtitles into AVI and MPEG4 files. Need GStreamer work 
   for it to happen. Support encoding subtitles as part of the video image.
@@ -55,6 +54,7 @@ This list is completely unordered. Nothing about the ordering in this list shoul
 * AVC HD support.
   Variation of MPEG TS with H264 and AC3 audio
 
-* Support multiple audio tracks. Probably want to wait for new discoverer for that.
+* Support multiple audio tracks. Currently 'working', but we need fixes to uridecodebin to
+  make streams identifiable.
 
 * Batch transcoding - multiple files 'programmed up front'
