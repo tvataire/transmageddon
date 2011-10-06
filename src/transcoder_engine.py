@@ -365,6 +365,9 @@ class Transcoder(gobject.GObject):
        tag_setting_element=self.encodebin.get_by_interface(GstTagSetterType)
        if tag_setting_element != None:
            taglist=gst.TagList()
+           taglist[gst.TAG_ENCODER] = "Transmageddon encoder" # this should probably be set to
+	                                                      # string combining audio+video encoder
+                                                              # implementations
            taglist[gst.TAG_APPLICATION_NAME] = "Transmageddon transcoder"
            tag_setting_element.merge_tags(taglist, gst.TAG_MERGE_APPEND)
 
