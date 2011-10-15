@@ -315,6 +315,7 @@ class TransmageddonUI:
        self.haveaudio=False
        self.devicename = "nopreset"
        self.nocontaineroptiontoggle=False
+       self.outputdirectory=False # directory for holding output directory value
        # create variables to store passthrough options slot in the menu
        self.audiopassmenuno=1
        self.videopassmenuno=1
@@ -488,12 +489,8 @@ class TransmageddonUI:
    def _on_eos(self, source):
        context_id = self.StatusBar.get_context_id("EOS")
        if (self.multipass ==  False) or (self.passcounter == int(0)):
-           if self.havevideo == False:
-               self.StatusBar.push(context_id, (_("File saved to %(dir)s") % \
-                   {'dir': self.audiodirectory}))
-           else:
-               self.StatusBar.push(context_id, (_("File saved to %(dir)s") % \
-                   {'dir': self.videodirectory}))
+           self.StatusBar.push(context_id, (_("File saved to %(dir)s") % \
+                   {'dir': self.outputdirectory}))
            self.FileChooser.set_sensitive(True)
            self.containerchoice.set_sensitive(True)
            self.CodecBox.set_sensitive(True)
@@ -703,9 +700,9 @@ class TransmageddonUI:
                sep= ','
                minitext  = textdata.split(sep, 1)[0]
                videocodec = minitext
-           outputdirectory=self.videodirectory
+           self.outputdirectory=self.videodirectory
        else:
-           outputdirectory=self.audiodirectory
+           self.outputdirectory=self.audiodirectory
            videocodec=False
            vheight=False
            vwidth=False
@@ -721,10 +718,10 @@ class TransmageddonUI:
            audiocodec=False
            achannels=False
 
-      # print "transcoder values - filechoice: " + str(filechoice) + " - filename: " + str(self.filename) + " - outputdirectory: " + str(outputdirectory) + " - self.container: " + str(self.container) + " - audiocodec: " + str(audiocodec) + " - videocodec: " + str(videocodec), " -self.devicename: " + str(self.devicename) + "- vheight:" + str(vheight), " - vwidth: " + str(vwidth) + " - achannels: " + str(achannels) + " - self.multipass " + str(self.multipass) + " - self.passcounter: " + str(self.passcounter) + " -self.outputfilename: " + str(self.outputfilename) + " - self.timestamp: " + str(self.timestamp) + " - self.rotationvalue: " + str(self.rotationvalue) + " - self.audiopasstoggle: " + str(self.audiopasstoggle) + " - self.videopasstoggle: " + str(self.videopasstoggle) + " - self.interlaced: " + str(self.interlaced) + " - self.inputvideocaps: " + str(self.inputvideocaps)
+       # print "transcoder values - filechoice: " + str(filechoice) + " - filename: " + str(self.filename) + " - outputdirectory: " + str(self.outputdirectory) + " - self.container: " + str(self.container) + " - audiocodec: " + str(audiocodec) + " - videocodec: " + str(videocodec), " -self.devicename: " + str(self.devicename) + "- vheight:" + str(vheight), " - vwidth: " + str(vwidth) + " - achannels: " + str(achannels) + " - self.multipass " + str(self.multipass) + " - self.passcounter: " + str(self.passcounter) + " -self.outputfilename: " + str(self.outputfilename) + " - self.timestamp: " + str(self.timestamp) + " - self.rotationvalue: " + str(self.rotationvalue) + " - self.audiopasstoggle: " + str(self.audiopasstoggle) + " - self.videopasstoggle: " + str(self.videopasstoggle) + " - self.interlaced: " + str(self.interlaced) + " - self.inputvideocaps: " + str(self.inputvideocaps)
 
        self._transcoder = transcoder_engine.Transcoder(filechoice, self.filename,
-                        outputdirectory, self.container, audiocodec, 
+                        self.outputdirectory, self.container, audiocodec, 
                         videocodec, self.devicename, 
                         vheight, vwidth, ratenum, ratednom, achannels, 
                         self.multipass, self.passcounter, self.outputfilename,
