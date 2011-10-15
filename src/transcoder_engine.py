@@ -341,13 +341,18 @@ class Transcoder(gobject.GObject):
                    if d.startswith("audio/"):
                        src_pad.link(sinkpad)
            else:
+               # Checking if its a subtitle pad which we can't deal with
+               # currently.0
+               # Making sure that when we remove video from a file we don't
+               # bother with the video pad.
                c = origin.to_string()
                if not c.startswith("text/"):
-                   if not (c.startswith("video/") and (self.audiocaps != False)):
+                   if not (c.startswith("video/") and (self.videocaps == False)):
+                       # print "creating sinkpad"
                        sinkpad = self.encodebin.emit("request-pad", origin)
                if c.startswith("audio/"):
                    src_pad.link(sinkpad)
-               elif (c.startswith("video/") and (self.videocaps != False)):
+               elif ((c.startswith("video/") or c.startswith("image/")) and (self.videocaps != False)):
                    if self.videopasstoggle==False:
                        src_pad.link(self.deinterlacer.get_static_pad("sink"))
                        self.videoflipper.get_static_pad("src").link(sinkpad)
