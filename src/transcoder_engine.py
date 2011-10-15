@@ -328,7 +328,7 @@ class Transcoder(gobject.GObject):
    def OnDynamicPad(self, uridecodebin, src_pad):
        origin = src_pad.get_caps()
        if (self.container==False):
-           a =  origin.get_caps().to_string()
+           a =  origin.to_string()
            if a.startswith("audio/"):
                sinkpad = self.encodebin.get_static_pad("audio_0")
                src_pad.link(sinkpad)
