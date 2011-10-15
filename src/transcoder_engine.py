@@ -187,6 +187,7 @@ class Transcoder(gobject.GObject):
 
        if (self.audiopasstoggle) or (self.videopasstoggle) or (self.videocaps=="novid"):
            self.uridecoder.set_property("caps", self.remuxcaps)
+
  
        self.pipeline.add(self.uridecoder)
 
@@ -342,10 +343,11 @@ class Transcoder(gobject.GObject):
            else:
                c = origin.to_string()
                if not c.startswith("text/"):
-                   sinkpad = self.encodebin.emit("request-pad", origin)
+                   if not (c.startswith("video/") and (self.audiocaps != False)):
+                       sinkpad = self.encodebin.emit("request-pad", origin)
                if c.startswith("audio/"):
                    src_pad.link(sinkpad)
-               elif c.startswith("video/"):
+               elif (c.startswith("video/") and (self.videocaps != False)):
                    if self.videopasstoggle==False:
                        src_pad.link(self.deinterlacer.get_static_pad("sink"))
                        self.videoflipper.get_static_pad("src").link(sinkpad)
