@@ -295,7 +295,7 @@ class TransmageddonUI:
        self.presetchoice.set_sensitive(False)
        self.containerchoice.set_sensitive(False)
        self.rotationchoice.set_sensitive(False)
-
+       
        # set default values for various variables
        self.AudioCodec = "vorbis"
        self.VideoCodec = "theora"
@@ -311,7 +311,7 @@ class TransmageddonUI:
        self.discover_done=False # lets us know that discover is finished
        self.missingtoggle=False
        self.interlaced=False
-       self.havevideo=False
+       self.havevideo=False # tracks if input file got video
        self.haveaudio=False
        self.devicename = "nopreset"
        self.nocontaineroptiontoggle=False
@@ -653,7 +653,6 @@ class TransmageddonUI:
                            if audiointersect == ("EMPTY"):
                                audiointersect = sourcecaps.intersect(self.audiodata['audiotype'])
                                if audiointersect != ("EMPTY"):
-                                   print "audiointersect is " + str(audiointersect)
                                    self.asourcecaps = audiointersect
                if videointersect != ("EMPTY"):
                    self.videopass=True
@@ -722,12 +721,16 @@ class TransmageddonUI:
            audiocodec=False
            achannels=False
 
-       self._transcoder = transcoder_engine.Transcoder(filechoice, self.filename, outputdirectory, self.container, 
-                                                       audiocodec, videocodec, self.devicename, 
-                                                       vheight, vwidth, ratenum, ratednom, achannels, 
-                                                       self.multipass, self.passcounter, self.outputfilename,
-                                                       self.timestamp, self.rotationvalue, self.audiopasstoggle, 
-                                                       self.videopasstoggle, self.interlaced, self.inputvideocaps)
+      # print "transcoder values - filechoice: " + str(filechoice) + " - filename: " + str(self.filename) + " - outputdirectory: " + str(outputdirectory) + " - self.container: " + str(self.container) + " - audiocodec: " + str(audiocodec) + " - videocodec: " + str(videocodec), " -self.devicename: " + str(self.devicename) + "- vheight:" + str(vheight), " - vwidth: " + str(vwidth) + " - achannels: " + str(achannels) + " - self.multipass " + str(self.multipass) + " - self.passcounter: " + str(self.passcounter) + " -self.outputfilename: " + str(self.outputfilename) + " - self.timestamp: " + str(self.timestamp) + " - self.rotationvalue: " + str(self.rotationvalue) + " - self.audiopasstoggle: " + str(self.audiopasstoggle) + " - self.videopasstoggle: " + str(self.videopasstoggle) + " - self.interlaced: " + str(self.interlaced) + " - self.inputvideocaps: " + str(self.inputvideocaps)
+
+       self._transcoder = transcoder_engine.Transcoder(filechoice, self.filename,
+                        outputdirectory, self.container, audiocodec, 
+                        videocodec, self.devicename, 
+                        vheight, vwidth, ratenum, ratednom, achannels, 
+                        self.multipass, self.passcounter, self.outputfilename,
+                        self.timestamp, self.rotationvalue, self.audiopasstoggle, 
+                        self.videopasstoggle, self.interlaced, self.inputvideocaps)
+        
 
        self._transcoder.connect("ready-for-querying", self.ProgressBarUpdate)
        self._transcoder.connect("got-eos", self._on_eos)
@@ -949,9 +952,6 @@ class TransmageddonUI:
                    self.videorows[0].append_text(_("No Video"))
                    self.videocodecs.append("novid")
                    self.videonovideomenuno=(len(self.videocodecs))-1
-                   if self.builder.get_object("containerchoice").get_active()==self.nocontainernumber:
-                       self.videorows[0].set_active(self.videonovideomenuno)
-                       self.videorows[0].set_sensitive(False)
                       
                    # add the Passthrough option 
                    if self.videopass==True:
@@ -968,9 +968,10 @@ class TransmageddonUI:
        self.CodecBox.set_sensitive(True)
        self.ProgressBar.set_fraction(0.0)
        self.ProgressBar.set_text(_("Transcoding Progress"))
-       # print "container menu number is " + str(self.builder.get_object("containerchoice").get_active())
        if self.builder.get_object("containerchoice").get_active() == self.nocontainernumber:
                self.container = False
+               self.videorows[0].set_active(self.videonovideomenuno)
+               self.videorows[0].set_sensitive(False)
        else:
            if self.builder.get_object("containerchoice").get_active()!= -1:
                self.container = self.builder.get_object ("containerchoice").get_active_text ()
