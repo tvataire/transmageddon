@@ -552,6 +552,7 @@ class TransmageddonUI:
                audiostreams.append( \
                        gst.pbutils.get_codec_description(inputaudiocaps[audiostreamcounter]))
                audiotags.append(i.get_tags())
+               test=i.get_channels()
                audiochannels.append(i.get_channels())
                samplerate.append(i.get_sample_rate())
                self.haveaudio=True
@@ -652,6 +653,7 @@ class TransmageddonUI:
                            if audiointersect == ("EMPTY"):
                                audiointersect = sourcecaps.intersect(self.audiodata['audiotype'])
                                if audiointersect != ("EMPTY"):
+                                   print "audiointersect is " + str(audiointersect)
                                    self.asourcecaps = audiointersect
                if videointersect != ("EMPTY"):
                    self.videopass=True
@@ -690,7 +692,7 @@ class TransmageddonUI:
    def _start_transcoding(self): 
        filechoice = self.builder.get_object ("FileChooser").get_uri()
        self.filename = self.builder.get_object ("FileChooser").get_filename()
-       if self.havevideo:
+       if (self.havevideo and (self.VideoCodec != "novid")):
            vheight = self.videodata['videoheight']
            vwidth = self.videodata['videowidth']
            ratenum = self.videodata['fratenum']
