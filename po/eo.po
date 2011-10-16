@@ -1,0 +1,276 @@
+# Esperanto translation for transmageddon.
+# Copyright (C) 2011 Free Software Foundation, Inc.
+# This file is distributed under the same license as the transmageddon package.
+# Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: transmageddon master\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=transmageddon&keywords=I18N+L10N&component=General\n"
+"POT-Creation-Date: 2011-10-15 18:38+0000\n"
+"PO-Revision-Date: 2011-10-16 14:11+0200\n"
+"Last-Translator: Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>\n"
+"Language-Team: Esperanto <ubuntu-l10n-eo@lists.launchpad.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bits\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+#: ../src/about.py.in:48
+msgid "translator-credits"
+msgstr "Kristjan SCHMIDT, 2011."
+
+#: ../src/presets.py:77
+#, python-format
+msgid "Not a valid integer or fraction: %(value)s!"
+msgstr ""
+
+#: ../src/presets.py:410
+#, python-format
+msgid "Loaded device %(device)s (%(presets)d presets)"
+msgstr ""
+
+#: ../src/presets.py:477
+#, fuzzy, python-format
+msgid "Fetching %(location)s"
+msgstr "Venigi %(location)s"
+
+#: ../src/presets.py:484
+#, python-format
+msgid "Writing to %(file)s"
+msgstr "Skribante al %(file)s"
+
+#: ../src/presets.py:489
+#, python-format
+msgid "There was an error fetching and installing %(location)s: %(error)s"
+msgstr ""
+
+#: ../src/presets.py:506
+msgid "Checking for device preset updates..."
+msgstr ""
+
+#: ../src/presets.py:526
+#, python-format
+msgid "Device preset %(name)s is up to date"
+msgstr ""
+
+#: ../src/presets.py:530
+#, python-format
+msgid "Found updated device preset %(name)s"
+msgstr ""
+
+#: ../src/presets.py:536 ../src/presets.py:549
+#, python-format
+msgid "Error installing preset %(name)s from %(location)s: %(error)s"
+msgstr ""
+
+#: ../src/presets.py:543
+#, python-format
+msgid "Found new device preset %(name)s"
+msgstr ""
+
+#: ../src/presets.py:556
+#, python-format
+msgid "Malformed plugin version line %(line)s"
+msgstr ""
+
+#: ../src/presets.py:560
+#, python-format
+msgid "There was a problem accessing %(location)spresets.txt!"
+msgstr ""
+
+#: ../src/presets.py:582
+msgid "All device presets are up to date!"
+msgstr ""
+
+#: ../src/transmageddon.ui.h:1
+msgid "<b>Choose Audio Codec</b>:"
+msgstr "<b>Elekti son-kodekon</b>:"
+
+#: ../src/transmageddon.ui.h:2
+msgid "<b>Choose Input File:</b>"
+msgstr "<b>Elekti enig-dosieron:</b>"
+
+#: ../src/transmageddon.ui.h:3
+msgid "<b>Choose Video Codec</b>:"
+msgstr "<b>Elekti video-kodekon</b>:"
+
+#: ../src/transmageddon.ui.h:4
+msgid "<b>Output Format:</b>"
+msgstr ""
+
+#: ../src/transmageddon.ui.h:5
+msgid "<b>Presets:</b>"
+msgstr "<b>Antaŭagordoj:</b>"
+
+#: ../src/transmageddon.ui.h:6
+msgid "<small>Audio Channels:</small>"
+msgstr "<small>Son-kanalo:</small>"
+
+#: ../src/transmageddon.ui.h:7
+msgid "<small>Audio codec:</small>"
+msgstr "<small>Son-kodeko:</small>"
+
+#: ../src/transmageddon.ui.h:8
+msgid "<small>Rotate the video image if needed</small>"
+msgstr ""
+
+#: ../src/transmageddon.ui.h:9
+msgid "<small>Video codec:</small>"
+msgstr "<small>Video-kodeko:</small>"
+
+#: ../src/transmageddon.ui.h:10
+msgid "<small>Video height&#47;width:</small>"
+msgstr ""
+
+#: ../src/transmageddon.ui.h:11
+msgid "Transmageddon"
+msgstr "Transmageddon"
+
+#: ../src/transmageddon.ui.h:12
+msgid "_Debug"
+msgstr "_Sencimigo"
+
+#: ../src/transmageddon.ui.h:13
+msgid "_Help"
+msgstr "_Helpo"
+
+#: ../src/transmageddon.ui.h:14
+msgid "_Transcode"
+msgstr "_Transkodi"
+
+#: ../src/transmageddon.py:302 ../src/transmageddon.py:674
+#: ../src/transmageddon.py:848 ../src/transmageddon.py:879
+#: ../src/transmageddon.py:967 ../src/transmageddon.py:1048
+msgid "Transcoding Progress"
+msgstr "Progreso de la transkodado"
+
+#. add i18n "No container"option
+#: ../src/transmageddon.py:337
+msgid "No container (Audio-only)"
+msgstr ""
+
+#. Populate the rotatation box
+#: ../src/transmageddon.py:340
+msgid "No rotation (default)"
+msgstr "Sen rotacio (defalŭlto)"
+
+#: ../src/transmageddon.py:341
+msgid "Clockwise 90 degrees"
+msgstr "Turni laŭ 90 gradoj dekstrume"
+
+#: ../src/transmageddon.py:342
+msgid "Rotate 180 degrees"
+msgstr "Turni laŭ 180 gradoj"
+
+#: ../src/transmageddon.py:343
+msgid "Counterclockwise 90 degrees"
+msgstr "Turni laŭ 90 gradoj maldekstrume"
+
+#: ../src/transmageddon.py:344
+msgid "Horizontal flip"
+msgstr "Renversi horizontal"
+
+#: ../src/transmageddon.py:345
+msgid "Vertical flip"
+msgstr "Renversi vertikale"
+
+#: ../src/transmageddon.py:346
+msgid "Upper left diagonal flip"
+msgstr ""
+
+#: ../src/transmageddon.py:347
+msgid "Upper right diagnonal flip"
+msgstr ""
+
+#: ../src/transmageddon.py:368 ../src/transmageddon.py:983
+msgid "No Presets"
+msgstr "Sen antaŭagordoj"
+
+#: ../src/transmageddon.py:461
+#, python-format
+msgid "%(min)d:%(sec)02d"
+msgstr ""
+
+#: ../src/transmageddon.py:492
+#, python-format
+msgid "File saved to %(dir)s"
+msgstr "Konservis dosieron al %(dir)s"
+
+#: ../src/transmageddon.py:502
+msgid "Done Transcoding"
+msgstr "Finis transkodadon"
+
+#: ../src/transmageddon.py:513
+#, python-format
+msgid "Pass %(count)d Complete"
+msgstr ""
+
+#: ../src/transmageddon.py:516
+msgid "Start next pass"
+msgstr ""
+
+#: ../src/transmageddon.py:565
+msgid "No Audio"
+msgstr "Sen sono"
+
+#. add a 'No Video option'
+#: ../src/transmageddon.py:586 ../src/transmageddon.py:949
+msgid "No Video"
+msgstr "Sen video"
+
+#: ../src/transmageddon.py:755
+msgid "Plugins not found, choose different codecs."
+msgstr "Ne trovis kromprogramojn, elektu aliajn kodekojn."
+
+#: ../src/transmageddon.py:763
+msgid "Codec installation aborted."
+msgstr "Cesîgis instaladon de kodeko."
+
+#: ../src/transmageddon.py:771
+msgid "Missing plugin installation failed: "
+msgstr ""
+
+#: ../src/transmageddon.py:846
+#, python-format
+msgid "Writing %(filename)s"
+msgstr "Skribante %(filename)s"
+
+#: ../src/transmageddon.py:851
+#, python-format
+msgid "Pass %(count)d Progress"
+msgstr ""
+
+#: ../src/transmageddon.py:955
+msgid "Video passthrough"
+msgstr ""
+
+#: ../src/transmageddon.py:960
+msgid "Audio passthrough"
+msgstr ""
+
+#: ../src/transmageddon.py:1050
+msgid "No audio parser, passthrough not available"
+msgstr ""
+
+#: ../src/transmageddon.py:1055
+msgid "No video parser, passthrough not available"
+msgstr ""
+
+#: ../src/transmageddon.py:1060
+msgid "Uknown error"
+msgstr "Nekonata eraro"
+
+#: ../src/utils.py:73
+#, python-format
+msgid "Can't find %(path)s in any known prefix!"
+msgstr ""
+
+#: ../transmageddon.desktop.in.in.h:1
+msgid "Transmageddon Video Transcoder"
+msgstr "Video-transkodilo Transmageddon"
+
+#: ../transmageddon.desktop.in.in.h:2
+msgid "Video format conversion tool"
+msgstr ""
