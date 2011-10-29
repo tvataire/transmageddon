@@ -1,4 +1,4 @@
-0.17
+0.20
   Port to new plugins-base discoverer and encodebin
   Replace radiobutton lists with a combobox instead
   add support for audio only transcoding
