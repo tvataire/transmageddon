@@ -50,10 +50,17 @@ except Exception, e:
    print e
    sys.exit(1)
 
+major, minor, patch = gst.pygst_version
+if (major == 0) and (patch < 22):
+   print "You need version 0.10.22 or higher of gstreamer-python for Transmageddon" 
+   sys.exit(1)
+
 major, minor, patch = gobject.pygobject_version
 if (major == 2) and (minor < 18):
-   print "You need version 2.18.0 or higher of pygobject for Transmageddon" 
+   print "You need version 2.18.0 or higher of pygobject for Transmageddon"
    sys.exit(1)
+
+
 
 TARGET_TYPE_URI_LIST = 80
 dnd_list = [ ( 'text/uri-list', 0, TARGET_TYPE_URI_LIST ) ]
