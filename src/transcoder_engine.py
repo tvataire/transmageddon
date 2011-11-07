@@ -21,29 +21,24 @@ import os
 import codecfinder
 import presets
 
-try:
-   import gobject; gobject.threads_init()
-   import pygst
-   import glib
-   pygst.require("0.10")
-   import gst
-except Exception, e:
-   print "failed to import required modules"
-   print e
-   sys.exit(1)
+from gi.repository import GObject
+GObject.threads_init()
+import pygst
+pygst.require("0.10")
+import gst
 
-class Transcoder(gobject.GObject):
+class Transcoder(GObject.GObject):
 
    __gsignals__ = {
-            'ready-for-querying' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, []),
-            'got-eos' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, []),
-            'got-error' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,))
+            'ready-for-querying' : (GObject.SignalFlags.RUN_LAST, None, []),
+            'got-eos' : (GObject.SignalFlags.RUN_LAST, None, []),
+            'got-error' : (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT,))
                     }
 
    def __init__(self, FILECHOSEN, FILENAME, DESTDIR, CONTAINERCHOICE, AUDIOCODECVALUE, VIDEOCODECVALUE, PRESET, 
                       OHEIGHT, OWIDTH, FRATENUM, FRATEDEN, ACHANNELS, MULTIPASS, PASSCOUNTER, OUTPUTNAME, 
                       TIMESTAMP, ROTATIONVALUE, AUDIOPASSTOGGLE, VIDEOPASSTOGGLE, INTERLACED, INPUTVIDEOCAPS):
-       gobject.GObject.__init__(self)
+       GObject.GObject.__init__(self)
 
        # Choose plugin based on Container name
        self.container = CONTAINERCHOICE
@@ -368,7 +363,7 @@ class Transcoder(gobject.GObject):
 
        # Grab element from encodebin which supports tagsetter interface and set app name
        # to Transmageddon
-       GstTagSetterType = gobject.type_from_name("GstTagSetter")
+       GstTagSetterType = GObject.type_from_name("GstTagSetter")
        tag_setting_element=self.encodebin.get_by_interface(GstTagSetterType)
        if tag_setting_element != None:
            taglist=gst.TagList()

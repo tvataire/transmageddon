@@ -26,7 +26,6 @@ os.putenv('GST_DEBUG_DUMP_DIR_DIR', '/tmp')
 import which
 import time
 import transcoder_engine
-import gobject; gobject.threads_init()
 from urlparse import urlparse
 import codecfinder
 import about
@@ -36,26 +35,23 @@ import datetime
 from gettext import gettext as _
 import gettext
 
-try:
-   import pygtk
-   pygtk.require("2.0")
-   import glib
-   import gtk
-   import pygst
-   pygst.require("0.10")
-   import gst
-   import gst.pbutils
-except Exception, e:
-   print "failed to import required modules"
-   print e
-   sys.exit(1)
+import gi
+from gi.repository import Gtk
+from gi.repository import GObject
+GObject.threads_init()
+from gi.repository import GLib
+import pygst
+pygst.require("0.10")
+import gst
+import gst.pbutils
+
 
 major, minor, patch = gst.pygst_version
 if (major == 0) and (patch < 22):
    print "You need version 0.10.22 or higher of gstreamer-python for Transmageddon" 
    sys.exit(1)
 
-major, minor, patch = gobject.pygobject_version
+major, minor, patch = GObject.pygobject_version
 if (major == 2) and (minor < 18):
    print "You need version 2.18.0 or higher of pygobject for Transmageddon"
    sys.exit(1)
@@ -154,7 +150,7 @@ class TransmageddonUI:
        gettext.bindtextdomain("transmageddon","../../share/locale")
        gettext.textdomain("transmageddon")
 
-       self.builder = gtk.Builder()
+       self.builder = Gtk.Builder()
        # Set the translation domain of builder
        # please note the call *right after* the builder is created
        self.builder.set_translation_domain("transmageddon")
@@ -179,15 +175,15 @@ class TransmageddonUI:
        # these dynamic comboboxes allow us to support files with multiple streams eventually
        def dynamic_comboboxes_audio(streams,extra = []):
            streams=1 # this will become a variable once we support multiple streams
-           vbox = gtk.VBox()
+           vbox = Gtk.VBox()
 
            x=-1
            while x < (streams-1):
                x=x+1
                # print "x is " + str(x)
-               store = gtk.ListStore(gobject.TYPE_STRING, *extra)
-               combo = gtk.ComboBox(store)
-               text_cell = gtk.CellRendererText()
+               # store = Gtk.ListStore(GObject.TYPE_STRING, *extra)
+               combo = Gtk.ComboBoxText.new()
+               text_cell = Gtk.CellRendererText()
                combo.pack_start(text_cell, True)
                combo.add_attribute(text_cell, 'text', 0)
                self.audiorows.append(combo)
@@ -196,14 +192,14 @@ class TransmageddonUI:
 
        def dynamic_comboboxes_video(streams,extra = []):
            streams=1
-           vbox = gtk.VBox()
+           vbox = Gtk.VBox()
 
            x=-1
            while x < (streams-1):
                x=x+1
-               store = gtk.ListStore(gobject.TYPE_STRING, *extra)
-               combo = gtk.ComboBox(store)
-               text_cell = gtk.CellRendererText()
+               # store = Gtk.ListStore(GObject.TYPE_STRING, *extra)
+               combo = Gtk.ComboBoxText.new()
+               text_cell = Gtk.CellRendererText()
                combo.pack_start(text_cell, True)
                combo.add_attribute(text_cell, 'text', 0)
                self.videorows.append(combo)
@@ -217,8 +213,8 @@ class TransmageddonUI:
        self.audioinformation = self.builder.get_object("audioinformation")
        self.videocodec = self.builder.get_object("videocodec")
        self.audiocodec = self.builder.get_object("audiocodec")
-       self.audiobox = dynamic_comboboxes_audio([gobject.TYPE_PYOBJECT])
-       self.videobox = dynamic_comboboxes_video([gobject.TYPE_PYOBJECT])
+       self.audiobox = dynamic_comboboxes_audio([GObject.TYPE_PYOBJECT])
+       self.videobox = dynamic_comboboxes_video([GObject.TYPE_PYOBJECT])
        self.CodecBox = self.builder.get_object("CodecBox")
        self.presetchoice = self.builder.get_object("presetchoice")
        self.containerchoice = self.builder.get_object("containerchoice")
@@ -227,12 +223,12 @@ class TransmageddonUI:
        self.ProgressBar = self.builder.get_object("ProgressBar")
        self.cancelbutton = self.builder.get_object("cancelbutton")
        self.StatusBar = self.builder.get_object("StatusBar")
-       self.CodecBox.attach(self.audiobox, 0, 1, 1, 2, yoptions = gtk.FILL)
-       self.CodecBox.attach(self.videobox, 2, 3, 1, 2, yoptions = gtk.FILL)
+       self.CodecBox.attach(self.audiobox, 0, 1, 1, 2, yoptions = Gtk.AttachOptions.FILL)
+       self.CodecBox.attach(self.videobox, 2, 3, 1, 2, yoptions = Gtk.AttachOptions.FILL)
        self.CodecBox.show_all()
        self.audiorows[0].connect("changed", self.on_audiocodec_changed)
        self.videorows[0].connect("changed", self.on_videocodec_changed)
-       self.TopWindow.connect("destroy", gtk.main_quit)
+       self.TopWindow.connect("destroy", Gtk.main_quit)
        def get_file_path_from_dnd_dropped_uri(self, uri):
            # get the path to file
            path = ""
@@ -250,10 +246,10 @@ class TransmageddonUI:
                uri = selection.data.strip('\r\n\x00')
                self.builder.get_object ("FileChooser").set_uri(uri)
 
-       self.TopWindow.connect('drag_data_received', on_drag_data_received)
-       self.TopWindow.drag_dest_set( gtk.DEST_DEFAULT_MOTION |
-               gtk.DEST_DEFAULT_HIGHLIGHT | gtk.DEST_DEFAULT_DROP, dnd_list, \
-               gtk.gdk.ACTION_COPY)
+       #self.TopWindow.connect('drag_data_received', on_drag_data_received)
+       #self.Gtk.drag_dest_set(TopWindow,  Gtk.DEST_DEFAULT_MOTION |
+       #        Gtk.DEST_DEFAULT_HIGHLIGHT | Gtk.DEST_DEFAULT_DROP, dnd_list, \
+       #        Gdk.DragAction.COPY)
 
        self.start_time = False
        self.multipass = False
@@ -261,11 +257,11 @@ class TransmageddonUI:
        
        # Set the Videos XDG UserDir as the default directory for the filechooser
        # also make sure directory exists
-       if 'get_user_special_dir' in glib.__dict__:
+       if 'get_user_special_dir' in GLib.__dict__:
            self.videodirectory = \
-                   glib.get_user_special_dir(glib.USER_DIRECTORY_VIDEOS)
+                   GLib.get_user_special_dir(GLib.USER_DIRECTORY_VIDEOS)
            self.audiodirectory = \
-                   glib.get_user_special_dir(glib.USER_DIRECTORY_MUSIC)
+                   GLib.get_user_special_dir(GLib.USER_DIRECTORY_MUSIC)
        else:
            print "XDG video or audio directory not available"
            self.videodirectory = os.getenv('HOME')
@@ -338,10 +334,10 @@ class TransmageddonUI:
        self.p_time = gst.FORMAT_TIME
 
        # Populate the Container format combobox
-       for i in supported_containers:
-           self.containerchoice.append_text(i)
+       # for i in supported_containers:
+       #    self.containerchoice.append_text(i)
        # add i18n "No container"option
-       self.containerchoice.append_text(_("No container (Audio-only)"))
+       # self.containerchoice.append_text(_("No container (Audio-only)"))
 
        # Populate the rotatation box
        self.rotationlist = [_("No rotation (default)"),\
@@ -369,8 +365,8 @@ class TransmageddonUI:
            devicelist.append(str(device))
            shortname.append(str(name))
 
-       #for (name, device) in (presets.get().items()):
-       #    shortname.append(str(name))
+       for (name, device) in (presets.get().items()):
+           shortname.append(str(name))
        self.presetchoices = dict(zip(devicelist, shortname))
        self.presetchoice.prepend_text(_("No Presets"))
 
@@ -486,11 +482,11 @@ class TransmageddonUI:
        else:
            return False
 
-   # Call gobject.timeout_add with a value of 500millisecond to regularly poll
+   # Call GObject.timeout_add with a value of 500millisecond to regularly poll
    # for position so we can
    # use it for the progressbar
    def ProgressBarUpdate(self, source):
-       gobject.timeout_add(500, self.Increment_Progressbar)
+       GObject.timeout_add(500, self.Increment_Progressbar)
        # print "ProgressBar timeout_add startet"
 
    def _on_eos(self, source):
@@ -687,7 +683,7 @@ class TransmageddonUI:
 
                # removing bogus text from supported_containers
                if self.bogus==0:
-                   self.containerchoice.remove_text(12)
+                   self.containerchoice.remove(12)
                    self.bogus=1
                self.nocontaineroptiontoggle=False
            self.containerchoice.set_sensitive(True)
@@ -896,12 +892,12 @@ class TransmageddonUI:
        # clean up stuff from previous run
        self.houseclean=True # set this to avoid triggering events when cleaning out menus
        for c in self.audiocodecs: # 
-           self.audiorows[0].remove_text(0)
+           self.audiorows[0].remove(0)
        self.audiocodecs =[]
        if self.havevideo==True:
            if self.container != False:
                for c in self.videocodecs:
-                   self.videorows[0].remove_text(0)
+                   self.videorows[0].remove(0)
                self.videocodecs=[]
        self.houseclean=False
       # end of housecleaning
@@ -985,9 +981,10 @@ class TransmageddonUI:
        self.populate_menu_choices()
 
    def on_presetchoice_changed(self, widget):
-       presetchoice = self.builder.get_object ("presetchoice").get_active_text ()
+       presetchoice = self.builder.get_object ("presetchoice").get_active()
+       print "presetchoice is " + str(presetchoice)
        self.ProgressBar.set_fraction(0.0)
-       if presetchoice == _("No Presets"):
+       if presetchoice == 0:
            self.usingpreset=False
            self.devicename = "nopreset"
            self.containerchoice.set_sensitive(True)
@@ -1003,11 +1000,15 @@ class TransmageddonUI:
        else:
            self.usingpreset=True
            self.ProgressBar.set_fraction(0.0)
-           self.devicename= self.presetchoices[presetchoice]
-           self.provide_presets(self.devicename)
-           self.containerchoice.set_sensitive(False)
-           self.CodecBox.set_sensitive(False)
-           self.rotationchoice.set_sensitive(False)
+           if presetchoice != None:
+               print "am I getting here"
+               self.devicename= self.presetchoices[presetchoice]
+               self.provide_presets(self.devicename)
+               self.containerchoice.set_sensitive(False)
+               self.CodecBox.set_sensitive(False)
+               self.rotationchoice.set_sensitive(False)
+           else:
+               print "no presetchoice values found"
            if self.builder.get_object("containerchoice").get_active_text():
                self.transcodebutton.set_sensitive(True)
 
@@ -1084,11 +1085,11 @@ class TransmageddonUI:
        try:
            dot = which.which("dot")
            os.system(dot + " -Tpng -o " + pngfile + " " + dotfile)
-           gtk.show_uri(gtk.gdk.Screen(), "file://"+pngfile, 0)
+           Gtk.show_uri(Gdk.Screen(), "file://"+pngfile, 0)
        except which.WhichError:
               print "The debug feature requires graphviz (dot) to be installed."
               print "Transmageddon can not find the (dot) binary."
 
 if __name__ == "__main__":
         hwg = TransmageddonUI()
-        gtk.main()
+        Gtk.main()
