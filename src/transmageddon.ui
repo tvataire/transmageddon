@@ -420,6 +420,7 @@
                   <object class="GtkComboBoxText" id="presetchoice">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="entry_text_column">0</property>
                     <signal name="changed" handler="on_presetchoice_changed" swapped="no"/>
                   </object>
                   <packing>
@@ -433,6 +434,8 @@
                   <object class="GtkComboBoxText" id="containerchoice">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="entry_text_column">0</property>
+                    <signal name="changed" handler="on_containerchoice_changed" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left_attach">2</property>
@@ -597,6 +600,7 @@
                   <object class="GtkComboBoxText" id="rotationchoice">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="entry_text_column">0</property>
                     <signal name="changed" handler="on_rotationchoice_changed" swapped="no"/>
                   </object>
                   <packing>

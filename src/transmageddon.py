@@ -21,10 +21,19 @@
 import sys
 import os
 
-os.environ["GST_DEBUG_DUMP_DOT_DIR"] = "/tmp"
-os.putenv('GST_DEBUG_DUMP_DIR_DIR', '/tmp')
+os.environ["Gst_DEBUG_DUMP_DOT_DIR"] = "/tmp"
+os.putenv('Gst_DEBUG_DUMP_DIR_DIR', '/tmp')
 import which
 import time
+
+from gi.repository import Gtk
+from gi.repository import GLib
+from gi.repository import Gst
+from gi.repository import GstPbutils
+Gst.init(None)
+from gi.repository import GObject
+GObject.threads_init()
+
 import transcoder_engine
 from urlparse import urlparse
 import codecfinder
@@ -35,21 +44,11 @@ import datetime
 from gettext import gettext as _
 import gettext
 
-import gi
-from gi.repository import Gtk
-from gi.repository import GObject
-GObject.threads_init()
-from gi.repository import GLib
-import pygst
-pygst.require("0.10")
-import gst
-import gst.pbutils
 
-
-major, minor, patch = gst.pygst_version
-if (major == 0) and (patch < 22):
-   print "You need version 0.10.22 or higher of gstreamer-python for Transmageddon" 
-   sys.exit(1)
+#major, minor, patch = Gst.pygst_version
+#if (major == 0) and (patch < 22):
+#   print "You need version 0.10.22 or higher of Gstreamer-python for Transmageddon" 
+#   sys.exit(1)
 
 major, minor, patch = GObject.pygobject_version
 if (major == 2) and (minor < 18):
@@ -155,8 +154,8 @@ class TransmageddonUI:
        # please note the call *right after* the builder is created
        self.builder.set_translation_domain("transmageddon")
 
-       #initialize discoverer
-       self.discovered = gst.pbutils.Discoverer(5000000000)
+       # create discoverer object
+       self.discovered = GstPbutils.Discoverer.new(50000000000)
        self.discovered.connect('discovered', self.succeed)
        self.discovered.start()
 
@@ -246,6 +245,7 @@ class TransmageddonUI:
                uri = selection.data.strip('\r\n\x00')
                self.builder.get_object ("FileChooser").set_uri(uri)
 
+
        #self.TopWindow.connect('drag_data_received', on_drag_data_received)
        #self.Gtk.drag_dest_set(TopWindow,  Gtk.DEST_DEFAULT_MOTION |
        #        Gtk.DEST_DEFAULT_HIGHLIGHT | Gtk.DEST_DEFAULT_DROP, dnd_list, \
@@ -257,17 +257,16 @@ class TransmageddonUI:
        
        # Set the Videos XDG UserDir as the default directory for the filechooser
        # also make sure directory exists
-       if 'get_user_special_dir' in GLib.__dict__:
-           self.videodirectory = \
-                   GLib.get_user_special_dir(GLib.USER_DIRECTORY_VIDEOS)
-           self.audiodirectory = \
-                   GLib.get_user_special_dir(GLib.USER_DIRECTORY_MUSIC)
-       else:
-           print "XDG video or audio directory not available"
-           self.videodirectory = os.getenv('HOME')
-           self.audiodirectory = os.getenv('HOME')
+       #if 'get_user_special_dir' in GLib.__dict__:
+       self.videodirectory = \
+                   GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_VIDEOS)
+       self.audiodirectory = \
+                   GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_MUSIC)
+       #else:
+       #    print "XDG video or audio directory not available"
+       #    self.videodirectory = os.getenv('HOME')
+       #    self.audiodirectory = os.getenv('HOME')
        if self.videodirectory is None:
-           print "XDG video or audio directory not available"
            self.videodirectory = os.getenv('HOME')
            self.audiodirectory = os.getenv('HOME')
        CheckDir = os.path.isdir(self.videodirectory)
@@ -330,16 +329,18 @@ class TransmageddonUI:
        self.presetvideocodec="None"
        self.inputvideocaps=None # using this value to store videocodec name to feed uridecodebin to avoid decoding video when not keeping video
        self.nocontainernumber = int(13) # this needs to be set to the number of the no container option in the menu (from 0)
-       self.p_duration = gst.CLOCK_TIME_NONE
-       self.p_time = gst.FORMAT_TIME
+       self.p_duration = Gst.CLOCK_TIME_NONE
+       self.p_time = Gst.Format.TIME
 
        # Populate the Container format combobox
-       # for i in supported_containers:
-       #    self.containerchoice.append_text(i)
+       print "do we try to populate container choice"
+       for i in supported_containers:
+           self.containerchoice.append_text(i)
        # add i18n "No container"option
-       # self.containerchoice.append_text(_("No container (Audio-only)"))
+       self.containerchoice.append_text(_("No container (Audio-only)"))
 
        # Populate the rotatation box
+       print "populating rotationbox"
        self.rotationlist = [_("No rotation (default)"),\
                             _("Clockwise 90 degrees"), \
                             _("Rotate 180 degrees"),
@@ -353,9 +354,11 @@ class TransmageddonUI:
            self.rotationchoice.append_text(y)
 
        self.rotationchoice.set_active(0)
-       self.rotationvalue = int(0) 
+       self.rotationvalue = int(0)
+       print "done with rotationbox"
       
        # Populate Device Presets combobox
+       print "starting preset population"
        devicelist = []
        shortname = []
        preset_list = sorted(presets.get().items(),
@@ -371,6 +374,7 @@ class TransmageddonUI:
        self.presetchoice.prepend_text(_("No Presets"))
 
        self.waiting_for_signal="False"
+       print "done with preset population"
 
    # Get all preset values
    def reverse_lookup(self,v):
@@ -378,7 +382,8 @@ class TransmageddonUI:
            if codecfinder.codecmap[k] == v:
                return k
 
-   def provide_presets(self,devicename): 
+   def provide_presets(self,devicename):
+       print "provide presets"
        devices = presets.get()
        device = devices[devicename]
        preset = device.presets["Normal"]
@@ -414,6 +419,7 @@ class TransmageddonUI:
            self.containerchoice.set_active(12)
        else:
             print "failed to set container format from preset data"
+       print "done loading presets"
 
 
        # Check for number of passes
@@ -428,24 +434,25 @@ class TransmageddonUI:
    # Notes:
    # Query interface only available on uridecoder, not decodebin2)
    # FORMAT_TIME only value implemented by all plugins used
-   # a lot of original code from gst-python synchronizer.py example
+   # a lot of original code from Gst-python synchronizer.py example
    def Increment_Progressbar(self):
+       print "incrementing progressbar"
        if self.start_time == False:  
            self.start_time = time.time()
        try:
            position, format = \
-                   self._transcoder.uridecoder.query_position(gst.FORMAT_TIME)
+                   self._transcoder.uridecoder.query_position(Gst.Format.TIME)
            # print "position is " + str(position)
        except:
-           position = gst.CLOCK_TIME_NONE
+           position = Gst.CLOCK_TIME_NONE
 
        try:
            duration, format = \
-                   self._transcoder.uridecoder.query_duration(gst.FORMAT_TIME)
+                   self._transcoder.uridecoder.query_duration(Gst.Format.TIME)
            # print "duration is " + str(duration)
        except:
-           duration = gst.CLOCK_TIME_NONE
-       if position != gst.CLOCK_TIME_NONE:
+           duration = Gst.CLOCK_TIME_NONE
+       if position != Gst.CLOCK_TIME_NONE:
            value = float(position) / duration
            # print "value is " + str(value)
            if float(value) < (1.0) and float(value) >= 0:
@@ -524,105 +531,110 @@ class TransmageddonUI:
                self.passcounter = self.passcounter+1
                self._start_transcoding()
 
-
-   # Use the pygst extension 'discoverer' to get information about the incoming
-   # media. Probably need to get codec data in another way.
-   # this code is probably more complex than it needs to be currently
  
    def succeed(self, discoverer, info, error):
-       result=gst.pbutils.DiscovererInfo.get_result(info)
-       streaminfo=info.get_stream_info()
-       container = streaminfo.get_caps()
-       seekbool = info.get_seekable()
-       clipduration=info.get_duration()
+       print "starting succeed"
+       result=GstPbutils.DiscovererInfo.get_result(info)
+       print "result is " + str(result)
+       if result != GstPbutils.DiscovererResult.ERROR:
+           streaminfo=info.get_stream_info()
+           print "streaminfo is " +str(streaminfo)
+           container = streaminfo.get_caps()
+           print container
+           seekbool = info.get_seekable()
+           clipduration=info.get_duration()
 
-       audiostreamcounter=-1
-       audiostreams=[]
-       audiotags=[]
-       audiochannels=[]
-       samplerate=[]
-       inputaudiocaps=[]
-       markupaudioinfo=[]
-       videowidth = None
-       videoheight = None
-       for i in info.get_stream_list():
-           if isinstance(i, gst.pbutils.DiscovererAudioInfo):
-               audiostreamcounter=audiostreamcounter+1
-               inputaudiocaps.append(i.get_caps())
-               audiostreams.append( \
-                       gst.pbutils.get_codec_description(inputaudiocaps[audiostreamcounter]))
-               audiotags.append(i.get_tags())
-               test=i.get_channels()
-               audiochannels.append(i.get_channels())
-               samplerate.append(i.get_sample_rate())
-               self.haveaudio=True
-               self.audiodata = { 'audiochannels' : audiochannels[audiostreamcounter], \
+           audiostreamcounter=-1
+           audiostreams=[]
+           audiotags=[]
+           audiochannels=[]
+           samplerate=[]
+           inputaudiocaps=[]
+           markupaudioinfo=[]
+           videowidth = None
+           videoheight = None
+           for i in info.get_stream_list():
+               if isinstance(i, GstPbutils.DiscovererAudioInfo):
+                   audiostreamcounter=audiostreamcounter+1
+                   inputaudiocaps.append(i.get_caps())
+                   audiostreams.append( \
+                       GstPbutils.pb_utils_get_codec_description(inputaudiocaps[audiostreamcounter]))
+                   audiotags.append(i.get_tags())
+                   test=i.get_channels()
+                   audiochannels.append(i.get_channels())
+                   samplerate.append(i.get_sample_rate())
+                   self.haveaudio=True
+                   self.audiodata = { 'audiochannels' : audiochannels[audiostreamcounter], \
                        'samplerate' : samplerate[audiostreamcounter], 'audiotype' : inputaudiocaps[audiostreamcounter], \
                        'clipduration' : clipduration }
-               markupaudioinfo.append((''.join(('<small>', \
+                   markupaudioinfo.append((''.join(('<small>', \
                        'Audio channels: ', str(audiochannels[audiostreamcounter]) ,'</small>'))))
 
-               self.containerchoice.set_active(-1) # set this here to ensure it happens even with quick audio-only
-               self.containerchoice.set_active(0)
-           if self.haveaudio==False:
-               self.audioinformation.set_markup(''.join(('<small>', _("No Audio"), '</small>')))
-               self.audiocodec.set_markup(''.join(('<small>', "",'</small>')))
+                   self.containerchoice.set_active(-1) # set this here to ensure it happens even with quick audio-only
+                   self.containerchoice.set_active(0)
+               if self.haveaudio==False:
+                   self.audioinformation.set_markup(''.join(('<small>', _("No Audio"), '</small>')))
+                   self.audiocodec.set_markup(''.join(('<small>', "",'</small>')))
 
-           if isinstance(i, gst.pbutils.DiscovererVideoInfo):
-               self.inputvideocaps=i.get_caps()
-               videotags=i.get_tags()
-               interlacedbool = i.is_interlaced()
-               if interlacedbool is True:
-                   self.interlaced=True
-               self.havevideo=True
-               self.populate_menu_choices() # run this to ensure video menu gets filled
-               videoheight=i.get_height()
-               videowidth=i.get_width()
-               videodenom=i.get_framerate_denom()
-               videonum=i.get_framerate_num()
+               if isinstance(i, GstPbutils.DiscovererVideoInfo):
+                   print "discoverer found video"
+                   self.inputvideocaps=i.get_caps()
+                   videotags=i.get_tags()
+                   interlacedbool = i.is_interlaced()
+                   if interlacedbool is True:
+                       self.interlaced=True
+                   self.havevideo=True
+                   self.populate_menu_choices() # run this to ensure video menu gets filled
+                   videoheight=i.get_height()
+                   videowidth=i.get_width()
+                   videodenom=i.get_framerate_denom()
+                   videonum=i.get_framerate_num()
 
-               self.videodata = { 'videowidth' : videowidth, 'videoheight' : videoheight, 'videotype' : self.inputvideocaps,
+                   self.videodata = { 'videowidth' : videowidth, 'videoheight' : videoheight, 'videotype' : self.inputvideocaps,
                               'fratenum' : videonum, 'frateden' :  videodenom }
 
-           self.discover_done=True
-           if self.havevideo==False:
-               self.videoinformation.set_markup(''.join(('<small>', _("No Video"), '</small>')))
-               self.videocodec.set_markup(''.join(('<small>', "",
+                   self.discover_done=True
+                   if self.havevideo==False:
+                       self.videoinformation.set_markup(''.join(('<small>', _("No Video"), '</small>')))
+                       self.videocodec.set_markup(''.join(('<small>', "",
                                       '</small>')))
-           if self.waiting_for_signal == True:
-               if self.containertoggle == True:
-                   if self.container != False:
-                       self.check_for_passthrough(self.container)
-               else:
-                   self.check_for_elements()
-                   if self.missingtoggle==False:
-                       self._start_transcoding()
-           if self.container != False:
-               self.check_for_passthrough(self.container)
+               if self.waiting_for_signal == True:
+                   if self.containertoggle == True:
+                       if self.container != False:
+                           self.check_for_passthrough(self.container)
+                   else:
+                       self.check_for_elements()
+                       if self.missingtoggle==False:
+                           self._start_transcoding()
+               if self.container != False:
+                   self.check_for_passthrough(self.container)
        # set markup
 
-       if audiostreamcounter >= 0:
-           self.audioinformation.set_markup(''.join(('<small>', \
+           if audiostreamcounter >= 0:
+               self.audioinformation.set_markup(''.join(('<small>', \
                        'Audio channels: ', str(audiochannels[0]), '</small>')))
-           self.audiocodec.set_markup(''.join(('<small>','Audio codec: ', \
-                       str(gst.pbutils.get_codec_description(inputaudiocaps[audiostreamcounter])), \
+               self.audiocodec.set_markup(''.join(('<small>','Audio codec: ', \
+                       str(GstPbutils.pb_utils_get_codec_description(inputaudiocaps[audiostreamcounter])), \
                        '</small>')))
-       if videowidth and videoheight:
-           self.videoinformation.set_markup(''.join(('<small>', 'Video width&#47;height: ', str(videowidth),
+           if videowidth and videoheight:
+               self.videoinformation.set_markup(''.join(('<small>', 'Video width&#47;height: ', str(videowidth),
                                             "x", str(videoheight), '</small>')))
-           self.videocodec.set_markup(''.join(('<small>', 'Video codec: ',
-                                       str(gst.pbutils.get_codec_description(self.inputvideocaps)),
+               self.videocodec.set_markup(''.join(('<small>', 'Video codec: ',
+                                       str(GstPbutils.pb_utils_get_codec_description   (self.inputvideocaps)),
                                       '</small>')))
+           print "completed suceed"
 
    def discover(self, path):
        self.discovered.discover_uri_async("file://"+path)
 
    def mediacheck(self, FileChosen):
+       print "starting mediacheck"
        uri = urlparse (FileChosen)
        path = uri.path
        self.discover(path)
    
    def check_for_passthrough(self, containerchoice):
+       print "checking for passthtrough"
        videointersect = ("EMPTY")
        audiointersect = ("EMPTY")
        if (containerchoice != False or self.usingpreset==False):
@@ -632,20 +644,23 @@ class TransmageddonUI:
                self.containertoggle = True
                self.check_for_elements()
            else:
-               factory = gst.registry_get_default().lookup_feature(containerelement)
+               factory = Gst.Registry.get_default().lookup_feature(containerelement)
                for x in factory.get_static_pad_templates():
-                   if (x.direction == gst.PAD_SINK):
+                   if (x.direction == Gst.PAD_SINK):
                        sourcecaps = x.get_caps()
                        if self.havevideo == True:
                           if videointersect == ("EMPTY"):
                               # clean accepted caps to 'pure' value without parsing requirements
                               # might be redudant and caused by encodebin bug
-                              textdata=gst.Caps.to_string(self.videodata['videotype'])
-                              sep= ','
-                              minitext = textdata.split(sep, 1)[0]
-                              cleaned_videodata=gst.Caps(minitext)
+                              # 10.11.2011 trying to disable again as it is causing 
+                              # remuxing bugs for mpeg
+                              #
+                              #textdata=Gst.Caps.to_string(self.videodata['videotype'])
+                              #sep= ','
+                              #minitext = textdata.split(sep, 1)[0]
+                              #cleaned_videodata=Gst.caps_from_string(minitext)
 
-                              videointersect = sourcecaps.intersect(cleaned_videodata)
+                              videointersect = sourcecaps.intersect(self.videodata['videotype'])
 
                               if videointersect != ("EMPTY"):
                                   self.vsourcecaps = videointersect
@@ -687,6 +702,7 @@ class TransmageddonUI:
                    self.bogus=1
                self.nocontaineroptiontoggle=False
            self.containerchoice.set_sensitive(True)
+       print "filechoosing done"
 
    def _start_transcoding(self): 
        filechoice = self.builder.get_object ("FileChooser").get_uri()
@@ -699,7 +715,7 @@ class TransmageddonUI:
            if self.videopasstoggle == False:
                videocodec = self.VideoCodec
            else: # this is probably redundant and caused by encodebin 
-               textdata=gst.Caps.to_string(self.vsourcecaps)
+               textdata=Gst.Caps.to_string(self.vsourcecaps)
                sep= ','
                minitext  = textdata.split(sep, 1)[0]
                videocodec = minitext
@@ -716,7 +732,7 @@ class TransmageddonUI:
            if self.audiopasstoggle == False:
                audiocodec = self.AudioCodec
            else:
-               audiocodec = gst.Caps.to_string(self.asourcecaps)
+               audiocodec = Gst.Caps.to_string(self.asourcecaps)
        else:
            audiocodec=False
            achannels=False
@@ -738,21 +754,21 @@ class TransmageddonUI:
        return True
 
    def donemessage(self, donemessage, null):
-       if donemessage == gst.pbutils.INSTALL_PLUGINS_SUCCESS:
+       if donemessage == GstPbutils.INSTALL_PLUGINS_SUCCESS:
            # print "success " + str(donemessage)
-           if gst.update_registry():
+           if Gst.update_registry():
                print "Plugin registry updated, trying again"
            else:
-               print "GStreamer registry update failed"
+               print "Gstreamer registry update failed"
            if self.containertoggle == False:
                # print "done installing plugins, starting transcode"
                # FIXME - might want some test here to check plugins needed are
                # actually installed
                # but it is a rather narrow corner case when it fails
                self._start_transcoding()
-       elif donemessage == gst.pbutils.INSTALL_PLUGINS_PARTIAL_SUCCESS:
+       elif donemessage == GstPbutils.INSTALL_PLUGINS_PARTIAL_SUCCESS:
            self.check_for_elements()
-       elif donemessage == gst.pbutils.INSTALL_PLUGINS_NOT_FOUND:
+       elif donemessage == GstPbutils.INSTALL_PLUGINS_NOT_FOUND:
            context_id = self.StatusBar.get_context_id("EOS")
            self.StatusBar.push(context_id, \
                    _("Plugins not found, choose different codecs."))
@@ -761,7 +777,7 @@ class TransmageddonUI:
            self.CodecBox.set_sensitive(True)
            self.cancelbutton.set_sensitive(False)
            self.transcodebutton.set_sensitive(True)
-       elif donemessage == gst.pbutils.INSTALL_PLUGINS_USER_ABORT:
+       elif donemessage == GstPbutils.INSTALL_PLUGINS_USER_ABORT:
            context_id = self.StatusBar.get_context_id("EOS")
            self.StatusBar.push(context_id, _("Codec installation aborted."))
            self.FileChooser.set_sensitive(True)
@@ -771,14 +787,15 @@ class TransmageddonUI:
            self.transcodebutton.set_sensitive(True)
        else:
            context_id = self.StatusBar.get_context_id("EOS")
-           self.StatusBar.push(context_id, _("Missing plugin installation failed: ")) + gst.pbutils.InstallPluginsReturn()
+           self.StatusBar.push(context_id, _("Missing plugin installation failed: ")) + GstPbutils.InstallPluginsReturn()
 
    def check_for_elements(self):
        if self.container==False:
            containerstatus=True
            videostatus=True
        else:
-           containerchoice = self.builder.get_object ("containerchoice").get_active_text ()
+           print "checking for elements"
+           containerchoice = self.builder.get_object ("containerchoice").get_active_text()
            containerstatus = codecfinder.get_muxer_element(codecfinder.containermap[containerchoice])
            if self.havevideo:
                if self.videopasstoggle != True:
@@ -804,18 +821,18 @@ class TransmageddonUI:
                audiostatus=True
                videostatus=True
            if containerstatus == False: 
-               fail_info.append(gst.caps_from_string(codecfinder.containermap[containerchoice]))
+               fail_info.append(Gst.caps_from_string(codecfinder.containermap[containerchoice]))
            if audiostatus == False:
                fail_info.append(self.AudioCodec)
            if videostatus == False:
                fail_info.append(self.VideoCodec)
            missing = []
            for x in fail_info:
-               missing.append(gst.pbutils.missing_encoder_installer_detail_new(x))
-           context = gst.pbutils.InstallPluginsContext ()
+               missing.append(GstPbutils.missing_encoder_installer_detail_new(x))
+           context = GstPbutils.InstallPluginsContext ()
            context.set_xid(self.TopWindow.get_window().xid)
            strmissing = str(missing)
-           gst.pbutils.install_plugins_async (missing, context, \
+           GstPbutils.install_plugins_async (missing, context, \
                    self.donemessage, "NULL")
 
    # The transcodebutton is the one that calls the Transcoder class and thus
@@ -836,9 +853,9 @@ class TransmageddonUI:
        # Remove suffix from inbound filename so we can reuse it together with suffix to create outbound filename
        self.nosuffix = os.path.splitext(os.path.basename(self.filename))[0]
        # pick output suffix
-       container = self.builder.get_object ("containerchoice").get_active_text ()
+       container = self.builder.get_object("containerchoice").get_active_text()
        if self.container==False: # deal with container less formats
-           self.ContainerFormatSuffix = codecfinder.nocontainersuffixmap[gst.Caps.to_string(self.AudioCodec)]
+           self.ContainerFormatSuffix = codecfinder.nocontainersuffixmap[Gst.Caps.to_string(self.AudioCodec)]
        else:
            if self.havevideo == False:
                self.ContainerFormatSuffix = codecfinder.audiosuffixmap[container]
@@ -888,14 +905,17 @@ class TransmageddonUI:
        # self.audiocodecs - contains list of whats in self.audiorows
        # self.videocodecs - contains listof whats in self.videorows
        # audio_codecs, video_codecs - temporary lists
-
+       print "trying to populate menu choices"
        # clean up stuff from previous run
        self.houseclean=True # set this to avoid triggering events when cleaning out menus
        for c in self.audiocodecs: # 
            self.audiorows[0].remove(0)
        self.audiocodecs =[]
+       print "checking for video"
        if self.havevideo==True:
+           print "found video"
            if self.container != False:
+               print "found conntainer"
                for c in self.videocodecs:
                    self.videorows[0].remove(0)
                self.videocodecs=[]
@@ -904,25 +924,27 @@ class TransmageddonUI:
 
        # start filling audio
        if self.haveaudio==True:
-           
+           print "filling audio"
            if self.usingpreset==True: # First fill menu based on presetvalue
-               self.audiorows[0].append_text(str(gst.pbutils.get_codec_description(self.presetaudiocodec)))
+               self.audiorows[0].append_text(str(GstPbutils.pb_utils_get_codec_description(self.presetaudiocodec)))
                self.audiorows[0].set_active(0)
                self.audiocodecs.append(self.presetaudiocodec)
            elif self.container==False: # special setup for container less case, looks ugly, but good enough for now
-               self.audiorows[0].append_text(str(gst.pbutils.get_codec_description("audio/mpeg, mpegversion=(int)1, layer=(int)3")))
-               self.audiorows[0].append_text(str(gst.pbutils.get_codec_description("audio/mpeg, mpegversion=4, stream-format=adts")))
-               self.audiorows[0].append_text(str(gst.pbutils.get_codec_description("audio/x-flac")))
-               self.audiocodecs.append(gst.Caps("audio/mpeg, mpegversion=(int)1, layer=(int)3"))
-               self.audiocodecs.append(gst.Caps("audio/mpeg, mpegversion=4, stream-format=adts"))
-               self.audiocodecs.append(gst.Caps("audio/x-flac"))
+               self.audiorows[0].append_text(str(GstPbutils.pb_utils_get_codec_description(Gst.caps_from_string("audio/mpeg, mpegversion=(int)1, layer=(int)3"))))
+               self.audiorows[0].append_text(str(GstPbutils.pb_utils_get_codec_description(Gst.caps_from_string("audio/mpeg, mpegversion=4, stream-format=adts"))))
+               self.audiorows[0].append_text(str(GstPbutils.pb_utils_get_codec_description(Gst.caps_from_string("audio/x-flac"))))
+               self.audiocodecs.append(Gst.caps_from_string("audio/mpeg, mpegversion=(int)1, layer=(int)3"))
+               self.audiocodecs.append(Gst.caps_from_string("audio/mpeg, mpegversion=4, stream-format=adts"))
+               self.audiocodecs.append(Gst.caps_from_string("audio/x-flac"))
                self.audiorows[0].set_active(0)
                self.audiorows[0].set_sensitive(True)
            else:
+               print "getting to where audio options are filled inn"
                audio_codecs = []
                audio_codecs = supported_audio_container_map[self.container]
                for c in audio_codecs:
-                   self.audiocodecs.append(gst.Caps(codecfinder.codecmap[c]))
+                   print "adding audiocodec " + str(c)
+                   self.audiocodecs.append(Gst.caps_from_string(codecfinder.codecmap[c]))
                for c in audio_codecs:
                    self.audiorows[0].append_text(c)
            self.audiorows[0].set_sensitive(True)
@@ -934,7 +956,7 @@ class TransmageddonUI:
        if self.havevideo==True:
            if self.container != False:
                if self.usingpreset==True:
-                   self.videorows[0].append_text(str(gst.pbutils.get_codec_description(self.presetvideocodec)))
+                   self.videorows[0].append_text(str(GstPbutils.pb_utils_get_codec_description(self.presetvideocodec)))
                    self.videorows[0].set_active(0)
                    self.videocodecs.append(self.presetvideocodec)
                else:
@@ -942,7 +964,7 @@ class TransmageddonUI:
                    video_codecs = supported_video_container_map[self.container]
                    self.rotationchoice.set_sensitive(True)
                    for c in video_codecs:
-                       self.videocodecs.append(gst.Caps(codecfinder.codecmap[c]))
+                       self.videocodecs.append(Gst.caps_from_string(codecfinder.codecmap[c]))
                    for c in video_codecs: # I can't update the menu with loop append
                        self.videorows[0].append_text(c)
                    self.videorows[0].set_sensitive(True)
@@ -969,62 +991,71 @@ class TransmageddonUI:
        self.ProgressBar.set_fraction(0.0)
        self.ProgressBar.set_text(_("Transcoding Progress"))
        if self.builder.get_object("containerchoice").get_active() == self.nocontainernumber:
+               print "self.container is False"
                self.container = False
                self.videorows[0].set_active(self.videonovideomenuno)
                self.videorows[0].set_sensitive(False)
        else:
            if self.builder.get_object("containerchoice").get_active()!= -1:
-               self.container = self.builder.get_object ("containerchoice").get_active_text ()
+               self.container = self.builder.get_object ("containerchoice").get_active_text()
+               print "self.container is " + str(self.container)
                if self.discover_done == True:
                    self.check_for_passthrough(self.container)
            self.transcodebutton.set_sensitive(True)
-       self.populate_menu_choices()
+       print "containerchoice sorted"
+       # self.populate_menu_choices()
 
    def on_presetchoice_changed(self, widget):
-       presetchoice = self.builder.get_object ("presetchoice").get_active()
-       print "presetchoice is " + str(presetchoice)
-       self.ProgressBar.set_fraction(0.0)
-       if presetchoice == 0:
-           self.usingpreset=False
-           self.devicename = "nopreset"
-           self.containerchoice.set_sensitive(True)
-           self.containerchoice.set_active(0)
-           self.start_time = False
-           self.multipass = False
-           self.passcounter = False
-           self.rotationchoice.set_sensitive(True)
-           if self.builder.get_object("containerchoice").get_active_text():
-               self.populate_menu_choices()
-               self.CodecBox.set_sensitive(True)
-               self.transcodebutton.set_sensitive(True)
-       else:
-           self.usingpreset=True
-           self.ProgressBar.set_fraction(0.0)
-           if presetchoice != None:
-               print "am I getting here"
-               self.devicename= self.presetchoices[presetchoice]
-               self.provide_presets(self.devicename)
-               self.containerchoice.set_sensitive(False)
-               self.CodecBox.set_sensitive(False)
-               self.rotationchoice.set_sensitive(False)
-           else:
-               print "no presetchoice values found"
-           if self.builder.get_object("containerchoice").get_active_text():
-               self.transcodebutton.set_sensitive(True)
+       print "|12"
+       #presetchoice = self.builder.get_object ("presetchoice").get_active()
+       #print "presetchoice is " + str(presetchoice)
+       #self.ProgressBar.set_fraction(0.0)
+       #if presetchoice == 0:
+       #    self.usingpreset=False
+       #    self.devicename = "nopreset"
+       #    self.containerchoice.set_sensitive(True)
+       #    self.containerchoice.set_active(0)
+       #    self.start_time = False
+       #    self.multipass = False
+       #    self.passcounter = False
+       #    self.rotationchoice.set_sensitive(True)
+       #    print "before 2"
+       #    if self.builder.get_object("containerchoice").get_active():
+       #        print "does this happen?"
+       #        self.populate_menu_choices()
+       #        self.CodecBox.set_sensitive(True)
+       #        self.transcodebutton.set_sensitive(True)
+       #else:
+       #    self.usingpreset=True
+       #    self.ProgressBar.set_fraction(0.0)
+       #    if presetchoice != None:
+       #        print "am I getting here"
+       #        self.devicename= self.presetchoices[presetchoice]
+       #        self.provide_presets(self.devicename)
+       #        self.containerchoice.set_sensitive(False)
+       #        self.CodecBox.set_sensitive(False)
+       #        self.rotationchoice.set_sensitive(False)
+       #    else:
+       #        print "no presetchoice values found"
+       #    if self.builder.get_object("containerchoice").get_active_text():
+       #        self.transcodebutton.set_sensitive(True)
+       # print "preset choice successfully completed"
 
    def on_rotationchoice_changed(self, widget):
        self.rotationvalue = self.rotationchoice.get_active()
 
    def on_audiocodec_changed(self, widget):
+       print "audiocodec changed"
        if (self.houseclean == False and self.usingpreset==False):
            self.AudioCodec = self.audiocodecs[self.audiorows[0].get_active()]
            if self.container != False:
                if self.audiorows[0].get_active() ==  self.audiopassmenuno:
                    self.audiopasstoggle=True
        elif self.usingpreset==True:
-           self.AudioCodec = gst.Caps(self.presetaudiocodec)    
+           self.AudioCodec = Gst.caps_from_string(self.presetaudiocodec)    
 
    def on_videocodec_changed(self, widget):
+       print "videocodec changed"
        if (self.houseclean == False and self.usingpreset==False):
            if self.container != False:
                self.VideoCodec = self.videocodecs[self.videorows[0].get_active()]
@@ -1033,9 +1064,10 @@ class TransmageddonUI:
            if self.videorows[0].get_active() == self.videopassmenuno:
                self.videopasstoggle=True
        elif self.usingpreset==True:
-           self.VideoCodec = gst.Caps(self.presetvideocodec)
+           self.VideoCodec = Gst.caps_from_string(self.presetvideocodec)
 
    def on_about_dialog_activate(self, widget):
+       print "activating about"
        """
            Show the about dialog.
        """
@@ -1079,8 +1111,8 @@ class TransmageddonUI:
            os.remove(dotfile)
        if os.access(pngfile, os.F_OK):
            os.remove(pngfile)
-       gst.DEBUG_BIN_TO_DOT_FILE (self._transcoder.pipeline, \
-               gst.DEBUG_GRAPH_SHOW_ALL, 'transmageddon-debug-graph')
+       Gst.DEBUG_BIN_TO_DOT_FILE (self._transcoder.pipeline, \
+               Gst.DEBUG_GRAPH_SHOW_ALL, 'transmageddon-debug-graph')
        # check if graphviz is installed with a simple test
        try:
            dot = which.which("dot")

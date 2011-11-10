@@ -58,3 +58,5 @@ This list is completely unordered. Nothing about the ordering in this list shoul
   make streams identifiable.
 
 * Batch transcoding - multiple files 'programmed up front'
+
+* Error handling - handle case where discoverer fail

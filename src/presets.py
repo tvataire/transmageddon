@@ -43,8 +43,9 @@ import os
 import sys
 import urllib2
 import xml.etree.ElementTree
+import fractions
 
-import gst
+from gi.repository import Gst
 
 import utils
 
@@ -55,10 +56,10 @@ _log = logging.getLogger("transmageddon.presets")
 UPDATE_LOCATION = "http://programmer-art.org" + \
                   "/media/releases/transmageddon-transcoder/presets/"
 
-class Fraction(gst.Fraction):
+class Fraction(fractions.Fraction):
     """
         An object for storing a fraction as two integers. This is a subclass
-        of gst.Fraction that allows initialization from a string representation
+        of fractions.Fraction that allows initialization from a string representation
         like "1/2".
     """
     def __init__(self, value = "1"):
@@ -70,9 +71,9 @@ class Fraction(gst.Fraction):
         parts = value.split("/")
         
         if len(parts) == 1:
-            gst.Fraction.__init__(self, int(value), 1)
+            fractions.Fraction.__init__(self, int(value), 1)
         elif len(parts) == 2:
-            gst.Fraction.__init__(self, int(parts[0]), int(parts[1]))
+            fractions.Fraction.__init__(self, int(parts[0]), int(parts[1]))
         else:
             raise ValueError(_("Not a valid integer or fraction: %(value)s!") % {
                 "value": value,
@@ -228,7 +229,7 @@ class VideoCodec(Codec):
         self.border = "N"
         self.passes ="0"
         self.rate = (Fraction("1"), Fraction("60"))
-        self.aspectratio = Fraction("0/0")
+        self.aspectratio = Fraction("1/1")
         self.width = (2, 1920)
         self.height = (2, 1080)
 

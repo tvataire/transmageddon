@@ -20,12 +20,10 @@ import sys
 import os
 import codecfinder
 import presets
-
 from gi.repository import GObject
-GObject.threads_init()
-import pygst
-pygst.require("0.10")
-import gst
+from gi.repository import Gst
+from gi.repository import GstPbutils
+#Gst.init(None)
 
 class Transcoder(GObject.GObject):
 
@@ -44,12 +42,12 @@ class Transcoder(GObject.GObject):
        self.container = CONTAINERCHOICE
        self.audiocaps = AUDIOCODECVALUE
        if self.container != False:
-           self.containercaps = gst.Caps(codecfinder.containermap[CONTAINERCHOICE])
+           self.containercaps = Gst.caps_from_string_from_string(codecfinder.containermap[CONTAINERCHOICE])
        # special case mp3 which is a no-container format with a container (id3mux)
        else:
-           if self.audiocaps.intersect(gst.Caps("audio/mpeg, mpegversion=1, layer=3")):
-               self.containercaps=gst.Caps("application/x-id3")
-               self.container=gst.Caps("application/x-id3")
+           if self.audiocaps.intersect(Gst.caps_from_string("audio/mpeg, mpegversion=1, layer=3")):
+               self.containercaps=Gst.caps_from_string("application/x-id3")
+               self.container=Gst.caps_from_string("application/x-id3")
 
 
        # Choose plugin based on Codec Name
@@ -97,16 +95,16 @@ class Transcoder(GObject.GObject):
            for vcap in self.videocaps:
                vcap["height"] = int(height)
                vcap["width"] = int(width)
-               vcap["framerate"] = gst.Fraction(num, denom)
-               if pixelaspectratio != gst.Fraction(0, 0):
+               vcap["framerate"] = Gst.Fraction(num, denom)
+               if pixelaspectratio != Gst.Fraction(0, 0):
                    vcap["pixel-aspect-ratio"] = pixelaspectratio
 
 
        # Create transcoding pipeline
-       self.pipeline = gst.Pipeline("TranscodingPipeline")
-       self.pipeline.set_state(gst.STATE_PAUSED)
+       self.pipeline = Gst.Pipeline("TranscodingPipeline")
+       self.pipeline.set_state(Gst.STATE_PAUSED)
 
-       self.uridecoder = gst.element_factory_make("uridecodebin", "uridecoder")
+       self.uridecoder = Gst.ElementFactory.make("uridecodebin", "uridecoder")
        self.uridecoder.set_property("uri", FILECHOSEN)
        self.uridecoder.connect("pad-added", self.OnDynamicPad)
 
@@ -122,62 +120,62 @@ class Transcoder(GObject.GObject):
            videopreset="Quality Normal"
 
        if self.container==False:
-           if self.audiocaps.intersect(gst.Caps("audio/mpeg, mpegversion=4")):
-               self.audiocaps=gst.Caps("audio/mpeg, mpegversion=4, stream-format=adts")
-           elif self.audiocaps.intersect(gst.Caps("audio/x-flac")):
-               self.audiocaps=gst.Caps("audio/x-flac")
+           if self.audiocaps.intersect(Gst.caps_from_string("audio/mpeg, mpegversion=4")):
+               self.audiocaps=Gst.caps_from_string("audio/mpeg, mpegversion=4, stream-format=adts")
+           elif self.audiocaps.intersect(Gst.caps_from_string("audio/x-flac")):
+               self.audiocaps=Gst.caps_from_string("audio/x-flac")
        else:
-           self.encodebinprofile = gst.pbutils.EncodingContainerProfile ("containerformat", None , self.containercaps, None)
+           self.encodebinprofile = GstPbutils.EncodingContainerProfile ("containerformat", None , self.containercaps, None)
        if self.audiocaps != False:
            if self.container==False:
-               self.encodebinprofile = gst.pbutils.EncodingAudioProfile (gst.Caps(self.audiocaps), audiopreset, gst.caps_new_any(), 0)
+               self.encodebinprofile = GstPbutils.EncodingAudioProfile (Gst.caps_from_string(self.audiocaps), audiopreset, Gst.Caps.new_any(), 0)
            else:
-               self.audioprofile = gst.pbutils.EncodingAudioProfile (gst.Caps(self.audiocaps), audiopreset, gst.caps_new_any(), 0)
+               self.audioprofile = gst.pbutils.EncodingAudioProfile (Gst.caps_from_string(self.audiocaps), audiopreset, Gst.Caps.new_any(), 0)
                self.encodebinprofile.add_profile(self.audioprofile)
        if self.videocaps != "novid":
            if (self.videocaps != False):
-               self.videoprofile = gst.pbutils.EncodingVideoProfile (gst.Caps(self.videocaps), videopreset, gst.caps_new_any(), 0)
+               self.videoprofile = GstPbutils.EncodingVideoProfile (Gst.caps_from_string(self.videocaps), videopreset, Gst.Caps.new_any(), 0)
                self.encodebinprofile.add_profile(self.videoprofile)
-       self.encodebin = gst.element_factory_make ("encodebin", None)
+       self.encodebin = Gst.ElementFactory.make ("encodebin", None)
        self.encodebin.set_property("profile", self.encodebinprofile)
        self.encodebin.set_property("avoid-reencoding", True)
        self.pipeline.add(self.encodebin)
-       self.encodebin.set_state(gst.STATE_PAUSED)
+       self.encodebin.set_state(Gst.STATE_PAUSED)
 
        if self.videopasstoggle==False:
            if self.container != False:
-               self.videoflipper = gst.element_factory_make("videoflip")
+               self.videoflipper = Gst.ElementFactory.make("videoflip")
                self.videoflipper.set_property("method", self.rotationvalue)
                self.pipeline.add(self.videoflipper)
 
-               self.deinterlacer = gst.element_factory_make("deinterlace")
+               self.deinterlacer = Gst.ElementFactory.make("deinterlace")
                self.pipeline.add(self.deinterlacer)
 
-               self.colorspaceconversion = gst.element_factory_make("ffmpegcolorspace")
+               self.colorspaceconversion = Gst.ElementFactory.make("ffmpegcolorspace")
                self.pipeline.add(self.colorspaceconversion)
                        
                self.deinterlacer.link(self.colorspaceconversion)
 	       self.colorspaceconversion.link(self.videoflipper)
-               self.deinterlacer.set_state(gst.STATE_PAUSED)
-               self.colorspaceconversion.set_state(gst.STATE_PAUSED)
-               self.videoflipper.set_state(gst.STATE_PAUSED)
+               self.deinterlacer.set_state(Gst.STATE_PAUSED)
+               self.colorspaceconversion.set_state(Gst.STATE_PAUSED)
+               self.videoflipper.set_state(Gst.STATE_PAUSED)
 
-       self.remuxcaps = gst.Caps()
+       self.remuxcaps = Gst.Caps()
        if self.audiopasstoggle:
           self.remuxcaps.append(self.audiocaps)
        if self.videopasstoggle:
           self.remuxcaps.append(self.videocaps)
        if self.audiopasstoggle and not self.videopasstoggle:
-          self.remuxcaps.append_structure(gst.Structure("video/x-raw-rgb"))
-          self.remuxcaps.append_structure(gst.Structure("video/x-raw-yuv"))
+          self.remuxcaps.append_structure(Gst.Structure("video/x-raw-rgb"))
+          self.remuxcaps.append_structure(Gst.Structure("video/x-raw-yuv"))
        if self.videopasstoggle and not self.audiopasstoggle:
-          self.remuxcaps.append_structure(gst.Structure("audio/x-raw-float"))
-          self.remuxcaps.append_structure(gst.Structure("audio/x-raw-int"))
+          self.remuxcaps.append_structure(Gst.Structure("audio/x-raw-float"))
+          self.remuxcaps.append_structure(Gst.Structure("audio/x-raw-int"))
        if self.videocaps=="novid":
           if self.inputvideocaps != None:
               self.remuxcaps.append(self.inputvideocaps)
-              self.remuxcaps.append_structure(gst.Structure("audio/x-raw-float"))
-              self.remuxcaps.append_structure(gst.Structure("audio/x-raw-int"))
+              self.remuxcaps.append_structure(Gst.Structure("audio/x-raw-float"))
+              self.remuxcaps.append_structure(Gst.Structure("audio/x-raw-int"))
 
 
        if (self.audiopasstoggle) or (self.videopasstoggle) or (self.videocaps=="novid"):
@@ -186,14 +184,14 @@ class Transcoder(GObject.GObject):
  
        self.pipeline.add(self.uridecoder)
 
-       self.transcodefileoutput = gst.element_factory_make("filesink", \
+       self.transcodefileoutput = Gst.ElementFactory.make("filesink", \
                "transcodefileoutput")
        self.transcodefileoutput.set_property("location", \
                (DESTDIR+"/"+self.outputfilename))
        self.pipeline.add(self.transcodefileoutput)
        self.encodebin.link(self.transcodefileoutput)
 
-       self.uridecoder.set_state(gst.STATE_PAUSED)
+       self.uridecoder.set_state(Gst.STATE_PAUSED)
 
        # print "setting uridcodebin to paused"
        self.BusMessages = self.BusWatcher()
@@ -214,8 +212,8 @@ class Transcoder(GObject.GObject):
        device = devices[self.preset]
        preset = device.presets["Normal"]
        # set audio and video caps from preset file
-       self.audiocaps=gst.Caps(preset.acodec.name)
-       self.videocaps=gst.Caps(preset.vcodec.name)
+       self.audiocaps=Gst.caps_from_string(preset.acodec.name)
+       self.videocaps=Gst.caps_from_string(preset.vcodec.name)
        # Check for black border boolean
        border = preset.vcodec.border
        if border == "Y":
@@ -282,7 +280,7 @@ class Transcoder(GObject.GObject):
 
    def noMorePads(self, dbin):
        if (self.multipass == False) or (self.passcounter == int(0)):
-           self.transcodefileoutput.set_state(gst.STATE_PAUSED)
+           self.transcodefileoutput.set_state(Gst.STATE_PAUSED)
        glib.idle_add(self.idlePlay)
        # print "No More pads received"
 
@@ -298,25 +296,25 @@ class Transcoder(GObject.GObject):
    def on_message(self, bus, message):
        mtype = message.type
        # print mtype
-       if mtype == gst.MESSAGE_ERROR:
+       if mtype == Gst.MESSAGE_ERROR:
            err, debug = message.parse_error()
            print err 
            print debug
-           gst.DEBUG_BIN_TO_DOT_FILE (self.pipeline, gst.DEBUG_GRAPH_SHOW_ALL, \
+           Gst.DEBUG_BIN_TO_DOT_FILE (self.pipeline, Gst.DEBUG_GRAPH_SHOW_ALL, \
                    'transmageddon.dot')
            self.emit('got-error', err.message)
-       elif mtype == gst.MESSAGE_ASYNC_DONE:
+       elif mtype == Gst.MESSAGE_ASYNC_DONE:
            self.emit('ready-for-querying')
-       elif mtype == gst.MESSAGE_EOS:
+       elif mtype == Gst.MESSAGE_EOS:
            if (self.multipass != False):
                if (self.passcounter == 0):
                    #removing multipass cache file when done
                    if os.access(self.cachefile, os.F_OK):
                        os.remove(self.cachefile)
            self.emit('got-eos')
-           self.pipeline.set_state(gst.STATE_NULL)
-       elif mtype == gst.MESSAGE_APPLICATION:
-           self.pipeline.set_state(gst.STATE_NULL)
+           self.pipeline.set_state(Gst.STATE_NULL)
+       elif mtype == Gst.MESSAGE_APPLICATION:
+           self.pipeline.set_state(Gst.STATE_NULL)
            self.pipeline.remove(self.uridecoder)
        return True
 
@@ -366,15 +364,15 @@ class Transcoder(GObject.GObject):
        GstTagSetterType = GObject.type_from_name("GstTagSetter")
        tag_setting_element=self.encodebin.get_by_interface(GstTagSetterType)
        if tag_setting_element != None:
-           taglist=gst.TagList()
-           taglist[gst.TAG_ENCODER] = "Transmageddon encoder" # this should probably be set to
+           taglist=Gst.TagList()
+           taglist[Gst.TAG_ENCODER] = "Transmageddon encoder" # this should probably be set to
 	                                                      # string combining audio+video encoder
                                                               # implementations
-           taglist[gst.TAG_APPLICATION_NAME] = "Transmageddon transcoder"
-           tag_setting_element.merge_tags(taglist, gst.TAG_MERGE_APPEND)
+           taglist[Gst.TAG_APPLICATION_NAME] = "Transmageddon transcoder"
+           tag_setting_element.merge_tags(taglist, Gst.TAG_MERGE_APPEND)
 
    def Pipeline (self, state):
        if state == ("playing"):
-           self.pipeline.set_state(gst.STATE_PLAYING)
+           self.pipeline.set_state(Gst.STATE_PLAYING)
        elif state == ("null"):
-           self.pipeline.set_state(gst.STATE_NULL)
+           self.pipeline.set_state(Gst.STATE_NULL)
