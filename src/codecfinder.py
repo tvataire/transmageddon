@@ -24,9 +24,9 @@
 # REMAINING IS FFMUXERS AND WAVPACK
 
 
-import pygst
-pygst.require("0.10")
-import gst
+from gi.repository import Gst
+from gi.repository import GstPbutils
+#Gst.init(None)
 
 def list_compat(a1, b1):
    for x1 in a1:
@@ -111,6 +111,9 @@ codecmap = { 'Vorbis' : "audio/x-vorbis", \
 #This code checks for available muxers and return a unique caps string
 #for each. It also creates a python dictionary mapping the caps strings 
 #to concrete element names. 
+
+# This part of the file might be mostly uneeded due to the encodebin port, seems remaining code 
+# calling it could be removed even if its a biggish effort
 #####
 
 def get_muxer_element(containercaps): 
@@ -119,32 +122,34 @@ def get_muxer_element(containercaps):
    to element names. Then return elementname
    """
 
-   flist = gst.registry_get_default().get_feature_list(gst.ElementFactory)
+   flist = Gst.Registry.get_default().get_feature_list(Gst.ElementFactory)
    muxers = []
    features = []
    elementname = False
    for fact in flist:
-       # FIXME: the 'and not' part of this line should be removed, but it has to
-       # stay in until Ranks have been set on most muxers in GStreamer. If
-       # removed now we get lots of failures due to ending up with broken muxers
-       if list_compat(["Codec", "Muxer"], fact.get_klass().split('/')) and not \
-               fact.get_name().startswith('ffmux'):
+       # This code is a lot simpler than what I used with 0.10 thanks to the list_is_type call.
+       # 16 is the 'muxer' class of plugins
+       if Gst.ElementFactory.list_is_type(fact, 16):
+           test=fact.get_name()
+           print "muxer is " + str(test)
            muxers.append(fact.get_name())
            features.append(fact)
    muxerfeature = dict(zip(muxers, features))
-   incomingcaps = containercaps
-   for x in muxers:
-           element = x
-           factory = gst.registry_get_default().lookup_feature(str(x))
+   incomingcaps = Gst.caps_from_string(containercaps)
+   print "containercaps is " + str(containercaps)
+   for muxer in muxers:
+           element = muxer
+           factory = Gst.Registry.get_default().lookup_feature(str(muxer))
            sinkcaps = [x.get_caps() for x in factory.get_static_pad_templates() \
-                   if x.direction == gst.PAD_SRC]
+                   if x.direction == Gst.PadDirection.SRC]
+           print "sinkcaps are " + str(sinkcaps)
            for caps in sinkcaps:
                if caps.intersect(incomingcaps):
                    if elementname == False:
                        elementname = element
                    else:
-                       mostrecent = gst.PluginFeature.get_rank(muxerfeature[element])
-                       original = gst.PluginFeature.get_rank(muxerfeature[elementname])
+                       mostrecent = Gst.PluginFeature.get_rank(muxerfeature[element])
+                       original = Gst.PluginFeature.get_rank(muxerfeature[elementname])
                        if mostrecent >= original:
                            elementname = element
    return elementname
@@ -164,13 +169,13 @@ def get_audio_encoder_element(audioencodercaps):
    will return False.
    """
 
-   flist = gst.registry_get_default().get_feature_list(gst.ElementFactory)
+   flist = Gst.Registry.get_default().get_feature_list(Gst.ElementFactory)
    encoders = []
    features = []
    elementname = False
    for fact in flist:
        if list_compat(["Codec", "Encoder", "Audio"], \
-               fact.get_klass().split('/')):
+               fact.get_metadata().split('/')):
            # excluding wavpackenc as the fact that it got two SRC pads mess up
            # the logic of this code
            if fact.get_name() != 'wavpackenc':
@@ -180,16 +185,16 @@ def get_audio_encoder_element(audioencodercaps):
    incomingcaps = audioencodercaps
    for x in encoders:
            element = x
-           factory = gst.registry_get_default().lookup_feature(str(x))
+           factory = Gst.Registry.get_default().lookup_feature(str(x))
            sinkcaps = [x.get_caps() for x in factory.get_static_pad_templates() \
-                   if x.direction == gst.PAD_SRC]
+                   if x.direction == Gst.PAD_SRC]
            for caps in sinkcaps:
                if caps.intersect(incomingcaps):
                    if elementname == False:
                        elementname = element
                    else:
-                       mostrecent = gst.PluginFeature.get_rank(encoderfeature[element])
-                       original = gst.PluginFeature.get_rank(encoderfeature[elementname])
+                       mostrecent = Gst.PluginFeature.get_rank(encoderfeature[element])
+                       original = Gst.PluginFeature.get_rank(encoderfeature[elementname])
                        if mostrecent >= original:
                            elementname = element
    return elementname
@@ -209,33 +214,33 @@ def get_video_encoder_element(videoencodercaps):
    will return False.
    """
 
-   flist = gst.registry_get_default().get_feature_list(gst.ElementFactory)
+   flist = Gst.Registry.get_default().get_feature_list(Gst.ElementFactory)
    encoders = []
    features = []
    elementname = False
    for fact in flist:
        if list_compat(["Codec", "Encoder", "Video"], \
-               fact.get_klass().split('/')):
+               fact.get_metadata().split('/')):
            encoders.append(fact.get_name())
            features.append(fact) 
        elif list_compat(["Codec", "Encoder", "Image"], \
-               fact.get_klass().split('/')):
+               fact.get_metadata().split('/')):
            encoders.append(fact.get_name())
            features.append(fact)
    encoderfeature = dict(zip(encoders, features))
    incomingcaps = videoencodercaps
    for x in encoders:
            element = x
-           factory = gst.registry_get_default().lookup_feature(str(x))
+           factory = Gst.Registry.get_default().lookup_feature(str(x))
            sinkcaps = [x.get_caps() for x in factory.get_static_pad_templates() \
-                   if x.direction == gst.PAD_SRC]
+                   if x.direction == Gst.PAD_SRC]
            for caps in sinkcaps:
                if caps.intersect(incomingcaps):
                    if elementname == False:
                        elementname = element
                    else:
-                       mostrecent = gst.PluginFeature.get_rank(encoderfeature[element])
-                       original = gst.PluginFeature.get_rank(encoderfeature[elementname])
+                       mostrecent = Gst.PluginFeature.get_rank(encoderfeature[element])
+                       original = Gst.PluginFeature.get_rank(encoderfeature[elementname])
                        if mostrecent >= original:
                            elementname = element
    return elementname

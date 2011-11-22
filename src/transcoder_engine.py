@@ -21,9 +21,10 @@ import os
 import codecfinder
 import presets
 from gi.repository import GObject
+GObject.threads_init()
 from gi.repository import Gst
+Gst.init(None)
 from gi.repository import GstPbutils
-#Gst.init(None)
 
 class Transcoder(GObject.GObject):
 
@@ -42,7 +43,7 @@ class Transcoder(GObject.GObject):
        self.container = CONTAINERCHOICE
        self.audiocaps = AUDIOCODECVALUE
        if self.container != False:
-           self.containercaps = Gst.caps_from_string_from_string(codecfinder.containermap[CONTAINERCHOICE])
+           self.containercaps = Gst.caps_from_string(codecfinder.containermap[CONTAINERCHOICE])
        # special case mp3 which is a no-container format with a container (id3mux)
        else:
            if self.audiocaps.intersect(Gst.caps_from_string("audio/mpeg, mpegversion=1, layer=3")):
@@ -101,12 +102,15 @@ class Transcoder(GObject.GObject):
 
 
        # Create transcoding pipeline
-       self.pipeline = Gst.Pipeline("TranscodingPipeline")
-       self.pipeline.set_state(Gst.STATE_PAUSED)
+       self.pipeline = Gst.Pipeline()
+       self.pipeline.set_state(Gst.State.PAUSED)
 
        self.uridecoder = Gst.ElementFactory.make("uridecodebin", "uridecoder")
+       print "self.uridecoder " + str(self.uridecoder)
+       print "FILECHOSEN " + str(FILECHOSEN)
        self.uridecoder.set_property("uri", FILECHOSEN)
        self.uridecoder.connect("pad-added", self.OnDynamicPad)
+       self.uridecoder.set_state(Gst.State.PAUSED)
 
        # first check if we have a container format, if not set up output for possible outputs
        #  should not be hardcoded
@@ -140,7 +144,7 @@ class Transcoder(GObject.GObject):
        self.encodebin.set_property("profile", self.encodebinprofile)
        self.encodebin.set_property("avoid-reencoding", True)
        self.pipeline.add(self.encodebin)
-       self.encodebin.set_state(Gst.STATE_PAUSED)
+       self.encodebin.set_state(Gst.State.PAUSED)
 
        if self.videopasstoggle==False:
            if self.container != False:
@@ -151,14 +155,14 @@ class Transcoder(GObject.GObject):
                self.deinterlacer = Gst.ElementFactory.make("deinterlace")
                self.pipeline.add(self.deinterlacer)
 
-               self.colorspaceconversion = Gst.ElementFactory.make("ffmpegcolorspace")
+               self.colorspaceconversion = Gst.ElementFactory.make("videoconvert")
                self.pipeline.add(self.colorspaceconversion)
                        
                self.deinterlacer.link(self.colorspaceconversion)
 	       self.colorspaceconversion.link(self.videoflipper)
-               self.deinterlacer.set_state(Gst.STATE_PAUSED)
-               self.colorspaceconversion.set_state(Gst.STATE_PAUSED)
-               self.videoflipper.set_state(Gst.STATE_PAUSED)
+               self.deinterlacer.set_state(Gst.State.PAUSED)
+               self.colorspaceconversion.set_state(Gst.State.PAUSED)
+               self.videoflipper.set_state(Gst.State.PAUSED)
 
        self.remuxcaps = Gst.Caps()
        if self.audiopasstoggle:
@@ -191,7 +195,7 @@ class Transcoder(GObject.GObject):
        self.pipeline.add(self.transcodefileoutput)
        self.encodebin.link(self.transcodefileoutput)
 
-       self.uridecoder.set_state(Gst.STATE_PAUSED)
+       self.uridecoder.set_state(Gst.State.PAUSED)
 
        # print "setting uridcodebin to paused"
        self.BusMessages = self.BusWatcher()
@@ -280,7 +284,7 @@ class Transcoder(GObject.GObject):
 
    def noMorePads(self, dbin):
        if (self.multipass == False) or (self.passcounter == int(0)):
-           self.transcodefileoutput.set_state(Gst.STATE_PAUSED)
+           self.transcodefileoutput.set_state(Gst.State.PAUSED)
        glib.idle_add(self.idlePlay)
        # print "No More pads received"
 
@@ -312,9 +316,9 @@ class Transcoder(GObject.GObject):
                    if os.access(self.cachefile, os.F_OK):
                        os.remove(self.cachefile)
            self.emit('got-eos')
-           self.pipeline.set_state(Gst.STATE_NULL)
+           self.pipeline.set_state(Gst.State.NULL)
        elif mtype == Gst.MESSAGE_APPLICATION:
-           self.pipeline.set_state(Gst.STATE_NULL)
+           self.pipeline.set_state(Gst.State.NULL)
            self.pipeline.remove(self.uridecoder)
        return True
 
@@ -373,6 +377,6 @@ class Transcoder(GObject.GObject):
 
    def Pipeline (self, state):
        if state == ("playing"):
-           self.pipeline.set_state(Gst.STATE_PLAYING)
+           self.pipeline.set_state(Gst.State.PLAYING)
        elif state == ("null"):
-           self.pipeline.set_state(Gst.STATE_NULL)
+           self.pipeline.set_state(Gst.State.NULL)

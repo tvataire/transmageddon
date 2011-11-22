@@ -603,7 +603,7 @@ class TransmageddonUI:
                        if self.container != False:
                            self.check_for_passthrough(self.container)
                    else:
-                       self.check_for_elements()
+                       # self.check_for_elements()
                        if self.missingtoggle==False:
                            self._start_transcoding()
                if self.container != False:
@@ -642,11 +642,11 @@ class TransmageddonUI:
            containerelement = codecfinder.get_muxer_element(container)
            if containerelement == False:
                self.containertoggle = True
-               self.check_for_elements()
+               # self.check_for_elements()
            else:
                factory = Gst.Registry.get_default().lookup_feature(containerelement)
                for x in factory.get_static_pad_templates():
-                   if (x.direction == Gst.PAD_SINK):
+                   if (x.direction == Gst.PadDirection.SINK):
                        sourcecaps = x.get_caps()
                        if self.havevideo == True:
                           if videointersect == ("EMPTY"):
@@ -767,7 +767,8 @@ class TransmageddonUI:
                # but it is a rather narrow corner case when it fails
                self._start_transcoding()
        elif donemessage == GstPbutils.INSTALL_PLUGINS_PARTIAL_SUCCESS:
-           self.check_for_elements()
+           print "Plugin install not fully succesfull"
+           #self.check_for_elements()
        elif donemessage == GstPbutils.INSTALL_PLUGINS_NOT_FOUND:
            context_id = self.StatusBar.get_context_id("EOS")
            self.StatusBar.push(context_id, \
@@ -871,14 +872,14 @@ class TransmageddonUI:
            self.ProgressBar.set_text(_("Pass %(count)d Progress") % {'count': self.passcounter})
        if self.haveaudio:
            if self.audiodata.has_key("samplerate"):
-               self.check_for_elements()
+               # self.check_for_elements()
                if self.missingtoggle==False:
                    self._start_transcoding()
            else:
                self.waiting_for_signal="True"
        elif self.havevideo:
            if self.videodata.has_key("videoheight"):
-               self.check_for_elements()
+               # self.check_for_elements()
                if self.missingtoggle==False:
                    self._start_transcoding()
            else:
