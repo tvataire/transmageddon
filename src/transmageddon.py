@@ -703,10 +703,11 @@ class TransmageddonUI:
            if self.videopasstoggle == False:
                videocodec = self.VideoCodec
            else: # this is probably redundant and caused by encodebin 
-               textdata=gst.Caps.to_string(self.vsourcecaps)
-               sep= ','
-               minitext  = textdata.split(sep, 1)[0]
-               videocodec = minitext
+               # textdata=gst.Caps.to_string(self.vsourcecaps)
+               # sep= ','
+               # minitext  = textdata.split(sep, 1)[0]
+               # videocodec = minitext
+               videocodec = gst.Caps.to_string(self.vsourcecaps)
            self.outputdirectory=self.videodirectory
        else:
            self.outputdirectory=self.audiodirectory
