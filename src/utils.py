@@ -28,7 +28,7 @@ import gettext
 import logging
 import os
 import sys
-import xdg.BaseDirectory
+import glib
 
 _ = gettext.gettext
 
@@ -39,11 +39,12 @@ def get_search_paths():
         @rtype: list
         @return: A list of paths to search in the order they will be searched
     """
+    userconfig=glib.get_user_config_dir()
     return [
-        xdg.BaseDirectory.save_data_path("transmageddon"),
+        userconfig,
         os.getcwd(),
         os.path.join(os.getcwd(), ".."),
-        os.path.expanduser(os.path.join("~", ".transmageddon")),
+        os.path.expanduser(os.path.join(userconfig, "transmageddon")),
         os.path.join(sys.prefix, "share", "transmageddon"),
         os.path.join(sys.prefix, "local", "share", "transmageddon"),
     ]
