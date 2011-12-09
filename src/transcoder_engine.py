@@ -27,6 +27,7 @@ try:
    import glib
    pygst.require("0.10")
    import gst
+
 except Exception, e:
    print "failed to import required modules"
    print e
@@ -56,7 +57,9 @@ class Transcoder(gobject.GObject):
                self.containercaps=gst.Caps("application/x-id3")
                self.container=gst.Caps("application/x-id3")
 
-
+       # set preset directory 
+       gst.preset_set_app_dir("/usr/share/transmageddon/presets/")
+   
        # Choose plugin based on Codec Name
        # or switch to remuxing mode if any of the values are set to 'pastr'
        self.stoptoggle=False

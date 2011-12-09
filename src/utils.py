@@ -28,6 +28,7 @@ import gettext
 import logging
 import os
 import sys
+import xdg.BaseDirectory
 
 _ = gettext.gettext
 
@@ -39,6 +40,7 @@ def get_search_paths():
         @return: A list of paths to search in the order they will be searched
     """
     return [
+        xdg.BaseDirectory.save_data_path("transmageddon"),
         os.getcwd(),
         os.path.join(os.getcwd(), ".."),
         os.path.expanduser(os.path.join("~", ".transmageddon")),

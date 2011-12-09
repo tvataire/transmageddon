@@ -1,5 +1,5 @@
 
-presetdir = $(datadir)/gstreamer-0.10/presets
+presetdir = $(datadir)/transmageddon/presets
 preset_DATA = ffenc_ac3.prs GstFaac.prs GstVorbisEnc.prs \
               ffenc_flv.prs GstLameMP3Enc.prs \
               ffenc_h263p.prs GstXvidEnc.prs \
