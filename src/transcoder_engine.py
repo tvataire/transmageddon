@@ -129,16 +129,23 @@ class Transcoder(GObject.GObject):
            elif self.audiocaps.intersect(Gst.caps_from_string("audio/x-flac")):
                self.audiocaps=Gst.caps_from_string("audio/x-flac")
        else:
-           self.encodebinprofile = GstPbutils.EncodingContainerProfile ("containerformat", None , self.containercaps, None)
+           print "self.containercaps is " +str(self.containercaps)
+           # the "Null" here must be a binding bug
+           self.encodebinprofile = GstPbutils.EncodingContainerProfile.new("containerformat", "Null" , self.containercaps, "Normal")
        if self.audiocaps != False:
            if self.container==False:
-               self.encodebinprofile = GstPbutils.EncodingAudioProfile (Gst.caps_from_string(self.audiocaps), audiopreset, Gst.Caps.new_any(), 0)
+               self.encodebinprofile = GstPbutils.EncodingAudioProfile.new (self.audiocaps, audiopreset, Gst.Caps.new_any(), 0)
            else:
-               self.audioprofile = gst.pbutils.EncodingAudioProfile (Gst.caps_from_string(self.audiocaps), audiopreset, Gst.Caps.new_any(), 0)
+               print "here we are"
+               print "self.audiocaps is " + str(self.audiocaps)
+               print "audiopreset is " +str(audiopreset)
+               audiopreset="Normal"
+               self.audioprofile = GstPbutils.EncodingAudioProfile.new(self.audiocaps, audiopreset, Gst.Caps.new_any(), 0)
                self.encodebinprofile.add_profile(self.audioprofile)
        if self.videocaps != "novid":
            if (self.videocaps != False):
-               self.videoprofile = GstPbutils.EncodingVideoProfile (Gst.caps_from_string(self.videocaps), videopreset, Gst.Caps.new_any(), 0)
+               videopreset="Normal"
+               self.videoprofile = GstPbutils.EncodingVideoProfile.new(self.videocaps, videopreset, Gst.Caps.new_any(), 0)
                self.encodebinprofile.add_profile(self.videoprofile)
        self.encodebin = Gst.ElementFactory.make ("encodebin", None)
        self.encodebin.set_property("profile", self.encodebinprofile)
@@ -148,19 +155,19 @@ class Transcoder(GObject.GObject):
 
        if self.videopasstoggle==False:
            if self.container != False:
-               self.videoflipper = Gst.ElementFactory.make("videoflip")
+               self.videoflipper = Gst.ElementFactory.make('videoflip', None)
                self.videoflipper.set_property("method", self.rotationvalue)
                self.pipeline.add(self.videoflipper)
 
-               self.deinterlacer = Gst.ElementFactory.make("deinterlace")
-               self.pipeline.add(self.deinterlacer)
+               #self.deinterlacer = Gst.ElementFactory.make('deinterlace', None)
+               #self.pipeline.add(self.deinterlacer)
 
-               self.colorspaceconversion = Gst.ElementFactory.make("videoconvert")
+               self.colorspaceconversion = Gst.ElementFactory.make('videoconvert', None)
                self.pipeline.add(self.colorspaceconversion)
                        
-               self.deinterlacer.link(self.colorspaceconversion)
+               #self.deinterlacer.link(self.colorspaceconversion)
 	       self.colorspaceconversion.link(self.videoflipper)
-               self.deinterlacer.set_state(Gst.State.PAUSED)
+               #self.deinterlacer.set_state(Gst.State.PAUSED)
                self.colorspaceconversion.set_state(Gst.State.PAUSED)
                self.videoflipper.set_state(Gst.State.PAUSED)
 
@@ -323,6 +330,7 @@ class Transcoder(GObject.GObject):
        return True
 
    def OnDynamicPad(self, uridecodebin, src_pad):
+       print "src_pad is" +str(src_pad)
        origin = src_pad.get_caps()
        if (self.container==False):
            a =  origin.to_string()
@@ -351,7 +359,8 @@ class Transcoder(GObject.GObject):
                    src_pad.link(sinkpad)
                elif ((c.startswith("video/") or c.startswith("image/")) and (self.videocaps != False)):
                    if self.videopasstoggle==False:
-                       src_pad.link(self.deinterlacer.get_static_pad("sink"))
+                       # port fix- should be self.deinterlacer
+                       src_pad.link(self.colorspaceconversion.get_static_pad("sink"))
                        self.videoflipper.get_static_pad("src").link(sinkpad)
                        
                    else:

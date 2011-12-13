@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import gtk
+from gi.repository import Gtk
 import os
 from gettext import gettext as _
 
