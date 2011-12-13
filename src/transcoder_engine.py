@@ -301,22 +301,27 @@ class Transcoder(GObject.GObject):
         return False
 
    def BusWatcher(self):
-       bus = self.pipeline.get_bus()
-       bus.add_watch(self.on_message)
+     bus = self.pipeline.get_bus()
+     bus.add_signal_watch()
+    #bus.connect('message::eos', on_eos)
+     bus.connect('message', self.on_message)
+     #  bus = self.pipeline.get_bus()
+     #  bus.add_watch(self.on_message)
 
    def on_message(self, bus, message):
        mtype = message.type
        # print mtype
-       if mtype == Gst.MESSAGE_ERROR:
+       if mtype == Gst.MessageType.ERROR:
+           # print "we got an error, life is shit"
            err, debug = message.parse_error()
-           print err 
-           print debug
-           Gst.DEBUG_BIN_TO_DOT_FILE (self.pipeline, Gst.DEBUG_GRAPH_SHOW_ALL, \
-                   'transmageddon.dot')
-           self.emit('got-error', err.message)
-       elif mtype == Gst.MESSAGE_ASYNC_DONE:
+           #print err 
+           #print debug
+           #Gst.DEBUG_BIN_TO_DOT_FILE (self.pipeline, Gst.DEBUG_GRAPH_SHOW_ALL, \
+           #        'transmageddon.dot')
+           #self.emit('got-error', err.message)
+       elif mtype == Gst.MessageType.ASYNC_DONE:
            self.emit('ready-for-querying')
-       elif mtype == Gst.MESSAGE_EOS:
+       elif mtype == Gst.MessageType.EOS:
            if (self.multipass != False):
                if (self.passcounter == 0):
                    #removing multipass cache file when done
@@ -324,7 +329,7 @@ class Transcoder(GObject.GObject):
                        os.remove(self.cachefile)
            self.emit('got-eos')
            self.pipeline.set_state(Gst.State.NULL)
-       elif mtype == Gst.MESSAGE_APPLICATION:
+       elif mtype == Gst.MessageType.APPLICATION:
            self.pipeline.set_state(Gst.State.NULL)
            self.pipeline.remove(self.uridecoder)
        return True
