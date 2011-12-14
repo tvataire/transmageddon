@@ -22,6 +22,7 @@ import codecfinder
 import presets
 from gi.repository import GObject
 GObject.threads_init()
+from gi.repository import GLib
 from gi.repository import Gst
 Gst.init(None)
 from gi.repository import GstPbutils
@@ -130,8 +131,7 @@ class Transcoder(GObject.GObject):
                self.audiocaps=Gst.caps_from_string("audio/x-flac")
        else:
            print "self.containercaps is " +str(self.containercaps)
-           # the "Null" here must be a binding bug
-           self.encodebinprofile = GstPbutils.EncodingContainerProfile.new("containerformat", "Null" , self.containercaps, "Normal")
+           self.encodebinprofile = GstPbutils.EncodingContainerProfile.new("containerformat", None , self.containercaps, "Normal")
        if self.audiocaps != False:
            if self.container==False:
                self.encodebinprofile = GstPbutils.EncodingAudioProfile.new (self.audiocaps, audiopreset, Gst.Caps.new_any(), 0)
@@ -152,7 +152,7 @@ class Transcoder(GObject.GObject):
        self.encodebin.set_property("avoid-reencoding", True)
        self.pipeline.add(self.encodebin)
        self.encodebin.set_state(Gst.State.PAUSED)
-
+       print "videopasstoggle " + str(self.videopasstoggle)
        if self.videopasstoggle==False:
            if self.container != False:
                self.videoflipper = Gst.ElementFactory.make('videoflip', None)
@@ -161,7 +161,7 @@ class Transcoder(GObject.GObject):
 
                #self.deinterlacer = Gst.ElementFactory.make('deinterlace', None)
                #self.pipeline.add(self.deinterlacer)
-
+               print "creating colorspaceconverter"
                self.colorspaceconversion = Gst.ElementFactory.make('videoconvert', None)
                self.pipeline.add(self.colorspaceconversion)
                        
@@ -292,7 +292,7 @@ class Transcoder(GObject.GObject):
    def noMorePads(self, dbin):
        if (self.multipass == False) or (self.passcounter == int(0)):
            self.transcodefileoutput.set_state(Gst.State.PAUSED)
-       glib.idle_add(self.idlePlay)
+       GLib.idle_add(self.idlePlay)
        # print "No More pads received"
 
    def idlePlay(self):
