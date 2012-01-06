@@ -436,20 +436,22 @@ class TransmageddonUI:
    # FORMAT_TIME only value implemented by all plugins used
    # a lot of original code from Gst-python synchronizer.py example
    def Increment_Progressbar(self):
-       print "incrementing progressbar"
+       # print "incrementing progressbar"
        if self.start_time == False:  
            self.start_time = time.time()
        try:
-           position, format = \
+           success, position = \
                    self._transcoder.uridecoder.query_position(Gst.Format.TIME)
-           # print "position is " + str(position)
+           #print "position is " + str(position)
+           # print "success is " + str(success)
        except:
            position = Gst.CLOCK_TIME_NONE
 
        try:
-           duration, format = \
+           success, duration = \
                    self._transcoder.uridecoder.query_duration(Gst.Format.TIME)
            # print "duration is " + str(duration)
+           # print "success is " + str(success)
        except:
            duration = Gst.CLOCK_TIME_NONE
        if position != Gst.CLOCK_TIME_NONE:
@@ -460,8 +462,8 @@ class TransmageddonUI:
                percent = (value*100)
                timespent = time.time() - self.start_time
                percent_remain = (100-percent)
-               # print "percent remain " + str(percent_remain)
-               # print "percentage is " + str(percent)
+               #print "percent remain " + str(percent_remain)
+               #print "percentage is " + str(percent)
                if percent != 0:
                    rem = (timespent / percent) * percent_remain
                else: 
@@ -644,7 +646,7 @@ class TransmageddonUI:
                self.containertoggle = True
                # self.check_for_elements()
            else:
-               factory = Gst.Registry.get_default().lookup_feature(containerelement)
+               factory = Gst.Registry.get().lookup_feature(containerelement)
                for x in factory.get_static_pad_templates():
                    if (x.direction == Gst.PadDirection.SINK):
                        sourcecaps = x.get_caps()
@@ -1112,7 +1114,7 @@ class TransmageddonUI:
            os.remove(dotfile)
        if os.access(pngfile, os.F_OK):
            os.remove(pngfile)
-       Gst.DEBUG_BIN_TO_DOT_FILE (self._transcoder.pipeline, \
+       Gst.debug_bin_to_dot_file (self._transcoder.pipeline, \
                Gst.DEBUG_GRAPH_SHOW_ALL, 'transmageddon-debug-graph')
        # check if graphviz is installed with a simple test
        try:

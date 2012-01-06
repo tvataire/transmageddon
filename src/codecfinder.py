@@ -122,7 +122,7 @@ def get_muxer_element(containercaps):
    to element names. Then return elementname
    """
 
-   flist = Gst.Registry.get_default().get_feature_list(Gst.ElementFactory)
+   flist = Gst.Registry.get().get_feature_list(Gst.ElementFactory)
    muxers = []
    features = []
    elementname = False
@@ -139,7 +139,7 @@ def get_muxer_element(containercaps):
    print "containercaps is " + str(containercaps)
    for muxer in muxers:
            element = muxer
-           factory = Gst.Registry.get_default().lookup_feature(str(muxer))
+           factory = Gst.Registry.get().lookup_feature(str(muxer))
            sinkcaps = [x.get_caps() for x in factory.get_static_pad_templates() \
                    if x.direction == Gst.PadDirection.SRC]
            print "sinkcaps are " + str(sinkcaps)
@@ -169,7 +169,7 @@ def get_audio_encoder_element(audioencodercaps):
    will return False.
    """
 
-   flist = Gst.Registry.get_default().get_feature_list(Gst.ElementFactory)
+   flist = Gst.Registry.get().get_feature_list(Gst.ElementFactory)
    encoders = []
    features = []
    elementname = False
@@ -185,7 +185,7 @@ def get_audio_encoder_element(audioencodercaps):
    incomingcaps = audioencodercaps
    for x in encoders:
            element = x
-           factory = Gst.Registry.get_default().lookup_feature(str(x))
+           factory = Gst.Registry.get().lookup_feature(str(x))
            sinkcaps = [x.get_caps() for x in factory.get_static_pad_templates() \
                    if x.direction == Gst.PAD_SRC]
            for caps in sinkcaps:
@@ -214,7 +214,7 @@ def get_video_encoder_element(videoencodercaps):
    will return False.
    """
 
-   flist = Gst.Registry.get_default().get_feature_list(Gst.ElementFactory)
+   flist = Gst.Registry.get().get_feature_list(Gst.ElementFactory)
    encoders = []
    features = []
    elementname = False
@@ -231,7 +231,7 @@ def get_video_encoder_element(videoencodercaps):
    incomingcaps = videoencodercaps
    for x in encoders:
            element = x
-           factory = Gst.Registry.get_default().lookup_feature(str(x))
+           factory = Gst.Registry.get().lookup_feature(str(x))
            sinkcaps = [x.get_caps() for x in factory.get_static_pad_templates() \
                    if x.direction == Gst.PAD_SRC]
            for caps in sinkcaps:
