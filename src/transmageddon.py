@@ -171,7 +171,8 @@ class TransmageddonUI:
        # set flag so we remove bogus value from menu only once
        self.bogus=0
 
-       # these dynamic comboboxes allow us to support files with multiple streams eventually
+       # These dynamic comboboxes allow us to support files with 
+       # multiple streams eventually
        def dynamic_comboboxes_audio(streams,extra = []):
            streams=1 # this will become a variable once we support multiple streams
            vbox = Gtk.VBox()
@@ -179,12 +180,8 @@ class TransmageddonUI:
            x=-1
            while x < (streams-1):
                x=x+1
-               # print "x is " + str(x)
-               # store = Gtk.ListStore(GObject.TYPE_STRING, *extra)
+               print "x is " + str(x)
                combo = Gtk.ComboBoxText.new()
-               text_cell = Gtk.CellRendererText()
-               combo.pack_start(text_cell, True)
-               combo.add_attribute(text_cell, 'text', 0)
                self.audiorows.append(combo)
                vbox.add(self.audiorows[x])
            return vbox
@@ -196,11 +193,7 @@ class TransmageddonUI:
            x=-1
            while x < (streams-1):
                x=x+1
-               # store = Gtk.ListStore(GObject.TYPE_STRING, *extra)
                combo = Gtk.ComboBoxText.new()
-               text_cell = Gtk.CellRendererText()
-               combo.pack_start(text_cell, True)
-               combo.add_attribute(text_cell, 'text', 0)
                self.videorows.append(combo)
                vbox.add(self.videorows[x])
            return vbox
@@ -333,14 +326,14 @@ class TransmageddonUI:
        self.p_time = Gst.Format.TIME
 
        # Populate the Container format combobox
-       print "do we try to populate container choice"
+       # print "do we try to populate container choice"
        for i in supported_containers:
            self.containerchoice.append_text(i)
        # add i18n "No container"option
        self.containerchoice.append_text(_("No container (Audio-only)"))
 
        # Populate the rotatation box
-       print "populating rotationbox"
+       # print "populating rotationbox"
        self.rotationlist = [_("No rotation (default)"),\
                             _("Clockwise 90 degrees"), \
                             _("Rotate 180 degrees"),
@@ -355,10 +348,9 @@ class TransmageddonUI:
 
        self.rotationchoice.set_active(0)
        self.rotationvalue = int(0)
-       print "done with rotationbox"
       
        # Populate Device Presets combobox
-       print "starting preset population"
+       # print "starting preset population"
        devicelist = []
        shortname = []
        preset_list = sorted(presets.get().items(),
@@ -374,7 +366,6 @@ class TransmageddonUI:
        self.presetchoice.prepend_text(_("No Presets"))
 
        self.waiting_for_signal="False"
-       print "done with preset population"
 
    # Get all preset values
    def reverse_lookup(self,v):
@@ -383,7 +374,6 @@ class TransmageddonUI:
                return k
 
    def provide_presets(self,devicename):
-       print "provide presets"
        devices = presets.get()
        device = devices[devicename]
        preset = device.presets["Normal"]
@@ -535,14 +525,11 @@ class TransmageddonUI:
 
  
    def succeed(self, discoverer, info, error):
-       print "starting succeed"
+       # print "starting succeed"
        result=GstPbutils.DiscovererInfo.get_result(info)
-       print "result is " + str(result)
        if result != GstPbutils.DiscovererResult.ERROR:
            streaminfo=info.get_stream_info()
-           print "streaminfo is " +str(streaminfo)
            container = streaminfo.get_caps()
-           print container
            seekbool = info.get_seekable()
            clipduration=info.get_duration()
 
@@ -579,7 +566,6 @@ class TransmageddonUI:
                    self.audiocodec.set_markup(''.join(('<small>', "",'</small>')))
 
                if isinstance(i, GstPbutils.DiscovererVideoInfo):
-                   print "discoverer found video"
                    self.inputvideocaps=i.get_caps()
                    videotags=i.get_tags()
                    interlacedbool = i.is_interlaced()
@@ -624,19 +610,18 @@ class TransmageddonUI:
                self.videocodec.set_markup(''.join(('<small>', 'Video codec: ',
                                        str(GstPbutils.pb_utils_get_codec_description   (self.inputvideocaps)),
                                       '</small>')))
-           print "completed suceed"
+
 
    def discover(self, path):
        self.discovered.discover_uri_async("file://"+path)
 
    def mediacheck(self, FileChosen):
-       print "starting mediacheck"
        uri = urlparse (FileChosen)
        path = uri.path
        self.discover(path)
    
    def check_for_passthrough(self, containerchoice):
-       print "checking for passthtrough"
+       # print "checking for passthtrough"
        videointersect = ("EMPTY")
        audiointersect = ("EMPTY")
        if (containerchoice != False or self.usingpreset==False):
@@ -704,7 +689,7 @@ class TransmageddonUI:
                    self.bogus=1
                self.nocontaineroptiontoggle=False
            self.containerchoice.set_sensitive(True)
-       print "filechoosing done"
+       # print "filechoosing done"
 
    def _start_transcoding(self): 
        filechoice = self.builder.get_object ("FileChooser").get_uri()
@@ -908,17 +893,17 @@ class TransmageddonUI:
        # self.audiocodecs - contains list of whats in self.audiorows
        # self.videocodecs - contains listof whats in self.videorows
        # audio_codecs, video_codecs - temporary lists
-       print "trying to populate menu choices"
+       # print "trying to populate menu choices"
        # clean up stuff from previous run
        self.houseclean=True # set this to avoid triggering events when cleaning out menus
        for c in self.audiocodecs: # 
            self.audiorows[0].remove(0)
        self.audiocodecs =[]
-       print "checking for video"
+       # print "checking for video"
        if self.havevideo==True:
-           print "found video"
+           # print "found video"
            if self.container != False:
-               print "found conntainer"
+               # print "found conntainer"
                for c in self.videocodecs:
                    self.videorows[0].remove(0)
                self.videocodecs=[]
@@ -927,7 +912,6 @@ class TransmageddonUI:
 
        # start filling audio
        if self.haveaudio==True:
-           print "filling audio"
            if self.usingpreset==True: # First fill menu based on presetvalue
                self.audiorows[0].append_text(str(GstPbutils.pb_utils_get_codec_description(self.presetaudiocodec)))
                self.audiorows[0].set_active(0)
@@ -942,11 +926,11 @@ class TransmageddonUI:
                self.audiorows[0].set_active(0)
                self.audiorows[0].set_sensitive(True)
            else:
-               print "getting to where audio options are filled inn"
+               # print "getting to where audio options are filled inn"
                audio_codecs = []
                audio_codecs = supported_audio_container_map[self.container]
                for c in audio_codecs:
-                   print "adding audiocodec " + str(c)
+                   # print "adding audiocodec " + str(c)
                    self.audiocodecs.append(Gst.caps_from_string(codecfinder.codecmap[c]))
                for c in audio_codecs:
                    self.audiorows[0].append_text(c)
@@ -994,22 +978,20 @@ class TransmageddonUI:
        self.ProgressBar.set_fraction(0.0)
        self.ProgressBar.set_text(_("Transcoding Progress"))
        if self.builder.get_object("containerchoice").get_active() == self.nocontainernumber:
-               print "self.container is False"
+               # print "self.container is False"
                self.container = False
                self.videorows[0].set_active(self.videonovideomenuno)
                self.videorows[0].set_sensitive(False)
        else:
            if self.builder.get_object("containerchoice").get_active()!= -1:
                self.container = self.builder.get_object ("containerchoice").get_active_text()
-               print "self.container is " + str(self.container)
+               # print "self.container is " + str(self.container)
                if self.discover_done == True:
                    self.check_for_passthrough(self.container)
            self.transcodebutton.set_sensitive(True)
-       print "containerchoice sorted"
-       # self.populate_menu_choices()
 
    def on_presetchoice_changed(self, widget):
-       print "|12"
+       print "remember to fix preset choice"
        #presetchoice = self.builder.get_object ("presetchoice").get_active()
        #print "presetchoice is " + str(presetchoice)
        #self.ProgressBar.set_fraction(0.0)
@@ -1048,7 +1030,7 @@ class TransmageddonUI:
        self.rotationvalue = self.rotationchoice.get_active()
 
    def on_audiocodec_changed(self, widget):
-       print "audiocodec changed"
+       # print "audiocodec changed"
        if (self.houseclean == False and self.usingpreset==False):
            self.AudioCodec = self.audiocodecs[self.audiorows[0].get_active()]
            if self.container != False:
@@ -1058,7 +1040,7 @@ class TransmageddonUI:
            self.AudioCodec = Gst.caps_from_string(self.presetaudiocodec)    
 
    def on_videocodec_changed(self, widget):
-       print "videocodec changed"
+       # print "videocodec changed"
        if (self.houseclean == False and self.usingpreset==False):
            if self.container != False:
                self.VideoCodec = self.videocodecs[self.videorows[0].get_active()]
