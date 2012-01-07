@@ -136,15 +136,16 @@ def get_muxer_element(containercaps):
            features.append(fact)
    muxerfeature = dict(zip(muxers, features))
    incomingcaps = Gst.caps_from_string(containercaps)
-   print "containercaps is " + str(containercaps)
+   print "incomingcaps is " + str(containercaps)
    for muxer in muxers:
            element = muxer
            factory = Gst.Registry.get().lookup_feature(str(muxer))
            sinkcaps = [x.get_caps() for x in factory.get_static_pad_templates() \
                    if x.direction == Gst.PadDirection.SRC]
-           print "sinkcaps are " + str(sinkcaps)
            for caps in sinkcaps:
-               if caps.intersect(incomingcaps):
+               intersect = caps.intersect(incomingcaps).to_string()
+               # intersect is EMPTY, not FALSE is this a bindings bug?
+               if intersect != "EMPTY":
                    if elementname == False:
                        elementname = element
                    else:
@@ -152,6 +153,8 @@ def get_muxer_element(containercaps):
                        original = Gst.PluginFeature.get_rank(muxerfeature[elementname])
                        if mostrecent >= original:
                            elementname = element
+   # This is just a test of if an element exist that can mux this format now, 
+   # so elementname doesn't really matter any more.
    return elementname
 
 ######
