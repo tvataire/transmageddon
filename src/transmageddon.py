@@ -930,10 +930,9 @@ class TransmageddonUI:
                audio_codecs = []
                audio_codecs = supported_audio_container_map[self.container]
                for c in audio_codecs:
-                   # print "adding audiocodec " + str(c)
                    self.audiocodecs.append(Gst.caps_from_string(codecfinder.codecmap[c]))
-               for c in audio_codecs:
-                   self.audiorows[0].append_text(c)
+               for c in self.audiocodecs: # Use codec descriptions from GStreamer
+                   self.audiorows[0].append_text(GstPbutils.pb_utils_get_codec_description(c))
            self.audiorows[0].set_sensitive(True)
            self.audiorows[0].set_active(0)
        else:
@@ -952,8 +951,8 @@ class TransmageddonUI:
                    self.rotationchoice.set_sensitive(True)
                    for c in video_codecs:
                        self.videocodecs.append(Gst.caps_from_string(codecfinder.codecmap[c]))
-                   for c in video_codecs: # I can't update the menu with loop append
-                       self.videorows[0].append_text(c)
+                   for c in self.videocodecs: # Use descriptions from GStreamer
+                       self.videorows[0].append_text(GstPbutils.pb_utils_get_codec_description(c))
                    self.videorows[0].set_sensitive(True)
                    self.videorows[0].set_active(0)
 
@@ -1033,6 +1032,7 @@ class TransmageddonUI:
        # print "audiocodec changed"
        if (self.houseclean == False and self.usingpreset==False):
            self.AudioCodec = self.audiocodecs[self.audiorows[0].get_active()]
+           print "Self.AudioCodec is " + str(self.AudioCodec)
            if self.container != False:
                if self.audiorows[0].get_active() ==  self.audiopassmenuno:
                    self.audiopasstoggle=True
