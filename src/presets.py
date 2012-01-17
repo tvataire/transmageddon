@@ -330,7 +330,9 @@ def _load_video_codec(root):
         elif child.tag == "height":
             codec.height = _parse_range(child.text.strip())
         elif child.tag == "pixelaspectratio":
-            codec.aspectratio = _parse_range(child.text.strip(), Fraction)
+            aspectratio = child.text.strip()
+            if aspectratio != "0/0":
+                codec.aspectratio = _parse_range(child.text.strip(), Fraction)
         elif child.tag == "framerate":
             codec.rate = _parse_range(child.text.strip(), Fraction)
         elif child.tag == "border":
