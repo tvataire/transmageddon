@@ -131,7 +131,7 @@ def get_muxer_element(containercaps):
        # 16 is the 'muxer' class of plugins
        if Gst.ElementFactory.list_is_type(fact, 16):
            test=fact.get_name()
-           print "muxer is " + str(test)
+           # print "muxer is " + str(test)
            muxers.append(fact.get_name())
            features.append(fact)
    muxerfeature = dict(zip(muxers, features))
