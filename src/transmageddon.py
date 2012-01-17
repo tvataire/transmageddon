@@ -26,6 +26,7 @@ os.putenv('Gst_DEBUG_DUMP_DIR_DIR', '/tmp')
 import which
 import time
 
+from gi.repository import GdkX11
 from gi.repository import Gtk
 from gi.repository import GLib
 from gi.repository import Gst
@@ -737,7 +738,6 @@ class TransmageddonUI:
 
        self._transcoder.connect("ready-for-querying", self.ProgressBarUpdate)
        self._transcoder.connect("got-eos", self._on_eos)
-       self._transcoder.connect("got-error", self.show_error)
        return True
 
    def donemessage(self, donemessage, null):
@@ -755,7 +755,7 @@ class TransmageddonUI:
                self._start_transcoding()
        elif donemessage == GstPbutils.INSTALL_PLUGINS_PARTIAL_SUCCESS:
            print "Plugin install not fully succesfull"
-           #self.check_for_elements()
+           # self.check_for_elements()
        elif donemessage == GstPbutils.INSTALL_PLUGINS_NOT_FOUND:
            context_id = self.StatusBar.get_context_id("EOS")
            self.StatusBar.push(context_id, \
@@ -778,50 +778,57 @@ class TransmageddonUI:
            self.StatusBar.push(context_id, _("Missing plugin installation failed: ")) + GstPbutils.InstallPluginsReturn()
 
    def check_for_elements(self):
+       containerstatus=False
+   # This function checks for missing muxers and encoders
        if self.container==False:
            containerstatus=True
            videostatus=True
        else:
            print "checking for elements"
            containerchoice = self.builder.get_object ("containerchoice").get_active_text()
-           containerstatus = codecfinder.get_muxer_element(codecfinder.containermap[containerchoice])
-           if self.havevideo:
-               if self.videopasstoggle != True:
-                   if self.VideoCodec == "novid":
-                       videostatus=True
-                   else:
-                       videostatus = codecfinder.get_video_encoder_element(self.VideoCodec)
-               else:
-                   videostatus=True
-       if self.haveaudio:
-           if self.audiopasstoggle != True:
-               audiostatus = codecfinder.get_audio_encoder_element(self.AudioCodec)
-           else:
-               audiostatus=True
-       else:
-           audiostatus=True
-       if self.havevideo == False: # this flags help check if input is audio-only file
-           videostatus=True
-       if not containerstatus or not videostatus or not audiostatus:
-           self.missingtoggle=True
-           fail_info = []
-           if self.containertoggle==True:
-               audiostatus=True
-               videostatus=True
-           if containerstatus == False: 
-               fail_info.append(Gst.caps_from_string(codecfinder.containermap[containerchoice]))
-           if audiostatus == False:
-               fail_info.append(self.AudioCodec)
-           if videostatus == False:
-               fail_info.append(self.VideoCodec)
-           missing = []
-           for x in fail_info:
-               missing.append(GstPbutils.missing_encoder_installer_detail_new(x))
-           context = GstPbutils.InstallPluginsContext ()
-           context.set_xid(self.TopWindow.get_window().xid)
-           strmissing = str(missing)
-           GstPbutils.install_plugins_async (missing, context, \
-                   self.donemessage, "NULL")
+           print "containerchoise is " + str(containerchoice)
+           if containerchoice != None:
+               containerstatus = codecfinder.get_muxer_element(codecfinder.containermap[containerchoice])
+               print "containerchoice returned is " +str(containerstatus)
+           #if self.havevideo:
+           #    if self.videopasstoggle != True:
+           #        if self.VideoCodec == "novid":
+           #            videostatus=True
+           #        else:
+           #            videostatus = codecfinder.get_video_encoder_element(self.VideoCodec)
+           #    else:
+           #        videostatus=True
+       #if self.haveaudio:
+       #    if self.audiopasstoggle != True:
+       #        audiostatus = codecfinder.get_audio_encoder_element(self.AudioCodec)
+       #    else:
+       #        audiostatus=True
+       #else:
+       #    audiostatus=True
+       #if self.havevideo == False: # this flags help check if input is audio-only file
+       #    videostatus=True
+               print "containerstatus is here " + str(containerstatus)
+               if not containerstatus: # or not videostatus or not audiostatus:
+                   self.missingtoggle=True
+                   fail_info = []
+           #if self.containertoggle==True:
+           #    audiostatus=True
+           #    videostatus=True
+               if containerstatus == False: 
+                   fail_info.append(Gst.caps_from_string(codecfinder.containermap[containerchoice]))
+           #if audiostatus == False:
+           #    fail_info.append(self.AudioCodec)
+           #if videostatus == False:
+           #    fail_info.append(self.VideoCodec)
+                   missing = []
+                   for x in fail_info:
+                       missing.append(GstPbutils.missing_encoder_installer_detail_new(x))
+                   context = GstPbutils.InstallPluginsContext ()
+                   context.set_xid(self.TopWindow.get_window().get_xid())
+                   strmissing = str(missing)
+                   print "strmissing is " + strmissing
+                   GstPbutils.install_plugins_async (strmissing, context, \
+                       self.donemessage, "NULL")
 
    # The transcodebutton is the one that calls the Transcoder class and thus
    # starts the transcoding
@@ -973,6 +980,7 @@ class TransmageddonUI:
                        self.audiopassmenuno=(len(self.audiocodecs))-1
 
    def on_containerchoice_changed(self, widget):
+       self.check_for_elements()
        self.CodecBox.set_sensitive(True)
        self.ProgressBar.set_fraction(0.0)
        self.ProgressBar.set_text(_("Transcoding Progress"))
@@ -1057,37 +1065,6 @@ class TransmageddonUI:
            Show the about dialog.
        """
        about.AboutDialog()
-
-
-   def show_error(self, NONE, error_string):
-       if (error_string=="noaudioparser") or (error_string=="novideoparser"):
-           self.FileChooser.set_sensitive(True)
-           self.containerchoice.set_sensitive(True)
-           self.CodecBox.set_sensitive(True)
-           self.presetchoice.set_sensitive(True)
-           self.rotationchoice.set_sensitive(True)
-           self.presetchoice.set_active(0)
-           self.cancelbutton.set_sensitive(False)
-           self.transcodebutton.set_sensitive(True)
-           self.ProgressBar.set_fraction(0.0)
-           self.ProgressBar.set_text(_("Transcoding Progress"))
-           if error_string=="noaudioparser":
-               error_message = _("No audio parser, passthrough not available")
-               codecs = supported_container_map[self.container]
-               self.AudioCodec = codecs[0]
-               self.audiopasstoggle = False
-           elif error_string=="novideoparser":
-               error_message= _("No video parser, passthrough not available")
-               codecs = supported_container_map[self.container]
-               self.VideoCodec = codecs[1]
-               self.videopasstoggle = False
-           else:
-               error_message=_("Uknown error")
-       else:
-         error_message = error_string
-       context_id = self.StatusBar.get_context_id("EOS")
-       self.StatusBar.push(context_id, error_message)
-
 
    def on_debug_activate(self, widget):
        dotfile = "/tmp/transmageddon-debug-graph.dot"
