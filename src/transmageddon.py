@@ -21,8 +21,8 @@
 import sys
 import os
 
-os.environ["Gst_DEBUG_DUMP_DOT_DIR"] = "/tmp"
-os.putenv('Gst_DEBUG_DUMP_DIR_DIR', '/tmp')
+os.environ["GST_DEBUG_DUMP_DOT_DIR"] = "/tmp"
+os.putenv('GST_DEBUG_DUMP_DIR_DIR', '/tmp')
 import which
 import time
 
@@ -1074,12 +1074,12 @@ class TransmageddonUI:
        if os.access(pngfile, os.F_OK):
            os.remove(pngfile)
        Gst.debug_bin_to_dot_file (self._transcoder.pipeline, \
-               Gst.DEBUG_GRAPH_SHOW_ALL, 'transmageddon-debug-graph')
+               Gst.DebugGraphDetails.ALL, 'transmageddon-debug-graph')
        # check if graphviz is installed with a simple test
        try:
            dot = which.which("dot")
            os.system(dot + " -Tpng -o " + pngfile + " " + dotfile)
-           Gtk.show_uri(Gdk.Screen(), "file://"+pngfile, 0)
+           Gtk.show_uri(GdkX11.X11Screen(), "file://"+pngfile, 0)
        except which.WhichError:
               print "The debug feature requires graphviz (dot) to be installed."
               print "Transmageddon can not find the (dot) binary."
