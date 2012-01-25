@@ -181,7 +181,6 @@ class TransmageddonUI:
            x=-1
            while x < (streams-1):
                x=x+1
-               print "x is " + str(x)
                combo = Gtk.ComboBoxText.new()
                self.audiorows.append(combo)
                vbox.add(self.audiorows[x])
@@ -446,41 +445,41 @@ class TransmageddonUI:
        except:
            duration = Gst.CLOCK_TIME_NONE
        if position != Gst.CLOCK_TIME_NONE:
-           value = float(position) / duration
-           # print "value is " + str(value)
-           if float(value) < (1.0) and float(value) >= 0:
-               self.ProgressBar.set_fraction(value)
-               percent = (value*100)
-               timespent = time.time() - self.start_time
-               percent_remain = (100-percent)
-               #print "percent remain " + str(percent_remain)
-               #print "percentage is " + str(percent)
-               if percent != 0:
-                   rem = (timespent / percent) * percent_remain
-               else: 
-                   rem = 0.1
-               min = rem / 60
-               sec = rem % 60
-               time_rem = _("%(min)d:%(sec)02d") % {
-                   "min": min,
-                   "sec": sec,
-                   }
-               if percent_remain > 0.5:
-                   if self.passcounter == int(0):
-                       txt = "Estimated time remaining: %(time)s"
-                       self.ProgressBar.set_text(_(txt) % \
-                               {'time': str(time_rem)})
-                   else:
-                       txt = "Pass %(count)d time remaining: %(time)s"
-                       self.ProgressBar.set_text(_(txt) % { \
+           if duration != 0:
+               value = float(position) / duration
+               if float(value) < (1.0) and float(value) >= 0:
+                   self.ProgressBar.set_fraction(value)
+                   percent = (value*100)
+                   timespent = time.time() - self.start_time
+                   percent_remain = (100-percent)
+                   #print "percent remain " + str(percent_remain)
+                   #print "percentage is " + str(percent)
+                   if percent != 0:
+                       rem = (timespent / percent) * percent_remain
+                   else: 
+                       rem = 0.1
+                   min = rem / 60
+                   sec = rem % 60
+                   time_rem = _("%(min)d:%(sec)02d") % {
+                       "min": min,
+                       "sec": sec,
+                       }
+                   if percent_remain > 0.5:
+                       if self.passcounter == int(0):
+                           txt = "Estimated time remaining: %(time)s"
+                           self.ProgressBar.set_text(_(txt) % \
+                                {'time': str(time_rem)})
+                       else:
+                           txt = "Pass %(count)d time remaining: %(time)s"
+                           self.ProgressBar.set_text(_(txt) % { \
                                'count': self.passcounter, \
                                'time': str(time_rem), })
-               return True
+                   return True
+               else:
+                   self.ProgressBar.set_fraction(0.0)
+                   return False
            else:
-               self.ProgressBar.set_fraction(0.0)
                return False
-       else:
-           return False
 
    # Call GObject.timeout_add with a value of 500millisecond to regularly poll
    # for position so we can
@@ -622,50 +621,48 @@ class TransmageddonUI:
        self.discover(path)
    
    def check_for_passthrough(self, containerchoice):
-       # print "checking for passthtrough"
-       videointersect = ("EMPTY")
-       audiointersect = ("EMPTY")
+       videointersect = Gst.Caps.new_empty()
+       audiointersect = Gst.Caps.new_empty()
        if (containerchoice != False or self.usingpreset==False):
            container = codecfinder.containermap[containerchoice]
+           print "container is " + str(container)
            containerelement = codecfinder.get_muxer_element(container)
            if containerelement == False:
                self.containertoggle = True
-               # self.check_for_elements()
            else:
                factory = Gst.Registry.get().lookup_feature(containerelement)
                for x in factory.get_static_pad_templates():
                    if (x.direction == Gst.PadDirection.SINK):
                        sourcecaps = x.get_caps()
                        if self.havevideo == True:
-                          if videointersect == ("EMPTY"):
-                              # clean accepted caps to 'pure' value without parsing requirements
-                              # might be redudant and caused by encodebin bug
-                              # 10.11.2011 trying to disable again as it is causing 
-                              # remuxing bugs for mpeg
-                              #
-                              #textdata=Gst.Caps.to_string(self.videodata['videotype'])
-                              #sep= ','
-                              #minitext = textdata.split(sep, 1)[0]
-                              #cleaned_videodata=Gst.caps_from_string(minitext)
-
+                           if Gst.Caps.is_empty(videointersect):
+                              print "intersect is EMPTY"
                               videointersect = sourcecaps.intersect(self.videodata['videotype'])
-
-                              if videointersect != ("EMPTY"):
-                                  self.vsourcecaps = videointersect
+                              output=Gst.Caps.to_string(videointersect)
+                              print "videointersect is empty " + str(output)
+                           else:
+                                  if self.vsourcecaps != False:
+                                      output2 = Gst.Caps.to_string(self.vsourcecaps)
+                                      print "intersect is not empty " + (str(output2))
+                                      self.vsourcecaps = videointersect
                        if self.haveaudio == True:
-                           if audiointersect == ("EMPTY"):
+                           if audiointersect == Gst.Caps.new_empty():
                                audiointersect = sourcecaps.intersect(self.audiodata['audiotype'])
-                               if audiointersect != ("EMPTY"):
+                               if audiointersect != Gst.Caps.new_empty():
                                    self.asourcecaps = audiointersect
-               if videointersect != ("EMPTY"):
-                   self.videopass=True
-               else:
+               if videointersect.is_empty:
                    self.videopass=False
-
-               if audiointersect != ("EMPTY"):
-                   self.audiopass=True
                else:
+                   output3 = Gst.Caps.to_string(videointersect)
+                   print "videointersect3 is " + str(output3)
+                   self.videopass=True
+                   print "videopass is " + str(self.videopass)
+        
+
+               if audiointersect.is_empty:
                    self.audiopass=False
+               else:
+                   self.audiopass=True
                
 
    # define the behaviour of the other buttons
@@ -784,12 +781,12 @@ class TransmageddonUI:
            containerstatus=True
            videostatus=True
        else:
-           print "checking for elements"
+           # print "checking for elements"
            containerchoice = self.builder.get_object ("containerchoice").get_active_text()
-           print "containerchoise is " + str(containerchoice)
+           #print "containerchoise is " + str(containerchoice)
            if containerchoice != None:
                containerstatus = codecfinder.get_muxer_element(codecfinder.containermap[containerchoice])
-               print "containerchoice returned is " +str(containerstatus)
+           #print "containerchoice returned is " +str(containerstatus)
            #if self.havevideo:
            #    if self.videopasstoggle != True:
            #        if self.VideoCodec == "novid":
@@ -807,7 +804,7 @@ class TransmageddonUI:
        #    audiostatus=True
        #if self.havevideo == False: # this flags help check if input is audio-only file
        #    videostatus=True
-               print "containerstatus is here " + str(containerstatus)
+               # print "containerstatus is here " + str(containerstatus)
                if not containerstatus: # or not videostatus or not audiostatus:
                    self.missingtoggle=True
                    fail_info = []
@@ -826,7 +823,7 @@ class TransmageddonUI:
                    context = GstPbutils.InstallPluginsContext ()
                    context.set_xid(self.TopWindow.get_window().get_xid())
                    strmissing = str(missing)
-                   print "strmissing is " + strmissing
+                   # print "strmissing is " + strmissing
                    GstPbutils.install_plugins_async (strmissing, context, \
                        self.donemessage, "NULL")
 
@@ -981,6 +978,7 @@ class TransmageddonUI:
 
    def on_containerchoice_changed(self, widget):
        self.check_for_elements()
+       self.populate_menu_choices()
        self.CodecBox.set_sensitive(True)
        self.ProgressBar.set_fraction(0.0)
        self.ProgressBar.set_text(_("Transcoding Progress"))
@@ -997,41 +995,36 @@ class TransmageddonUI:
                    self.check_for_passthrough(self.container)
            self.transcodebutton.set_sensitive(True)
 
+
    def on_presetchoice_changed(self, widget):
-       print "remember to fix preset choice"
-       #presetchoice = self.builder.get_object ("presetchoice").get_active()
+       presetchoice = self.builder.get_object ("presetchoice").get_active()
        #print "presetchoice is " + str(presetchoice)
-       #self.ProgressBar.set_fraction(0.0)
-       #if presetchoice == 0:
-       #    self.usingpreset=False
-       #    self.devicename = "nopreset"
-       #    self.containerchoice.set_sensitive(True)
-       #    self.containerchoice.set_active(0)
-       #    self.start_time = False
-       #    self.multipass = False
-       #    self.passcounter = False
-       #    self.rotationchoice.set_sensitive(True)
-       #    print "before 2"
-       #    if self.builder.get_object("containerchoice").get_active():
-       #        print "does this happen?"
-       #        self.populate_menu_choices()
-       #        self.CodecBox.set_sensitive(True)
-       #        self.transcodebutton.set_sensitive(True)
-       #else:
-       #    self.usingpreset=True
-       #    self.ProgressBar.set_fraction(0.0)
-       #    if presetchoice != None:
-       #        print "am I getting here"
-       #        self.devicename= self.presetchoices[presetchoice]
-       #        self.provide_presets(self.devicename)
-       #        self.containerchoice.set_sensitive(False)
-       #        self.CodecBox.set_sensitive(False)
-       #        self.rotationchoice.set_sensitive(False)
-       #    else:
-       #        print "no presetchoice values found"
-       #    if self.builder.get_object("containerchoice").get_active_text():
-       #        self.transcodebutton.set_sensitive(True)
-       # print "preset choice successfully completed"
+       self.ProgressBar.set_fraction(0.0)
+       if presetchoice == 0:
+           self.usingpreset=False
+           self.devicename = "nopreset"
+           self.containerchoice.set_sensitive(True)
+           self.containerchoice.set_active(0)
+           self.start_time = False
+           self.multipass = False
+           self.passcounter = False
+           self.rotationchoice.set_sensitive(True)
+           if self.builder.get_object("containerchoice").get_active():
+               self.populate_menu_choices()
+               self.CodecBox.set_sensitive(True)
+               self.transcodebutton.set_sensitive(True)
+       else:
+           self.usingpreset=True
+           self.ProgressBar.set_fraction(0.0)
+           if presetchoice != None:
+               self.devicename= self.presetchoices[presetchoice]
+               self.provide_presets(self.devicename)
+               self.containerchoice.set_sensitive(False)
+               self.CodecBox.set_sensitive(False)
+               self.rotationchoice.set_sensitive(False)
+           else:
+               if self.builder.get_object("containerchoice").get_active_text():
+                   self.transcodebutton.set_sensitive(True)
 
    def on_rotationchoice_changed(self, widget):
        self.rotationvalue = self.rotationchoice.get_active()
@@ -1040,7 +1033,6 @@ class TransmageddonUI:
        # print "audiocodec changed"
        if (self.houseclean == False and self.usingpreset==False):
            self.AudioCodec = self.audiocodecs[self.audiorows[0].get_active()]
-           print "Self.AudioCodec is " + str(self.AudioCodec)
            if self.container != False:
                if self.audiorows[0].get_active() ==  self.audiopassmenuno:
                    self.audiopasstoggle=True
