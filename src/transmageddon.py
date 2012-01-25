@@ -218,6 +218,7 @@ class TransmageddonUI:
        self.CodecBox.attach(self.audiobox, 0, 1, 1, 2, yoptions = Gtk.AttachOptions.FILL)
        self.CodecBox.attach(self.videobox, 2, 3, 1, 2, yoptions = Gtk.AttachOptions.FILL)
        self.CodecBox.show_all()
+       self.containerchoice.connect("changed", self.on_containerchoice_changed)
        self.audiorows[0].connect("changed", self.on_audiocodec_changed)
        self.videorows[0].connect("changed", self.on_videocodec_changed)
        self.TopWindow.connect("destroy", Gtk.main_quit)
@@ -623,9 +624,8 @@ class TransmageddonUI:
    def check_for_passthrough(self, containerchoice):
        videointersect = Gst.Caps.new_empty()
        audiointersect = Gst.Caps.new_empty()
-       if (containerchoice != False or self.usingpreset==False):
+       if containerchoice != False: # or self.usingpreset==False): <- Need to figure out what this was about
            container = codecfinder.containermap[containerchoice]
-           print "container is " + str(container)
            containerelement = codecfinder.get_muxer_element(container)
            if containerelement == False:
                self.containertoggle = True
@@ -636,30 +636,27 @@ class TransmageddonUI:
                        sourcecaps = x.get_caps()
                        if self.havevideo == True:
                            if Gst.Caps.is_empty(videointersect):
-                              print "intersect is EMPTY"
                               videointersect = sourcecaps.intersect(self.videodata['videotype'])
-                              output=Gst.Caps.to_string(videointersect)
-                              print "videointersect is empty " + str(output)
                            else:
                                   if self.vsourcecaps != False:
-                                      output2 = Gst.Caps.to_string(self.vsourcecaps)
-                                      print "intersect is not empty " + (str(output2))
                                       self.vsourcecaps = videointersect
                        if self.haveaudio == True:
-                           if audiointersect == Gst.Caps.new_empty():
+                           if audiointersect.is_empty():
                                audiointersect = sourcecaps.intersect(self.audiodata['audiotype'])
-                               if audiointersect != Gst.Caps.new_empty():
-                                   self.asourcecaps = audiointersect
-               if videointersect.is_empty:
+                           else:
+                               self.asourcecaps = audiointersect
+               output3 = Gst.Caps.to_string(videointersect)
+               print "output is " + str(output3)
+               # test=videointersect.is_empty()
+               if videointersect.is_empty():
+                   print "is empty"
                    self.videopass=False
                else:
+                   print "got caps"
                    output3 = Gst.Caps.to_string(videointersect)
-                   print "videointersect3 is " + str(output3)
+                   print "output is " + str(output3)
                    self.videopass=True
-                   print "videopass is " + str(self.videopass)
-        
-
-               if audiointersect.is_empty:
+               if audiointersect.is_empty():
                    self.audiopass=False
                else:
                    self.audiopass=True
@@ -697,13 +694,13 @@ class TransmageddonUI:
            vwidth = self.videodata['videowidth']
            ratenum = self.videodata['fratenum']
            ratednom = self.videodata['frateden']
-           if self.videopasstoggle == False:
-               videocodec = self.VideoCodec
-           else: # this is probably redundant and caused by encodebin 
-               textdata=Gst.Caps.to_string(self.vsourcecaps)
-               sep= ','
-               minitext  = textdata.split(sep, 1)[0]
-               videocodec = minitext
+           #if self.videopasstoggle == False:
+           videocodec = self.VideoCodec
+           #else: # this is probably redundant and caused by encodebin 
+           #    textdata=Gst.Caps.to_string(self.vsourcecaps)
+           #    sep= ','
+           #    minitext  = textdata.split(sep, 1)[0]
+           #videocodec = minitext
            self.outputdirectory=self.videodirectory
        else:
            self.outputdirectory=self.audiodirectory
@@ -721,8 +718,6 @@ class TransmageddonUI:
        else:
            audiocodec=False
            achannels=False
-
-       # print "transcoder values - filechoice: " + str(filechoice) + " - filename: " + str(self.filename) + " - outputdirectory: " + str(self.outputdirectory) + " - self.container: " + str(self.container) + " - audiocodec: " + str(audiocodec) + " - videocodec: " + str(videocodec), " -self.devicename: " + str(self.devicename) + "- vheight:" + str(vheight), " - vwidth: " + str(vwidth) + " - achannels: " + str(achannels) + " - self.multipass " + str(self.multipass) + " - self.passcounter: " + str(self.passcounter) + " -self.outputfilename: " + str(self.outputfilename) + " - self.timestamp: " + str(self.timestamp) + " - self.rotationvalue: " + str(self.rotationvalue) + " - self.audiopasstoggle: " + str(self.audiopasstoggle) + " - self.videopasstoggle: " + str(self.videopasstoggle) + " - self.interlaced: " + str(self.interlaced) + " - self.inputvideocaps: " + str(self.inputvideocaps)
 
        self._transcoder = transcoder_engine.Transcoder(filechoice, self.filename,
                         self.outputdirectory, self.container, audiocodec, 
@@ -781,49 +776,21 @@ class TransmageddonUI:
            containerstatus=True
            videostatus=True
        else:
-           # print "checking for elements"
            containerchoice = self.builder.get_object ("containerchoice").get_active_text()
-           #print "containerchoise is " + str(containerchoice)
            if containerchoice != None:
                containerstatus = codecfinder.get_muxer_element(codecfinder.containermap[containerchoice])
-           #print "containerchoice returned is " +str(containerstatus)
-           #if self.havevideo:
-           #    if self.videopasstoggle != True:
-           #        if self.VideoCodec == "novid":
-           #            videostatus=True
-           #        else:
-           #            videostatus = codecfinder.get_video_encoder_element(self.VideoCodec)
-           #    else:
-           #        videostatus=True
-       #if self.haveaudio:
-       #    if self.audiopasstoggle != True:
-       #        audiostatus = codecfinder.get_audio_encoder_element(self.AudioCodec)
-       #    else:
-       #        audiostatus=True
-       #else:
-       #    audiostatus=True
-       #if self.havevideo == False: # this flags help check if input is audio-only file
-       #    videostatus=True
-               # print "containerstatus is here " + str(containerstatus)
+           
                if not containerstatus: # or not videostatus or not audiostatus:
                    self.missingtoggle=True
                    fail_info = []
-           #if self.containertoggle==True:
-           #    audiostatus=True
-           #    videostatus=True
                if containerstatus == False: 
                    fail_info.append(Gst.caps_from_string(codecfinder.containermap[containerchoice]))
-           #if audiostatus == False:
-           #    fail_info.append(self.AudioCodec)
-           #if videostatus == False:
-           #    fail_info.append(self.VideoCodec)
                    missing = []
                    for x in fail_info:
                        missing.append(GstPbutils.missing_encoder_installer_detail_new(x))
                    context = GstPbutils.InstallPluginsContext ()
                    context.set_xid(self.TopWindow.get_window().get_xid())
                    strmissing = str(missing)
-                   # print "strmissing is " + strmissing
                    GstPbutils.install_plugins_async (strmissing, context, \
                        self.donemessage, "NULL")
 
@@ -903,11 +870,8 @@ class TransmageddonUI:
        for c in self.audiocodecs: # 
            self.audiorows[0].remove(0)
        self.audiocodecs =[]
-       # print "checking for video"
        if self.havevideo==True:
-           # print "found video"
            if self.container != False:
-               # print "found conntainer"
                for c in self.videocodecs:
                    self.videorows[0].remove(0)
                self.videocodecs=[]
@@ -930,7 +894,6 @@ class TransmageddonUI:
                self.audiorows[0].set_active(0)
                self.audiorows[0].set_sensitive(True)
            else:
-               # print "getting to where audio options are filled inn"
                audio_codecs = []
                audio_codecs = supported_audio_container_map[self.container]
                for c in audio_codecs:
@@ -977,8 +940,6 @@ class TransmageddonUI:
                        self.audiopassmenuno=(len(self.audiocodecs))-1
 
    def on_containerchoice_changed(self, widget):
-       self.check_for_elements()
-       self.populate_menu_choices()
        self.CodecBox.set_sensitive(True)
        self.ProgressBar.set_fraction(0.0)
        self.ProgressBar.set_text(_("Transcoding Progress"))
@@ -990,9 +951,11 @@ class TransmageddonUI:
        else:
            if self.builder.get_object("containerchoice").get_active()!= -1:
                self.container = self.builder.get_object ("containerchoice").get_active_text()
+               self.check_for_elements()
                # print "self.container is " + str(self.container)
-               if self.discover_done == True:
-                   self.check_for_passthrough(self.container)
+       if self.discover_done == True:
+           self.check_for_passthrough(self.container)
+           self.populate_menu_choices()
            self.transcodebutton.set_sensitive(True)
 
 

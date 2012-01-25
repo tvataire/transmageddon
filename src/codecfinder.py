@@ -136,7 +136,7 @@ def get_muxer_element(containercaps):
            features.append(fact)
    muxerfeature = dict(zip(muxers, features))
    incomingcaps = Gst.caps_from_string(containercaps)
-   print "incomingcaps is " + str(containercaps)
+   # print "incomingcaps is " + str(containercaps)
    for muxer in muxers:
            element = muxer
            factory = Gst.Registry.get().lookup_feature(str(muxer))

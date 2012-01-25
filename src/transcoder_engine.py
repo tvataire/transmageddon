@@ -42,9 +42,11 @@ class Transcoder(GObject.GObject):
 
        # Choose plugin based on Container name
        self.container = CONTAINERCHOICE
+       print "self.container is"
        self.audiocaps = AUDIOCODECVALUE
        if self.container != False:
            self.containercaps = Gst.caps_from_string(codecfinder.containermap[CONTAINERCHOICE])
+           print "self.containercaps"
        # special case mp3 which is a no-container format with a container (id3mux)
        else:
            if self.audiocaps.intersect(Gst.caps_from_string("audio/mpeg, mpegversion=1, layer=3")):
@@ -126,12 +128,12 @@ class Transcoder(GObject.GObject):
            if self.videopasstoggle==False:
                if self.container != False:
                    self.videoflipper = Gst.ElementFactory.make('videoflip', None)
-                   print "videoflipper created " + str(self.videoflipper)
+                   # print "videoflipper created " + str(self.videoflipper)
                    self.videoflipper.set_property("method", self.rotationvalue)
                    self.pipeline.add(self.videoflipper)
 
                    self.colorspaceconverter = Gst.ElementFactory.make("videoconvert", None)
-                   print "creating colorspaceconverter " + str(self.colorspaceconverter)
+                   # print "creating colorspaceconverter " + str(self.colorspaceconverter)
                    self.pipeline.add(self.colorspaceconverter)
 
                    #self.deinterlacer = Gst.ElementFactory.make('deinterlace', None)
@@ -143,14 +145,13 @@ class Transcoder(GObject.GObject):
                    self.colorspaceconverter.set_state(Gst.State.PAUSED)
                    self.videoflipper.set_state(Gst.State.PAUSED)
 
-               print "self.containercaps is " +str(self.containercaps)
-               self.encodebinprofile = GstPbutils.EncodingContainerProfile.new("containerformat", None , self.containercaps, None)
-               print "self.encodebinprofile is " + str(self.encodebinprofile)
+               # print "self.containercaps is " +str(self.containercaps)
+           self.encodebinprofile = GstPbutils.EncodingContainerProfile.new("containerformat", None , self.containercaps, None)
        if self.audiocaps != False:
            if self.container==False:
                self.encodebinprofile = GstPbutils.EncodingAudioProfile.new (self.audiocaps, audiopreset, Gst.Caps.new_any(), 0)
            else:
-               print "self.audiocaps is " + str(self.audiocaps)
+               # print "self.audiocaps is " + str(self.audiocaps)
                audiopreset=None
                self.audioprofile = GstPbutils.EncodingAudioProfile.new(self.audiocaps, audiopreset, Gst.Caps.new_any(), 0)
                self.encodebinprofile.add_profile(self.audioprofile)
@@ -163,7 +164,7 @@ class Transcoder(GObject.GObject):
        self.encodebin.set_property("profile", self.encodebinprofile)
        self.encodebin.set_property("avoid-reencoding", True)
        self.pipeline.add(self.encodebin)
-       print "creating encodebin " +str(self.encodebin)
+       # print "creating encodebin " +str(self.encodebin)
        self.encodebin.set_state(Gst.State.PAUSED)
 
        self.remuxcaps = Gst.Caps()
@@ -188,8 +189,8 @@ class Transcoder(GObject.GObject):
            self.uridecoder.set_property("caps", self.remuxcaps)
 
        self.uridecoder = Gst.ElementFactory.make("uridecodebin", "uridecoder")
-       print "self.uridecoder " + str(self.uridecoder)
-       print "FILECHOSEN " + str(FILECHOSEN)
+       # print "self.uridecoder " + str(self.uridecoder)
+       # print "FILECHOSEN " + str(FILECHOSEN)
        self.uridecoder.set_property("uri", FILECHOSEN)
        self.uridecoder.connect("pad-added", self.OnDynamicPad)
        self.uridecoder.set_state(Gst.State.PAUSED)
@@ -333,7 +334,7 @@ class Transcoder(GObject.GObject):
        return True
 
    def OnDynamicPad(self, uridecodebin, src_pad):
-       print "src_pad is" +str(src_pad)
+       # print "src_pad is" +str(src_pad)
        origin = src_pad.query_caps(None)
        if (self.container==False):
            a =  origin.to_string()
@@ -356,16 +357,16 @@ class Transcoder(GObject.GObject):
                c = origin.to_string()
                if not c.startswith("text/"):
                    if not (c.startswith("video/") and (self.videocaps == False)):
-                       print "origin is " + str(c)
+                       # print "origin is " + str(c)
                        sinkpad = self.encodebin.emit("request-pad", origin)
                if c.startswith("audio/"):
-                   print "src_pad is " +str(src_pad)
-                   print "sinkpad is " +str(sinkpad)
+                   # print "src_pad is " +str(src_pad)
+                   # print "sinkpad is " +str(sinkpad)
                    src_pad.link(sinkpad)
                elif ((c.startswith("video/") or c.startswith("image/")) and (self.videocaps != False)):
                    if self.videopasstoggle==False:
                        # port fix- should be self.deinterlacer
-                       print "self.colorspaceconverter before use " + str(self.colorspaceconverter)
+                       # print "self.colorspaceconverter before use " + str(self.colorspaceconverter)
                        colorspacepad = self.colorspaceconverter.get_static_pad("sink")
                        src_pad.link(colorspacepad)
                        self.videoflipper.get_static_pad("src").link(sinkpad)
