@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+
+<device>
+    <make>Sony</make>
+    <model>Tablet S</model>
+    <description>Profile for Sony Tablet S</description>
+    <author>
+        <name>Christian Schaller</name>
+        <email>uraeus@linuxrising.org</email>
+    </author>
+    <version>1.0</version>
+    <icon>file://ipod.svg</icon>
+    <default>Normal</default>
+    
+   
+    <profile>
+        <name>Normal</name>
+        <container>video/x-matroska</container>
+        <extension>mkv</extension>
+        <audio>
+            <name>audio/mpeg,mpegversion=4, base-profile=lc</name>
+            <channels>1, 2</channels>
+            <samplerate>44100</samplerate>
+        </audio>
+        <video>
+            <name>video/x-h264, profile=constrained-baseline</name>
+            <passes>1</passes>
+            <pixelaspectratio>0/0</pixelaspectratio>
+            <width>320, 1280</width>
+            <height>240, 800</height>
+            <framerate>1, 30</framerate>
+        </video>
+    </profile>
+</device>
