@@ -122,10 +122,10 @@ class Transcoder(GObject.GObject):
                    # print "creating colorspaceconverter " + str(self.colorspaceconverter)
                    self.pipeline.add(self.colorspaceconverter)
 
-                   #self.deinterlacer = Gst.ElementFactory.make('deinterlace', None)
-                   #self.pipeline.add(self.deinterlacer)
+                  #self.deinterlacer = Gst.ElementFactory.make('deinterlace', None)
+                  # self.pipeline.add(self.deinterlacer)
                        
-                   #self.deinterlacer.link(self.colorspaceconversion)
+                   # self.deinterlacer.link(self.colorspaceconverter)
 	           self.colorspaceconverter.link(self.videoflipper)
                    #self.deinterlacer.set_state(Gst.State.PAUSED)
                    self.colorspaceconverter.set_state(Gst.State.PAUSED)
@@ -137,10 +137,7 @@ class Transcoder(GObject.GObject):
            if self.container==False:
                self.encodebinprofile = GstPbutils.EncodingAudioProfile.new (self.audiocaps, audiopreset, Gst.Caps.new_any(), 0)
            else:
-               print "self.audiocaps is " + str(self.audiocaps)
                audiopreset=None
-               capsy= self.audiocaps
-               print "capsy is " + str(capsy)
                self.audioprofile = GstPbutils.EncodingAudioProfile.new(self.audiocaps, audiopreset, Gst.Caps.new_any(), 0)
                self.encodebinprofile.add_profile(self.audioprofile)
        if self.videocaps != "novid":
