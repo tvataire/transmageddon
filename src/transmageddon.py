@@ -222,7 +222,7 @@ class TransmageddonUI:
        self.presetchoice.connect("changed", self.on_presetchoice_changed)
        self.audiorows[0].connect("changed", self.on_audiocodec_changed)
        self.videorows[0].connect("changed", self.on_videocodec_changed)
-
+       self.rotationchoice.connect("changed", self.on_rotationchoice_changed)
        self.TopWindow.connect("destroy", Gtk.main_quit)
        def get_file_path_from_dnd_dropped_uri(self, uri):
            # get the path to file
@@ -986,6 +986,7 @@ class TransmageddonUI:
 
    def on_rotationchoice_changed(self, widget):
        self.rotationvalue = self.rotationchoice.get_active()
+       print "rotationvalue " + str(self.rotationvalue)
 
    def on_audiocodec_changed(self, widget):
        # print "audiocodec changed"
