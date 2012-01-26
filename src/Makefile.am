@@ -10,7 +10,8 @@ transmageddon_PYTHON = \
 	presets.py \
 	utils.py \
 	about.py \
-        which.py
+        which.py \
+        gstfraction.py
 
 BUILT_SOURCES=
 
