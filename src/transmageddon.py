@@ -695,11 +695,6 @@ class TransmageddonUI:
            ratednom = self.videodata['frateden']
            #if self.videopasstoggle == False:
            videocodec = self.VideoCodec
-           #else: # this is probably redundant and caused by encodebin 
-           #    textdata=Gst.Caps.to_string(self.vsourcecaps)
-           #    sep= ','
-           #    minitext  = textdata.split(sep, 1)[0]
-           #videocodec = minitext
            self.outputdirectory=self.videodirectory
        else:
            self.outputdirectory=self.audiodirectory
@@ -713,7 +708,7 @@ class TransmageddonUI:
            if self.audiopasstoggle == False:
                audiocodec = self.AudioCodec
            else:
-               audiocodec = Gst.Caps.to_string(self.asourcecaps)
+               audiocodec = self.asourcecaps
        else:
            audiocodec=False
            achannels=False

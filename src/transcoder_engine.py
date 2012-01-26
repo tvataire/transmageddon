@@ -43,6 +43,7 @@ class Transcoder(GObject.GObject):
        # Choose plugin based on Container name
        self.container = CONTAINERCHOICE
        self.audiocaps = AUDIOCODECVALUE
+       print "self.audiocaps from UI is " +str(self.audiocaps)
        if self.container != False:
            self.containercaps = Gst.caps_from_string(codecfinder.containermap[CONTAINERCHOICE])
        # special case mp3 which is a no-container format with a container (id3mux)
