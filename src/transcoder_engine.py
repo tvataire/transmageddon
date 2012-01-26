@@ -42,11 +42,9 @@ class Transcoder(GObject.GObject):
 
        # Choose plugin based on Container name
        self.container = CONTAINERCHOICE
-       print "self.container is"
        self.audiocaps = AUDIOCODECVALUE
        if self.container != False:
            self.containercaps = Gst.caps_from_string(codecfinder.containermap[CONTAINERCHOICE])
-           print "self.containercaps"
        # special case mp3 which is a no-container format with a container (id3mux)
        else:
            if self.audiocaps.intersect(Gst.caps_from_string("audio/mpeg, mpegversion=1, layer=3")):
@@ -90,19 +88,6 @@ class Transcoder(GObject.GObject):
        if self.multipass != False:
            self.cachefile = (str (glib.get_user_cache_dir()) + "/" + \
                    "multipass-cache-file" + self.timestamp + ".log")
-
-       # gather preset data if relevant
-       if self.preset != "nopreset":
-           height, width, num, denom, pixelaspectratio = self.provide_presets()
-           for acap in self.audiocaps:
-               acap["channels"] = self.channels
-           for vcap in self.videocaps:
-               vcap["height"] = int(height)
-               vcap["width"] = int(width)
-               vcap["framerate"] = Gst.Fraction(num, denom)
-               if pixelaspectratio != Gst.Fraction(0, 0):
-                   vcap["pixel-aspect-ratio"] = pixelaspectratio
-
 
        # Create transcoding pipeline
        self.pipeline = Gst.Pipeline()
@@ -151,8 +136,10 @@ class Transcoder(GObject.GObject):
            if self.container==False:
                self.encodebinprofile = GstPbutils.EncodingAudioProfile.new (self.audiocaps, audiopreset, Gst.Caps.new_any(), 0)
            else:
-               # print "self.audiocaps is " + str(self.audiocaps)
+               print "self.audiocaps is " + str(self.audiocaps)
                audiopreset=None
+               capsy= self.audiocaps
+               print "capsy is " + str(capsy)
                self.audioprofile = GstPbutils.EncodingAudioProfile.new(self.audiocaps, audiopreset, Gst.Caps.new_any(), 0)
                self.encodebinprofile.add_profile(self.audioprofile)
        if self.videocaps != "novid":
@@ -167,23 +154,19 @@ class Transcoder(GObject.GObject):
        # print "creating encodebin " +str(self.encodebin)
        self.encodebin.set_state(Gst.State.PAUSED)
 
-       self.remuxcaps = Gst.Caps()
+       self.remuxcaps = Gst.Caps.new_empty()
        if self.audiopasstoggle:
           self.remuxcaps.append(self.audiocaps)
        if self.videopasstoggle:
           self.remuxcaps.append(self.videocaps)
        if self.audiopasstoggle and not self.videopasstoggle:
-          self.remuxcaps.append_structure(Gst.Structure("video/x-raw-rgb"))
-          self.remuxcaps.append_structure(Gst.Structure("video/x-raw-yuv"))
+          self.remuxcaps.append_structure(Gst.Structure.from_string("video/x-raw"))
        if self.videopasstoggle and not self.audiopasstoggle:
-          self.remuxcaps.append_structure(Gst.Structure("audio/x-raw-float"))
-          self.remuxcaps.append_structure(Gst.Structure("audio/x-raw-int"))
+          self.remuxcaps.append_structure(Gst.Structure.from_string("audio/x-raw"))
        if self.videocaps=="novid":
           if self.inputvideocaps != None:
               self.remuxcaps.append(self.inputvideocaps)
-              self.remuxcaps.append_structure(Gst.Structure("audio/x-raw-float"))
-              self.remuxcaps.append_structure(Gst.Structure("audio/x-raw-int"))
-
+              self.remuxcaps.append_structure(Gst.Structure.from_string("audio/x-raw"))
 
        if (self.audiopasstoggle) or (self.videopasstoggle) or (self.videocaps=="novid"):
            self.uridecoder.set_property("caps", self.remuxcaps)
@@ -249,7 +232,7 @@ class Transcoder(GObject.GObject):
        width, height = self.owidth, self.oheight
 
        # Get Display aspect ratio
-       pixelaspectratio = preset.vcodec.aspectratio[0]
+       pixelaspectratio = preset.vcodec.aspectratio
 
        # Scale width / height down
        if self.owidth > wmax:

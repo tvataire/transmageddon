@@ -219,8 +219,10 @@ class TransmageddonUI:
        self.CodecBox.attach(self.videobox, 2, 3, 1, 2, yoptions = Gtk.AttachOptions.FILL)
        self.CodecBox.show_all()
        self.containerchoice.connect("changed", self.on_containerchoice_changed)
+       self.presetchoice.connect("changed", self.on_presetchoice_changed)
        self.audiorows[0].connect("changed", self.on_audiocodec_changed)
        self.videorows[0].connect("changed", self.on_videocodec_changed)
+
        self.TopWindow.connect("destroy", Gtk.main_quit)
        def get_file_path_from_dnd_dropped_uri(self, uri):
            # get the path to file
@@ -319,8 +321,8 @@ class TransmageddonUI:
        # create toggle so I can split codepath depending on if I using a preset
        # or not
        self.usingpreset=False
-       self.presetaudiocodec="None"
-       self.presetvideocodec="None"
+       self.presetaudiocodec=Gst.Caps.new_empty()
+       self.presetvideocodec=Gst.Caps.new_empty()
        self.inputvideocaps=None # using this value to store videocodec name to feed uridecodebin to avoid decoding video when not keeping video
        self.nocontainernumber = int(13) # this needs to be set to the number of the no container option in the menu (from 0)
        self.p_duration = Gst.CLOCK_TIME_NONE
@@ -363,7 +365,8 @@ class TransmageddonUI:
 
        for (name, device) in (presets.get().items()):
            shortname.append(str(name))
-       self.presetchoices = dict(zip(devicelist, shortname))
+       # self.presetchoices = dict(zip(devicelist, shortname))
+       self.presetchoices = shortname
        self.presetchoice.prepend_text(_("No Presets"))
 
        self.waiting_for_signal="False"
@@ -380,8 +383,9 @@ class TransmageddonUI:
        preset = device.presets["Normal"]
        self.usingpreset=True
        self.containerchoice.set_active(-1) # resetting to -1 to ensure population of menu triggers
-       self.presetaudiocodec=preset.acodec.name
-       self.presetvideocodec=preset.vcodec.name
+       self.presetaudiocodec=Gst.caps_from_string(preset.acodec.name)
+       self.presetvideocodec=Gst.caps_from_string(preset.vcodec.name)
+       print "preset container is " +str(preset.container)
        if preset.container == "application/ogg":
            self.containerchoice.set_active(0)
        elif preset.container == "video/x-matroska":
@@ -646,15 +650,10 @@ class TransmageddonUI:
                            else:
                                self.asourcecaps = audiointersect
                output3 = Gst.Caps.to_string(videointersect)
-               print "output is " + str(output3)
                # test=videointersect.is_empty()
                if videointersect.is_empty():
-                   print "is empty"
                    self.videopass=False
                else:
-                   print "got caps"
-                   output3 = Gst.Caps.to_string(videointersect)
-                   print "output is " + str(output3)
                    self.videopass=True
                if audiointersect.is_empty():
                    self.audiopass=False
@@ -944,7 +943,6 @@ class TransmageddonUI:
        self.ProgressBar.set_fraction(0.0)
        self.ProgressBar.set_text(_("Transcoding Progress"))
        if self.builder.get_object("containerchoice").get_active() == self.nocontainernumber:
-               # print "self.container is False"
                self.container = False
                self.videorows[0].set_active(self.videonovideomenuno)
                self.videorows[0].set_sensitive(False)
@@ -952,7 +950,6 @@ class TransmageddonUI:
            if self.builder.get_object("containerchoice").get_active()!= -1:
                self.container = self.builder.get_object ("containerchoice").get_active_text()
                self.check_for_elements()
-               # print "self.container is " + str(self.container)
        if self.discover_done == True:
            self.check_for_passthrough(self.container)
            self.populate_menu_choices()
@@ -961,7 +958,7 @@ class TransmageddonUI:
 
    def on_presetchoice_changed(self, widget):
        presetchoice = self.builder.get_object ("presetchoice").get_active()
-       #print "presetchoice is " + str(presetchoice)
+       print "presetchoice is " +str(presetchoice)
        self.ProgressBar.set_fraction(0.0)
        if presetchoice == 0:
            self.usingpreset=False
@@ -977,10 +974,13 @@ class TransmageddonUI:
                self.CodecBox.set_sensitive(True)
                self.transcodebutton.set_sensitive(True)
        else:
+           print "we are using presets"
            self.usingpreset=True
            self.ProgressBar.set_fraction(0.0)
            if presetchoice != None:
-               self.devicename= self.presetchoices[presetchoice]
+               print self.presetchoices
+               print presetchoice
+               self.devicename= self.presetchoices[presetchoice-1]
                self.provide_presets(self.devicename)
                self.containerchoice.set_sensitive(False)
                self.CodecBox.set_sensitive(False)
@@ -1000,7 +1000,7 @@ class TransmageddonUI:
                if self.audiorows[0].get_active() ==  self.audiopassmenuno:
                    self.audiopasstoggle=True
        elif self.usingpreset==True:
-           self.AudioCodec = Gst.caps_from_string(self.presetaudiocodec)    
+           self.AudioCodec = self.presetaudiocodec    
 
    def on_videocodec_changed(self, widget):
        # print "videocodec changed"
@@ -1012,7 +1012,7 @@ class TransmageddonUI:
            if self.videorows[0].get_active() == self.videopassmenuno:
                self.videopasstoggle=True
        elif self.usingpreset==True:
-           self.VideoCodec = Gst.caps_from_string(self.presetvideocodec)
+           self.VideoCodec = self.presetvideocodec
 
    def on_about_dialog_activate(self, widget):
        print "activating about"
