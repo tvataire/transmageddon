@@ -94,8 +94,8 @@ class Transcoder(GObject.GObject):
        self.pipeline = Gst.Pipeline()
        self.pipeline.set_state(Gst.State.PAUSED)
 
-       # first check if we have a container format, if not set up output for possible outputs
-       #  should not be hardcoded
+       # first check if we have a container format, if not set up output 
+       # for possible outputs should not be hardcoded
 
        audiopreset=None
        videopreset=None
@@ -105,21 +105,23 @@ class Transcoder(GObject.GObject):
            audiopreset=None
            videopreset=None
 
+       # first check if we are using a container format
        if self.container==False:
            if self.audiocaps.intersect(Gst.caps_from_string("audio/mpeg, mpegversion=4")):
                self.audiocaps=Gst.caps_from_string("audio/mpeg, mpegversion=4, stream-format=adts")
            elif self.audiocaps.intersect(Gst.caps_from_string("audio/x-flac")):
                self.audiocaps=Gst.caps_from_string("audio/x-flac")
        else:
+           self.encodebinprofile = GstPbutils.EncodingContainerProfile.new("containerformat", None , self.containercaps, None)
+ 
+           # What to do if we are not doing video passthrough (we only support video 
+           # with container format
            if self.videopasstoggle==False:
-               if self.container != False:
                    self.videoflipper = Gst.ElementFactory.make('videoflip', None)
-                   # print "videoflipper created " + str(self.videoflipper)
                    self.videoflipper.set_property("method", self.rotationvalue)
                    self.pipeline.add(self.videoflipper)
 
                    self.colorspaceconverter = Gst.ElementFactory.make("videoconvert", None)
-                   # print "creating colorspaceconverter " + str(self.colorspaceconverter)
                    self.pipeline.add(self.colorspaceconverter)
 
                   #self.deinterlacer = Gst.ElementFactory.make('deinterlace', None)
@@ -130,9 +132,15 @@ class Transcoder(GObject.GObject):
                    #self.deinterlacer.set_state(Gst.State.PAUSED)
                    self.colorspaceconverter.set_state(Gst.State.PAUSED)
                    self.videoflipper.set_state(Gst.State.PAUSED)
+           # this part of the pipeline is used for both passthrough and re-encoding
+           if self.videocaps != "novid":
+               if (self.videocaps != False):
+                   videopreset=None
+                   self.videoprofile = GstPbutils.EncodingVideoProfile.new(self.videocaps, videopreset, Gst.Caps.new_any(), 0)
+                   self.encodebinprofile.add_profile(self.videoprofile)
 
-               # print "self.containercaps is " +str(self.containercaps)
-           self.encodebinprofile = GstPbutils.EncodingContainerProfile.new("containerformat", None , self.containercaps, None)
+       # We do not need to do anything special for passthrough for audio, since we are not
+       # including any extra elements between uridecodebin and encodebin
        if self.audiocaps != False:
            if self.container==False:
                self.encodebinprofile = GstPbutils.EncodingAudioProfile.new (self.audiocaps, audiopreset, Gst.Caps.new_any(), 0)
@@ -140,42 +148,44 @@ class Transcoder(GObject.GObject):
                audiopreset=None
                self.audioprofile = GstPbutils.EncodingAudioProfile.new(self.audiocaps, audiopreset, Gst.Caps.new_any(), 0)
                self.encodebinprofile.add_profile(self.audioprofile)
-       if self.videocaps != "novid":
-           if (self.videocaps != False):
-               videopreset=None
-               self.videoprofile = GstPbutils.EncodingVideoProfile.new(self.videocaps, videopreset, Gst.Caps.new_any(), 0)
-               self.encodebinprofile.add_profile(self.videoprofile)
+       
+
        self.encodebin = Gst.ElementFactory.make ("encodebin", None)
        self.encodebin.set_property("profile", self.encodebinprofile)
        self.encodebin.set_property("avoid-reencoding", True)
        self.pipeline.add(self.encodebin)
-       # print "creating encodebin " +str(self.encodebin)
        self.encodebin.set_state(Gst.State.PAUSED)
-
-       self.remuxcaps = Gst.Caps.new_empty()
+       
+       # put together remuxing caps to set on uridecodebin if doing 
+       # passthrough on audio or video
+       print "audiopassthrough is " +str(self.audiopasstoggle) 
+       print "videopassthrougth is " +str(self.videopasstoggle)
+       if self.audiopasstoggle or self.videopasstoggle:
+           self.remuxcaps = Gst.Caps.new_empty()
        if self.audiopasstoggle:
           self.remuxcaps.append(self.audiocaps)
        if self.videopasstoggle:
           self.remuxcaps.append(self.videocaps)
        if self.audiopasstoggle and not self.videopasstoggle:
-          self.remuxcaps.append_structure(Gst.Structure.from_string("video/x-raw"))
+          videostruct=Gst.Structure.from_string("video/x-raw")
+          self.remuxcaps.append_structure(videostruct[0])
        if self.videopasstoggle and not self.audiopasstoggle:
-          self.remuxcaps.append_structure(Gst.Structure.from_string("audio/x-raw"))
+          audiostruct=Gst.Structure.from_string("audio/x-raw")
+          self.remuxcaps.append_structure(audiostruct[0])
        if self.videocaps=="novid":
           if self.inputvideocaps != None:
               self.remuxcaps.append(self.inputvideocaps)
-              self.remuxcaps.append_structure(Gst.Structure.from_string("audio/x-raw"))
-
-       if (self.audiopasstoggle) or (self.videopasstoggle) or (self.videocaps=="novid"):
-           self.uridecoder.set_property("caps", self.remuxcaps)
+              audiostruct=Gst.Structure.from_string("audio/x-raw")
+              self.remuxcaps.append_structure(audiostruct[0])
 
        self.uridecoder = Gst.ElementFactory.make("uridecodebin", "uridecoder")
-       # print "self.uridecoder " + str(self.uridecoder)
-       # print "FILECHOSEN " + str(FILECHOSEN)
        self.uridecoder.set_property("uri", FILECHOSEN)
        self.uridecoder.connect("pad-added", self.OnDynamicPad)
        self.uridecoder.set_state(Gst.State.PAUSED)
- 
+
+       if (self.audiopasstoggle) or (self.videopasstoggle) or(self.videocaps=="novid"):
+           self.uridecoder.set_property("caps", self.remuxcaps) 
+
        self.pipeline.add(self.uridecoder)
 
        self.transcodefileoutput = Gst.ElementFactory.make("filesink", \
@@ -187,7 +197,6 @@ class Transcoder(GObject.GObject):
 
        self.uridecoder.set_state(Gst.State.PAUSED)
 
-       # print "setting uridcodebin to paused"
        self.BusMessages = self.BusWatcher()
 
        # we need to wait on this one before going further
@@ -296,8 +305,8 @@ class Transcoder(GObject.GObject):
            err, debug = message.parse_error()
            print err 
            print debug
-           #Gst.DEBUG_BIN_TO_DOT_FILE (self.pipeline, Gst.DEBUG_GRAPH_SHOW_ALL, \
-           #        'transmageddon.dot')
+           Gst.debug_bin_to_dot_file (self._transcoder.pipeline, \
+           Gst.DebugGraphDetails.ALL, 'transmageddon-debug-graph')
            #self.emit('got-error', err.message)
        elif mtype == Gst.MessageType.ASYNC_DONE:
            self.emit('ready-for-querying')
@@ -366,12 +375,12 @@ class Transcoder(GObject.GObject):
        #GstTagSetterType = GObject.type_from_name("GstTagSetter")
        #tag_setting_element=self.encodebin.get_by_interface(GstTagSetterType)
        #if tag_setting_element != None:
-       #    taglist=Gst.TagList()
-       #    taglist[Gst.TAG_ENCODER] = "Transmageddon encoder" # this should probably be set to
-	                                                      # string combining audio+video encoder
-                                                              # implementations
-       #    taglist[Gst.TAG_APPLICATION_NAME] = "Transmageddon transcoder"
-       #    tag_setting_element.merge_tags(taglist, Gst.TAG_MERGE_APPEND)
+       #    taglist=Gst.TagList.new_empty()
+       #    taglist.add_value(Gst.TagMergeMode.APPEND, Gst.TAG_ENCODER, "Transmageddon encoder") 
+           # the tag above should probably be set to string combining audio+video
+           # encoder implementations
+           #taglist[Gst.TAG_APPLICATION_NAME] = "Transmageddon transcoder"
+           #tag_setting_element.merge_tags(taglist, Gst.TAG_MERGE_APPEND)
 
    def Pipeline (self, state):
        if state == ("playing"):

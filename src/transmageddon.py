@@ -953,7 +953,6 @@ class TransmageddonUI:
 
    def on_presetchoice_changed(self, widget):
        presetchoice = self.builder.get_object ("presetchoice").get_active()
-       print "presetchoice is " +str(presetchoice)
        self.ProgressBar.set_fraction(0.0)
        if presetchoice == 0:
            self.usingpreset=False
@@ -986,7 +985,6 @@ class TransmageddonUI:
 
    def on_rotationchoice_changed(self, widget):
        self.rotationvalue = self.rotationchoice.get_active()
-       print "rotationvalue " + str(self.rotationvalue)
 
    def on_audiocodec_changed(self, widget):
        # print "audiocodec changed"
@@ -1030,7 +1028,7 @@ class TransmageddonUI:
        try:
            dot = which.which("dot")
            os.system(dot + " -Tpng -o " + pngfile + " " + dotfile)
-           Gtk.show_uri(GdkX11.X11Screen(), "file://"+pngfile, 0)
+           Gtk.show_uri(self.TopWindow.get_screen(), "file://"+pngfile, 0)
        except which.WhichError:
               print "The debug feature requires graphviz (dot) to be installed."
               print "Transmageddon can not find the (dot) binary."
