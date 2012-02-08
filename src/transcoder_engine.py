@@ -181,11 +181,10 @@ class Transcoder(GObject.GObject):
        self.uridecoder = Gst.ElementFactory.make("uridecodebin", "uridecoder")
        self.uridecoder.set_property("uri", FILECHOSEN)
        self.uridecoder.connect("pad-added", self.OnDynamicPad)
-       self.uridecoder.set_state(Gst.State.PAUSED)
 
        if (self.audiopasstoggle) or (self.videopasstoggle) or(self.videocaps=="novid"):
            self.uridecoder.set_property("caps", self.remuxcaps) 
-
+       self.uridecoder.set_state(Gst.State.PAUSED)
        self.pipeline.add(self.uridecoder)
 
        self.transcodefileoutput = Gst.ElementFactory.make("filesink", \
@@ -305,7 +304,7 @@ class Transcoder(GObject.GObject):
            err, debug = message.parse_error()
            print err 
            print debug
-           Gst.debug_bin_to_dot_file (self._transcoder.pipeline, \
+           Gst.debug_bin_to_dot_file (self.pipeline, \
            Gst.DebugGraphDetails.ALL, 'transmageddon-debug-graph')
            #self.emit('got-error', err.message)
        elif mtype == Gst.MessageType.ASYNC_DONE:

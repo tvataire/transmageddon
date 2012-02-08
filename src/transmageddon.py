@@ -530,14 +530,13 @@ class TransmageddonUI:
 
  
    def succeed(self, discoverer, info, error):
-       # print "starting succeed"
+       print "starting succeed"
        result=GstPbutils.DiscovererInfo.get_result(info)
        if result != GstPbutils.DiscovererResult.ERROR:
            streaminfo=info.get_stream_info()
            container = streaminfo.get_caps()
            seekbool = info.get_seekable()
            clipduration=info.get_duration()
-
            audiostreamcounter=-1
            audiostreams=[]
            audiotags=[]
@@ -615,7 +614,10 @@ class TransmageddonUI:
                self.videocodec.set_markup(''.join(('<small>', 'Video codec: ',
                                        str(GstPbutils.pb_utils_get_codec_description   (self.inputvideocaps)),
                                       '</small>')))
-
+       else:
+          print "hoped for a great discovery; got an error"
+          print result
+          print error
 
    def discover(self, path):
        self.discovered.discover_uri_async("file://"+path)
