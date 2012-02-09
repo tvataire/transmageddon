@@ -57,6 +57,7 @@ class Transcoder(GObject.GObject):
        # or switch to remuxing mode if any of the values are set to 'pastr'
        self.stoptoggle=False
        self.videocaps = VIDEOCODECVALUE # "novid" means we have a video file input, but do not want it
+       print "self.videopass from ui is " + str(self.videocaps)
                                         #  while False means we don't have any video
        self.audiopasstoggle = AUDIOPASSTOGGLE
        self.interlaced = INTERLACED
@@ -126,7 +127,7 @@ class Transcoder(GObject.GObject):
 
                   #self.deinterlacer = Gst.ElementFactory.make('deinterlace', None)
                   # self.pipeline.add(self.deinterlacer)
-                       
+   
                    # self.deinterlacer.link(self.colorspaceconverter)
 	           self.colorspaceconverter.link(self.videoflipper)
                    #self.deinterlacer.set_state(Gst.State.PAUSED)
@@ -136,6 +137,7 @@ class Transcoder(GObject.GObject):
            if self.videocaps != "novid":
                if (self.videocaps != False):
                    videopreset=None
+                   print "videocaps are " + str(self.videocaps)
                    self.videoprofile = GstPbutils.EncodingVideoProfile.new(self.videocaps, videopreset, Gst.Caps.new_any(), 0)
                    self.encodebinprofile.add_profile(self.videoprofile)
 
@@ -346,11 +348,8 @@ class Transcoder(GObject.GObject):
                c = origin.to_string()
                if not c.startswith("text/"):
                    if not (c.startswith("video/") and (self.videocaps == False)):
-                       # print "origin is " + str(c)
                        sinkpad = self.encodebin.emit("request-pad", origin)
                if c.startswith("audio/"):
-                   # print "src_pad is " +str(src_pad)
-                   # print "sinkpad is " +str(sinkpad)
                    src_pad.link(sinkpad)
                elif ((c.startswith("video/") or c.startswith("image/")) and (self.videocaps != False)):
                    if self.videopasstoggle==False:
@@ -361,12 +360,6 @@ class Transcoder(GObject.GObject):
                        self.videoflipper.get_static_pad("src").link(sinkpad)
                        
                    else:
-                       srccaps=src_pad.get_caps()
-                       srcstring=srccaps.to_string()
-                       #print "source pad is " + str(srcstring)
-                       sinkcaps=sinkpad.get_caps()
-                       sinkstring=sinkcaps.to_string()
-                       #print "sinkpad is " + str(sinkstring)
                        src_pad.link(sinkpad)
 
        # Grab element from encodebin which supports tagsetter interface and set app name

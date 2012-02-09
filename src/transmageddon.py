@@ -641,18 +641,17 @@ class TransmageddonUI:
                    if (x.direction == Gst.PadDirection.SINK):
                        sourcecaps = x.get_caps()
                        if self.havevideo == True:
-                           if Gst.Caps.is_empty(videointersect):
+                           if videointersect.is_empty():
                               videointersect = sourcecaps.intersect(self.videodata['videotype'])
                            else:
-                                  if self.vsourcecaps != False:
-                                      self.vsourcecaps = videointersect
+                               # if self.vsourcecaps != False:
+                                   self.vsourcecaps = videointersect
                        if self.haveaudio == True:
                            if audiointersect.is_empty():
                                audiointersect = sourcecaps.intersect(self.audiodata['audiotype'])
                            else:
                                self.asourcecaps = audiointersect
-               output3 = Gst.Caps.to_string(videointersect)
-               # test=videointersect.is_empty()
+               print "vsourcecaps at source " + str(self.vsourcecaps)
                if videointersect.is_empty():
                    self.videopass=False
                else:
@@ -695,8 +694,12 @@ class TransmageddonUI:
            vwidth = self.videodata['videowidth']
            ratenum = self.videodata['fratenum']
            ratednom = self.videodata['frateden']
-           #if self.videopasstoggle == False:
-           videocodec = self.VideoCodec
+           if self.videopasstoggle == False:
+               print "toggle is false"
+               videocodec = self.VideoCodec
+           else:
+               print "self.vsourcecaps " + str(self.vsourcecaps)
+               videocodec = self.vsourcecaps
            self.outputdirectory=self.videodirectory
        else:
            self.outputdirectory=self.audiodirectory
