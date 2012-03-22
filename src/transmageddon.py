@@ -794,6 +794,7 @@ class TransmageddonUI:
                else:
                    videostatus=True
        if self.haveaudio:
+           print "audiopasstoggle " + str(self.audiopasstoggle)
            if self.audiopasstoggle != True:
                audiostatus = codecfinder.get_audio_encoder_element(self.AudioCodec)
            else:
@@ -887,7 +888,6 @@ class TransmageddonUI:
        self.ProgressBar.set_text(_("Transcoding Progress"))
        context_id = self.StatusBar.get_context_id("EOS")
        self.StatusBar.pop(context_id)
-       self.audiopasstoggle=False
 
    def populate_menu_choices(self):
        # self.audiocodecs - contains list of whats in self.audiorows
@@ -1016,6 +1016,7 @@ class TransmageddonUI:
        self.rotationvalue = self.rotationchoice.get_active()
 
    def on_audiocodec_changed(self, widget):
+       self.audiopasstoggle=False
        if (self.houseclean == False and self.usingpreset==False):
            self.AudioCodec = self.audiocodecs[self.audiorows[0].get_active()]
            if self.container != False:
@@ -1025,6 +1026,7 @@ class TransmageddonUI:
            self.AudioCodec = gst.Caps(self.presetaudiocodec)    
 
    def on_videocodec_changed(self, widget):
+       self.videopasstoggle=False
        if (self.houseclean == False and self.usingpreset==False):
            if self.container != False:
                self.VideoCodec = self.videocodecs[self.videorows[0].get_active()]
