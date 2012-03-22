@@ -1,3 +1,10 @@
+0.21
+  Fix MPEG4 profiles to work with new caps in GStreamer
+  Move preset directory to be Transmageddon specific
+  Stop using XDG python library and just use glib
+  Fix bug with repeated remuxings of same file
+  Added or updated Brazilian, Swedish, Slovak, Turkish and Serbian translation
+
 0.20
   Port to new plugins-base discoverer and encodebin
   Replace radiobutton lists with a combobox instead
