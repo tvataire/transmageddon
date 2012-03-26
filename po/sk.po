@@ -1,131 +1,129 @@
-# Brazilian Portuguese translation for transmageddon.
-# Copyright (C) 2010 transmageddon's COPYRIGHT HOLDER
+# Slovak translation for transmageddon.
+# Copyright (C) 2011 Free Software Foundation, Inc.
 # This file is distributed under the same license as the transmageddon package.
-# Gilfran Ribeiro <contato@gilfran.net>, 2010.
+# Stanislav Petrek <stanislav.petrek@gmail.com>, 2011.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: transmageddon master\n"
+"Project-Id-Version: transmageddon\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=transmageddon&keywords=I18N+L10N&component=General\n"
 "POT-Creation-Date: 2011-10-29 17:32+0000\n"
-"PO-Revision-Date: 2010-11-15 00:16-0200\n"
-"Last-Translator: João Eduardo Strottmann <eduardo-strottmann@ig.com.br>\n"
-"Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
+"PO-Revision-Date: 2011-09-24 15:46+0200\n"
+"Last-Translator: Stanislav Petrek <stanislav.petrek@gmail.com>\n"
+"Language-Team: Slovak <gnome-sk-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0;\n"
 
 #: ../src/about.py.in:48
 msgid "translator-credits"
-msgstr ""
-"Gilfran Ribeiro <contato@gilfran.net>\n"
-"João Eduardo Strottmann <eduardo-strottmann@ig.com.br>"
+msgstr "Stanislav Petrek <stanislav.petrek@gmail.com>"
 
 #: ../src/presets.py:77
 #, python-format
 msgid "Not a valid integer or fraction: %(value)s!"
-msgstr "Não é um inteiro ou fracionário válido: %(value)s!"
+msgstr "%(value)s nie je platné celé číslo ani zlomok!"
 
+# %(presets)d je počet predvolieb
 #: ../src/presets.py:410
 #, python-format
 msgid "Loaded device %(device)s (%(presets)d presets)"
-msgstr "Dispositivo carregado %(device)s (predefinição %(presets)d)"
+msgstr "Načítané zariadenie %(device)s (predvolieb: %(presets)d)"
 
 #: ../src/presets.py:477
 #, python-format
 msgid "Fetching %(location)s"
-msgstr "Buscando %(location)s"
+msgstr "Získava sa %(location)s"
 
 #: ../src/presets.py:484
 #, python-format
 msgid "Writing to %(file)s"
-msgstr "Gravando em %(file)s"
+msgstr "Zapisuje sa do %(file)s"
 
 #: ../src/presets.py:489
 #, python-format
 msgid "There was an error fetching and installing %(location)s: %(error)s"
-msgstr "Houve um erro ao buscar e instalar em %(location)s: %(error)s"
+msgstr "Pri získavaní a inštalovaní %(location)s sa vyskytla chyba: %(error)s"
 
 #: ../src/presets.py:506
 msgid "Checking for device preset updates..."
-msgstr "Checando atualização de dispositivos de predefinido..."
+msgstr "Zisťujú sa aktualizácie predvolieb zariadenia..."
 
 #: ../src/presets.py:526
 #, python-format
 msgid "Device preset %(name)s is up to date"
-msgstr "O dispositivo predefinido %(name)s está atualizado"
+msgstr "Predvoľba zariadenia %(name)s je aktuálna"
 
 #: ../src/presets.py:530
 #, python-format
 msgid "Found updated device preset %(name)s"
-msgstr "Encontrado dispositivo predefinido atualizado %(name)s"
+msgstr "Našli sa aktualizované predvoľby zariadenia %(name)s"
 
 #: ../src/presets.py:536 ../src/presets.py:549
 #, python-format
 msgid "Error installing preset %(name)s from %(location)s: %(error)s"
-msgstr ""
-"Erro ao instalar predefinição %(name)s a partir de %(location)s: %(error)s"
+msgstr "Chyba pri inštalovaní predvoľby %(name)s z %(location)s: %(error)s"
 
 #: ../src/presets.py:543
 #, python-format
 msgid "Found new device preset %(name)s"
-msgstr "Encontrado novo dispositivo predefinido %(name)s"
+msgstr "Našla sa nová predvoľba zariadenia %(name)s"
 
 #: ../src/presets.py:556
 #, python-format
 msgid "Malformed plugin version line %(line)s"
-msgstr "Linha do plugin de versão invália %(line)s"
+msgstr "Chybná verzia zásuvného modulu na riadku %(line)s"
 
 #: ../src/presets.py:560
 #, python-format
 msgid "There was a problem accessing %(location)spresets.txt!"
-msgstr "Houve um problema ao acessar %(location)spresets.txt!"
+msgstr "Nastal problém pri prístupe k %(location)spresets.txt!"
 
 #: ../src/presets.py:582
 msgid "All device presets are up to date!"
-msgstr "Todos os dispositivos predefinidos estão atualizados!"
+msgstr "Všetky predvoľby zariadenia sú aktuálne!"
 
 #: ../src/transmageddon.ui.h:1
 msgid "<b>Choose Audio Codec</b>:"
-msgstr "<b>Escolha o codec de áudio</b>:"
+msgstr "<b>Vyberte zvukový kodek</b>:"
 
 #: ../src/transmageddon.ui.h:2
 msgid "<b>Choose Input File:</b>"
-msgstr "<b>Escolha o arquivo de entrada:</b>"
+msgstr "<b>Vyberte vstupný súbor:</b>"
 
 #: ../src/transmageddon.ui.h:3
 msgid "<b>Choose Video Codec</b>:"
-msgstr "<b>Escolha o codec de vídeo</b>:"
+msgstr "<b>Vyberte video kodek</b>:"
 
 #: ../src/transmageddon.ui.h:4
 msgid "<b>Output Format:</b>"
-msgstr "<b>Formato de saída:</b>"
+msgstr "<b>Výstupný formát:</b>"
 
 #: ../src/transmageddon.ui.h:5
 msgid "<b>Presets:</b>"
-msgstr "<b>Predefinição:</b>"
+msgstr "<b>Prevoľby:</b>"
 
 #: ../src/transmageddon.ui.h:6
 msgid "<small>Audio Channels:</small>"
-msgstr "<small>Canais de áudio:</small>"
+msgstr "<small>Zvukové kanály:</small>"
 
 #: ../src/transmageddon.ui.h:7
 msgid "<small>Audio codec:</small>"
-msgstr "<small>Codec de áudio:</small>"
+msgstr "<small>Zvukový kodek:</small>"
 
 #: ../src/transmageddon.ui.h:8
 msgid "<small>Rotate the video image if needed</small>"
-msgstr "<small>Girar a imagem de vídeo se necessário</small>"
+msgstr "<small>Ak je to potrebné, otočiť obraz</small>"
 
 #: ../src/transmageddon.ui.h:9
 msgid "<small>Video codec:</small>"
-msgstr "<small>Codec de vídeo:</small>"
+msgstr "<small>Video kodek:</small>"
 
 #: ../src/transmageddon.ui.h:10
 msgid "<small>Video height&#47;width:</small>"
-msgstr "<small>Video altura&#47;largura:</small>"
+msgstr "<small>Video výška&#47;šírka:</small>"
 
 #: ../src/transmageddon.ui.h:11
 msgid "Transmageddon"
@@ -133,63 +131,63 @@ msgstr "Transmageddon"
 
 #: ../src/transmageddon.ui.h:12
 msgid "_Debug"
-msgstr "_Depurar"
+msgstr "_Ladiť"
 
 #: ../src/transmageddon.ui.h:13
 msgid "_Help"
-msgstr "_Ajuda"
+msgstr "_Pomocník"
 
 #: ../src/transmageddon.ui.h:14
 msgid "_Transcode"
-msgstr "Converter"
+msgstr "_Prekódovať"
 
 #: ../src/transmageddon.py:309 ../src/transmageddon.py:681
 #: ../src/transmageddon.py:855 ../src/transmageddon.py:886
 #: ../src/transmageddon.py:974 ../src/transmageddon.py:1055
 msgid "Transcoding Progress"
-msgstr "Progresso da conversão"
+msgstr "Priebeh prekódovania"
 
 #. add i18n "No container"option
 #: ../src/transmageddon.py:344
 msgid "No container (Audio-only)"
-msgstr "Sem container (somente áudio)"
+msgstr "Bez kontajnera (iba zvuk)"
 
 #. Populate the rotatation box
 #: ../src/transmageddon.py:347
 msgid "No rotation (default)"
-msgstr "Não girar (padrão)"
+msgstr "Bez otočenia (predvolené)"
 
 #: ../src/transmageddon.py:348
 msgid "Clockwise 90 degrees"
-msgstr "Sentido horário 90 graus"
+msgstr "Otočiť o 90 stupňov vpravo"
 
 #: ../src/transmageddon.py:349
 msgid "Rotate 180 degrees"
-msgstr "Girar 180 graus"
+msgstr "Otočiť o 180 stupňov"
 
 #: ../src/transmageddon.py:350
 msgid "Counterclockwise 90 degrees"
-msgstr "Sentido anti-horário 90 graus"
+msgstr "Otočiť o 90 stupňov vľavo"
 
 #: ../src/transmageddon.py:351
 msgid "Horizontal flip"
-msgstr "Inverter na horizontal"
+msgstr "Prevrátiť vodorovne"
 
 #: ../src/transmageddon.py:352
 msgid "Vertical flip"
-msgstr "Inverter na vertical"
+msgstr "Prevrátiť zvisle"
 
 #: ../src/transmageddon.py:353
 msgid "Upper left diagonal flip"
-msgstr "Inverter na diagonal superior esquerda"
+msgstr "Preklopiť podľa uhlopriečky smerujúcej vľavo hore"
 
 #: ../src/transmageddon.py:354
 msgid "Upper right diagnonal flip"
-msgstr "Inverter na diagonal superior direita"
+msgstr "Preklopiť podľa uhlopriečky smerujúcej vpravo hore"
 
 #: ../src/transmageddon.py:375 ../src/transmageddon.py:990
 msgid "No Presets"
-msgstr "Sem predefinições"
+msgstr "Bez predvolieb"
 
 #: ../src/transmageddon.py:468
 #, python-format
@@ -199,84 +197,83 @@ msgstr "%(min)d:%(sec)02d"
 #: ../src/transmageddon.py:499
 #, python-format
 msgid "File saved to %(dir)s"
-msgstr "Arquivo salvo em %(dir)s"
+msgstr "Súbor uložený do %(dir)s"
 
 #: ../src/transmageddon.py:509
 msgid "Done Transcoding"
-msgstr "Conversão concluída"
+msgstr "Prekódovanie je dokončené"
 
 #: ../src/transmageddon.py:520
 #, python-format
 msgid "Pass %(count)d Complete"
-msgstr "Passo %(count)d completo"
+msgstr "Prechod %(count)d je dokončený"
 
 #: ../src/transmageddon.py:523
 msgid "Start next pass"
-msgstr "Iniciar próximo passo"
+msgstr "Spustiť ďalší prechod"
 
 #: ../src/transmageddon.py:572
 msgid "No Audio"
-msgstr "Sem áudio"
+msgstr "Bez zvuku"
 
 #. add a 'No Video option'
 #: ../src/transmageddon.py:593 ../src/transmageddon.py:956
 msgid "No Video"
-msgstr "Sem vídeo"
+msgstr "Bez videa"
 
 #: ../src/transmageddon.py:762
 msgid "Plugins not found, choose different codecs."
-msgstr "Plugins não encontrados, escolha codecs diferentes."
+msgstr "Zásuvné moduly neboli nájdené, vyberte iné kodeky."
 
 #: ../src/transmageddon.py:770
 msgid "Codec installation aborted."
-msgstr "Instalação do codec cancelada."
+msgstr "Inštalácia kodeku bola prerušená."
 
 #: ../src/transmageddon.py:778
 msgid "Missing plugin installation failed: "
-msgstr "Faltando plugin, instalação falhou:"
+msgstr "Zlyhala inštalácia chýbajúceho zásuvného modulu: "
 
 #: ../src/transmageddon.py:853
 #, python-format
 msgid "Writing %(filename)s"
-msgstr "Gravando %(filename)s"
+msgstr "Zapisuje sa %(filename)s"
 
 #: ../src/transmageddon.py:858
 #, python-format
 msgid "Pass %(count)d Progress"
-msgstr "Progresso de passos %(count)d"
+msgstr "Prebieha %(count)d. prechod"
 
+# SP: ak bude zaškrtnuté "video nemeniť", tak sa nedá už video otáčať.
+# PM: OK
 #: ../src/transmageddon.py:962
-#| msgid "_Video passthrough"
 msgid "Video passthrough"
-msgstr "Passagem de vídeo"
+msgstr "Video nemeniť"
 
 #: ../src/transmageddon.py:967
-#| msgid "_Audio passthrough"
 msgid "Audio passthrough"
-msgstr "Passagem de áudio"
+msgstr "Zvuk nemeniť"
 
 #: ../src/transmageddon.py:1057
 msgid "No audio parser, passthrough not available"
-msgstr "Nenhum analisador de áudio, passagem não disponível"
+msgstr "Bez analyzátora zvuku je prechod nedostupný"
 
 #: ../src/transmageddon.py:1062
 msgid "No video parser, passthrough not available"
-msgstr "Nenhum analisador de vídeo, passagem não disponível"
+msgstr "Bez analyzátora videa je prechod nedostupný"
 
 #: ../src/transmageddon.py:1067
 msgid "Uknown error"
-msgstr "Erro desconhecido"
+msgstr "Neznáma chyba"
 
 #: ../src/utils.py:73
 #, python-format
 msgid "Can't find %(path)s in any known prefix!"
-msgstr "Não foi possível encontrar %(path)s em qualquer prefixo conhecido!"
+msgstr "Nedá sa %(path)s nájsť v žiadnej známej ceste!"
 
 #: ../transmageddon.desktop.in.in.h:1
 msgid "Transmageddon Video Transcoder"
-msgstr "Transcodificador de vídeo Transmageddon"
+msgstr "Transmageddon – prekódovač videa"
 
 #: ../transmageddon.desktop.in.in.h:2
 msgid "Video format conversion tool"
-msgstr "Ferramenta de conversão de formato de vídeo"
-
+msgstr "Nástroj na prekódovanie video formátu"

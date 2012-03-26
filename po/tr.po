@@ -1,131 +1,130 @@
-# Brazilian Portuguese translation for transmageddon.
-# Copyright (C) 2010 transmageddon's COPYRIGHT HOLDER
+# Turkish translation for transmageddon.
+# Copyright (C) 2012 transmageddon's COPYRIGHT HOLDER
 # This file is distributed under the same license as the transmageddon package.
-# Gilfran Ribeiro <contato@gilfran.net>, 2010.
 #
+# Muhammet Kara <muhammet.k@gmail.com>, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: transmageddon master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=transmageddon&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2011-10-29 17:32+0000\n"
-"PO-Revision-Date: 2010-11-15 00:16-0200\n"
-"Last-Translator: João Eduardo Strottmann <eduardo-strottmann@ig.com.br>\n"
-"Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
+"POT-Creation-Date: 2011-12-09 14:32+0000\n"
+"PO-Revision-Date: 2012-01-13 14:13+0200\n"
+"Last-Translator: Muhammet Kara <muhammet.k@gmail.com>\n"
+"Language-Team: Turkish <gnome-turk@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language: tr\n"
+"X-Generator: Lokalize 1.2\n"
 
 #: ../src/about.py.in:48
 msgid "translator-credits"
-msgstr ""
-"Gilfran Ribeiro <contato@gilfran.net>\n"
-"João Eduardo Strottmann <eduardo-strottmann@ig.com.br>"
+msgstr "Muhammet Kara <muhammet.k@gmail.com>"
 
 #: ../src/presets.py:77
 #, python-format
 msgid "Not a valid integer or fraction: %(value)s!"
-msgstr "Não é um inteiro ou fracionário válido: %(value)s!"
+msgstr "Geçerli bir tamsayı ya da kesir değil: %(value)s!"
 
 #: ../src/presets.py:410
 #, python-format
 msgid "Loaded device %(device)s (%(presets)d presets)"
-msgstr "Dispositivo carregado %(device)s (predefinição %(presets)d)"
+msgstr "%(device)s aygıtı yüklendi (%(presets)d önayar)"
 
 #: ../src/presets.py:477
 #, python-format
 msgid "Fetching %(location)s"
-msgstr "Buscando %(location)s"
+msgstr "%(location)s alınıyor"
 
 #: ../src/presets.py:484
 #, python-format
 msgid "Writing to %(file)s"
-msgstr "Gravando em %(file)s"
+msgstr "%(file)s'e yazılıyor"
 
 #: ../src/presets.py:489
 #, python-format
 msgid "There was an error fetching and installing %(location)s: %(error)s"
-msgstr "Houve um erro ao buscar e instalar em %(location)s: %(error)s"
+msgstr "%(location)s alınıp kurulurken bir hata oluştu: %(error)s"
 
 #: ../src/presets.py:506
 msgid "Checking for device preset updates..."
-msgstr "Checando atualização de dispositivos de predefinido..."
+msgstr "Aygıt önayar güncellemeleri denetleniyor..."
 
 #: ../src/presets.py:526
 #, python-format
 msgid "Device preset %(name)s is up to date"
-msgstr "O dispositivo predefinido %(name)s está atualizado"
+msgstr "Aygıt önayarı %(name)s güncel"
 
 #: ../src/presets.py:530
 #, python-format
 msgid "Found updated device preset %(name)s"
-msgstr "Encontrado dispositivo predefinido atualizado %(name)s"
+msgstr "Güncellenmiş aygıt önayarı %(name)s bulundu"
 
 #: ../src/presets.py:536 ../src/presets.py:549
 #, python-format
 msgid "Error installing preset %(name)s from %(location)s: %(error)s"
-msgstr ""
-"Erro ao instalar predefinição %(name)s a partir de %(location)s: %(error)s"
+msgstr "%(name)s önayarı %(location)s konumundan kurulurken hata: %(error)s"
 
 #: ../src/presets.py:543
 #, python-format
 msgid "Found new device preset %(name)s"
-msgstr "Encontrado novo dispositivo predefinido %(name)s"
+msgstr "Yeni aygıt önayarı %(name)s bulundu"
 
 #: ../src/presets.py:556
 #, python-format
 msgid "Malformed plugin version line %(line)s"
-msgstr "Linha do plugin de versão invália %(line)s"
+msgstr "Hatalı eklenti sürümü satırı %(line)s"
 
 #: ../src/presets.py:560
 #, python-format
 msgid "There was a problem accessing %(location)spresets.txt!"
-msgstr "Houve um problema ao acessar %(location)spresets.txt!"
+msgstr "%(location)spresets.txt dosyasına erişilirken bir sorun oluştu!"
 
 #: ../src/presets.py:582
 msgid "All device presets are up to date!"
-msgstr "Todos os dispositivos predefinidos estão atualizados!"
+msgstr "Tüm aygıt önayarları güncel!"
 
 #: ../src/transmageddon.ui.h:1
 msgid "<b>Choose Audio Codec</b>:"
-msgstr "<b>Escolha o codec de áudio</b>:"
+msgstr "<b>Ses Kod Çözücüsünü Seç</b>:"
 
 #: ../src/transmageddon.ui.h:2
 msgid "<b>Choose Input File:</b>"
-msgstr "<b>Escolha o arquivo de entrada:</b>"
+msgstr "<b>Girdi Dosyası Seç:</b>"
 
 #: ../src/transmageddon.ui.h:3
 msgid "<b>Choose Video Codec</b>:"
-msgstr "<b>Escolha o codec de vídeo</b>:"
+msgstr "<b>Video Kod Çözücüsünü Seç</b>:"
 
 #: ../src/transmageddon.ui.h:4
 msgid "<b>Output Format:</b>"
-msgstr "<b>Formato de saída:</b>"
+msgstr "<b>Çıktı Biçimi:</b>"
 
 #: ../src/transmageddon.ui.h:5
 msgid "<b>Presets:</b>"
-msgstr "<b>Predefinição:</b>"
+msgstr "<b>Önayarlar:</b>"
 
 #: ../src/transmageddon.ui.h:6
 msgid "<small>Audio Channels:</small>"
-msgstr "<small>Canais de áudio:</small>"
+msgstr "<small>Ses Kanalları:</small>"
 
 #: ../src/transmageddon.ui.h:7
 msgid "<small>Audio codec:</small>"
-msgstr "<small>Codec de áudio:</small>"
+msgstr "<small>Ses kod çözücüsü:</small>"
 
 #: ../src/transmageddon.ui.h:8
 msgid "<small>Rotate the video image if needed</small>"
-msgstr "<small>Girar a imagem de vídeo se necessário</small>"
+msgstr "<small>Eğer gerekiyorsa video görüntüsünü döndür</small>"
 
 #: ../src/transmageddon.ui.h:9
 msgid "<small>Video codec:</small>"
-msgstr "<small>Codec de vídeo:</small>"
+msgstr "<small>Video kod çözücüsü:</small>"
 
 #: ../src/transmageddon.ui.h:10
 msgid "<small>Video height&#47;width:</small>"
-msgstr "<small>Video altura&#47;largura:</small>"
+msgstr "<small>Video yükseklik&#47;genişlik:</small>"
 
 #: ../src/transmageddon.ui.h:11
 msgid "Transmageddon"
@@ -133,63 +132,63 @@ msgstr "Transmageddon"
 
 #: ../src/transmageddon.ui.h:12
 msgid "_Debug"
-msgstr "_Depurar"
+msgstr "_Hata Ayıkla"
 
 #: ../src/transmageddon.ui.h:13
 msgid "_Help"
-msgstr "_Ajuda"
+msgstr "_Yardım"
 
 #: ../src/transmageddon.ui.h:14
 msgid "_Transcode"
-msgstr "Converter"
+msgstr "_Kodlama Dönüştür"
 
 #: ../src/transmageddon.py:309 ../src/transmageddon.py:681
-#: ../src/transmageddon.py:855 ../src/transmageddon.py:886
-#: ../src/transmageddon.py:974 ../src/transmageddon.py:1055
+#: ../src/transmageddon.py:856 ../src/transmageddon.py:887
+#: ../src/transmageddon.py:975 ../src/transmageddon.py:1056
 msgid "Transcoding Progress"
-msgstr "Progresso da conversão"
+msgstr "Kodlama Dönüştürme Süreci"
 
 #. add i18n "No container"option
 #: ../src/transmageddon.py:344
 msgid "No container (Audio-only)"
-msgstr "Sem container (somente áudio)"
+msgstr "Taşıyıcı yok (Sadece ses)"
 
 #. Populate the rotatation box
 #: ../src/transmageddon.py:347
 msgid "No rotation (default)"
-msgstr "Não girar (padrão)"
+msgstr "Döndürme yok (öntanımlı)"
 
 #: ../src/transmageddon.py:348
 msgid "Clockwise 90 degrees"
-msgstr "Sentido horário 90 graus"
+msgstr "Saat yönünde 90 derece"
 
 #: ../src/transmageddon.py:349
 msgid "Rotate 180 degrees"
-msgstr "Girar 180 graus"
+msgstr "180 derece döndür"
 
 #: ../src/transmageddon.py:350
 msgid "Counterclockwise 90 degrees"
-msgstr "Sentido anti-horário 90 graus"
+msgstr "Saat yönünün tersine 90 derece"
 
 #: ../src/transmageddon.py:351
 msgid "Horizontal flip"
-msgstr "Inverter na horizontal"
+msgstr "Yatay çevir"
 
 #: ../src/transmageddon.py:352
 msgid "Vertical flip"
-msgstr "Inverter na vertical"
+msgstr "Dikey çevir"
 
 #: ../src/transmageddon.py:353
 msgid "Upper left diagonal flip"
-msgstr "Inverter na diagonal superior esquerda"
+msgstr "Sol üst köşegen çevir"
 
 #: ../src/transmageddon.py:354
 msgid "Upper right diagnonal flip"
-msgstr "Inverter na diagonal superior direita"
+msgstr "Sağ üst köşegen çevir"
 
-#: ../src/transmageddon.py:375 ../src/transmageddon.py:990
+#: ../src/transmageddon.py:375 ../src/transmageddon.py:991
 msgid "No Presets"
-msgstr "Sem predefinições"
+msgstr "Önayar Yok"
 
 #: ../src/transmageddon.py:468
 #, python-format
@@ -199,84 +198,81 @@ msgstr "%(min)d:%(sec)02d"
 #: ../src/transmageddon.py:499
 #, python-format
 msgid "File saved to %(dir)s"
-msgstr "Arquivo salvo em %(dir)s"
+msgstr "Dosya %(dir)s'a kaydedildi"
 
 #: ../src/transmageddon.py:509
 msgid "Done Transcoding"
-msgstr "Conversão concluída"
+msgstr "Kodlama Dönüşümü Yapıldı"
 
 #: ../src/transmageddon.py:520
 #, python-format
 msgid "Pass %(count)d Complete"
-msgstr "Passo %(count)d completo"
+msgstr ""
 
 #: ../src/transmageddon.py:523
 msgid "Start next pass"
-msgstr "Iniciar próximo passo"
+msgstr ""
 
 #: ../src/transmageddon.py:572
 msgid "No Audio"
-msgstr "Sem áudio"
+msgstr "Ses Yok"
 
 #. add a 'No Video option'
-#: ../src/transmageddon.py:593 ../src/transmageddon.py:956
+#: ../src/transmageddon.py:593 ../src/transmageddon.py:957
 msgid "No Video"
-msgstr "Sem vídeo"
+msgstr "Görüntü Yok"
 
-#: ../src/transmageddon.py:762
+#: ../src/transmageddon.py:763
 msgid "Plugins not found, choose different codecs."
-msgstr "Plugins não encontrados, escolha codecs diferentes."
+msgstr "Eklentiler bulunamadı, farklı kod paketleri seçin."
 
-#: ../src/transmageddon.py:770
+#: ../src/transmageddon.py:771
 msgid "Codec installation aborted."
-msgstr "Instalação do codec cancelada."
+msgstr "Kod paketi kurulumu iptal edildi."
 
-#: ../src/transmageddon.py:778
+#: ../src/transmageddon.py:779
 msgid "Missing plugin installation failed: "
-msgstr "Faltando plugin, instalação falhou:"
+msgstr "Eksik eklentilerin kurulumu başarısız oldu: "
 
-#: ../src/transmageddon.py:853
+#: ../src/transmageddon.py:854
 #, python-format
 msgid "Writing %(filename)s"
-msgstr "Gravando %(filename)s"
+msgstr "%(filename)s yazılıyor"
 
-#: ../src/transmageddon.py:858
+#: ../src/transmageddon.py:859
 #, python-format
 msgid "Pass %(count)d Progress"
-msgstr "Progresso de passos %(count)d"
+msgstr ""
 
-#: ../src/transmageddon.py:962
-#| msgid "_Video passthrough"
+#: ../src/transmageddon.py:963
 msgid "Video passthrough"
-msgstr "Passagem de vídeo"
+msgstr ""
 
-#: ../src/transmageddon.py:967
-#| msgid "_Audio passthrough"
+#: ../src/transmageddon.py:968
 msgid "Audio passthrough"
-msgstr "Passagem de áudio"
+msgstr ""
 
-#: ../src/transmageddon.py:1057
+#: ../src/transmageddon.py:1058
 msgid "No audio parser, passthrough not available"
-msgstr "Nenhum analisador de áudio, passagem não disponível"
+msgstr ""
 
-#: ../src/transmageddon.py:1062
+#: ../src/transmageddon.py:1063
 msgid "No video parser, passthrough not available"
-msgstr "Nenhum analisador de vídeo, passagem não disponível"
+msgstr ""
 
-#: ../src/transmageddon.py:1067
+#: ../src/transmageddon.py:1068
 msgid "Uknown error"
-msgstr "Erro desconhecido"
+msgstr "Bilinmeyen hata"
 
-#: ../src/utils.py:73
+#: ../src/utils.py:76
 #, python-format
 msgid "Can't find %(path)s in any known prefix!"
-msgstr "Não foi possível encontrar %(path)s em qualquer prefixo conhecido!"
+msgstr ""
 
 #: ../transmageddon.desktop.in.in.h:1
 msgid "Transmageddon Video Transcoder"
-msgstr "Transcodificador de vídeo Transmageddon"
+msgstr "Transmageddon Video Kodlama Dönüştürücüsü"
 
 #: ../transmageddon.desktop.in.in.h:2
 msgid "Video format conversion tool"
-msgstr "Ferramenta de conversão de formato de vídeo"
-
+msgstr "Video biçim dönüştürme aracı"

@@ -1,0 +1,278 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Miroslav Nikolić <miroslavnikolic@rocketmail.com>, 2012.
+msgid ""
+msgstr ""
+"Project-Id-Version: transmageddon\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=transm"
+"ageddon&keywords=I18N+L10N&component=General\n"
+"POT-Creation-Date: 2012-02-15 12:02+0000\n"
+"PO-Revision-Date: 2012-03-18 12:44+0200\n"
+"Last-Translator: Miroslav Nikolić <miroslavnikolic@rocketmail.com>\n"
+"Language-Team: Serbian <gnom@prevod.org>\n"
+"Language: sr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=n==1? 3 : n%10==1 && n%100!=11 ? 0 : "
+"n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Project-Style: gnome\n"
+
+#: ../src/about.py.in:48
+msgid "translator-credits"
+msgstr "Miroslav Nikolić <miroslavnikolic@rocketmail.com>"
+
+#: ../src/presets.py:77
+#, python-format
+msgid "Not a valid integer or fraction: %(value)s!"
+msgstr "Neispravan ceo broj ili razlomak: %(value)s!"
+
+#: ../src/presets.py:410
+#, python-format
+msgid "Loaded device %(device)s (%(presets)d presets)"
+msgstr "Učitan uređaj %(device)s (%(presets)d pretpodešavanja)"
+
+#: ../src/presets.py:477
+#, python-format
+msgid "Fetching %(location)s"
+msgstr "Dovlačim %(location)s"
+
+#: ../src/presets.py:484
+#, python-format
+msgid "Writing to %(file)s"
+msgstr "Zapisujem u %(file)s"
+
+#: ../src/presets.py:489
+#, python-format
+msgid "There was an error fetching and installing %(location)s: %(error)s"
+msgstr "Došlo je do greške dovlačenja i instaliranja %(location)s: %(error)s"
+
+#: ../src/presets.py:506
+msgid "Checking for device preset updates..."
+msgstr "Proveravam ažuriranja pretpodešavanja uređaja..."
+
+#: ../src/presets.py:526
+#, python-format
+msgid "Device preset %(name)s is up to date"
+msgstr "Petpodešavanje uređaja %(name)s je najnovije"
+
+#: ../src/presets.py:530
+#, python-format
+msgid "Found updated device preset %(name)s"
+msgstr "Pronašao sam pretpodešavanje uređaja %(name)s"
+
+#: ../src/presets.py:536 ../src/presets.py:549
+#, python-format
+msgid "Error installing preset %(name)s from %(location)s: %(error)s"
+msgstr "Greška instaliranja pretpodešavanja %(name)s sa %(location)s: %(error)s"
+
+#: ../src/presets.py:543
+#, python-format
+msgid "Found new device preset %(name)s"
+msgstr "Pronašao sam pretpodešavanje novog uređaja %(name)s"
+
+#: ../src/presets.py:556
+#, python-format
+msgid "Malformed plugin version line %(line)s"
+msgstr "Loš red izdanja priključka %(line)s"
+
+#: ../src/presets.py:560
+#, python-format
+msgid "There was a problem accessing %(location)spresets.txt!"
+msgstr "Došlo je do problema pristupanja %(location)spretpodešavanja.txt!"
+
+#: ../src/presets.py:582
+msgid "All device presets are up to date!"
+msgstr "Sva pretpodešavanja uređaja su najnovija!"
+
+#: ../src/transmageddon.ui.h:1
+msgid "Transmageddon"
+msgstr "Transmagedon"
+
+#: ../src/transmageddon.ui.h:2
+msgid "_Help"
+msgstr "Po_moć"
+
+#: ../src/transmageddon.ui.h:3
+msgid "_Debug"
+msgstr "_Ispravljanje grešaka"
+
+#: ../src/transmageddon.ui.h:4
+msgid "<small>Audio Channels:</small>"
+msgstr "<small>Zvučni kanali:</small>"
+
+#: ../src/transmageddon.ui.h:5
+msgid "<small>Video height&#47;width:</small>"
+msgstr "<small>Visina&#47;širina snimka:</small>"
+
+#: ../src/transmageddon.ui.h:6
+msgid "<b>Presets:</b>"
+msgstr "<b>Pretpodešavanja:</b>"
+
+#: ../src/transmageddon.ui.h:7
+msgid "<b>Choose Input File:</b>"
+msgstr "<b>Izaberi ulaznu datoteku:</b>"
+
+#: ../src/transmageddon.ui.h:8
+msgid "<b>Output Format:</b>"
+msgstr "<b>Izlazni format:</b>"
+
+#: ../src/transmageddon.ui.h:9
+msgid "<small>Video codec:</small>"
+msgstr "<small>Kodek snimka:</small>"
+
+#: ../src/transmageddon.ui.h:10
+msgid "<small>Audio codec:</small>"
+msgstr "<small>Kodek zvuka:</small>"
+
+#: ../src/transmageddon.ui.h:11
+msgid "<b>Choose Audio Codec</b>:"
+msgstr "<b>Izaberi kodek zvuka</b>:"
+
+#: ../src/transmageddon.ui.h:12
+msgid "<b>Choose Video Codec</b>:"
+msgstr "<b>Izaberi kodek snimka</b>:"
+
+#: ../src/transmageddon.ui.h:13
+msgid "<small>Rotate the video image if needed</small>"
+msgstr "<small>Zaokreni sliku snimka ako je potrebno</small>"
+
+#: ../src/transmageddon.ui.h:14
+msgid "_Transcode"
+msgstr "_Prekodiraj"
+
+#: ../src/transmageddon.py:309 ../src/transmageddon.py:681
+#: ../src/transmageddon.py:856 ../src/transmageddon.py:887
+#: ../src/transmageddon.py:975 ../src/transmageddon.py:1056
+msgid "Transcoding Progress"
+msgstr "Napredovanje prekodiranja"
+
+#. add i18n "No container"option
+#: ../src/transmageddon.py:344
+msgid "No container (Audio-only)"
+msgstr "Bez sadržaoca (samo zvuk)"
+
+#. Populate the rotatation box
+#: ../src/transmageddon.py:347
+msgid "No rotation (default)"
+msgstr "Bez zaokretanja (osnovno)"
+
+#: ../src/transmageddon.py:348
+msgid "Clockwise 90 degrees"
+msgstr "90 stepeni u smeru kazaljke"
+
+#: ../src/transmageddon.py:349
+msgid "Rotate 180 degrees"
+msgstr "Okreni za 180 stepeni"
+
+#: ../src/transmageddon.py:350
+msgid "Counterclockwise 90 degrees"
+msgstr "90 stepeni suprotno smeru kazaljke"
+
+#: ../src/transmageddon.py:351
+msgid "Horizontal flip"
+msgstr "Vodoravno prevrtanje"
+
+#: ../src/transmageddon.py:352
+msgid "Vertical flip"
+msgstr "Uspravno prevrtanje"
+
+#: ../src/transmageddon.py:353
+msgid "Upper left diagonal flip"
+msgstr "Prevrtanje po gornjoj levoj dijagonali"
+
+#: ../src/transmageddon.py:354
+msgid "Upper right diagnonal flip"
+msgstr "Prevrtanje po gornjoj desnoj dijagonali"
+
+#: ../src/transmageddon.py:375 ../src/transmageddon.py:991
+msgid "No Presets"
+msgstr "Bez pretpodešavanja"
+
+#: ../src/transmageddon.py:468
+#, python-format
+msgid "%(min)d:%(sec)02d"
+msgstr "%(min)d:%(sec)02d"
+
+#: ../src/transmageddon.py:499
+#, python-format
+msgid "File saved to %(dir)s"
+msgstr "Datoteka je sačuvana u %(dir)s"
+
+#: ../src/transmageddon.py:509
+msgid "Done Transcoding"
+msgstr "Prekodiranje je obavljeno"
+
+#: ../src/transmageddon.py:520
+#, python-format
+msgid "Pass %(count)d Complete"
+msgstr "Korak %(count)d je obavljen"
+
+#: ../src/transmageddon.py:523
+msgid "Start next pass"
+msgstr "Započni sledeći korak"
+
+#: ../src/transmageddon.py:572
+msgid "No Audio"
+msgstr "Bez zvuka"
+
+#. add a 'No Video option'
+#: ../src/transmageddon.py:593 ../src/transmageddon.py:957
+msgid "No Video"
+msgstr "Bez snimka"
+
+#: ../src/transmageddon.py:763
+msgid "Plugins not found, choose different codecs."
+msgstr "Priključci nisu pronađeni, izaberite druge kodeke."
+
+#: ../src/transmageddon.py:771
+msgid "Codec installation aborted."
+msgstr "Instalacija kodeka je prekinuta."
+
+#: ../src/transmageddon.py:779
+msgid "Missing plugin installation failed: "
+msgstr "Instalacija nedostajućeg priključka nije uspela: "
+
+#: ../src/transmageddon.py:854
+#, python-format
+msgid "Writing %(filename)s"
+msgstr "Zapisujem %(filename)s"
+
+#: ../src/transmageddon.py:859
+#, python-format
+msgid "Pass %(count)d Progress"
+msgstr "Napredovanje %(count)d. koraka"
+
+#: ../src/transmageddon.py:963
+msgid "Video passthrough"
+msgstr "Prolaz snimka"
+
+#: ../src/transmageddon.py:968
+msgid "Audio passthrough"
+msgstr "Prolaz zvuka"
+
+#: ../src/transmageddon.py:1058
+msgid "No audio parser, passthrough not available"
+msgstr "Nema obrađivača zvuka, prolaz nije dostupan"
+
+#: ../src/transmageddon.py:1063
+msgid "No video parser, passthrough not available"
+msgstr "Nema obrađivača snimka, prolaz nije dostupan"
+
+#: ../src/transmageddon.py:1068
+msgid "Uknown error"
+msgstr "Nepoznata greška"
+
+#: ../src/utils.py:76
+#, python-format
+msgid "Can't find %(path)s in any known prefix!"
+msgstr "Ne mogu da pronađem %(path)s ni u jednom poznatom prefiksu!"
+
+#: ../transmageddon.desktop.in.in.h:1
+msgid "Transmageddon Video Transcoder"
+msgstr "Transmagedon prekoder snimka"
+
+#: ../transmageddon.desktop.in.in.h:2
+msgid "Video format conversion tool"
+msgstr "Alat za pretvaranje formata snimka"
