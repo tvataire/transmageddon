@@ -4,7 +4,7 @@ dnl initialize autoconf
 dnl when going to/from release please set the nano (fourth number) right !
 dnl releases only do Wall, cvs and prerelease does Werror too
 AC_INIT([transmageddon],
-        [0.20],
+        [0.22],
         [https://bugzilla.gnome.org/enter_bug.cgi?product=transmageddon],
         [transmageddon],
         [http://www.linuxrising.org/transmageddon])
@@ -29,9 +29,7 @@ dnl
 dnl For a more exhaustive list of checks, you can have a look at
 dnl the runtime checks in pitivi/check.py
 
-AC_SUBST(PYGTK_REQ, 2.8.0)
-AC_SUBST(PYGST_REQ, 0.10.6)
-AC_SUBST(GST_REQ, 0.10.13.1)
+AC_SUBST(GST_REQ, 0.11.0)
 
 AS_AC_EXPAND(LIBDIR, $libdir)
 AC_MSG_NOTICE(Storing library files in $LIBDIR)
