@@ -41,7 +41,7 @@ def get_search_paths():
     """
     userconfig=GLib.get_user_config_dir()
     return [
-        userconfig
+        userconfig,
         os.getcwd(),
         os.path.join(os.getcwd(), ".."),
         os.path.expanduser(os.path.join(userconfig, "transmageddon")),
