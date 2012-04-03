@@ -43,7 +43,6 @@ class Transcoder(GObject.GObject):
        # Choose plugin based on Container name
        self.container = CONTAINERCHOICE
        self.audiocaps = AUDIOCODECVALUE
-       print "self.audiocaps from UI is " +str(self.audiocaps)
        if self.container != False:
            self.containercaps = Gst.caps_from_string(codecfinder.containermap[CONTAINERCHOICE])
        # special case mp3 which is a no-container format with a container (id3mux)
@@ -59,7 +58,6 @@ class Transcoder(GObject.GObject):
        # or switch to remuxing mode if any of the values are set to 'pastr'
        self.stoptoggle=False
        self.videocaps = VIDEOCODECVALUE # "novid" means we have a video file input, but do not want it
-       print "self.videopass from ui is " + str(self.videocaps)
                                         #  while False means we don't have any video
        self.audiopasstoggle = AUDIOPASSTOGGLE
        self.interlaced = INTERLACED
@@ -139,7 +137,6 @@ class Transcoder(GObject.GObject):
            if self.videocaps != "novid":
                if (self.videocaps != False):
                    videopreset=None
-                   print "videocaps are " + str(self.videocaps)
                    self.videoprofile = GstPbutils.EncodingVideoProfile.new(self.videocaps, videopreset, Gst.Caps.new_any(), 0)
                    self.encodebinprofile.add_profile(self.videoprofile)
 

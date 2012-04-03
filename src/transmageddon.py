@@ -530,7 +530,6 @@ class TransmageddonUI:
 
  
    def succeed(self, discoverer, info, error):
-       print "starting succeed"
        result=GstPbutils.DiscovererInfo.get_result(info)
        if result != GstPbutils.DiscovererResult.ERROR:
            streaminfo=info.get_stream_info()
@@ -651,7 +650,6 @@ class TransmageddonUI:
                                audiointersect = sourcecaps.intersect(self.audiodata['audiotype'])
                            else:
                                self.asourcecaps = audiointersect
-               print "vsourcecaps at source " + str(self.vsourcecaps)
                if videointersect.is_empty():
                    self.videopass=False
                else:
@@ -695,7 +693,6 @@ class TransmageddonUI:
            ratenum = self.videodata['fratenum']
            ratednom = self.videodata['frateden']
            if self.videopasstoggle == False:
-               print "toggle is false"
                videocodec = self.VideoCodec
            else:
                print "self.vsourcecaps " + str(self.vsourcecaps)
