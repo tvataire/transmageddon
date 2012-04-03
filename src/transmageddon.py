@@ -1014,7 +1014,6 @@ class TransmageddonUI:
            self.VideoCodec = self.presetvideocodec
 
    def on_about_dialog_activate(self, widget):
-       print "activating about"
        """
            Show the about dialog.
        """
