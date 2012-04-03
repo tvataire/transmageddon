@@ -8,7 +8,7 @@
         <name>Christian Schaller</name>
         <email>christian.schaller@collabora.co.uk</email>
     </author>
-    <version>1.0</version>
+    <version>2.0</version>
     <icon>file://ipod.svg</icon>
     <default>Normal</default>
     
@@ -26,13 +26,13 @@
             <channels>1, 2</channels>
         </audio>
         <video>
-            <name>video/mpeg,mpegversion=4</name>
+            <name>video/mpeg,mpegversion=4,systemstream=false,profile=simple</name>
             <border>N</border>
             <passes>0</passes>
             <pixelaspectratio>0/0</pixelaspectratio>
             <presets>
                 <preset>
-                    Quality Low, Profile Simple
+                    Quality Low
                 </preset>
             </presets>
             <width>60, 352</width>
