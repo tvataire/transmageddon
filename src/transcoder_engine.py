@@ -52,6 +52,8 @@ class Transcoder(GObject.GObject):
                self.containercaps=Gst.caps_from_string("application/x-id3")
                self.container=Gst.caps_from_string("application/x-id3")
 
+       # set preset directory
+       Gst.preset_set_app_dir("/usr/share/transmageddon/presets/")
 
        # Choose plugin based on Codec Name
        # or switch to remuxing mode if any of the values are set to 'pastr'
@@ -160,8 +162,7 @@ class Transcoder(GObject.GObject):
        
        # put together remuxing caps to set on uridecodebin if doing 
        # passthrough on audio or video
-       print "audiopassthrough is " +str(self.audiopasstoggle) 
-       print "videopassthrougth is " +str(self.videopasstoggle)
+
        if self.audiopasstoggle or self.videopasstoggle:
            self.remuxcaps = Gst.Caps.new_empty()
        if self.audiopasstoggle:
