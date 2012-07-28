@@ -533,7 +533,10 @@ class TransmageddonUI:
        result=GstPbutils.DiscovererInfo.get_result(info)
        if result != GstPbutils.DiscovererResult.ERROR:
            streaminfo=info.get_stream_info()
-           container = streaminfo.get_caps()
+           if streaminfo != None:
+               container = streaminfo.get_caps()
+           else:
+               self.check_for_elements()
            seekbool = info.get_seekable()
            clipduration=info.get_duration()
            audiostreamcounter=-1
@@ -594,7 +597,7 @@ class TransmageddonUI:
                        if self.container != False:
                            self.check_for_passthrough(self.container)
                    else:
-                       # self.check_for_elements()
+                       self.check_for_elements()
                        if self.missingtoggle==False:
                            self._start_transcoding()
                if self.container != False:
@@ -780,14 +783,17 @@ class TransmageddonUI:
                    self.missingtoggle=True
                    fail_info = []
                if containerstatus == False: 
-                   fail_info.append(Gst.caps_from_string(codecfinder.containermap[containerchoice]))
+                   print "containerchoice is " +str(containerchoice)
+                   muxercaps=Gst.caps_from_string(codecfinder.containermap[containerchoice])
+                   fail_info.append(muxercaps)
                    missing = []
                    for x in fail_info:
                        missing.append(GstPbutils.missing_encoder_installer_detail_new(x))
                    context = GstPbutils.InstallPluginsContext ()
                    context.set_xid(self.TopWindow.get_window().get_xid())
                    strmissing = str(missing)
-                   GstPbutils.install_plugins_async (strmissing, context, \
+                   print strmissing
+                   GstPbutils.install_plugins_async (missing, context, \
                        self.donemessage, "NULL")
 
    # The transcodebutton is the one that calls the Transcoder class and thus
