@@ -732,7 +732,7 @@ class TransmageddonUI:
        return True
 
    def donemessage(self, donemessage, null):
-       if donemessage == GstPbutils.INSTALL_PLUGINS_SUCCESS:
+       if donemessage == GstPbutils.InstallPluginsReturn.SUCCESS:
            # print "success " + str(donemessage)
            if Gst.update_registry():
                print "Plugin registry updated, trying again"
@@ -744,10 +744,10 @@ class TransmageddonUI:
                # actually installed
                # but it is a rather narrow corner case when it fails
                self._start_transcoding()
-       elif donemessage == GstPbutils.INSTALL_PLUGINS_PARTIAL_SUCCESS:
+       elif donemessage == GstPbutils.InstallPluginsReturn.PARTIAL_SUCCESS:
            print "Plugin install not fully succesfull"
            # self.check_for_elements()
-       elif donemessage == GstPbutils.INSTALL_PLUGINS_NOT_FOUND:
+       elif donemessage == GstPbutils.InstallPluginsReturn.NOT_FOUND:
            context_id = self.StatusBar.get_context_id("EOS")
            self.StatusBar.push(context_id, \
                    _("Plugins not found, choose different codecs."))
@@ -756,7 +756,7 @@ class TransmageddonUI:
            self.CodecBox.set_sensitive(True)
            self.cancelbutton.set_sensitive(False)
            self.transcodebutton.set_sensitive(True)
-       elif donemessage == GstPbutils.INSTALL_PLUGINS_USER_ABORT:
+       elif donemessage == GstPbutils.InstallPluginsReturn.USER_ABORT:
            context_id = self.StatusBar.get_context_id("EOS")
            self.StatusBar.push(context_id, _("Codec installation aborted."))
            self.FileChooser.set_sensitive(True)
@@ -766,7 +766,9 @@ class TransmageddonUI:
            self.transcodebutton.set_sensitive(True)
        else:
            context_id = self.StatusBar.get_context_id("EOS")
-           self.StatusBar.push(context_id, _("Missing plugin installation failed: ")) + GstPbutils.InstallPluginsReturn()
+           print donemessage
+           self.StatusBar.push(context_id, _("Missing plugin installation failed: "))
+
 
    def check_for_elements(self):
        containerstatus=False
