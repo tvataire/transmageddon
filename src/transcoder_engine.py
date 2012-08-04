@@ -91,6 +91,10 @@ class Transcoder(GObject.GObject):
            self.cachefile = (str (glib.get_user_cache_dir()) + "/" + \
                    "multipass-cache-file" + self.timestamp + ".log")
 
+       # gather preset data if relevant
+       if self.preset != "nopreset":
+           self.provide_presets()
+ 
        # Create transcoding pipeline
        self.pipeline = Gst.Pipeline()
        self.pipeline.set_state(Gst.State.PAUSED)
@@ -210,12 +214,11 @@ class Transcoder(GObject.GObject):
 
    # Gather preset values and create preset elements
    def provide_presets(self):
+       print "LOADING PRESETS IN TRANSCODER ENGINE"
        devices = presets.get()
        device = devices[self.preset]
        preset = device.presets["Normal"]
-       # set audio and video caps from preset file
-       self.audiocaps=Gst.caps_from_string(preset.acodec.name)
-       self.videocaps=Gst.caps_from_string(preset.vcodec.name)
+
        # Check for black border boolean
        border = preset.vcodec.border
        if border == "Y":
@@ -236,7 +239,10 @@ class Transcoder(GObject.GObject):
        wmin, wmax  =  preset.vcodec.width
        hmin, hmax = preset.vcodec.height
        width, height = self.owidth, self.oheight
-
+       print "wmax is " +str(wmax)
+       print "hmax is " +str(hmax)
+       print "width is " +str(width)
+       print "height is " +str(height)
        # Get Display aspect ratio
        pixelaspectratio = preset.vcodec.aspectratio
 
@@ -276,9 +282,19 @@ class Transcoder(GObject.GObject):
        else:
            num = self.fratenum
            denom = self.frateden
+       
+       print "audiocaps " +self.audiocaps.to_string()
+       print "videocaps " +self.videocaps.to_string()
+       # set audio and video caps from preset file
+       self.audiocaps=Gst.caps_from_string(preset.acodec.name+","+"channels="+str(self.channels))
+       self.videocaps=Gst.caps_from_string(preset.vcodec.name+","+"height="+str(height)+","+"width="+str(width)+","+"framerate="+str(num)+"/"+str(denom))
+       # self.videocaps.set_value("pixelaspectratio", pixelaspectratio) this doesn't work due to pixelaspectratio being a fraction, 
+       # needs further investigation
+       print "audiocaps " +str(self.audiocaps.to_string())
+       print "videocaps " + str(self.videocaps.to_string())
 
        # print "final height " + str(height) + " final width " + str(width)
-       return height, width, num, denom, pixelaspectratio
+       # return height, width, num, denom, pixelaspectratio
 
    def noMorePads(self, dbin):
        if (self.multipass == False) or (self.passcounter == int(0)):
