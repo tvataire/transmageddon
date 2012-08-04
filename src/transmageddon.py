@@ -385,7 +385,6 @@ class TransmageddonUI:
        self.containerchoice.set_active(-1) # resetting to -1 to ensure population of menu triggers
        self.presetaudiocodec=Gst.caps_from_string(preset.acodec.name)
        self.presetvideocodec=Gst.caps_from_string(preset.vcodec.name)
-       print "preset container is " +str(preset.container)
        if preset.container == "application/ogg":
            self.containerchoice.set_active(0)
        elif preset.container == "video/x-matroska":
@@ -414,7 +413,6 @@ class TransmageddonUI:
            self.containerchoice.set_active(12)
        else:
             print "failed to set container format from preset data"
-       print "done loading presets"
 
 
        # Check for number of passes
@@ -884,9 +882,11 @@ class TransmageddonUI:
        # start filling audio
        if self.haveaudio==True:
            if self.usingpreset==True: # First fill menu based on presetvalue
-               self.audiorows[0].append_text(str(GstPbutils.pb_utils_get_codec_description(self.presetaudiocodec)))
-               self.audiorows[0].set_active(0)
-               self.audiocodecs.append(self.presetaudiocodec)
+               testforempty = self.presetaudiocodec.to_string()
+               if testforempty != "EMPTY": 
+                   self.audiorows[0].append_text(str(GstPbutils.pb_utils_get_codec_description(self.presetaudiocodec)))
+                   self.audiorows[0].set_active(0)
+                   self.audiocodecs.append(self.presetaudiocodec)
            elif self.container==False: # special setup for container less case, looks ugly, but good enough for now
                self.audiorows[0].append_text(str(GstPbutils.pb_utils_get_codec_description(Gst.caps_from_string("audio/mpeg, mpegversion=(int)1, layer=(int)3"))))
                self.audiorows[0].append_text(str(GstPbutils.pb_utils_get_codec_description(Gst.caps_from_string("audio/mpeg, mpegversion=4, stream-format=adts"))))
@@ -912,9 +912,11 @@ class TransmageddonUI:
        if self.havevideo==True:
            if self.container != False:
                if self.usingpreset==True:
-                   self.videorows[0].append_text(str(GstPbutils.pb_utils_get_codec_description(self.presetvideocodec)))
-                   self.videorows[0].set_active(0)
-                   self.videocodecs.append(self.presetvideocodec)
+                   testforempty = self.presetvideocodec.to_string()
+                   if testforempty != "EMPTY":
+                       self.videorows[0].append_text(str(GstPbutils.pb_utils_get_codec_description(self.presetvideocodec)))
+                       self.videorows[0].set_active(0)
+                       self.videocodecs.append(self.presetvideocodec)
                else:
                    video_codecs=[]
                    video_codecs = supported_video_container_map[self.container]
@@ -980,8 +982,6 @@ class TransmageddonUI:
            self.usingpreset=True
            self.ProgressBar.set_fraction(0.0)
            if presetchoice != None:
-               print self.presetchoices
-               print presetchoice
                self.devicename= self.presetchoices[presetchoice-1]
                self.provide_presets(self.devicename)
                self.containerchoice.set_sensitive(False)
