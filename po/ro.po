@@ -1,0 +1,367 @@
+# Romanian translation for transmageddon.
+# Copyright (C) 2011 transmageddon's COPYRIGHT HOLDER
+# This file is distributed under the same license as the transmageddon package.
+# ruxy <ruxy.simion@gmail.com>, 2011.
+# Dobre Alin <dobre.inter@yahoo.com>, 2011.
+# Daniel Șerbănescu <daniel@serbanescu.dk>, 2012.
+msgid ""
+msgstr ""
+"Project-Id-Version: transmageddon master\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=transm"
+"ageddon&keywords=I18N+L10N&component=General\n"
+"POT-Creation-Date: 2012-08-05 09:58+0000\n"
+"PO-Revision-Date: 2012-08-05 21:17+0200\n"
+"Last-Translator: Daniel Șerbănescu <daniel@serbanescu.dk>\n"
+"Language-Team: Gnome Romanian Translation Team\n"
+"Language: ro\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
+"20)) ? 1 : 2);;\n"
+"X-Generator: Virtaal 0.7.0\n"
+"X-Project-Style: gnome\n"
+
+#: ../src/about.py.in:46 ../src/about.py.in:47 ../src/transmageddon.ui.h:1
+msgid "Transmageddon"
+msgstr "Transmageddon"
+
+#: ../src/about.py.in:49
+msgid ""
+"Transmageddon is a simple video and audio conversion tool for GNOME created "
+"by Christian Fredrik Kalager Schaller."
+msgstr ""
+"Transmageddon este un utilitar simplu de conversie audio și video pentru "
+"Gnome creat de Christian Fredrik Kalager Schaller."
+
+#: ../src/about.py.in:50
+#| msgid "Transmageddon"
+msgid "Transmageddon homepage"
+msgstr "Pagina web Transmageddon"
+
+#: ../src/about.py.in:52
+msgid "translator-credits"
+msgstr "Dobre Alin <dobre.inter@yahoo.com>"
+
+#: ../src/presets.py:78
+#, python-format
+msgid "Not a valid integer or fraction: %(value)s!"
+msgstr "Nu este un număr întreg sau o fracție validă: %(value)s!"
+
+#: ../src/presets.py:413
+#, python-format
+msgid "Loaded device %(device)s (%(presets)d presets)"
+msgstr "S-a încărcat dispozitivul %(device)s (%(presets)d prestabiliri)"
+
+#: ../src/presets.py:480
+#, python-format
+msgid "Fetching %(location)s"
+msgstr "Se aduce %(location)s"
+
+#: ../src/presets.py:487
+#, python-format
+msgid "Writing to %(file)s"
+msgstr "Se scrie în %(file)s"
+
+#: ../src/presets.py:492
+#, python-format
+msgid "There was an error fetching and installing %(location)s: %(error)s"
+msgstr "A avut loc o eroare la aducerea și instalarea %(location)s: %(error)s"
+
+#: ../src/presets.py:509
+msgid "Checking for device preset updates..."
+msgstr "Se verifică pentru actualizări ale prestabilirilor de dispozitive..."
+
+#: ../src/presets.py:529
+#, python-format
+msgid "Device preset %(name)s is up to date"
+msgstr "Prestabilirea de dispozitiv %(name)s este actualizată"
+
+#: ../src/presets.py:533
+#, python-format
+msgid "Found updated device preset %(name)s"
+msgstr "S-a găsit o prestabilire de dispozitiv actualizată %(name)s"
+
+#: ../src/presets.py:539 ../src/presets.py:552
+#, python-format
+msgid "Error installing preset %(name)s from %(location)s: %(error)s"
+msgstr ""
+"Eroare la instalarea prestabilirii %(name)s de la %(location)s: %(error)s"
+
+#: ../src/presets.py:546
+#, python-format
+msgid "Found new device preset %(name)s"
+msgstr "S-a găsit o prestabilire de dispozitiv nouă %(name)s"
+
+#: ../src/presets.py:559
+#, python-format
+msgid "Malformed plugin version line %(line)s"
+msgstr "Linie de versiuni de module deteriorată %(line)s"
+
+#: ../src/presets.py:563
+#, python-format
+msgid "There was a problem accessing %(location)spresets.txt!"
+msgstr "S-a întâmpinat o problemă la accesarea %(location)sprestabiliri.txt!"
+
+#: ../src/presets.py:585
+msgid "All device presets are up to date!"
+msgstr "Toate prestabilirile de dispozitiv sunt actualizate!"
+
+#: ../src/transmageddon.ui.h:2
+msgid "_Help"
+msgstr "_Ajutor"
+
+#: ../src/transmageddon.ui.h:3
+msgid "_Debug"
+msgstr "_Depanare"
+
+#: ../src/transmageddon.ui.h:4
+msgid "<small>Audio Channels:</small>"
+msgstr "<small>Canale audio:</small>"
+
+#: ../src/transmageddon.ui.h:5
+msgid "<small>Video height&#47;width:</small>"
+msgstr "<small>Înălțime și lățime video:</small>"
+
+#: ../src/transmageddon.ui.h:6
+msgid "<b>Presets:</b>"
+msgstr "<b>Prestabiliri:</b>"
+
+#: ../src/transmageddon.ui.h:7
+msgid "<b>Choose Input File:</b>"
+msgstr "<b>Alegeți fișierul de intrare:</b>"
+
+#: ../src/transmageddon.ui.h:8
+msgid "<b>Output Format:</b>"
+msgstr "<b>Formatul de ieșire:</b>"
+
+#: ../src/transmageddon.ui.h:9
+msgid "<small>Video codec:</small>"
+msgstr "<small>Codec video:</small>"
+
+#: ../src/transmageddon.ui.h:10
+msgid "<small>Audio codec:</small>"
+msgstr "<small>Codec audio:</small>"
+
+#: ../src/transmageddon.ui.h:11
+msgid "<b>Choose Audio Codec</b>:"
+msgstr "<b>Alegeți codecul audio</b>:"
+
+#: ../src/transmageddon.ui.h:12
+msgid "<b>Choose Video Codec</b>:"
+msgstr "<b>Alegeți codecul video</b>:"
+
+#: ../src/transmageddon.ui.h:13
+msgid "<small>Rotate the video image if needed</small>"
+msgstr "<small>Rotiți imaginea video, dacă este necesar</small>"
+
+#: ../src/transmageddon.ui.h:14
+msgid "_Transcode"
+msgstr "_Transcodează"
+
+#: ../src/transmageddon.py:304 ../src/transmageddon.py:681
+#: ../src/transmageddon.py:857 ../src/transmageddon.py:888
+#: ../src/transmageddon.py:978
+msgid "Transcoding Progress"
+msgstr "Progresul transcodării"
+
+#. add i18n "No container"option
+#: ../src/transmageddon.py:340
+msgid "No container (Audio-only)"
+msgstr "Niciun conținător (numai audio)"
+
+#. Populate the rotatation box
+#. print "populating rotationbox"
+#: ../src/transmageddon.py:344
+msgid "No rotation (default)"
+msgstr "Nicio rotație (implicit)"
+
+#: ../src/transmageddon.py:345
+msgid "Clockwise 90 degrees"
+msgstr "90 de grade în sens orar"
+
+#: ../src/transmageddon.py:346
+msgid "Rotate 180 degrees"
+msgstr "Rotește cu 180 de grade"
+
+#: ../src/transmageddon.py:347
+msgid "Counterclockwise 90 degrees"
+msgstr "90 de grade în sens anti-orar"
+
+#: ../src/transmageddon.py:348
+msgid "Horizontal flip"
+msgstr "Răsturnare orizontală"
+
+#: ../src/transmageddon.py:349
+msgid "Vertical flip"
+msgstr "Răsturnare verticală"
+
+#: ../src/transmageddon.py:350
+msgid "Upper left diagonal flip"
+msgstr "Răsturnare diagonală stânga sus"
+
+#: ../src/transmageddon.py:351
+msgid "Upper right diagnonal flip"
+msgstr "Răsturnare diagonală dreapta sus"
+
+#: ../src/transmageddon.py:374
+msgid "No Presets"
+msgstr "Nicio prestabilire"
+
+#: ../src/transmageddon.py:472
+#, python-format
+msgid "%(min)d:%(sec)02d"
+msgstr "%(min)d:%(sec)02d"
+
+#: ../src/transmageddon.py:503 ../src/transmageddon.py:505
+#, python-format
+msgid "File saved to %(dir)s"
+msgstr "Fișier salvat în %(dir)s"
+
+#: ../src/transmageddon.py:515
+msgid "Done Transcoding"
+msgstr "Transcodare finalizată"
+
+#: ../src/transmageddon.py:526
+#, python-format
+msgid "Pass %(count)d Complete"
+msgstr "Trecerea %(count)d completă"
+
+#: ../src/transmageddon.py:529
+msgid "Start next pass"
+msgstr "Începe următoarea trecere"
+
+#: ../src/transmageddon.py:577
+msgid "No Audio"
+msgstr "Fără audio"
+
+#. add a 'No Video option'
+#: ../src/transmageddon.py:598 ../src/transmageddon.py:960
+msgid "No Video"
+msgstr "Fără video"
+
+#: ../src/transmageddon.py:759
+msgid "Plugins not found, choose different codecs."
+msgstr "Modulele nu au fost găsite, alegeți codecuri diferite."
+
+#: ../src/transmageddon.py:767
+msgid "Codec installation aborted."
+msgstr "Instalarea codecului a fost abandonată."
+
+#: ../src/transmageddon.py:776
+msgid "Missing plugin installation failed: "
+msgstr "Instalarea modulului lipsă a eșuat: "
+
+#: ../src/transmageddon.py:855
+#, python-format
+msgid "Writing %(filename)s"
+msgstr "Se scrie %(filename)s"
+
+#: ../src/transmageddon.py:860
+#, python-format
+msgid "Pass %(count)d Progress"
+msgstr "Progresul trecerii %(count)d"
+
+#: ../src/transmageddon.py:966
+#, fuzzy
+msgid "Video passthrough"
+msgstr "_Video passthrough"
+
+#: ../src/transmageddon.py:971
+#, fuzzy
+msgid "Audio passthrough"
+msgstr "_Audio passthrough"
+
+#: ../src/utils.py:76
+#, python-format
+msgid "Can't find %(path)s in any known prefix!"
+msgstr "Nu s-a putut găsi %(path)s în niciun prefix cunoscut!"
+
+#: ../transmageddon.desktop.in.in.h:1
+msgid "Transmageddon Video Transcoder"
+msgstr "Transmageddon - transcoder video"
+
+#: ../transmageddon.desktop.in.in.h:2
+msgid "Video format conversion tool"
+msgstr "Utilitar pentru conversia formatelor video"
+
+#~ msgid "AA_C"
+#~ msgstr "AA_C"
+
+#~ msgid "AC_3"
+#~ msgstr "AC_3"
+
+#~ msgid "AMR-N_B"
+#~ msgstr "AMR-N_B"
+
+#~ msgid "Celt _Ultra"
+#~ msgstr "Celt _Ultra"
+
+#~ msgid "F_LAC"
+#~ msgstr "F_LAC"
+
+#~ msgid "H263_plus"
+#~ msgstr "H263_plus"
+
+#~ msgid "H2_64"
+#~ msgstr "H2_64"
+
+#~ msgid "MPEG_2"
+#~ msgstr "MPEG_2"
+
+#~ msgid "MPEG_4/DivX5"
+#~ msgstr "MPEG_4/DivX5"
+
+#~ msgid "Theo_ra"
+#~ msgstr "Theo_ra"
+
+#~ msgid "V_orbis"
+#~ msgstr "V_orbis"
+
+#~ msgid "W_indowsMediaAudio 2"
+#~ msgstr "W_indowsMediaAudio 2"
+
+#~ msgid "_Dirac"
+#~ msgstr "_Dirac"
+
+#~ msgid "_On2 VP8"
+#~ msgstr "_On2 VP8"
+
+#~ msgid "_Speex"
+#~ msgstr "_Speex"
+
+#~ msgid "_WindowsMediaVideo2"
+#~ msgstr "_WindowsMediaVideo2"
+
+#~ msgid "_mp3"
+#~ msgstr "_mp3"
+
+#~ msgid "_xvid"
+#~ msgstr "_xvid"
+
+#~ msgid "Estimated time remaining: %(time)s"
+#~ msgstr "Timpul rămas estimat: %(time)s"
+
+#~ msgid "Pass %(count)d time remaining: %(time)s"
+#~ msgstr "Timp rămas pentru trecerea %(count)d: %(time)s"
+
+#~ msgid "Video width&#47;height: "
+#~ msgstr "Lățime&#47;înălțime video:"
+
+#~ msgid "Video codec: %(codec)s"
+#~ msgstr "Codec video: %(codec)s"
+
+#~ msgid "Audio channels: %(chans)s"
+#~ msgstr "Canale audio: %(chans)s"
+
+#~ msgid "Audio codec: %(codec)s"
+#~ msgstr "Codec audio: %(codec)s"
+
+#~ msgid "No audio parser, passthrough not available"
+#~ msgstr "Niciun parser audio, passthrough indisponibil"
+
+#~ msgid "No video parser, passthrough not available"
+#~ msgstr "Niciun parser video, passthrough indisponibil"
+
+#~ msgid "Uknown error"
+#~ msgstr "Eroare necunoscută"
