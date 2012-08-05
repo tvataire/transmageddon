@@ -769,31 +769,49 @@ class TransmageddonUI:
 
 
    def check_for_elements(self):
-       containerstatus=False
-   # This function checks for missing muxers and encoders
+       # this function checks for missing plugins using pbutils
        if self.container==False:
            containerstatus=True
            videostatus=True
        else:
-           containerchoice = self.builder.get_object ("containerchoice").get_active_text()
-           if containerchoice != None:
-               containerstatus = codecfinder.get_muxer_element(codecfinder.containermap[containerchoice])
-           
-               if not containerstatus: # or not videostatus or not audiostatus:
-                   self.missingtoggle=True
-                   fail_info = []
-               if containerstatus == False: 
-                   print "containerchoice is " +str(containerchoice)
-                   muxercaps=Gst.caps_from_string(codecfinder.containermap[containerchoice])
-                   fail_info.append(muxercaps)
-                   missing = []
-                   for x in fail_info:
-                       missing.append(GstPbutils.missing_encoder_installer_detail_new(x))
-                   context = GstPbutils.InstallPluginsContext ()
-                   context.set_xid(self.TopWindow.get_window().get_xid())
-                   strmissing = str(missing)
-                   print strmissing
-                   GstPbutils.install_plugins_async (missing, context, \
+           containerchoice = self.builder.get_object ("containerchoice").get_active_text ()
+           containerstatus = codecfinder.get_muxer_element(codecfinder.containermap[containerchoice])
+           if self.havevideo:
+               if self.videopasstoggle != True:
+                   if self.VideoCodec == "novid":
+                       videostatus=True
+                   else:
+                       videostatus = codecfinder.get_video_encoder_element(self.VideoCodec)
+               else:
+                   videostatus=True
+       if self.haveaudio:
+           if self.audiopasstoggle != True:
+               audiostatus = codecfinder.get_audio_encoder_element(self.AudioCodec)
+           else:
+               audiostatus=True
+       else:
+           audiostatus=True
+       if self.havevideo == False: # this flags help check if input is audio-only file
+           videostatus=True
+       if not containerstatus or not videostatus or not audiostatus:
+           self.missingtoggle=True
+           fail_info = []
+           if self.containertoggle==True:
+               audiostatus=True
+               videostatus=True
+           if containerstatus == False:
+               fail_info.append(Gst.caps_from_string(codecfinder.containermap[containerchoice]))
+           if audiostatus == False:
+               fail_info.append(self.AudioCodec)
+           if videostatus == False:
+               fail_info.append(self.VideoCodec)
+           missing = []
+           for x in fail_info:
+               missing.append(GstPbutils.missing_encoder_installer_detail_new(x))
+           context = GstPbutils.InstallPluginsContext ()
+           context.set_xid(self.TopWindow.get_window().get_xid())
+           strmissing = str(missing)
+           GstPbutils.install_plugins_async (missing, context, \
                        self.donemessage, "NULL")
 
    # The transcodebutton is the one that calls the Transcoder class and thus
@@ -832,14 +850,14 @@ class TransmageddonUI:
            self.ProgressBar.set_text(_("Pass %(count)d Progress") % {'count': self.passcounter})
        if self.haveaudio:
            if self.audiodata.has_key("samplerate"):
-               # self.check_for_elements()
+               self.check_for_elements()
                if self.missingtoggle==False:
                    self._start_transcoding()
            else:
                self.waiting_for_signal="True"
        elif self.havevideo:
            if self.videodata.has_key("videoheight"):
-               # self.check_for_elements()
+               self.check_for_elements()
                if self.missingtoggle==False:
                    self._start_transcoding()
            else:

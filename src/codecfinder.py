@@ -130,8 +130,6 @@ def get_muxer_element(containercaps):
        # This code is a lot simpler than what I used with 0.10 thanks to the list_is_type call.
        # 16 is the 'muxer' class of plugins
        if Gst.ElementFactory.list_is_type(fact, 16):
-           test=fact.get_name()
-           # print "muxer is " + str(test)
            muxers.append(fact.get_name())
            features.append(fact)
    muxerfeature = dict(zip(muxers, features))
@@ -177,22 +175,30 @@ def get_audio_encoder_element(audioencodercaps):
    features = []
    elementname = False
    for fact in flist:
-       if list_compat(["Codec", "Encoder", "Audio"], \
-               fact.get_metadata().split('/')):
+      if Gst.ElementFactory.list_is_type(fact, 2):
+           test=fact.get_name()
+           # print "audioencoder is " + str(test)
            # excluding wavpackenc as the fact that it got two SRC pads mess up
            # the logic of this code
            if fact.get_name() != 'wavpackenc':
-               encoders.append(fact.get_name())
-               features.append(fact)
+               if fact.get_name() != 'encodebin':
+                   encoders.append(fact.get_name())
+                   features.append(fact)
    encoderfeature = dict(zip(encoders, features))
-   incomingcaps = audioencodercaps
+   
+   if isinstance(audioencodercaps, str): # this value should always be a caps value, so this sometimes being a string is a bug
+       incomingcaps = Gst.caps_from_string(audioencodercaps)
+   else:
+       incomingcaps = audioencodercaps
    for x in encoders:
            element = x
            factory = Gst.Registry.get().lookup_feature(str(x))
            sinkcaps = [x.get_caps() for x in factory.get_static_pad_templates() \
-                   if x.direction == Gst.PAD_SRC]
+                   if x.direction == Gst.PadDirection.SRC]
            for caps in sinkcaps:
-               if caps.intersect(incomingcaps):
+               # print "incomingcaps is " +str(incomingcaps)
+               intersect= caps.intersect(incomingcaps).to_string()
+               if intersect != "EMPTY":
                    if elementname == False:
                        elementname = element
                    else:
@@ -222,23 +228,25 @@ def get_video_encoder_element(videoencodercaps):
    features = []
    elementname = False
    for fact in flist:
-       if list_compat(["Codec", "Encoder", "Video"], \
-               fact.get_metadata().split('/')):
+       if Gst.ElementFactory.list_is_type(fact, 21):
            encoders.append(fact.get_name())
            features.append(fact) 
-       elif list_compat(["Codec", "Encoder", "Image"], \
-               fact.get_metadata().split('/')):
-           encoders.append(fact.get_name())
-           features.append(fact)
+       # elif list_compat(["Codec", "Encoder", "Image"], \
+       #        fact.get_metadata().split('/')):
+       #    encoders.append(fact.get_name())
+       #   features.append(fact)
    encoderfeature = dict(zip(encoders, features))
+   # print "videoencodercaps is " + str(videoencodercaps)
    incomingcaps = videoencodercaps
    for x in encoders:
            element = x
            factory = Gst.Registry.get().lookup_feature(str(x))
            sinkcaps = [x.get_caps() for x in factory.get_static_pad_templates() \
-                   if x.direction == Gst.PAD_SRC]
+                   if x.direction == Gst.PadDirection.SRC]
            for caps in sinkcaps:
-               if caps.intersect(incomingcaps):
+               # print "incoming caps is " + str(incomingcaps)
+               intersect= caps.intersect(incomingcaps).to_string()
+               if intersect != "EMPTY":
                    if elementname == False:
                        elementname = element
                    else:
