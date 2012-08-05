@@ -25,7 +25,7 @@ os.environ["GST_DEBUG_DUMP_DOT_DIR"] = "/tmp"
 os.putenv('GST_DEBUG_DUMP_DIR_DIR', '/tmp')
 import which
 import time
-
+from gi.repository import Notify
 from gi.repository import GdkX11
 from gi.repository import Gtk
 from gi.repository import GLib
@@ -171,6 +171,10 @@ class TransmageddonUI:
 	
        # set flag so we remove bogus value from menu only once
        self.bogus=0
+       
+       # init the notification area
+       Notify.init('Transmageddon')
+
 
        # These dynamic comboboxes allow us to support files with 
        # multiple streams eventually
@@ -295,8 +299,8 @@ class TransmageddonUI:
        self.rotationchoice.set_sensitive(False)
        
        # set default values for various variables
-       self.AudioCodec = "vorbis"
-       self.VideoCodec = "theora"
+       self.AudioCodec = Gst.caps_from_string("audio/x-vorbis")
+       self.VideoCodec = Gst.caps_from_string("video/x-theora")
        self.ProgressBar.set_text(_("Transcoding Progress"))
        self.container = False
        self.vsourcecaps = False
@@ -384,7 +388,9 @@ class TransmageddonUI:
        self.usingpreset=True
        self.containerchoice.set_active(-1) # resetting to -1 to ensure population of menu triggers
        self.presetaudiocodec=Gst.caps_from_string(preset.acodec.name)
+       self.AudioCodec=Gst.caps_from_string(preset.acodec.name)
        self.presetvideocodec=Gst.caps_from_string(preset.vcodec.name)
+       self.VideoCodec=Gst.caps_from_string(preset.vcodec.name)
        if preset.container == "application/ogg":
            self.containerchoice.set_active(0)
        elif preset.container == "video/x-matroska":
@@ -496,6 +502,8 @@ class TransmageddonUI:
        if (self.multipass ==  False) or (self.passcounter == int(0)):
            self.StatusBar.push(context_id, (_("File saved to %(dir)s") % \
                    {'dir': self.outputdirectory}))
+           notification = Notify.Notification.new("Transmageddon", (_("File saved to %(dir)s") % {'dir': self.outputdirectory}), "Transcoding Complete")
+           notification.show()
            self.FileChooser.set_sensitive(True)
            self.containerchoice.set_sensitive(True)
            self.CodecBox.set_sensitive(True)
@@ -595,7 +603,7 @@ class TransmageddonUI:
                        if self.container != False:
                            self.check_for_passthrough(self.container)
                    else:
-                       self.check_for_elements()
+                       # self.check_for_elements()
                        if self.missingtoggle==False:
                            self._start_transcoding()
                if self.container != False:
@@ -775,15 +783,16 @@ class TransmageddonUI:
            videostatus=True
        else:
            containerchoice = self.builder.get_object ("containerchoice").get_active_text ()
-           containerstatus = codecfinder.get_muxer_element(codecfinder.containermap[containerchoice])
-           if self.havevideo:
-               if self.videopasstoggle != True:
-                   if self.VideoCodec == "novid":
-                       videostatus=True
+           if containerchoice != None:
+               containerstatus = codecfinder.get_muxer_element(codecfinder.containermap[containerchoice])
+               if self.havevideo:
+                   if self.videopasstoggle != True:
+                       if self.VideoCodec == "novid":
+                           videostatus=True
+                       else:
+                           videostatus = codecfinder.get_video_encoder_element(self.VideoCodec)
                    else:
-                       videostatus = codecfinder.get_video_encoder_element(self.VideoCodec)
-               else:
-                   videostatus=True
+                       videostatus=True
        if self.haveaudio:
            if self.audiopasstoggle != True:
                audiostatus = codecfinder.get_audio_encoder_element(self.AudioCodec)
@@ -807,6 +816,7 @@ class TransmageddonUI:
                fail_info.append(self.VideoCodec)
            missing = []
            for x in fail_info:
+               print x.to_string()
                missing.append(GstPbutils.missing_encoder_installer_detail_new(x))
            context = GstPbutils.InstallPluginsContext ()
            context.set_xid(self.TopWindow.get_window().get_xid())
@@ -850,14 +860,14 @@ class TransmageddonUI:
            self.ProgressBar.set_text(_("Pass %(count)d Progress") % {'count': self.passcounter})
        if self.haveaudio:
            if self.audiodata.has_key("samplerate"):
-               self.check_for_elements()
+               # self.check_for_elements()
                if self.missingtoggle==False:
                    self._start_transcoding()
            else:
                self.waiting_for_signal="True"
        elif self.havevideo:
            if self.videodata.has_key("videoheight"):
-               self.check_for_elements()
+               # self.check_for_elements()
                if self.missingtoggle==False:
                    self._start_transcoding()
            else:
