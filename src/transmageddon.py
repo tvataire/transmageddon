@@ -504,7 +504,8 @@ class TransmageddonUI:
        if (self.multipass ==  False) or (self.passcounter == int(0)):
            self.StatusBar.push(context_id, (_("File saved to %(dir)s") % \
                    {'dir': self.outputdirectory}))
-           notification = Notify.Notification.new("Transmageddon", (_("File saved to %(dir)s") % {'dir': self.outputdirectory}), "Transcoding Complete")
+           uri = "file://" + os.path.abspath(os.path.curdir) + "/transmageddon.svg"
+           notification = Notify.Notification.new("Transmageddon", (_("File saved to %(dir)s") % {'dir': self.outputdirectory}), uri)
            notification.show()
            self.FileChooser.set_sensitive(True)
            self.containerchoice.set_sensitive(True)
