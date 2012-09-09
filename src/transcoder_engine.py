@@ -88,7 +88,7 @@ class Transcoder(GObject.GObject):
        # if needed create a variable to store the filename of the multipass \
        # statistics file
        if self.multipass != False:
-           self.cachefile = (str (glib.get_user_cache_dir()) + "/" + \
+           self.cachefile = (str (GLib.get_user_cache_dir()) + "/" + \
                    "multipass-cache-file" + self.timestamp + ".log")
 
        # gather preset data if relevant

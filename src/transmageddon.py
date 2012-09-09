@@ -22,7 +22,7 @@ import sys
 import os
 
 os.environ["GST_DEBUG_DUMP_DOT_DIR"] = "/tmp"
-os.putenv('GST_DEBUG_DUMP_DIR_DIR', '/tmp')
+
 import which
 import time
 from gi.repository import Notify
@@ -422,12 +422,14 @@ class TransmageddonUI:
 
 
        # Check for number of passes
-       # passes = preset.vcodec.passes
-       #if passes == "0":
-       self.multipass = False
-       #else:
-       #   self.multipass = int(passes)
-       #   self.passcounter = int(0)
+       passes = preset.vcodec.passes
+       print "passes is " +str(passes)
+       if passes == "0":
+           self.multipass = False
+       else:
+           print "self.multipass " +str(self.multipass)
+           self.multipass = int(passes)
+           self.passcounter = int(0)
 
    # Create query on uridecoder to get values to populate progressbar 
    # Notes:
@@ -853,11 +855,9 @@ class TransmageddonUI:
        self.outputfilename = str(self.nosuffix+self.timestamp+self.ContainerFormatSuffix)
        context_id = self.StatusBar.get_context_id("EOS")
        self.StatusBar.push(context_id, (_("Writing %(filename)s") % {'filename': self.outputfilename}))
-       if self.multipass == False:
-           self.ProgressBar.set_text(_("Transcoding Progress"))
-       else:
+       if self.multipass != False:
            self.passcounter=int(1)
-           self.ProgressBar.set_text(_("Pass %(count)d Progress") % {'count': self.passcounter})
+           self.StatusBar.push(context_id, (_("Pass %(count)d Progress") % {'count': self.passcounter}))
        if self.haveaudio:
            if self.audiodata.has_key("samplerate"):
                # self.check_for_elements()
