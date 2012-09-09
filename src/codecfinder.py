@@ -96,7 +96,6 @@ codecmap = { 'Vorbis' : "audio/x-vorbis", \
         'H264' : "video/x-h264", \
         'MPEG2' : "video/mpeg,mpegversion=2,systemstream=false", \
         'MPEG4' : "video/mpeg,mpegversion=4", \
-        'xvid' : "video/x-xvid", \
         'Windows Media Video 2' : "video/x-wmv,wmvversion=2", \
         'dnxhd' : "video/x-dnxhd", \
         'divx5' : "video/x-divx,divxversion=5", \

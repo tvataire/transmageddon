@@ -96,7 +96,6 @@ supported_video_codecs = [
        "h264",
        "mpeg2",
        "mpeg4",
-       "xvid",
        "h263p",
        "wmv2",
        "vp8"
@@ -110,7 +109,7 @@ supported_video_container_map = {
     'MXF':        [ 'H264', 'MPEG2', 'MPEG4' ],
     'Matroska':   [ 'Dirac', 'Theora', 'H264', 'On2 vp8',
                     'MPEG4', 'MPEG2', 'xvid', 'H263+' ],
-    'AVI':        [ 'H264', 'Dirac', 'MPEG2', 'MPEG4', 'xvid',
+    'AVI':        [ 'H264', 'Dirac', 'MPEG2', 'MPEG4',
                     'Windows Media Video 2', 'On2 vp8' ],
     'Quicktime':  [ 'H264', 'Dirac', 'MPEG2', 'MPEG4', 'On2 vp8' ],
     'MPEG4':      [ 'H264', 'MPEG2', 'MPEG4' ],
