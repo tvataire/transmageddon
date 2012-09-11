@@ -108,7 +108,7 @@ supported_video_container_map = {
     'Ogg':        [ 'Theora', 'Dirac', 'On2 vp8' ],
     'MXF':        [ 'H264', 'MPEG2', 'MPEG4' ],
     'Matroska':   [ 'Dirac', 'Theora', 'H264', 'On2 vp8',
-                    'MPEG4', 'MPEG2', 'xvid', 'H263+' ],
+                    'MPEG4', 'MPEG2', 'H263+' ],
     'AVI':        [ 'H264', 'Dirac', 'MPEG2', 'MPEG4',
                     'Windows Media Video 2', 'On2 vp8' ],
     'Quicktime':  [ 'H264', 'Dirac', 'MPEG2', 'MPEG4', 'On2 vp8' ],
@@ -251,8 +251,8 @@ class TransmageddonUI:
        #        Gdk.DragAction.COPY)
 
        self.start_time = False
-       self.multipass = False
-       self.passcounter = False
+       self.multipass = 0
+       self.passcounter = 0
        
        # Set the Videos XDG UserDir as the default directory for the filechooser
        # also make sure directory exists
@@ -422,11 +422,9 @@ class TransmageddonUI:
 
        # Check for number of passes
        passes = preset.vcodec.passes
-       print "passes is " +str(passes)
        if passes == "0":
-           self.multipass = False
+           self.multipass = 0
        else:
-           print "self.multipass " +str(self.multipass)
            self.multipass = int(passes)
            self.passcounter = int(0)
 
@@ -500,7 +498,7 @@ class TransmageddonUI:
 
    def _on_eos(self, source):
        context_id = self.StatusBar.get_context_id("EOS")
-       if (self.multipass ==  False) or (self.passcounter == int(0)):
+       if self.passcounter == int(0):
            self.StatusBar.push(context_id, (_("File saved to %(dir)s") % \
                    {'dir': self.outputdirectory}))
            uri = "file://" + os.path.abspath(os.path.curdir) + "/transmageddon.svg"
@@ -517,8 +515,8 @@ class TransmageddonUI:
            self.ProgressBar.set_text(_("Done Transcoding"))
            self.ProgressBar.set_fraction(1.0)
            self.start_time = False
-           self.multipass = False
-           self.passcounter = False
+           self.multipass = 0
+           self.passcounter = 0
            self.audiopasstoggle=False
            self.videopasstoggle=False
            self.houseclean=False # due to not knowing which APIs to use I need
@@ -528,7 +526,6 @@ class TransmageddonUI:
            self.StatusBar.push(context_id, (_("Pass %(count)d Complete") % \
                    {'count': self.passcounter}))
            self.start_time = False
-           self.ProgressBar.set_text(_("Start next pass"))
            if self.passcounter == (self.multipass-1):
                self.passcounter = int(0)
                self._start_transcoding()
@@ -576,7 +573,7 @@ class TransmageddonUI:
                    self.containerchoice.set_active(-1) # set this here to ensure it happens even with quick audio-only
                    self.containerchoice.set_active(0)
                if self.haveaudio==False:
-                   self.audioinformation.set_markup(''.join(('<small>', _("No Audio"), '</small>')))
+                   self.audioinformation.set_markup(''.join(('<small>', _("No Audio"), '</small>'))) 
                    self.audiocodec.set_markup(''.join(('<small>', "",'</small>')))
 
                if isinstance(i, GstPbutils.DiscovererVideoInfo):
@@ -855,7 +852,7 @@ class TransmageddonUI:
        self.outputfilename = str(self.nosuffix+self.timestamp+self.ContainerFormatSuffix)
        context_id = self.StatusBar.get_context_id("EOS")
        self.StatusBar.push(context_id, (_("Writing %(filename)s") % {'filename': self.outputfilename}))
-       if self.multipass != False:
+       if self.multipass != 0:
            self.passcounter=int(1)
            self.StatusBar.push(context_id, (_("Pass %(count)d Progress") % {'count': self.passcounter}))
        if self.haveaudio:
@@ -999,8 +996,8 @@ class TransmageddonUI:
            self.containerchoice.set_sensitive(True)
            self.containerchoice.set_active(0)
            self.start_time = False
-           self.multipass = False
-           self.passcounter = False
+           self.multipass = 0
+           self.passcounter = 0
            self.rotationchoice.set_sensitive(True)
            if self.builder.get_object("containerchoice").get_active():
                self.populate_menu_choices()

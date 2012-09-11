@@ -87,7 +87,7 @@ class Transcoder(GObject.GObject):
 
        # if needed create a variable to store the filename of the multipass \
        # statistics file
-       if self.multipass != False:
+       if self.multipass != 0:
            self.cachefile = (str (GLib.get_user_cache_dir()) + "/" + \
                    "multipass-cache-file" + self.timestamp + ".log")
 
@@ -121,22 +121,22 @@ class Transcoder(GObject.GObject):
  
            # What to do if we are not doing video passthrough (we only support video 
            # with container format
-           if self.videopasstoggle==False:
-                   self.videoflipper = Gst.ElementFactory.make('videoflip', None)
-                   self.videoflipper.set_property("method", self.rotationvalue)
-                   self.pipeline.add(self.videoflipper)
+           if self.videopasstoggle==False and self.passcounter == int(0):
+               self.videoflipper = Gst.ElementFactory.make('videoflip', None)
+               self.videoflipper.set_property("method", self.rotationvalue)
+               self.pipeline.add(self.videoflipper)
 
-                   self.colorspaceconverter = Gst.ElementFactory.make("videoconvert", None)
-                   self.pipeline.add(self.colorspaceconverter)
+               self.colorspaceconverter = Gst.ElementFactory.make("videoconvert", None)
+               self.pipeline.add(self.colorspaceconverter)
 
-                  #self.deinterlacer = Gst.ElementFactory.make('deinterlace', None)
-                  # self.pipeline.add(self.deinterlacer)
+               self.deinterlacer = Gst.ElementFactory.make('deinterlace', None)
+               self.pipeline.add(self.deinterlacer)
    
-                   # self.deinterlacer.link(self.colorspaceconverter)
-	           self.colorspaceconverter.link(self.videoflipper)
-                   #self.deinterlacer.set_state(Gst.State.PAUSED)
-                   self.colorspaceconverter.set_state(Gst.State.PAUSED)
-                   self.videoflipper.set_state(Gst.State.PAUSED)
+               self.deinterlacer.link(self.colorspaceconverter)
+	       self.colorspaceconverter.link(self.videoflipper)
+               self.deinterlacer.set_state(Gst.State.PAUSED)
+               self.colorspaceconverter.set_state(Gst.State.PAUSED)
+               self.videoflipper.set_state(Gst.State.PAUSED)
            # this part of the pipeline is used for both passthrough and re-encoding
            if self.videocaps != "novid":
                if (self.videocaps != False):
@@ -154,12 +154,29 @@ class Transcoder(GObject.GObject):
                self.audioprofile = GstPbutils.EncodingAudioProfile.new(self.audiocaps, audiopreset, Gst.Caps.new_any(), 0)
                self.encodebinprofile.add_profile(self.audioprofile)
        
+       if self.passcounter != int(0):
+           passvalue = "Pass "+ str(self.passcounter)
+           videoencoderplugin = codecfinder.get_video_encoder_element(self.videocaps)
+           self.videoencoder = Gst.ElementFactory.make(videoencoderplugin,"videoencoder")
+           self.pipeline.add(self.videoencoder)
+           GstPresetType = GObject.type_from_name("GstPreset")
+           if GstPresetType in GObject.type_interfaces(self.videoencoder):
+               bob = self.videoencoder.load_preset(passvalue)
+               self.videoencoder.set_property("multipass-cache-file", self.cachefile)
+           self.multipassfakesink = Gst.ElementFactory.make("fakesink", "multipassfakesink")
+           self.pipeline.add(self.multipassfakesink)
+           self.videoencoder.set_state(Gst.State.PAUSED)
+           self.multipassfakesink.set_state(Gst.State.PAUSED)
 
-       self.encodebin = Gst.ElementFactory.make ("encodebin", None)
-       self.encodebin.set_property("profile", self.encodebinprofile)
-       self.encodebin.set_property("avoid-reencoding", True)
-       self.pipeline.add(self.encodebin)
-       self.encodebin.set_state(Gst.State.PAUSED)
+
+       else:
+           self.encodebin = Gst.ElementFactory.make ("encodebin", None)
+           self.encodebin.set_property("profile", self.encodebinprofile)
+           self.encodebin.set_property("avoid-reencoding", True)
+           if (self.multipass != 0) and (self.passcounter == int(0)):
+               self.encodebin.connect("element-added", self.SetCacheFileProperty)
+           self.pipeline.add(self.encodebin)
+           self.encodebin.set_state(Gst.State.PAUSED)
        
        # put together remuxing caps to set on uridecodebin if doing 
        # passthrough on audio or video
@@ -190,14 +207,17 @@ class Transcoder(GObject.GObject):
            self.uridecoder.set_property("caps", self.remuxcaps) 
        self.uridecoder.set_state(Gst.State.PAUSED)
        self.pipeline.add(self.uridecoder)
-
-       self.transcodefileoutput = Gst.ElementFactory.make("filesink", \
+       
+       if self.passcounter != int(0):
+           self.videoencoder.link(self.multipassfakesink)
+       else:
+           self.transcodefileoutput = Gst.ElementFactory.make("filesink", \
                "transcodefileoutput")
-       self.transcodefileoutput.set_property("location", \
+           self.transcodefileoutput.set_property("location", \
                (DESTDIR+"/"+self.outputfilename))
-       self.pipeline.add(self.transcodefileoutput)
-       self.encodebin.link(self.transcodefileoutput)
-
+           self.pipeline.add(self.transcodefileoutput)
+           self.encodebin.link(self.transcodefileoutput)
+           self.transcodefileoutput.set_state(Gst.State.PAUSED)
        self.uridecoder.set_state(Gst.State.PAUSED)
 
        self.BusMessages = self.BusWatcher()
@@ -214,7 +234,6 @@ class Transcoder(GObject.GObject):
 
    # Gather preset values and create preset elements
    def provide_presets(self):
-       print "LOADING PRESETS IN TRANSCODER ENGINE"
        devices = presets.get()
        device = devices[self.preset]
        preset = device.presets["Normal"]
@@ -239,10 +258,7 @@ class Transcoder(GObject.GObject):
        wmin, wmax  =  preset.vcodec.width
        hmin, hmax = preset.vcodec.height
        width, height = self.owidth, self.oheight
-       print "wmax is " +str(wmax)
-       print "hmax is " +str(hmax)
-       print "width is " +str(width)
-       print "height is " +str(height)
+
        # Get Display aspect ratio
        pixelaspectratio = preset.vcodec.aspectratio
 
@@ -282,22 +298,19 @@ class Transcoder(GObject.GObject):
        else:
            num = self.fratenum
            denom = self.frateden
-       
-       print "audiocaps " +self.audiocaps.to_string()
-       print "videocaps " +self.videocaps.to_string()
+
        # set audio and video caps from preset file
        self.audiocaps=Gst.caps_from_string(preset.acodec.name+","+"channels="+str(self.channels))
        self.videocaps=Gst.caps_from_string(preset.vcodec.name+","+"height="+str(height)+","+"width="+str(width)+","+"framerate="+str(num)+"/"+str(denom))
        # self.videocaps.set_value("pixelaspectratio", pixelaspectratio) this doesn't work due to pixelaspectratio being a fraction, 
        # needs further investigation
-       print "audiocaps " +str(self.audiocaps.to_string())
-       print "videocaps " + str(self.videocaps.to_string())
+
 
        # print "final height " + str(height) + " final width " + str(width)
        # return height, width, num, denom, pixelaspectratio
 
    def noMorePads(self, dbin):
-       if (self.multipass == False) or (self.passcounter == int(0)):
+       if self.passcounter == int(0):
            self.transcodefileoutput.set_state(Gst.State.PAUSED)
        GLib.idle_add(self.idlePlay)
        # print "No More pads received"
@@ -326,7 +339,7 @@ class Transcoder(GObject.GObject):
        elif mtype == Gst.MessageType.ASYNC_DONE:
            self.emit('ready-for-querying')
        elif mtype == Gst.MessageType.EOS:
-           if (self.multipass != False):
+           if (self.multipass != 0):
                if (self.passcounter == 0):
                    #removing multipass cache file when done
                    if os.access(self.cachefile, os.F_OK):
@@ -356,26 +369,35 @@ class Transcoder(GObject.GObject):
                        src_pad.link(sinkpad)
            else:
                # Checking if its a subtitle pad which we can't deal with
-               # currently.0
+               # currently.
                # Making sure that when we remove video from a file we don't
                # bother with the video pad.
                c = origin.to_string()
                if not c.startswith("text/"):
                    if not (c.startswith("video/") and (self.videocaps == False)):
-                       sinkpad = self.encodebin.emit("request-pad", origin)
+                       if self.passcounter == int(0):
+                           sinkpad = self.encodebin.emit("request-pad", origin)
                if c.startswith("audio/"):
-                   src_pad.link(sinkpad)
+                   if (self.multipass == 0) and (self.passcounter == int(0)):
+                       src_pad.link(sinkpad)
                elif ((c.startswith("video/") or c.startswith("image/")) and (self.videocaps != False)):
                    if self.videopasstoggle==False:
+                       if (self.multipass != 0) and (self.passcounter != int(0)):
+                           videoencoderpad = self.videoencoder.get_static_pad("sink")
+                           src_pad.link(videoencoderpad)
+                       else:
                        # port fix- should be self.deinterlacer
                        # print "self.colorspaceconverter before use " + str(self.colorspaceconverter)
-                       colorspacepad = self.colorspaceconverter.get_static_pad("sink")
-                       src_pad.link(colorspacepad)
-                       self.videoflipper.get_static_pad("src").link(sinkpad)
-                       
+                           deinterlacerpad = self.deinterlacer.get_static_pad("sink")
+                           src_pad.link(deinterlacerpad)
+                           self.videoflipper.get_static_pad("src").link(sinkpad)   
                    else:
-                       src_pad.link(sinkpad)
+                           src_pad.link(sinkpad)
 
+   def SetCacheFileProperty(self, encodebin, element):
+       print "element is " + str(element)
+        # self.videoencoder.set_property("multipass-cache-file", self.cachefile)
+       # self.videoencoder.set_property("multipass-cache-file", self.cachefile) #### NEEDS FIXING
        # Grab element from encodebin which supports tagsetter interface and set app name
        # to Transmageddon
        #GstTagSetterType = GObject.type_from_name("GstTagSetter")

@@ -227,7 +227,9 @@ def get_video_encoder_element(videoencodercaps):
    features = []
    elementname = False
    for fact in flist:
-       if Gst.ElementFactory.list_is_type(fact, 21):
+       if Gst.ElementFactory.list_is_type(fact, 2814749767106562):
+           test=fact.get_name()
+           # print "videoencoder is " + str(test)
            encoders.append(fact.get_name())
            features.append(fact) 
        # elif list_compat(["Codec", "Encoder", "Image"], \
@@ -243,7 +245,6 @@ def get_video_encoder_element(videoencodercaps):
            sinkcaps = [x.get_caps() for x in factory.get_static_pad_templates() \
                    if x.direction == Gst.PadDirection.SRC]
            for caps in sinkcaps:
-               # print "incoming caps is " + str(incomingcaps)
                intersect= caps.intersect(incomingcaps).to_string()
                if intersect != "EMPTY":
                    if elementname == False:
@@ -253,4 +254,5 @@ def get_video_encoder_element(videoencodercaps):
                        original = Gst.PluginFeature.get_rank(encoderfeature[elementname])
                        if mostrecent >= original:
                            elementname = element
+   print "elementname is " +str(elementname)
    return elementname
