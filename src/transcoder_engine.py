@@ -398,9 +398,12 @@ class Transcoder(GObject.GObject):
                            src_pad.link(sinkpad)
 
    def SetCacheFileProperty(self, encodebin, element):
-       print "element is " + str(element)
-        # self.videoencoder.set_property("multipass-cache-file", self.cachefile)
-       # self.videoencoder.set_property("multipass-cache-file", self.cachefile) #### NEEDS FIXING
+       factory=element.get_factory()
+       if factory != None:
+           if Gst.ElementFactory.list_is_type(factory, 2814749767106562):
+               print "we have a winner"
+               element.set_property("multipass-cache-file", self.cachefile)
+
        # Grab element from encodebin which supports tagsetter interface and set app name
        # to Transmageddon
        #GstTagSetterType = GObject.type_from_name("GstTagSetter")
