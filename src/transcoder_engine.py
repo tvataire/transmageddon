@@ -77,6 +77,7 @@ class Transcoder(GObject.GObject):
        self.timestamp = TIMESTAMP
        self.rotationvalue = int(ROTATIONVALUE)
        self.vbox = {}
+          
 
        # switching width and height around for rotationchoices where it makes sense
        if self.rotationvalue == 1 or self.rotationvalue == 3:
@@ -87,6 +88,8 @@ class Transcoder(GObject.GObject):
 
        # if needed create a variable to store the filename of the multipass \
        # statistics file
+       print "self.multipass is " + str(self.multipass)
+       print "self.passcounter is " + str(self.passcounter)
        if self.multipass != 0:
            self.cachefile = (str (GLib.get_user_cache_dir()) + "/" + \
                    "multipass-cache-file" + self.timestamp + ".log")
@@ -378,7 +381,7 @@ class Transcoder(GObject.GObject):
                        if self.passcounter == int(0):
                            sinkpad = self.encodebin.emit("request-pad", origin)
                if c.startswith("audio/"):
-                   if (self.multipass == 0) and (self.passcounter == int(0)):
+                   if self.passcounter == int(0):
                        src_pad.link(sinkpad)
                elif ((c.startswith("video/") or c.startswith("image/")) and (self.videocaps != False)):
                    if self.videopasstoggle==False:
