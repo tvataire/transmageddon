@@ -21,7 +21,7 @@
         </audio>
         <video>
             <name>video/x-h264, profile=constrained-baseline</name>
-            <passes>0</passes>
+            <passes>2</passes>
             <pixelaspectratio>0/0</pixelaspectratio>
             <width>320, 640</width>
             <height>240, 480</height>

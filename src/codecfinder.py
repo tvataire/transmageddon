@@ -254,5 +254,4 @@ def get_video_encoder_element(videoencodercaps):
                        original = Gst.PluginFeature.get_rank(encoderfeature[elementname])
                        if mostrecent >= original:
                            elementname = element
-   print "elementname is " +str(elementname)
    return elementname

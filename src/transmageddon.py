@@ -523,13 +523,14 @@ class TransmageddonUI:
                                  # this toggle to avoid errors when cleaning
                                  # the codec comboboxes
        else:
-           self.StatusBar.push(context_id, (_("Pass %(count)d Complete") % \
-                   {'count': self.passcounter}))
            self.start_time = False
            if self.passcounter == (self.multipass-1):
+               self.StatusBar.push(context_id, (_("Encoding file")))
                self.passcounter = int(0)
                self._start_transcoding()
            else:
+               self.StatusBar.push(context_id, (_("Pass %(count)d Complete. ") % \
+                   {'count': self.passcounter}))
                self.passcounter = self.passcounter+1
                self._start_transcoding()
 

@@ -174,10 +174,9 @@ class Transcoder(GObject.GObject):
 
        else:
            self.encodebin = Gst.ElementFactory.make ("encodebin", None)
+           self.encodebin.connect("element-added", self.OnEncodebinElementAdd)
            self.encodebin.set_property("profile", self.encodebinprofile)
            self.encodebin.set_property("avoid-reencoding", True)
-           if (self.multipass != 0) and (self.passcounter == int(0)):
-               self.encodebin.connect("element-added", self.SetCacheFileProperty)
            self.pipeline.add(self.encodebin)
            self.encodebin.set_state(Gst.State.PAUSED)
        
@@ -389,7 +388,6 @@ class Transcoder(GObject.GObject):
                            videoencoderpad = self.videoencoder.get_static_pad("sink")
                            src_pad.link(videoencoderpad)
                        else:
-                       # port fix- should be self.deinterlacer
                        # print "self.colorspaceconverter before use " + str(self.colorspaceconverter)
                            deinterlacerpad = self.deinterlacer.get_static_pad("sink")
                            src_pad.link(deinterlacerpad)
@@ -397,24 +395,22 @@ class Transcoder(GObject.GObject):
                    else:
                            src_pad.link(sinkpad)
 
-   def SetCacheFileProperty(self, encodebin, element):
+   def OnEncodebinElementAdd(self, encodebin, element):
        factory=element.get_factory()
+       name=element.get_name()
        if factory != None:
-           if Gst.ElementFactory.list_is_type(factory, 2814749767106562):
-               print "we have a winner"
-               element.set_property("multipass-cache-file", self.cachefile)
-
-       # Grab element from encodebin which supports tagsetter interface and set app name
-       # to Transmageddon
-       #GstTagSetterType = GObject.type_from_name("GstTagSetter")
-       #tag_setting_element=self.encodebin.get_by_interface(GstTagSetterType)
-       #if tag_setting_element != None:
-       #    taglist=Gst.TagList.new_empty()
-       #    taglist.add_value(Gst.TagMergeMode.APPEND, Gst.TAG_ENCODER, "Transmageddon encoder") 
-           # the tag above should probably be set to string combining audio+video
-           # encoder implementations
-           #taglist[Gst.TAG_APPLICATION_NAME] = "Transmageddon transcoder"
-           #tag_setting_element.merge_tags(taglist, Gst.TAG_MERGE_APPEND)
+           # set multipass cache file on video encoder element
+           if (self.multipass != 0) and (self.passcounter == int(0)):
+               if Gst.ElementFactory.list_is_type(factory, 2814749767106562): # this is the factory code for Video encoders
+                   element.set_property("multipass-cache-file", self.cachefile)
+           
+           # Set Transmageddon as Application name using Tagsetter interface
+           tagyes = factory.has_interface("GstTagSetter")
+           # print str(name) + " got GstTagSetter Interface " +str(tagyes)
+           if tagyes ==True:
+               taglist=Gst.TagList.new_empty()
+               # Gst.TagList.add_value(taglist, Gst.TAG_MERGE_APPEND, Gst.TAG_APPLICATION_NAME], "Transmageddon transcoder"
+               # tag_setting_element.merge_tags(taglist, Gst.TAG_MERGE_APPEND)
 
    def Pipeline (self, state):
        if state == ("playing"):
