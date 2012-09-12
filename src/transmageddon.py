@@ -525,7 +525,7 @@ class TransmageddonUI:
        else:
            self.start_time = False
            if self.passcounter == (self.multipass-1):
-               self.StatusBar.push(context_id, (_("Encoding file")))
+               self.StatusBar.push(context_id, (_("Writing %(filename)s") % {'filename': self.outputfilename}))
                self.passcounter = int(0)
                self._start_transcoding()
            else:
