@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: transmageddon master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=transmageddon&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2012-09-12 09:47+0000\n"
-"PO-Revision-Date: 2012-09-12 12:58+0100\n"
+"POT-Creation-Date: 2012-09-12 18:54+0000\n"
+"PO-Revision-Date: 2012-09-12 20:57+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: \n"
@@ -211,10 +211,14 @@ msgid "%(min)d:%(sec)02d"
 msgstr "%(min)d:%(sec)02d"
 
 #: ../src/transmageddon.py:502
-#: ../src/transmageddon.py:505
 #, python-format
 msgid "File saved to %(dir)s"
 msgstr "Datoteka je shranjena v %(dir)s"
+
+#: ../src/transmageddon.py:505
+#, python-format
+msgid "%(file)s saved to %(dir)s"
+msgstr "Datoteka %(file)s je shranjena v %(dir)s"
 
 #: ../src/transmageddon.py:515
 msgid "Done Transcoding"
