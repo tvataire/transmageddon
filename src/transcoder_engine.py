@@ -409,7 +409,7 @@ class Transcoder(GObject.GObject):
            # print str(name) + " got GstTagSetter Interface " +str(tagyes)
            if tagyes ==True:
                taglist=Gst.TagList.new_empty()
-               # Gst.TagList.add_value(taglist, Gst.TAG_MERGE_APPEND, Gst.TAG_APPLICATION_NAME], "Transmageddon transcoder"
+               # Gst.TagList.add_value(taglist, Gst.TagMergeMode.APPEND, Gst.TAG_APPLICATION_NAME, "Transmageddon transcoder"
                # tag_setting_element.merge_tags(taglist, Gst.TAG_MERGE_APPEND)
 
    def Pipeline (self, state):
