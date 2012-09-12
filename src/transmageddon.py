@@ -502,7 +502,7 @@ class TransmageddonUI:
            self.StatusBar.push(context_id, (_("File saved to %(dir)s") % \
                    {'dir': self.outputdirectory}))
            uri = "file://" + os.path.abspath(os.path.curdir) + "/transmageddon.svg"
-           notification = Notify.Notification.new("Transmageddon", (_("File saved to %(dir)s") % {'dir': self.outputdirectory}), uri)
+           notification = Notify.Notification.new("Transmageddon", (_("%(file)s saved to %(dir)s") % {'dir': self.outputdirectory, 'file': self.outputfilename}), uri)
            notification.show()
            self.FileChooser.set_sensitive(True)
            self.containerchoice.set_sensitive(True)
