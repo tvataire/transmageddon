@@ -26,11 +26,7 @@ os.environ["GST_DEBUG_DUMP_DOT_DIR"] = "/tmp"
 import which
 import time
 from gi.repository import Notify
-from gi.repository import GdkX11
-from gi.repository import Gtk
-from gi.repository import GLib
-from gi.repository import Gst
-from gi.repository import GstPbutils
+from gi.repository import GdkX11, Gio, Gtk, GLib, Gst, GstPbutils
 Gst.init(None)
 from gi.repository import GObject
 GObject.threads_init()
@@ -141,28 +137,91 @@ supported_audio_container_map = {
     # if adding more containers make sure to update code for 'No container as it is placement tied'
 }
 
-
-class TransmageddonUI:
-   """This class loads the GtkBuilder file of the UI"""
+class Transmageddon(Gtk.Application):
    def __init__(self):
+       Gtk.Application.__init__(self)
+
+   def do_activate(self):
+       self.win = TransmageddonUI(self)
+       self.win.show_all()
+
+   def do_startup (self):
+       # start the application
+       Gtk.Application.do_startup(self)
+
+       # create a menu
+       menu = Gio.Menu()
+       # append to the menu the options
+       menu.append("About", "app.about")
+       menu.append("Quit", "app.quit")
+       menu.append("Debug", "app.debug")
+       # set the menu as menu of the application
+       self.set_app_menu(menu)
+
+       # create an action for the option "new" of the menu
+       debug_action = Gio.SimpleAction.new("debug", None)
+       # connect it to the callback function debug_cb
+       debug_action.connect("activate", self.debug_cb)
+       # add the action to the application
+       self.add_action(debug_action)
+
+       # option "about"
+       about_action = Gio.SimpleAction.new("about", None)
+       about_action.connect("activate", self.about_cb)
+       self.add_action(about_action)
+
+       # option "quit"
+       quit_action = Gio.SimpleAction.new("quit", None)
+       quit_action.connect("activate", self.quit_cb)
+       self.add_action(quit_action)
+
+   # callback function for "new"
+   def debug_cb(self, action, parameter):
+       dotfile = "/tmp/transmageddon-debug-graph.dot"
+       pngfile = "/tmp/transmageddon-pipeline.png"
+       if os.access(dotfile, os.F_OK):
+           os.remove(dotfile)
+       if os.access(pngfile, os.F_OK):
+           os.remove(pngfile)
+       Gst.debug_bin_to_dot_file (self.win._transcoder.pipeline, \
+               Gst.DebugGraphDetails.ALL, 'transmageddon-debug-graph')
+       # check if graphviz is installed with a simple test
+       try:
+           dot = which.which("dot")
+           os.system(dot + " -Tpng -o " + pngfile + " " + dotfile)
+           Gtk.show_uri(self.win.get_screen(), "file://"+pngfile, 0)
+       except which.WhichError:
+              print "The debug feature requires graphviz (dot) to be installed."
+              print "Transmageddon can not find the (dot) binary."
+
+   # callback function for "about"
+   def about_cb(self, action, parameter):
+       """
+           Show the about dialog.
+       """
+       about.AboutDialog()
+
+   # callback function for "quit"
+   def quit_cb(self, action, parameter):
+        print "You have quit."
+        self.quit()
+
+class TransmageddonUI(Gtk.ApplicationWindow):
+   def on_window_destroy(self, widget, data=None):
+       Gtk.main_quit()
+
+   def __init__(self, app):
+       Gtk.Window.__init__(self, title="Transmageddon", application=app)
+       """This class loads the GtkBuilder file of the UI"""
        #Set up i18n
        gettext.bindtextdomain("transmageddon","../../share/locale")
        gettext.textdomain("transmageddon")
-
-       self.builder = Gtk.Builder()
-       # Set the translation domain of builder
-       # please note the call *right after* the builder is created
-       self.builder.set_translation_domain("transmageddon")
 
        # create discoverer object
        self.discovered = GstPbutils.Discoverer.new(50000000000)
        self.discovered.connect('discovered', self.succeed)
        self.discovered.start()
 
-       #Set the Glade file
-       self.uifile = "transmageddon.ui"
-       self.builder.add_from_file(self.uifile)
-       self.builder.connect_signals(self) # Initialize User Interface
        self.audiorows=[] # set up the lists for holding the codec combobuttons
        self.videorows=[]
        self.audiocodecs=[] # create lists to store the ordered lists of codecs
@@ -173,7 +232,6 @@ class TransmageddonUI:
        
        # init the notification area
        Notify.init('Transmageddon')
-
 
        # These dynamic comboboxes allow us to support files with 
        # multiple streams eventually
@@ -201,8 +259,15 @@ class TransmageddonUI:
                vbox.add(self.videorows[x])
            return vbox
 
+
+       self.builder = Gtk.Builder()
+       self.builder.set_translation_domain("transmageddon")
+       uifile = "transmageddon.ui"
+       self.builder.add_from_file(uifile)
+
        #Define functionality of our button and main window
-       self.TopWindow = self.builder.get_object("TopWindow")
+       # self.TopWindow = self.builder.get_object("TopWindow")
+       self.box = self.builder.get_object("window")
        self.FileChooser = self.builder.get_object("FileChooser")
        self.videoinformation = self.builder.get_object("videoinformation")
        self.audioinformation = self.builder.get_object("audioinformation")
@@ -226,7 +291,14 @@ class TransmageddonUI:
        self.audiorows[0].connect("changed", self.on_audiocodec_changed)
        self.videorows[0].connect("changed", self.on_videocodec_changed)
        self.rotationchoice.connect("changed", self.on_rotationchoice_changed)
-       self.TopWindow.connect("destroy", Gtk.main_quit)
+       # self.TopWindow.connect("destroy", Gtk.main_quit)
+
+
+       self.window=self.builder.get_object("window")
+       self.builder.connect_signals(self) # Initialize User Interface
+       self.add(self.box)
+
+       
        def get_file_path_from_dnd_dropped_uri(self, uri):
            # get the path to file
            path = ""
@@ -238,11 +310,14 @@ class TransmageddonUI:
                path = uri[5:] # 5 is len('file:')
            return path
 
-       def on_drag_data_received(widget, context, x, y, selection, target_type, \
-               timestamp):
-           if target_type == TARGET_TYPE_URI_LIST:
-               uri = selection.data.strip('\r\n\x00')
-               self.builder.get_object ("FileChooser").set_uri(uri)
+
+       # This could should be fixed and re-enabled to allow drag and drop
+
+       #def on_drag_data_received(widget, context, x, y, selection, target_type, \
+       #        timestamp):
+       #    if target_type == TARGET_TYPE_URI_LIST:
+       #        uri = selection.data.strip('\r\n\x00')
+       #        self.builder.get_object ("FileChooser").set_uri(uri)
 
 
        #self.TopWindow.connect('drag_data_received', on_drag_data_received)
@@ -279,12 +354,11 @@ class TransmageddonUI:
        # Setting AppIcon
        FileExist = os.path.isfile("../../share/pixmaps/transmageddon.svg")
        if FileExist:
-           self.TopWindow.set_icon_from_file( \
+           self.set_icon_from_file( \
                    "../../share/pixmaps/transmageddon.svg")
-
        else:
            try:
-               self.TopWindow.set_icon_from_file("transmageddon.svg")
+               self.set_icon_from_file("transmageddon.svg")
            except:
                print "failed to find appicon"
 
@@ -301,7 +375,7 @@ class TransmageddonUI:
        self.AudioCodec = Gst.caps_from_string("audio/x-vorbis")
        self.VideoCodec = Gst.caps_from_string("video/x-theora")
        self.ProgressBar.set_text(_("Transcoding Progress"))
-       self.container = False
+       self.codeccontainer = False
        self.vsourcecaps = False
        self.asourcecaps = False
        self.videopasstoggle=False # toggle for passthrough mode chosen
@@ -606,14 +680,14 @@ class TransmageddonUI:
 
                if self.waiting_for_signal == True:
                    if self.containertoggle == True:
-                       if self.container != False:
-                           self.check_for_passthrough(self.container)
+                       if self.codeccontainer != False:
+                           self.check_for_passthrough(self.codeccontainer)
                    else:
                        # self.check_for_elements()
                        if self.missingtoggle==False:
                            self._start_transcoding()
-               if self.container != False:
-                   self.check_for_passthrough(self.container)
+               if self.codeccontainer != False:
+                   self.check_for_passthrough(self.codeccontainer)
        # set markup
 
            if audiostreamcounter >= 0:
@@ -730,7 +804,7 @@ class TransmageddonUI:
            achannels=False
 
        self._transcoder = transcoder_engine.Transcoder(filechoice, self.filename,
-                        self.outputdirectory, self.container, audiocodec, 
+                        self.outputdirectory, self.codeccontainer, audiocodec, 
                         videocodec, self.devicename, 
                         vheight, vwidth, ratenum, ratednom, achannels, 
                         self.multipass, self.passcounter, self.outputfilename,
@@ -783,7 +857,7 @@ class TransmageddonUI:
 
    def check_for_elements(self):
        # this function checks for missing plugins using pbutils
-       if self.container==False:
+       if self.codeccontainer==False:
            containerstatus=True
            videostatus=True
        else:
@@ -848,7 +922,7 @@ class TransmageddonUI:
        self.nosuffix = os.path.splitext(os.path.basename(self.filename))[0]
        # pick output suffix
        container = self.builder.get_object("containerchoice").get_active_text()
-       if self.container==False: # deal with container less formats
+       if self.codeccontainer==False: # deal with container less formats
            self.ContainerFormatSuffix = codecfinder.nocontainersuffixmap[Gst.Caps.to_string(self.AudioCodec)]
        else:
            if self.havevideo == False:
@@ -903,7 +977,7 @@ class TransmageddonUI:
            self.audiorows[0].remove(0)
        self.audiocodecs =[]
        if self.havevideo==True:
-           if self.container != False:
+           if self.codeccontainer != False:
                for c in self.videocodecs:
                    self.videorows[0].remove(0)
                self.videocodecs=[]
@@ -918,7 +992,7 @@ class TransmageddonUI:
                    self.audiorows[0].append_text(str(GstPbutils.pb_utils_get_codec_description(self.presetaudiocodec)))
                    self.audiorows[0].set_active(0)
                    self.audiocodecs.append(self.presetaudiocodec)
-           elif self.container==False: # special setup for container less case, looks ugly, but good enough for now
+           elif self.codeccontainer==False: # special setup for container less case, looks ugly, but good enough for now
                self.audiorows[0].append_text(str(GstPbutils.pb_utils_get_codec_description(Gst.caps_from_string("audio/mpeg, mpegversion=(int)1, layer=(int)3"))))
                self.audiorows[0].append_text(str(GstPbutils.pb_utils_get_codec_description(Gst.caps_from_string("audio/mpeg, mpegversion=4, stream-format=adts"))))
                self.audiorows[0].append_text(str(GstPbutils.pb_utils_get_codec_description(Gst.caps_from_string("audio/x-flac"))))
@@ -929,7 +1003,7 @@ class TransmageddonUI:
                self.audiorows[0].set_sensitive(True)
            else:
                audio_codecs = []
-               audio_codecs = supported_audio_container_map[self.container]
+               audio_codecs = supported_audio_container_map[self.codeccontainer]
                for c in audio_codecs:
                    self.audiocodecs.append(Gst.caps_from_string(codecfinder.codecmap[c]))
                for c in self.audiocodecs: # Use codec descriptions from GStreamer
@@ -941,7 +1015,7 @@ class TransmageddonUI:
 
        # fill in with video
        if self.havevideo==True:
-           if self.container != False:
+           if self.codeccontainer != False:
                if self.usingpreset==True:
                    testforempty = self.presetvideocodec.to_string()
                    if testforempty != "EMPTY":
@@ -950,7 +1024,7 @@ class TransmageddonUI:
                        self.videocodecs.append(self.presetvideocodec)
                else:
                    video_codecs=[]
-                   video_codecs = supported_video_container_map[self.container]
+                   video_codecs = supported_video_container_map[self.codeccontainer]
                    self.rotationchoice.set_sensitive(True)
                    for c in video_codecs:
                        self.videocodecs.append(Gst.caps_from_string(codecfinder.codecmap[c]))
@@ -980,15 +1054,15 @@ class TransmageddonUI:
        self.ProgressBar.set_fraction(0.0)
        self.ProgressBar.set_text(_("Transcoding Progress"))
        if self.builder.get_object("containerchoice").get_active() == self.nocontainernumber:
-               self.container = False
+               self.codeccontainer = False
                self.videorows[0].set_active(self.videonovideomenuno)
                self.videorows[0].set_sensitive(False)
        else:
            if self.builder.get_object("containerchoice").get_active()!= -1:
-               self.container = self.builder.get_object ("containerchoice").get_active_text()
+               self.codeccontainer = self.builder.get_object ("containerchoice").get_active_text()
                self.check_for_elements()
        if self.discover_done == True:
-           self.check_for_passthrough(self.container)
+           self.check_for_passthrough(self.codeccontainer)
            self.populate_menu_choices()
            self.transcodebutton.set_sensitive(True)
 
@@ -1029,7 +1103,7 @@ class TransmageddonUI:
        self.audiopasstoggle=False
        if (self.houseclean == False and self.usingpreset==False):
            self.AudioCodec = self.audiocodecs[self.audiorows[0].get_active()]
-           if self.container != False:
+           if self.codeccontainer != False:
                if self.audiorows[0].get_active() ==  self.audiopassmenuno:
                    self.audiopasstoggle=True
        elif self.usingpreset==True:
@@ -1038,7 +1112,7 @@ class TransmageddonUI:
    def on_videocodec_changed(self, widget):
        self.videopasstoggle=False
        if (self.houseclean == False and self.usingpreset==False):
-           if self.container != False:
+           if self.codeccontainer != False:
                self.VideoCodec = self.videocodecs[self.videorows[0].get_active()]
            else:
                    self.VideoCodec = "novid"
@@ -1048,30 +1122,7 @@ class TransmageddonUI:
        elif self.usingpreset==True:
            self.VideoCodec = self.presetvideocodec
 
-   def on_about_dialog_activate(self, widget):
-       """
-           Show the about dialog.
-       """
-       about.AboutDialog()
-
-   def on_debug_activate(self, widget):
-       dotfile = "/tmp/transmageddon-debug-graph.dot"
-       pngfile = "/tmp/transmageddon-pipeline.png"
-       if os.access(dotfile, os.F_OK):
-           os.remove(dotfile)
-       if os.access(pngfile, os.F_OK):
-           os.remove(pngfile)
-       Gst.debug_bin_to_dot_file (self._transcoder.pipeline, \
-               Gst.DebugGraphDetails.ALL, 'transmageddon-debug-graph')
-       # check if graphviz is installed with a simple test
-       try:
-           dot = which.which("dot")
-           os.system(dot + " -Tpng -o " + pngfile + " " + dotfile)
-           Gtk.show_uri(self.TopWindow.get_screen(), "file://"+pngfile, 0)
-       except which.WhichError:
-              print "The debug feature requires graphviz (dot) to be installed."
-              print "Transmageddon can not find the (dot) binary."
-
-if __name__ == "__main__":
-        hwg = TransmageddonUI()
-        Gtk.main()
+app = Transmageddon()
+exit_status = app.run(sys.argv)
+sys.exit(exit_status)
+Gtk.main()
