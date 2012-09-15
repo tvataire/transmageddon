@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <requires lib="gtk+" version="2.16"/>
+  <!-- interface-requires gtk+ 3.0 -->
   <object class="GtkWindow" id="TopWindow">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
@@ -19,9 +19,9 @@
             <property name="child_pack_direction">rtl</property>
             <child>
               <object class="GtkMenuItem" id="help">
+                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="use_action_appearance">False</property>
                 <property name="label" translatable="yes">_Help</property>
                 <property name="use_underline">True</property>
                 <child type="submenu">
@@ -31,9 +31,9 @@
                     <child>
                       <object class="GtkImageMenuItem" id="debug">
                         <property name="label" translatable="yes">_Debug</property>
+                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">False</property>
                         <signal name="activate" handler="on_debug_activate" swapped="no"/>
@@ -42,9 +42,9 @@
                     <child>
                       <object class="GtkImageMenuItem" id="about_dialog">
                         <property name="label">gtk-about</property>
+                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                         <signal name="activate" handler="on_about_dialog_activate" swapped="no"/>
@@ -458,6 +458,18 @@
                 <property name="n_rows">4</property>
                 <property name="n_columns">3</property>
                 <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
                   <object class="GtkLabel" id="vspacer15">
                     <property name="width_request">12</property>
                     <property name="visible">True</property>
@@ -557,18 +569,6 @@
                     <property name="right_attach">3</property>
                   </packing>
                 </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -647,6 +647,7 @@
                 <child>
                   <object class="GtkButton" id="cancelbutton">
                     <property name="label">gtk-cancel</property>
+                    <property name="use_action_appearance">False</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
@@ -663,6 +664,7 @@
                 <child>
                   <object class="GtkButton" id="transcodebutton">
                     <property name="label" translatable="yes">_Transcode</property>
+                    <property name="use_action_appearance">False</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
