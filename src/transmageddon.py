@@ -140,7 +140,10 @@ supported_audio_container_map = {
 class Transmageddon(Gtk.Application):
    def __init__(self):
        Gtk.Application.__init__(self)
-
+   #Set up i18n
+   gettext.bindtextdomain("transmageddon","../../share/locale")
+   gettext.textdomain("transmageddon")
+   
    def do_activate(self):
        self.win = TransmageddonUI(self)
        self.win.show_all()
@@ -152,18 +155,19 @@ class Transmageddon(Gtk.Application):
        # create a menu
        menu = Gio.Menu()
        # append to the menu the options
-       menu.append("About", "app.about")
-       menu.append("Quit", "app.quit")
-       menu.append("Debug", "app.debug")
+       menu.append(_("About", "app.about"))
+       menu.append(_("Quit", "app.quit"))
+       menu.append(_("Debug", "app.debug"))
+       
        # set the menu as menu of the application
        self.set_app_menu(menu)
 
        # create an action for the option "new" of the menu
        debug_action = Gio.SimpleAction.new("debug", None)
-       # connect it to the callback function debug_cb
        debug_action.connect("activate", self.debug_cb)
-       # add the action to the application
        self.add_action(debug_action)
+
+       
 
        # option "about"
        about_action = Gio.SimpleAction.new("about", None)
@@ -213,9 +217,6 @@ class TransmageddonUI(Gtk.ApplicationWindow):
    def __init__(self, app):
        Gtk.Window.__init__(self, title="Transmageddon", application=app)
        """This class loads the GtkBuilder file of the UI"""
-       #Set up i18n
-       gettext.bindtextdomain("transmageddon","../../share/locale")
-       gettext.textdomain("transmageddon")
 
        # create discoverer object
        self.discovered = GstPbutils.Discoverer.new(50000000000)
@@ -313,17 +314,18 @@ class TransmageddonUI(Gtk.ApplicationWindow):
 
        # This could should be fixed and re-enabled to allow drag and drop
 
-       #def on_drag_data_received(widget, context, x, y, selection, target_type, \
-       #        timestamp):
-       #    if target_type == TARGET_TYPE_URI_LIST:
-       #        uri = selection.data.strip('\r\n\x00')
-       #        self.builder.get_object ("FileChooser").set_uri(uri)
+       def on_drag_data_received(widget, context, x, y, selection, target_type, \
+               timestamp):
+           if target_type == TARGET_TYPE_URI_LIST:
+               uri = selection.data.strip('\r\n\x00')
+               self.builder.get_object ("FileChooser").set_uri(uri)
 
 
-       #self.TopWindow.connect('drag_data_received', on_drag_data_received)
-       #self.Gtk.drag_dest_set(TopWindow,  Gtk.DEST_DEFAULT_MOTION |
-       #        Gtk.DEST_DEFAULT_HIGHLIGHT | Gtk.DEST_DEFAULT_DROP, dnd_list, \
-       #        Gdk.DragAction.COPY)
+       self.connect('drag_data_received', on_drag_data_received)
+       self.Gtk.drag_dest_set(self,  Gtk.DEST_DEFAULT_MOTION |
+               Gtk.DEST_DEFAULT_HIGHLIGHT | Gtk.DEST_DEFAULT_DROP, dnd_list, \
+               Gdk.DragAction.COPY)
+
 
        self.start_time = False
        self.multipass = 0
