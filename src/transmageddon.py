@@ -592,12 +592,18 @@ class TransmageddonUI:
 
                    self.videodata = { 'videowidth' : videowidth, 'videoheight' : videoheight, 'videotype' : self.inputvideocaps,
                               'fratenum' : videonum, 'frateden' :  videodenom }
-
-                   self.discover_done=True
-                   if self.havevideo==False:
-                       self.videoinformation.set_markup(''.join(('<small>', _("No Video"), '</small>')))
-                       self.videocodec.set_markup(''.join(('<small>', "",
+                   self.presetchoice.set_sensitive(True)
+                   self.videorows[0].set_sensitive(True)
+                   self.rotationchoice.set_sensitive(True)
+               if self.havevideo==False:
+                   self.videoinformation.set_markup(''.join(('<small>', _("No Video"), '</small>')))
+                   self.videocodec.set_markup(''.join(('<small>', "",
                                       '</small>')))
+                   self.presetchoice.set_sensitive(False)
+                   self.videorows[0].set_sensitive(False)
+                   self.rotationchoice.set_sensitive(False)
+               self.discover_done=True
+
                if self.waiting_for_signal == True:
                    if self.containertoggle == True:
                        if self.container != False:

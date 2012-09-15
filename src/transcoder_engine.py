@@ -88,8 +88,6 @@ class Transcoder(GObject.GObject):
 
        # if needed create a variable to store the filename of the multipass \
        # statistics file
-       print "self.multipass is " + str(self.multipass)
-       print "self.passcounter is " + str(self.passcounter)
        if self.multipass != 0:
            self.cachefile = (str (GLib.get_user_cache_dir()) + "/" + \
                    "multipass-cache-file" + self.timestamp + ".log")
@@ -124,22 +122,23 @@ class Transcoder(GObject.GObject):
  
            # What to do if we are not doing video passthrough (we only support video 
            # with container format
-           if self.videopasstoggle==False and self.passcounter == int(0):
-               self.videoflipper = Gst.ElementFactory.make('videoflip', None)
-               self.videoflipper.set_property("method", self.rotationvalue)
-               self.pipeline.add(self.videoflipper)
+           if self.videocaps !=False:
+               if (self.videopasstoggle==False and self.passcounter == int(0)):
+                   self.videoflipper = Gst.ElementFactory.make('videoflip', None)
+                   self.videoflipper.set_property("method", self.rotationvalue)
+                   self.pipeline.add(self.videoflipper)
 
-               self.colorspaceconverter = Gst.ElementFactory.make("videoconvert", None)
-               self.pipeline.add(self.colorspaceconverter)
+                   self.colorspaceconverter = Gst.ElementFactory.make("videoconvert", None)
+                   self.pipeline.add(self.colorspaceconverter)
 
-               self.deinterlacer = Gst.ElementFactory.make('deinterlace', None)
-               self.pipeline.add(self.deinterlacer)
+                   self.deinterlacer = Gst.ElementFactory.make('deinterlace', None)
+                   self.pipeline.add(self.deinterlacer)
    
-               self.deinterlacer.link(self.colorspaceconverter)
-	       self.colorspaceconverter.link(self.videoflipper)
-               self.deinterlacer.set_state(Gst.State.PAUSED)
-               self.colorspaceconverter.set_state(Gst.State.PAUSED)
-               self.videoflipper.set_state(Gst.State.PAUSED)
+                   self.deinterlacer.link(self.colorspaceconverter)
+	           self.colorspaceconverter.link(self.videoflipper)
+                   self.deinterlacer.set_state(Gst.State.PAUSED)
+                   self.colorspaceconverter.set_state(Gst.State.PAUSED)
+                   self.videoflipper.set_state(Gst.State.PAUSED)
            # this part of the pipeline is used for both passthrough and re-encoding
            if self.videocaps != "novid":
                if (self.videocaps != False):
