@@ -49,10 +49,11 @@ rm -rf %{buildroot}
 %defattr(-,root,root,-)
 %doc ChangeLog AUTHORS TODO COPYING NEWS
 %{_bindir}/transmageddon
-%{_datadir}/transmageddon
+%{_datadir}/transmageddon/*.*
 %{_datadir}/pixmaps/transmageddon.svg
 %{_datadir}/applications/transmageddon.desktop
 %{_datadir}/transmageddon/presets/*
+%{_datadir}/transmageddon/profiles/*
 %{_mandir}/man1/transmageddon.1.gz
 
 %changelog
