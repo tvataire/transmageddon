@@ -704,7 +704,6 @@ class TransmageddonUI:
            if self.videopasstoggle == False:
                videocodec = self.VideoCodec
            else:
-               print "self.vsourcecaps " + str(self.vsourcecaps)
                videocodec = self.vsourcecaps
            self.outputdirectory=self.videodirectory
        else:
@@ -1037,6 +1036,7 @@ class TransmageddonUI:
                self.VideoCodec = self.videocodecs[self.videorows[0].get_active()]
            else:
                    self.VideoCodec = "novid"
+                   self.rotationchoice.set_sensitive(False)
            if self.videorows[0].get_active() == self.videopassmenuno:
                self.videopasstoggle=True
        elif self.usingpreset==True:
