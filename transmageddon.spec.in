@@ -12,18 +12,15 @@ URL:		http://www.linuxrising.org/transmageddon
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 Requires:	python >= 2.5
-Requires:	gstreamer >= @GST_REQ@
-Requires:	gstreamer-python >= @PYGST_REQ@
-Requires:	pygtk2 >= @PYGTK_REQ@
-Requires:	gnome-python2
-Requires:	pygobject2 >= 2.17.0
+Requires:	gstreamer011 >= @GST_REQ@
+Requires:       notify-python
+Requires:	pygobject2
 
-BuildRequires:	gstreamer-devel >= @GST_REQ@
-BuildRequires:	gstreamer-python >= @PYGST_REQ@
+BuildRequires:	gstreamer011-devel >= @GST_REQ@
 BuildRequires:	python-devel >= 2.3
-BuildRequires:	pygtk2-devel >= @PYGTK_REQ@
 BuildRequires:  gettext
 BuildRequires:  desktop-file-utils
+BuildRequires:  pygobject2-devel
 BuildArch: 	noarch
 
 %description
@@ -55,7 +52,7 @@ rm -rf %{buildroot}
 %{_datadir}/transmageddon
 %{_datadir}/pixmaps/transmageddon.svg
 %{_datadir}/applications/transmageddon.desktop
-%{_datadir}/gstreamer-0.10/presets/*
+%{_datadir}/transmageddon/presets/*
 %{_mandir}/man1/transmageddon.1.gz
 
 %changelog
