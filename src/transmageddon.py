@@ -155,9 +155,9 @@ class Transmageddon(Gtk.Application):
        # create a menu
        menu = Gio.Menu()
        # append to the menu the options
-       menu.append(_("About", "app.about"))
-       menu.append(_("Quit", "app.quit"))
-       menu.append(_("Debug", "app.debug"))
+       menu.append(_("About"), "app.about")
+       menu.append(_("Quit"), "app.quit")
+       menu.append(_("Debug"), "app.debug")
        
        # set the menu as menu of the application
        self.set_app_menu(menu)
@@ -321,10 +321,10 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                self.builder.get_object ("FileChooser").set_uri(uri)
 
 
-       self.connect('drag_data_received', on_drag_data_received)
-       self.Gtk.drag_dest_set(self,  Gtk.DEST_DEFAULT_MOTION |
-               Gtk.DEST_DEFAULT_HIGHLIGHT | Gtk.DEST_DEFAULT_DROP, dnd_list, \
-               Gdk.DragAction.COPY)
+       # self.connect('drag_data_received', on_drag_data_received)
+       #Gtk.drag_dest_set(self,  Gtk.DEST_DEFAULT_MOTION |
+       #        Gtk.DEST_DEFAULT_HIGHLIGHT | Gtk.DEST_DEFAULT_DROP, dnd_list, \
+       #        Gdk.DragAction.COPY)
 
 
        self.start_time = False
