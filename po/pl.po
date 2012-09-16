@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: transmageddon\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-12 20:53+0200\n"
-"PO-Revision-Date: 2012-09-12 20:54+0200\n"
+"POT-Creation-Date: 2012-09-16 22:50+0200\n"
+"PO-Revision-Date: 2012-09-16 22:51+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -24,7 +24,7 @@ msgstr ""
 "X-Poedit-Language: Polish\n"
 "X-Poedit-Country: Poland\n"
 
-#: ../src/about.py.in:46 ../src/about.py.in:47 ../src/transmageddon.ui.h:1
+#: ../src/about.py.in:46 ../src/about.py.in:47
 msgid "Transmageddon"
 msgstr "Transmageddon"
 
@@ -114,166 +114,171 @@ msgstr "Wystąpił błąd dostępu do %(location)spresets.txt."
 msgid "All device presets are up to date!"
 msgstr "Wszystkie profile urządzeń są aktualne."
 
-#: ../src/transmageddon.ui.h:2
-msgid "_Help"
-msgstr "Pomo_c"
-
-#: ../src/transmageddon.ui.h:3
-msgid "_Debug"
-msgstr "_Debugowanie"
-
-#: ../src/transmageddon.ui.h:4
+#: ../src/transmageddon.ui.h:1
 msgid "<small>Audio Channels:</small>"
 msgstr "<small>Kanały dźwięku:</small>"
 
-#: ../src/transmageddon.ui.h:5
+#: ../src/transmageddon.ui.h:2
 msgid "<small>Video height&#47;width:</small>"
 msgstr "<small>Wysokość&#47;szerokość nagrania wideo:</small>"
 
-#: ../src/transmageddon.ui.h:6
+#: ../src/transmageddon.ui.h:3
 msgid "<b>Presets:</b>"
 msgstr "<b>Ustawienia:</b>"
 
-#: ../src/transmageddon.ui.h:7
+#: ../src/transmageddon.ui.h:4
 msgid "<b>Choose Input File:</b>"
 msgstr "<b>Wybór pliku źródłowego:</b>"
 
-#: ../src/transmageddon.ui.h:8
+#: ../src/transmageddon.ui.h:5
 msgid "<b>Output Format:</b>"
 msgstr "<b>Format wyjściowy:</b>"
 
-#: ../src/transmageddon.ui.h:9
+#: ../src/transmageddon.ui.h:6
 msgid "<small>Video codec:</small>"
 msgstr "<small>Kodek wideo:</small>"
 
-#: ../src/transmageddon.ui.h:10
+#: ../src/transmageddon.ui.h:7
 msgid "<small>Audio codec:</small>"
 msgstr "<small>Kodek dźwięku:</small>"
 
-#: ../src/transmageddon.ui.h:11
+#: ../src/transmageddon.ui.h:8
 msgid "<b>Choose Audio Codec</b>:"
 msgstr "<b>Wybór kodeka dźwięku</b>:"
 
-#: ../src/transmageddon.ui.h:12
+#: ../src/transmageddon.ui.h:9
 msgid "<b>Choose Video Codec</b>:"
 msgstr "<b>Wybór kodeka wideo</b>:"
 
-#: ../src/transmageddon.ui.h:13
+#: ../src/transmageddon.ui.h:10
 msgid "<small>Rotate the video image if needed</small>"
 msgstr "<small>Obrócenie obrazu, jeśli to konieczne</small>"
 
-#: ../src/transmageddon.ui.h:14
+#: ../src/transmageddon.ui.h:11
 msgid "_Transcode"
 msgstr "Prze_koduj"
 
-#: ../src/transmageddon.py:303 ../src/transmageddon.py:681
-#: ../src/transmageddon.py:886 ../src/transmageddon.py:976
+#. append to the menu the options
+#: ../src/transmageddon.py:157
+msgid "About"
+msgstr "O programie"
+
+#: ../src/transmageddon.py:158
+msgid "Quit"
+msgstr "Zakończ"
+
+#: ../src/transmageddon.py:159
+msgid "Debug"
+msgstr "Debugowanie"
+
+#: ../src/transmageddon.py:377 ../src/transmageddon.py:754
+#: ../src/transmageddon.py:953 ../src/transmageddon.py:1043
 msgid "Transcoding Progress"
 msgstr "Postęp przekodowywania"
 
 #. add i18n "No container"option
-#: ../src/transmageddon.py:339
+#: ../src/transmageddon.py:413
 msgid "No container (Audio-only)"
 msgstr "Brak kontenera (tylko dźwięk)"
 
 #. Populate the rotatation box
-#. print "populating rotationbox"
-#: ../src/transmageddon.py:343
+#. print("populating rotationbox")
+#: ../src/transmageddon.py:417
 msgid "No rotation (default)"
 msgstr "Bez obracania obrazu (domyślnie)"
 
-#: ../src/transmageddon.py:344
+#: ../src/transmageddon.py:418
 msgid "Clockwise 90 degrees"
 msgstr "Obrót o 90 stopni zgodnie z ruchem wskazówek zegara"
 
-#: ../src/transmageddon.py:345
+#: ../src/transmageddon.py:419
 msgid "Rotate 180 degrees"
 msgstr "Obrót o 180 stopni"
 
-#: ../src/transmageddon.py:346
+#: ../src/transmageddon.py:420
 msgid "Counterclockwise 90 degrees"
 msgstr "Obrót o 90 stopni przeciwnie do ruchu wskazówek zegara"
 
-#: ../src/transmageddon.py:347
+#: ../src/transmageddon.py:421
 msgid "Horizontal flip"
 msgstr "Odbicie poziome"
 
-#: ../src/transmageddon.py:348
+#: ../src/transmageddon.py:422
 msgid "Vertical flip"
 msgstr "Odbicie pionowe"
 
-#: ../src/transmageddon.py:349
+#: ../src/transmageddon.py:423
 msgid "Upper left diagonal flip"
 msgstr "Odbicie względem górnego lewego rogu"
 
-#: ../src/transmageddon.py:350
+#: ../src/transmageddon.py:424
 msgid "Upper right diagnonal flip"
 msgstr "Odbicie względem górnego prawego rogu"
 
-#: ../src/transmageddon.py:373
+#: ../src/transmageddon.py:447
 msgid "No Presets"
 msgstr "Brak ustawień"
 
-#: ../src/transmageddon.py:471
+#: ../src/transmageddon.py:539
 #, python-format
 msgid "%(min)d:%(sec)02d"
 msgstr "%(min)d:%(sec)02d"
 
-#: ../src/transmageddon.py:502
+#: ../src/transmageddon.py:569
 #, python-format
 msgid "File saved to %(dir)s"
 msgstr "Plik zapisany do %(dir)s"
 
-#: ../src/transmageddon.py:505
+#: ../src/transmageddon.py:572
 #, python-format
 msgid "%(file)s saved to %(dir)s"
 msgstr "Plik %(file)s zapisany do %(dir)s"
 
-#: ../src/transmageddon.py:515
+#: ../src/transmageddon.py:582
 msgid "Done Transcoding"
 msgstr "Ukończono przekodowywanie"
 
-#: ../src/transmageddon.py:528 ../src/transmageddon.py:855
+#: ../src/transmageddon.py:595 ../src/transmageddon.py:922
 #, python-format
 msgid "Writing %(filename)s"
 msgstr "Zapisywanie %(filename)s"
 
-#: ../src/transmageddon.py:532
+#: ../src/transmageddon.py:599
 #, python-format
 msgid "Pass %(count)d Complete. "
 msgstr "Ukończono przebieg %(count)d. "
 
-#: ../src/transmageddon.py:577
+#: ../src/transmageddon.py:644
 msgid "No Audio"
 msgstr "Brak dźwięku"
 
 #. add a 'No Video option'
-#: ../src/transmageddon.py:598 ../src/transmageddon.py:958
+#: ../src/transmageddon.py:666 ../src/transmageddon.py:1025
 msgid "No Video"
 msgstr "Brak wideo"
 
-#: ../src/transmageddon.py:759
+#: ../src/transmageddon.py:828
 msgid "Plugins not found, choose different codecs."
 msgstr "Nie odnaleziono wtyczek. Proszę wybrać inne kodeki."
 
-#: ../src/transmageddon.py:767
+#: ../src/transmageddon.py:836
 msgid "Codec installation aborted."
 msgstr "Przerwano instalację kodeków."
 
-#: ../src/transmageddon.py:776
+#: ../src/transmageddon.py:844
 msgid "Missing plugin installation failed: "
 msgstr "Instalacja brakującej wtyczki się nie powiodła: "
 
-#: ../src/transmageddon.py:858
+#: ../src/transmageddon.py:925
 #, python-format
 msgid "Pass %(count)d Progress"
 msgstr "Postęp przebiegu %(count)d"
 
-#: ../src/transmageddon.py:964
+#: ../src/transmageddon.py:1031
 msgid "Video passthrough"
 msgstr "Wideo bez zmian"
 
-#: ../src/transmageddon.py:969
+#: ../src/transmageddon.py:1036
 msgid "Audio passthrough"
 msgstr "Dźwięk bez zmian"
 
