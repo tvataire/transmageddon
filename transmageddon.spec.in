@@ -11,13 +11,12 @@ Group:		Applications/Multimedia
 URL:		http://www.linuxrising.org/transmageddon
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-Requires:	python >= 2.5
+Requires:	python3
 Requires:	gstreamer1 >= @GST_REQ@
 Requires:       notify-python
-Requires:	pygobject3
+Requires:	python-gobject
 
 BuildRequires:	gstreamer1-devel >= @GST_REQ@
-BuildRequires:	python-devel >= 2.3
 BuildRequires:  gettext
 BuildRequires:  desktop-file-utils
 BuildRequires:  intltool

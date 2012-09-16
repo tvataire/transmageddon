@@ -131,7 +131,7 @@ def get_muxer_element(containercaps):
        if Gst.ElementFactory.list_is_type(fact, 16):
            muxers.append(fact.get_name())
            features.append(fact)
-   muxerfeature = dict(zip(muxers, features))
+   muxerfeature = dict(list(zip(muxers, features)))
    incomingcaps = Gst.caps_from_string(containercaps)
    # print "incomingcaps is " + str(containercaps)
    for muxer in muxers:
@@ -183,7 +183,7 @@ def get_audio_encoder_element(audioencodercaps):
                if fact.get_name() != 'encodebin':
                    encoders.append(fact.get_name())
                    features.append(fact)
-   encoderfeature = dict(zip(encoders, features))
+   encoderfeature = dict(list(zip(encoders, features)))
    
    if isinstance(audioencodercaps, str): # this value should always be a caps value, so this sometimes being a string is a bug
        incomingcaps = Gst.caps_from_string(audioencodercaps)
@@ -236,7 +236,7 @@ def get_video_encoder_element(videoencodercaps):
        #        fact.get_metadata().split('/')):
        #    encoders.append(fact.get_name())
        #   features.append(fact)
-   encoderfeature = dict(zip(encoders, features))
+   encoderfeature = dict(list(zip(encoders, features)))
    # print "videoencodercaps is " + str(videoencodercaps)
    incomingcaps = videoencodercaps
    for x in encoders:

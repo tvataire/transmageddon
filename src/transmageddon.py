@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#! /usr/bin/env python3
 # -.- coding: utf-8 -.-
 
 # Transmageddon
@@ -35,7 +35,7 @@ from gi.repository import GObject
 GObject.threads_init()
 
 import transcoder_engine
-from urlparse import urlparse
+from urllib.parse import urlparse
 import codecfinder
 import about
 import presets
@@ -46,12 +46,12 @@ import datetime
 
 #major, minor, patch = Gst.pygst_version
 #if (major == 0) and (patch < 22):
-#   print "You need version 0.10.22 or higher of Gstreamer-python for Transmageddon" 
+#   print("You need version 0.10.22 or higher of Gstreamer-python for Transmageddon")
 #   sys.exit(1)
 
 major, minor, patch = GObject.pygobject_version
 if (major == 2) and (minor < 18):
-   print "You need version 2.18.0 or higher of pygobject for Transmageddon"
+   print("You need version 2.18.0 or higher of pygobject for Transmageddon")
    sys.exit(1)
 
 
@@ -194,8 +194,8 @@ class Transmageddon(Gtk.Application):
            os.system(dot + " -Tpng -o " + pngfile + " " + dotfile)
            Gtk.show_uri(self.win.get_screen(), "file://"+pngfile, 0)
        except which.WhichError:
-              print "The debug feature requires graphviz (dot) to be installed."
-              print "Transmageddon can not find the (dot) binary."
+              print("The debug feature requires graphviz (dot) to be installed.")
+              print("Transmageddon can not find the (dot) binary.")
 
    # callback function for "about"
    def about_cb(self, action, parameter):
@@ -206,7 +206,7 @@ class Transmageddon(Gtk.Application):
 
    # callback function for "quit"
    def quit_cb(self, action, parameter):
-        print "You have quit."
+        print("You have quit.")
         self.quit()
 
 class TransmageddonUI(Gtk.ApplicationWindow):
@@ -258,7 +258,6 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                self.videorows.append(combo)
                vbox.add(self.videorows[x])
            return vbox
-
 
        self.builder = Gtk.Builder()
        self.builder.set_translation_domain("transmageddon")
@@ -338,7 +337,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        self.audiodirectory = \
                    GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_MUSIC)
        #else:
-       #    print "XDG video or audio directory not available"
+       #    print("XDG video or audio directory not available")
        #    self.videodirectory = os.getenv('HOME')
        #    self.audiodirectory = os.getenv('HOME')
        if self.videodirectory is None:
@@ -361,7 +360,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            try:
                self.set_icon_from_file("transmageddon.svg")
            except:
-               print "failed to find appicon"
+               print("failed to find appicon")
 
        # default all but top box to insensitive by default
        # self.containerchoice.set_sensitive(False)
@@ -407,14 +406,14 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        self.p_time = Gst.Format.TIME
 
        # Populate the Container format combobox
-       # print "do we try to populate container choice"
+       # print("do we try to populate container choice")
        for i in supported_containers:
            self.containerchoice.append_text(i)
        # add i18n "No container"option
        self.containerchoice.append_text(_("No container (Audio-only)"))
 
        # Populate the rotatation box
-       # print "populating rotationbox"
+       # print("populating rotationbox")
        self.rotationlist = [_("No rotation (default)"),\
                             _("Clockwise 90 degrees"), \
                             _("Rotate 180 degrees"),
@@ -431,17 +430,17 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        self.rotationvalue = int(0)
       
        # Populate Device Presets combobox
-       # print "starting preset population"
+       # print("starting preset population")
        devicelist = []
        shortname = []
-       preset_list = sorted(presets.get().items(),
+       preset_list = sorted(list(presets.get().items()),
                             key = (lambda x: x[1].make + x[1].model))
        for x, (name, device) in enumerate(preset_list):
            self.presetchoice.append_text(str(device))
            devicelist.append(str(device))
            shortname.append(str(name))
 
-       for (name, device) in (presets.get().items()):
+       for (name, device) in (list(presets.get().items())):
            shortname.append(str(name))
        # self.presetchoices = dict(zip(devicelist, shortname))
        self.presetchoices = shortname
@@ -492,7 +491,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        elif preset.container == "video/webm":
            self.containerchoice.set_active(12)
        else:
-            print "failed to set container format from preset data"
+            print("failed to set container format from preset data")
 
 
        # Check for number of passes
@@ -509,22 +508,18 @@ class TransmageddonUI(Gtk.ApplicationWindow):
    # FORMAT_TIME only value implemented by all plugins used
    # a lot of original code from Gst-python synchronizer.py example
    def Increment_Progressbar(self):
-       # print "incrementing progressbar"
+       # print("incrementing progressbar")
        if self.start_time == False:  
            self.start_time = time.time()
        try:
            success, position = \
                    self._transcoder.uridecoder.query_position(Gst.Format.TIME)
-           #print "position is " + str(position)
-           # print "success is " + str(success)
        except:
            position = Gst.CLOCK_TIME_NONE
 
        try:
            success, duration = \
                    self._transcoder.uridecoder.query_duration(Gst.Format.TIME)
-           # print "duration is " + str(duration)
-           # print "success is " + str(success)
        except:
            duration = Gst.CLOCK_TIME_NONE
        if position != Gst.CLOCK_TIME_NONE:
@@ -535,8 +530,6 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                    percent = (value*100)
                    timespent = time.time() - self.start_time
                    percent_remain = (100-percent)
-                   #print "percent remain " + str(percent_remain)
-                   #print "percentage is " + str(percent)
                    if percent != 0:
                        rem = (timespent / percent) * percent_remain
                    else: 
@@ -569,7 +562,6 @@ class TransmageddonUI(Gtk.ApplicationWindow):
    # use it for the progressbar
    def ProgressBarUpdate(self, source):
        GObject.timeout_add(500, self.Increment_Progressbar)
-       # print "ProgressBar timeout_add startet"
 
    def _on_eos(self, source):
        context_id = self.StatusBar.get_context_id("EOS")
@@ -704,9 +696,9 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                                        str(GstPbutils.pb_utils_get_codec_description   (self.inputvideocaps)),
                                       '</small>')))
        else:
-          print "hoped for a great discovery; got an error"
-          print result
-          print error
+          print("hoped for a great discovery; got an error")
+          print(result)
+          print(error)
 
    def discover(self, path):
        self.discovered.discover_uri_async("file://"+path)
@@ -772,7 +764,6 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                    self.bogus=1
                self.nocontaineroptiontoggle=False
            self.containerchoice.set_sensitive(True)
-       # print "filechoosing done"
 
    def _start_transcoding(self): 
        filechoice = self.builder.get_object ("FileChooser").get_uri()
@@ -819,19 +810,17 @@ class TransmageddonUI(Gtk.ApplicationWindow):
 
    def donemessage(self, donemessage, null):
        if donemessage == GstPbutils.InstallPluginsReturn.SUCCESS:
-           # print "success " + str(donemessage)
            if Gst.update_registry():
-               print "Plugin registry updated, trying again"
+               print("Plugin registry updated, trying again")
            else:
-               print "Gstreamer registry update failed"
+               print("Gstreamer registry update failed")
            if self.containertoggle == False:
-               # print "done installing plugins, starting transcode"
                # FIXME - might want some test here to check plugins needed are
                # actually installed
                # but it is a rather narrow corner case when it fails
                self._start_transcoding()
        elif donemessage == GstPbutils.InstallPluginsReturn.PARTIAL_SUCCESS:
-           print "Plugin install not fully succesfull"
+           print("Plugin install not fully succesfull")
            # self.check_for_elements()
        elif donemessage == GstPbutils.InstallPluginsReturn.NOT_FOUND:
            context_id = self.StatusBar.get_context_id("EOS")
@@ -852,7 +841,6 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            self.transcodebutton.set_sensitive(True)
        else:
            context_id = self.StatusBar.get_context_id("EOS")
-           print donemessage
            self.StatusBar.push(context_id, _("Missing plugin installation failed: "))
 
 
@@ -896,7 +884,6 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                fail_info.append(self.VideoCodec)
            missing = []
            for x in fail_info:
-               print x.to_string()
                missing.append(GstPbutils.missing_encoder_installer_detail_new(x))
            context = GstPbutils.InstallPluginsContext ()
            context.set_xid(self.TopWindow.get_window().get_xid())
@@ -937,14 +924,14 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            self.passcounter=int(1)
            self.StatusBar.push(context_id, (_("Pass %(count)d Progress") % {'count': self.passcounter}))
        if self.haveaudio:
-           if self.audiodata.has_key("samplerate"):
+           if "samplerate" in self.audiodata:
                # self.check_for_elements()
                if self.missingtoggle==False:
                    self._start_transcoding()
            else:
                self.waiting_for_signal="True"
        elif self.havevideo:
-           if self.videodata.has_key("videoheight"):
+           if "videoheight" in self.videodata:
                # self.check_for_elements()
                if self.missingtoggle==False:
                    self._start_transcoding()
@@ -971,7 +958,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        # self.audiocodecs - contains list of whats in self.audiorows
        # self.videocodecs - contains listof whats in self.videorows
        # audio_codecs, video_codecs - temporary lists
-       # print "trying to populate menu choices"
+
        # clean up stuff from previous run
        self.houseclean=True # set this to avoid triggering events when cleaning out menus
        for c in self.audiocodecs: # 

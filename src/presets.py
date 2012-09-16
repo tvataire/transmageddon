@@ -41,7 +41,7 @@ import gettext
 import logging
 import os
 import sys
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 import xml.etree.ElementTree
 import gstfraction
 
@@ -452,7 +452,7 @@ def version_info():
     """
     info = ""
     
-    for name, device in _presets.items():
+    for name, device in list(_presets.items()):
         info += "%s, %s\n" % (name, device.version)
         
     return info
@@ -482,13 +482,13 @@ def install_preset(location, name):
         })
         
         try:
-            f = urllib2.urlopen(path)
+            f = urllib.request.urlopen(path)
             local_file = os.path.join(local_path, ".".join([name, ext]))
             _log.debug(_("Writing to %(file)s") % {
                 "file": local_file,
             })
             open(local_file, "w").write(f.read())
-        except Exception, e:
+        except Exception as e:
             _log.error(_("There was an error fetching and installing " \
                          "%(location)s: %(error)s") % {
                 "location": path,
@@ -513,7 +513,7 @@ def check_for_updates(location = UPDATE_LOCATION):
     if not location.endswith("/"):
         location = location + "/"
     
-    f = urllib2.urlopen(location + "presets.txt")
+    f = urllib.request.urlopen(location + "presets.txt")
     
     try:
         for line in f.readlines():
@@ -524,7 +524,7 @@ def check_for_updates(location = UPDATE_LOCATION):
             
             if len(parts) == 2:
                 name, version = parts
-                if _presets.has_key(name):
+                if name in _presets:
                     if _presets[name].version >= version:
                         _log.debug(_("Device preset %(name)s is up to date") % {
                             "name": name,
@@ -535,7 +535,7 @@ def check_for_updates(location = UPDATE_LOCATION):
                         })
                         try:
                             updates.append((location, name))
-                        except Exception, e:
+                        except Exception as e:
                             _log.error(_("Error installing preset %(name)s " \
                                          "from %(location)s: %(error)s") % {
                                 "name": name,
@@ -548,7 +548,7 @@ def check_for_updates(location = UPDATE_LOCATION):
                     })
                     try:
                         updates.append((location, name))
-                    except Exception, e:
+                    except Exception as e:
                         _log.error(_("Error installing preset %(name)s " \
                                      "from %(location)s: %(error)s") % {
                             "name": name,

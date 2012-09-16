@@ -135,7 +135,7 @@ class Transcoder(GObject.GObject):
                    self.pipeline.add(self.deinterlacer)
    
                    self.deinterlacer.link(self.colorspaceconverter)
-	           self.colorspaceconverter.link(self.videoflipper)
+                   self.colorspaceconverter.link(self.videoflipper)
                    self.deinterlacer.set_state(Gst.State.PAUSED)
                    self.colorspaceconverter.set_state(Gst.State.PAUSED)
                    self.videoflipper.set_state(Gst.State.PAUSED)
@@ -330,10 +330,10 @@ class Transcoder(GObject.GObject):
        mtype = message.type
        # print mtype
        if mtype == Gst.MessageType.ERROR:
-           print "we got an error, life is shit"
+           print("we got an error, life is shit")
            err, debug = message.parse_error()
-           print err 
-           print debug
+           print(err) 
+           print(debug)
            Gst.debug_bin_to_dot_file (self.pipeline, \
            Gst.DebugGraphDetails.ALL, 'transmageddon-debug-graph')
            #self.emit('got-error', err.message)
