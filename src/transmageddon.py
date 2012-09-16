@@ -1,5 +1,8 @@
+#! /usr/bin/env python
+# -.- coding: utf-8 -.-
+
 # Transmageddon
-# Copyright (C) 2009 Christian Schaller <uraeus@gnome.org>
+# Copyright (C) 2009,2010,2011,2012 Christian Schaller <uraeus@gnome.org>
 # 
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -38,8 +41,7 @@ import about
 import presets
 import utils
 import datetime
-from gettext import gettext as _
-import gettext
+
 
 
 #major, minor, patch = Gst.pygst_version
@@ -140,9 +142,6 @@ supported_audio_container_map = {
 class Transmageddon(Gtk.Application):
    def __init__(self):
        Gtk.Application.__init__(self)
-   #Set up i18n
-   gettext.bindtextdomain("transmageddon","../../share/locale")
-   gettext.textdomain("transmageddon")
    
    def do_activate(self):
        self.win = TransmageddonUI(self)
@@ -1124,7 +1123,22 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        elif self.usingpreset==True:
            self.VideoCodec = self.presetvideocodec
 
-app = Transmageddon()
-exit_status = app.run(sys.argv)
-sys.exit(exit_status)
-Gtk.main()
+
+# Setup i18n support
+import locale
+from gettext import gettext as _
+import gettext
+import signal
+  
+#Set up i18n
+gettext.bindtextdomain("transmageddon","../../share/locale")
+gettext.textdomain("transmageddon")
+
+if __name__ == "__main__":
+    app = Transmageddon()
+    # FIXME: Get rid of the following line which has the only purpose of
+    # working around Ctrl+C not exiting Gtk applications from bug 622084.
+    # https://bugzilla.gnome.org/show_bug.cgi?id=622084
+    signal.signal(signal.SIGINT, signal.SIG_DFL)
+    exit_status = app.run(sys.argv)
+    sys.exit(exit_status)
