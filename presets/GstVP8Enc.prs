@@ -9,7 +9,20 @@ quality=2
 [Quality Normal]
 _meta/comment=Normal quality
 quality=5
+lag-in-frames=25 
+auto-alt-ref=true
 
 [Quality High]
 _meta/comment=High quality
 quality=10
+lag-in-frames=25 
+auto-alt-ref=true
+
+[Pass 1]
+_meta/comment=First pass
+multipass-mode=1
+
+[Pass 2]
+_meta/comment=Second pass
+multipass-mode=2
+
