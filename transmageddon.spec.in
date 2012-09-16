@@ -14,13 +14,13 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Requires:	python >= 2.5
 Requires:	gstreamer1 >= @GST_REQ@
 Requires:       notify-python
-Requires:	pygobject2
+Requires:	pygobject3
 
 BuildRequires:	gstreamer1-devel >= @GST_REQ@
 BuildRequires:	python-devel >= 2.3
 BuildRequires:  gettext
 BuildRequires:  desktop-file-utils
-BuildRequires:  pygobject2-devel
+BuildRequires:  intltool
 BuildArch: 	noarch
 
 %description
