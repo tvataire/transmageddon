@@ -1,0 +1,283 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Daniel <ted.korostiled@gmail.com>, 2012.
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-09-18 21:55+0300\n"
+"PO-Revision-Date: 2012-09-13 13:46-0700\n"
+"Last-Translator: Daniel <ted.korostiled@gmail.com>\n"
+"Language-Team: translation@linux.org.ua\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Virtaal 0.7.0\n"
+
+#: ../src/about.py.in:46 ../src/about.py.in:47
+msgid "Transmageddon"
+msgstr "Transmageddon"
+
+#: ../src/about.py.in:49
+msgid ""
+"Transmageddon is a simple video and audio conversion tool for GNOME created "
+"by Christian Fredrik Kalager Schaller."
+msgstr ""
+"Transmageddon — звичайний засіб для перетворення звукових і відеозаписів у "
+"GNOME, який створив Christian Fredrik Kalager Schaller."
+
+#: ../src/about.py.in:50
+msgid "Transmageddon homepage"
+msgstr "Сторінка Transmageddon"
+
+#: ../src/about.py.in:52
+msgid "translator-credits"
+msgstr "Daniel Korostil <ted.korostiled@gmail.com>"
+
+#: ../src/presets.py:78
+#, python-format
+msgid "Not a valid integer or fraction: %(value)s!"
+msgstr "Недоступне число або дріб: %(value)s!"
+
+#: ../src/presets.py:413
+#, python-format
+msgid "Loaded device %(device)s (%(presets)d presets)"
+msgstr "Завантажений пристрій %(device)s (%(presets)d наявно)"
+
+#: ../src/presets.py:480
+#, python-format
+msgid "Fetching %(location)s"
+msgstr "Одержання %(location)s"
+
+#: ../src/presets.py:487
+#, python-format
+msgid "Writing to %(file)s"
+msgstr "Записування на %(file)s"
+
+#: ../src/presets.py:492
+#, python-format
+msgid "There was an error fetching and installing %(location)s: %(error)s"
+msgstr "Помилка одержання та встановлення %(location)s: %(error)s"
+
+#: ../src/presets.py:509
+msgid "Checking for device preset updates..."
+msgstr "Перевіряння на наявні оновлення пристрою…"
+
+#: ../src/presets.py:529
+#, python-format
+msgid "Device preset %(name)s is up to date"
+msgstr "Наявний пристрій %(name)s оновлено"
+
+#: ../src/presets.py:533
+#, python-format
+msgid "Found updated device preset %(name)s"
+msgstr "Знайдено оновлений наявний пристрій %(name)s"
+
+#: ../src/presets.py:539 ../src/presets.py:552
+#, python-format
+msgid "Error installing preset %(name)s from %(location)s: %(error)s"
+msgstr "Помилка встановлення %(name)s з %(location)s: %(error)s"
+
+#: ../src/presets.py:546
+#, python-format
+msgid "Found new device preset %(name)s"
+msgstr "Знайдено новий наявний пристрій %(name)s"
+
+#: ../src/presets.py:559
+#, python-format
+msgid "Malformed plugin version line %(line)s"
+msgstr "Несформований рядок версії додатка %(line)s"
+
+#: ../src/presets.py:563
+#, python-format
+msgid "There was a problem accessing %(location)spresets.txt!"
+msgstr "Проблема доступитися до %(location)spresets.txt!"
+
+#: ../src/presets.py:585
+msgid "All device presets are up to date!"
+msgstr "Всі наявні пристрої оновлено!"
+
+#: ../src/transmageddon.ui.h:1
+msgid "<small>Audio Channels:</small>"
+msgstr "<small>Звукові канали:</small>"
+
+#: ../src/transmageddon.ui.h:2
+msgid "<small>Video height&#47;width:</small>"
+msgstr "<small>Відео height&#47;width:</small>"
+
+#: ../src/transmageddon.ui.h:3
+msgid "<b>Presets:</b>"
+msgstr "<b>Шаблони:</b>"
+
+#: ../src/transmageddon.ui.h:4
+msgid "<b>Choose Input File:</b>"
+msgstr "<b>Вибрати вхідний файл:</b>"
+
+#: ../src/transmageddon.ui.h:5
+msgid "<b>Output Format:</b>"
+msgstr "<b>Вихідний формат:</b>"
+
+#: ../src/transmageddon.ui.h:6
+msgid "<small>Video codec:</small>"
+msgstr "<small>Відеокодек:</small>"
+
+#: ../src/transmageddon.ui.h:7
+msgid "<small>Audio codec:</small>"
+msgstr "<small>Аудіокодек:</small>"
+
+#: ../src/transmageddon.ui.h:8
+msgid "<b>Choose Audio Codec</b>:"
+msgstr "<b>Вибрати аудіокодек</b>:"
+
+#: ../src/transmageddon.ui.h:9
+msgid "<b>Choose Video Codec</b>:"
+msgstr "<b>Вибрати відеокодек</b>:"
+
+#: ../src/transmageddon.ui.h:10
+msgid "<small>Rotate the video image if needed</small>"
+msgstr "<small>Перевернути зображення відеозапису за потреби</small>"
+
+#: ../src/transmageddon.ui.h:11
+msgid "_Transcode"
+msgstr "_Перекодувати"
+
+#. append to the menu the options
+#: ../src/transmageddon.py:157
+msgid "About"
+msgstr "Про програму"
+
+#: ../src/transmageddon.py:158
+msgid "Quit"
+msgstr "Вийти"
+
+#: ../src/transmageddon.py:159
+msgid "Debug"
+msgstr "Зневадження"
+
+#: ../src/transmageddon.py:377 ../src/transmageddon.py:754
+#: ../src/transmageddon.py:953 ../src/transmageddon.py:1043
+msgid "Transcoding Progress"
+msgstr "Поступ перекодування"
+
+#. add i18n "No container"option
+#: ../src/transmageddon.py:413
+msgid "No container (Audio-only)"
+msgstr "Без контейнера (тільки звук)"
+
+#. Populate the rotatation box
+#. print("populating rotationbox")
+#: ../src/transmageddon.py:417
+msgid "No rotation (default)"
+msgstr "Без перевертання (типово)"
+
+#: ../src/transmageddon.py:418
+msgid "Clockwise 90 degrees"
+msgstr "Повернути за годинникова стрілкою на 90˚ градусів"
+
+#: ../src/transmageddon.py:419
+msgid "Rotate 180 degrees"
+msgstr "Повернути на 180˚"
+
+#: ../src/transmageddon.py:420
+msgid "Counterclockwise 90 degrees"
+msgstr "Повернути проти годинникової стрілки на 90˚ градусів"
+
+#: ../src/transmageddon.py:421
+msgid "Horizontal flip"
+msgstr "Віддзеркалити горизонтально"
+
+#: ../src/transmageddon.py:422
+msgid "Vertical flip"
+msgstr "Віддзеркалити вертикально"
+
+#: ../src/transmageddon.py:423
+msgid "Upper left diagonal flip"
+msgstr "Відзеркалити діагонально вверх зліва"
+
+#: ../src/transmageddon.py:424
+msgid "Upper right diagnonal flip"
+msgstr "Відзеркалити діагонально вверх справа"
+
+#: ../src/transmageddon.py:447
+msgid "No Presets"
+msgstr "Без шаблонів"
+
+#: ../src/transmageddon.py:539
+#, python-format
+msgid "%(min)d:%(sec)02d"
+msgstr "%(min)d:%(sec)02d"
+
+#: ../src/transmageddon.py:569
+#, python-format
+msgid "File saved to %(dir)s"
+msgstr "Файл збережено в %(dir)s"
+
+#: ../src/transmageddon.py:572
+#, python-format
+msgid "%(file)s saved to %(dir)s"
+msgstr "%(file)s збережено в %(dir)s"
+
+#: ../src/transmageddon.py:582
+msgid "Done Transcoding"
+msgstr "Перекодування завершено"
+
+#: ../src/transmageddon.py:595 ../src/transmageddon.py:922
+#, python-format
+msgid "Writing %(filename)s"
+msgstr "Записування %(filename)s"
+
+#: ../src/transmageddon.py:599
+#, python-format
+msgid "Pass %(count)d Complete. "
+msgstr "%(count)d пройдено."
+
+#: ../src/transmageddon.py:644
+msgid "No Audio"
+msgstr "Без звуку"
+
+#. add a 'No Video option'
+#: ../src/transmageddon.py:666 ../src/transmageddon.py:1025
+msgid "No Video"
+msgstr "Без відео"
+
+#: ../src/transmageddon.py:828
+msgid "Plugins not found, choose different codecs."
+msgstr "Додаток не знайдено, виберіть інші кодеки."
+
+#: ../src/transmageddon.py:836
+msgid "Codec installation aborted."
+msgstr "Встановлення кодеки перервано."
+
+#: ../src/transmageddon.py:844
+msgid "Missing plugin installation failed: "
+msgstr "Не вдалось установити потрібний додаток:"
+
+#: ../src/transmageddon.py:925
+#, python-format
+msgid "Pass %(count)d Progress"
+msgstr "Поступ %(count)d"
+
+#: ../src/transmageddon.py:1031
+msgid "Video passthrough"
+msgstr "Проходження відеозапису"
+
+#: ../src/transmageddon.py:1036
+msgid "Audio passthrough"
+msgstr "Проходження звуку"
+
+#: ../src/utils.py:76
+#, python-format
+msgid "Can't find %(path)s in any known prefix!"
+msgstr "Неможливо знайти %(path)s серед відомих префіксів!"
+
+#: ../transmageddon.desktop.in.in.h:1
+msgid "Transmageddon Video Transcoder"
+msgstr "Перекодовувач відеозаписів Transmageddon"
+
+#: ../transmageddon.desktop.in.in.h:2
+msgid "Video format conversion tool"
+msgstr "Засіб перетворення відеоформатів"
