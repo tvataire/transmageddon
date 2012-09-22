@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: transmageddon master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=transmageddon&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2012-09-12 14:07+0000\n"
-"PO-Revision-Date: 2012-09-14 23:18+0300\n"
+"POT-Creation-Date: 2012-09-15 19:23+0000\n"
+"PO-Revision-Date: 2012-09-22 13:33+0300\n"
 "Last-Translator: Aurimas Černius <aurisc4@gmail.com>\n"
 "Language-Team: Lithuanian <gnome-lt@lists.akl.lt>\n"
 "Language: lt\n"
@@ -19,7 +19,6 @@ msgstr ""
 
 #: ../src/about.py.in:46
 #: ../src/about.py.in:47
-#: ../src/transmageddon.ui.h:1
 msgid "Transmageddon"
 msgstr "Transmageddon"
 
@@ -99,172 +98,176 @@ msgstr "Klaida skaitant %(location)spresets.txt!"
 msgid "All device presets are up to date!"
 msgstr "Įrenginių konfigūracijos naujausios!"
 
-#: ../src/transmageddon.ui.h:2
-msgid "_Help"
-msgstr "_Pagalba"
-
-#: ../src/transmageddon.ui.h:3
-msgid "_Debug"
-msgstr "_Debug"
-
-#: ../src/transmageddon.ui.h:4
+#: ../src/transmageddon.ui.h:1
 msgid "<small>Audio Channels:</small>"
 msgstr "<small>Audio kanalai:</small>"
 
-#: ../src/transmageddon.ui.h:5
+#: ../src/transmageddon.ui.h:2
 msgid "<small>Video height&#47;width:</small>"
 msgstr "<small>Video aukštis/plotis</small>"
 
-#: ../src/transmageddon.ui.h:6
+#: ../src/transmageddon.ui.h:3
 msgid "<b>Presets:</b>"
 msgstr "<b>Konfigūracijos:</b>"
 
-#: ../src/transmageddon.ui.h:7
+#: ../src/transmageddon.ui.h:4
 msgid "<b>Choose Input File:</b>"
 msgstr "<b>Pasirinkite šaltinio failą:</b>"
 
-#: ../src/transmageddon.ui.h:8
+#: ../src/transmageddon.ui.h:5
 msgid "<b>Output Format:</b>"
 msgstr "<b>Išvedimo formatas:</b>"
 
-#: ../src/transmageddon.ui.h:9
+#: ../src/transmageddon.ui.h:6
 msgid "<small>Video codec:</small>"
 msgstr "<small>Video kodekas:</small>"
 
-#: ../src/transmageddon.ui.h:10
+#: ../src/transmageddon.ui.h:7
 msgid "<small>Audio codec:</small>"
 msgstr "<small>Audio kodekas:</small>"
 
-#: ../src/transmageddon.ui.h:11
+#: ../src/transmageddon.ui.h:8
 msgid "<b>Choose Audio Codec</b>:"
 msgstr "<b>Pasirinkite audio kodeką</b>:"
 
-#: ../src/transmageddon.ui.h:12
+#: ../src/transmageddon.ui.h:9
 msgid "<b>Choose Video Codec</b>:"
 msgstr "<b>Pasirinkite video kodeką</b>:"
 
-#: ../src/transmageddon.ui.h:13
+#: ../src/transmageddon.ui.h:10
 msgid "<small>Rotate the video image if needed</small>"
 msgstr "<small>Pasukti vaizdą, jei reikia</small>"
 
-#: ../src/transmageddon.ui.h:14
+#: ../src/transmageddon.ui.h:11
 msgid "_Transcode"
 msgstr "_Perkoduoti"
 
-#: ../src/transmageddon.py:303
-#: ../src/transmageddon.py:681
-#: ../src/transmageddon.py:886
-#: ../src/transmageddon.py:976
+#. append to the menu the options
+#: ../src/transmageddon.py:158
+msgid "About"
+msgstr "Apie"
+
+#: ../src/transmageddon.py:159
+msgid "Quit"
+msgstr "Išeiti"
+
+#: ../src/transmageddon.py:160
+#| msgid "_Debug"
+msgid "Debug"
+msgstr "Derinti"
+
+#: ../src/transmageddon.py:379
+#: ../src/transmageddon.py:763
+#: ../src/transmageddon.py:967
+#: ../src/transmageddon.py:1057
 msgid "Transcoding Progress"
 msgstr "Perkodavimo progresas"
 
 #. add i18n "No container"option
-#: ../src/transmageddon.py:339
+#: ../src/transmageddon.py:415
 msgid "No container (Audio-only)"
 msgstr "Nėra konteinerio (tik garsas)"
 
 #. Populate the rotatation box
 #. print "populating rotationbox"
-#: ../src/transmageddon.py:343
+#: ../src/transmageddon.py:419
 msgid "No rotation (default)"
 msgstr "Nepasukti (numatytasis)"
 
-#: ../src/transmageddon.py:344
+#: ../src/transmageddon.py:420
 msgid "Clockwise 90 degrees"
 msgstr "Pagal laikrodžio rodyklę 90 laipsnių"
 
-#: ../src/transmageddon.py:345
+#: ../src/transmageddon.py:421
 msgid "Rotate 180 degrees"
 msgstr "Pasukti 180 laipsnių"
 
-#: ../src/transmageddon.py:346
+#: ../src/transmageddon.py:422
 msgid "Counterclockwise 90 degrees"
 msgstr "Prieš laikrodžio rodyklę 90 laipsnių"
 
-#: ../src/transmageddon.py:347
+#: ../src/transmageddon.py:423
 msgid "Horizontal flip"
 msgstr "Horizontaliai apversti"
 
-#: ../src/transmageddon.py:348
+#: ../src/transmageddon.py:424
 msgid "Vertical flip"
 msgstr "Vertikaliai apversti"
 
-#: ../src/transmageddon.py:349
+#: ../src/transmageddon.py:425
 msgid "Upper left diagonal flip"
 msgstr "Apversti per įstrižainę iš kairės viršuje"
 
-#: ../src/transmageddon.py:350
+#: ../src/transmageddon.py:426
 msgid "Upper right diagnonal flip"
 msgstr "Apversti per įstrižainę iš dešinės viršuje"
 
-#: ../src/transmageddon.py:373
+#: ../src/transmageddon.py:449
 msgid "No Presets"
 msgstr "Nėra išankstinių nustatymų"
 
-#: ../src/transmageddon.py:471
+#: ../src/transmageddon.py:547
 #, python-format
 msgid "%(min)d:%(sec)02d"
 msgstr "%(min)d:%(sec)02d"
 
-#: ../src/transmageddon.py:502
+#: ../src/transmageddon.py:578
 #, python-format
 msgid "File saved to %(dir)s"
 msgstr "Failas įrašytas į %(dir)s"
 
-#: ../src/transmageddon.py:505
+#: ../src/transmageddon.py:581
 #, python-format
-#| msgid "File saved to %(dir)s"
 msgid "%(file)s saved to %(dir)s"
 msgstr "%(file)s įrašytas į %(dir)s"
 
-#: ../src/transmageddon.py:515
+#: ../src/transmageddon.py:591
 msgid "Done Transcoding"
 msgstr "Perkodavimas baigtas"
 
-#: ../src/transmageddon.py:528
-#: ../src/transmageddon.py:855
+#: ../src/transmageddon.py:604
+#: ../src/transmageddon.py:936
 #, python-format
 msgid "Writing %(filename)s"
 msgstr "Rašoma į %(filename)s"
 
-#: ../src/transmageddon.py:532
+#: ../src/transmageddon.py:608
 #, python-format
-#| msgid "Pass %(count)d Complete"
 msgid "Pass %(count)d Complete. "
 msgstr "Žingsnis %(count)d baigtas."
 
-#: ../src/transmageddon.py:577
+#: ../src/transmageddon.py:653
 msgid "No Audio"
 msgstr "Nėra garso"
 
 #. add a 'No Video option'
-#: ../src/transmageddon.py:598
-#: ../src/transmageddon.py:958
+#: ../src/transmageddon.py:675
+#: ../src/transmageddon.py:1039
 msgid "No Video"
 msgstr "Nėra vaizdo"
 
-#: ../src/transmageddon.py:759
+#: ../src/transmageddon.py:840
 msgid "Plugins not found, choose different codecs."
 msgstr "Įskiepių nerasta, pasirinkite kitus kodekus."
 
-#: ../src/transmageddon.py:767
+#: ../src/transmageddon.py:848
 msgid "Codec installation aborted."
 msgstr "Kodekų diegimas nutrauktas."
 
-#: ../src/transmageddon.py:776
+#: ../src/transmageddon.py:857
 msgid "Missing plugin installation failed: "
 msgstr "Nepavyko įdiegti trūkstamo įskiepio: "
 
-#: ../src/transmageddon.py:858
+#: ../src/transmageddon.py:939
 #, python-format
 msgid "Pass %(count)d Progress"
 msgstr "Vykdomas žingsnis %(count)d"
 
-#: ../src/transmageddon.py:964
+#: ../src/transmageddon.py:1045
 msgid "Video passthrough"
 msgstr "Vaizdo passthrough"
 
-#: ../src/transmageddon.py:969
+#: ../src/transmageddon.py:1050
 msgid "Audio passthrough"
 msgstr "Garso passthrough"
 
@@ -281,3 +284,5 @@ msgstr "Transmageddon video perkoduoklis"
 msgid "Video format conversion tool"
 msgstr "Video formato keitimo įrankis"
 
+#~ msgid "_Help"
+#~ msgstr "_Pagalba"
