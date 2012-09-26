@@ -32,6 +32,7 @@ class Transcoder(GObject.GObject):
    __gsignals__ = {
             'ready-for-querying' : (GObject.SignalFlags.RUN_LAST, None, []),
             'got-eos' : (GObject.SignalFlags.RUN_LAST, None, []),
+            'missing-plugin' : (GObject.SignalFlags.RUN_LAST, None, []),
             'got-error' : (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT,))
                     }
 
@@ -77,6 +78,7 @@ class Transcoder(GObject.GObject):
        self.timestamp = TIMESTAMP
        self.rotationvalue = int(ROTATIONVALUE)
        self.vbox = {}
+       self.missingplugin= False
           
 
        # switching width and height around for rotationchoices where it makes sense
@@ -328,7 +330,7 @@ class Transcoder(GObject.GObject):
 
    def on_message(self, bus, message):
        mtype = message.type
-       # print mtype
+       # print(mtype)
        if mtype == Gst.MessageType.ERROR:
            print("we got an error, life is shit")
            err, debug = message.parse_error()
@@ -337,6 +339,14 @@ class Transcoder(GObject.GObject):
            Gst.debug_bin_to_dot_file (self.pipeline, \
            Gst.DebugGraphDetails.ALL, 'transmageddon-debug-graph')
            #self.emit('got-error', err.message)
+       elif mtype == Gst.MessageType.ELEMENT:
+           if GstPbutils.is_missing_plugin_message(message):
+               self.missingplugin=message
+               # output=GstPbutils.missing_plugin_message_get_description(message)
+               # print(output)
+               # GstPbutils.missing_plugin_message_get_installer_detail(message)
+               self.emit('missing-plugin')
+           
        elif mtype == Gst.MessageType.ASYNC_DONE:
            self.emit('ready-for-querying')
        elif mtype == Gst.MessageType.EOS:

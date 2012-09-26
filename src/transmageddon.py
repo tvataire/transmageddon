@@ -265,7 +265,6 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        self.builder.add_from_file(uifile)
 
        #Define functionality of our button and main window
-       # self.TopWindow = self.builder.get_object("TopWindow")
        self.box = self.builder.get_object("window")
        self.FileChooser = self.builder.get_object("FileChooser")
        self.videoinformation = self.builder.get_object("videoinformation")
@@ -290,7 +289,6 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        self.audiorows[0].connect("changed", self.on_audiocodec_changed)
        self.videorows[0].connect("changed", self.on_videocodec_changed)
        self.rotationchoice.connect("changed", self.on_rotationchoice_changed)
-       # self.TopWindow.connect("destroy", Gtk.main_quit)
 
 
        self.window=self.builder.get_object("window")
@@ -806,7 +804,18 @@ class TransmageddonUI(Gtk.ApplicationWindow):
 
        self._transcoder.connect("ready-for-querying", self.ProgressBarUpdate)
        self._transcoder.connect("got-eos", self._on_eos)
+       self._transcoder.connect("missing-plugin", self.install_plugin)
        return True
+
+   def install_plugin(self, signal):
+       plugin=GstPbutils.missing_plugin_message_get_installer_detail(self._transcoder.missingplugin)
+       missing = []
+       missing.append(plugin)
+       self.context = GstPbutils.InstallPluginsContext ()
+       self.context.set_xid(self.get_window().get_xid())
+       GstPbutils.install_plugins_async (missing, self.context, \
+                       self.donemessage, "NULL")
+       self.on_cancelbutton_clicked("click")
 
    def donemessage(self, donemessage, null):
        if donemessage == GstPbutils.InstallPluginsReturn.SUCCESS:
@@ -886,8 +895,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            for x in fail_info:
                missing.append(GstPbutils.missing_encoder_installer_detail_new(x))
            context = GstPbutils.InstallPluginsContext ()
-           context.set_xid(self.TopWindow.get_window().get_xid())
-           strmissing = str(missing)
+           context.set_xid(self.window.get_xid())
            GstPbutils.install_plugins_async (missing, context, \
                        self.donemessage, "NULL")
 
