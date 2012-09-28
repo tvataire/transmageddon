@@ -341,11 +341,12 @@ class Transcoder(GObject.GObject):
            #self.emit('got-error', err.message)
        elif mtype == Gst.MessageType.ELEMENT:
            if GstPbutils.is_missing_plugin_message(message):
-               self.missingplugin=message
-               # output=GstPbutils.missing_plugin_message_get_description(message)
-               # print(output)
-               # GstPbutils.missing_plugin_message_get_installer_detail(message)
-               self.emit('missing-plugin')
+               if self.missingplugin==False: #don't think this is correct if more than one plugin installed
+                   self.missingplugin=message
+                   #output=GstPbutils.missing_plugin_message_get_description(message)
+                   #print(output)
+                   # GstPbutils.missing_plugin_message_get_installer_detail(message)
+                   self.emit('missing-plugin')
            
        elif mtype == Gst.MessageType.ASYNC_DONE:
            self.emit('ready-for-querying')

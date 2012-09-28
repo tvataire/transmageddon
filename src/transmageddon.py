@@ -808,6 +808,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        return True
 
    def install_plugin(self, signal):
+       # print("install plugin called")
        plugin=GstPbutils.missing_plugin_message_get_installer_detail(self._transcoder.missingplugin)
        missing = []
        missing.append(plugin)
@@ -818,6 +819,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        self.on_cancelbutton_clicked("click")
 
    def donemessage(self, donemessage, null):
+       # print("donemessage is called")
        if donemessage == GstPbutils.InstallPluginsReturn.SUCCESS:
            if Gst.update_registry():
                print("Plugin registry updated, trying again")
@@ -841,6 +843,9 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            self.cancelbutton.set_sensitive(False)
            self.transcodebutton.set_sensitive(True)
        elif donemessage == GstPbutils.InstallPluginsReturn.USER_ABORT:
+           self._cancel_encoding = \
+               transcoder_engine.Transcoder.Pipeline(self._transcoder,"null")
+           print("user abort")
            context_id = self.StatusBar.get_context_id("EOS")
            self.StatusBar.push(context_id, _("Codec installation aborted."))
            self.FileChooser.set_sensitive(True)
@@ -854,6 +859,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
 
 
    def check_for_elements(self):
+       # print("checking for elements")
        # this function checks for missing plugins using pbutils
        if self.codeccontainer==False:
            containerstatus=True
@@ -896,6 +902,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                missing.append(GstPbutils.missing_encoder_installer_detail_new(x))
            context = GstPbutils.InstallPluginsContext ()
            context.set_xid(self.window.get_xid())
+           print("async called")
            GstPbutils.install_plugins_async (missing, context, \
                        self.donemessage, "NULL")
 
