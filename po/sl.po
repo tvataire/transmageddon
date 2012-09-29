@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: transmageddon master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=transmageddon&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2012-09-15 19:39+0000\n"
-"PO-Revision-Date: 2012-09-15 21:47+0100\n"
+"POT-Creation-Date: 2012-09-29 08:46+0000\n"
+"PO-Revision-Date: 2012-09-29 15:51+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: \n"
@@ -147,130 +147,138 @@ msgid "_Transcode"
 msgstr "_Pretvori"
 
 #. append to the menu the options
-#: ../src/transmageddon.py:158
+#: ../src/transmageddon.py:157
 msgid "About"
 msgstr "O programu"
 
-#: ../src/transmageddon.py:159
+#: ../src/transmageddon.py:158
 msgid "Quit"
 msgstr "Končaj"
 
-#: ../src/transmageddon.py:160
+#: ../src/transmageddon.py:159
 msgid "Debug"
 msgstr "Razhroščevanje"
 
-#: ../src/transmageddon.py:379
-#: ../src/transmageddon.py:763
-#: ../src/transmageddon.py:967
-#: ../src/transmageddon.py:1057
+#: ../src/transmageddon.py:375
+#: ../src/transmageddon.py:752
+#: ../src/transmageddon.py:973
+#: ../src/transmageddon.py:1063
 msgid "Transcoding Progress"
 msgstr "Napredek pretvorbe"
 
 #. add i18n "No container"option
-#: ../src/transmageddon.py:415
+#: ../src/transmageddon.py:411
 msgid "No container (Audio-only)"
 msgstr "Brez zabojnika (le zvok)"
 
 #. Populate the rotatation box
-#. print "populating rotationbox"
-#: ../src/transmageddon.py:419
+#. print("populating rotationbox")
+#: ../src/transmageddon.py:415
 msgid "No rotation (default)"
 msgstr "Brez vrtenja (privzeto)"
 
-#: ../src/transmageddon.py:420
+#: ../src/transmageddon.py:416
 msgid "Clockwise 90 degrees"
 msgstr "V smeri urinega kazalca 90 stopinj"
 
-#: ../src/transmageddon.py:421
+#: ../src/transmageddon.py:417
 msgid "Rotate 180 degrees"
 msgstr "Vrtenje za 180 stopinj"
 
-#: ../src/transmageddon.py:422
+#: ../src/transmageddon.py:418
 msgid "Counterclockwise 90 degrees"
 msgstr "V nasprotni smeri urinega kazalca 90 stopinj"
 
-#: ../src/transmageddon.py:423
+#: ../src/transmageddon.py:419
 msgid "Horizontal flip"
 msgstr "Vodoravno zrcaljenje"
 
-#: ../src/transmageddon.py:424
+#: ../src/transmageddon.py:420
 msgid "Vertical flip"
 msgstr "Navpično zrcaljenje"
 
-#: ../src/transmageddon.py:425
+#: ../src/transmageddon.py:421
 msgid "Upper left diagonal flip"
 msgstr "Zrcaljenje zgornje leve diagonale"
 
-#: ../src/transmageddon.py:426
+#: ../src/transmageddon.py:422
 msgid "Upper right diagnonal flip"
 msgstr "Zrcaljenje zgornje desne diagonale"
 
-#: ../src/transmageddon.py:449
+#: ../src/transmageddon.py:445
 msgid "No Presets"
 msgstr "Brez prednastavljenih"
 
-#: ../src/transmageddon.py:547
+#: ../src/transmageddon.py:537
 #, python-format
 msgid "%(min)d:%(sec)02d"
 msgstr "%(min)d:%(sec)02d"
 
-#: ../src/transmageddon.py:578
+#: ../src/transmageddon.py:567
 #, python-format
 msgid "File saved to %(dir)s"
 msgstr "Datoteka je shranjena v %(dir)s"
 
-#: ../src/transmageddon.py:581
+#: ../src/transmageddon.py:570
 #, python-format
 msgid "%(file)s saved to %(dir)s"
 msgstr "Datoteka %(file)s je shranjena v %(dir)s"
 
-#: ../src/transmageddon.py:591
+#: ../src/transmageddon.py:580
 msgid "Done Transcoding"
 msgstr "Pretvorba je končana."
 
-#: ../src/transmageddon.py:604
-#: ../src/transmageddon.py:936
+#: ../src/transmageddon.py:593
+#: ../src/transmageddon.py:942
 #, python-format
 msgid "Writing %(filename)s"
 msgstr "Zapisovanje %(filename)s"
 
-#: ../src/transmageddon.py:608
+#: ../src/transmageddon.py:597
 #, python-format
 msgid "Pass %(count)d Complete. "
 msgstr "Prehod %(count)d je končan."
 
-#: ../src/transmageddon.py:653
+#: ../src/transmageddon.py:642
 msgid "No Audio"
 msgstr "Brez zvoka"
 
 #. add a 'No Video option'
-#: ../src/transmageddon.py:675
-#: ../src/transmageddon.py:1039
+#: ../src/transmageddon.py:664
+#: ../src/transmageddon.py:1045
 msgid "No Video"
 msgstr "Brez videa"
 
-#: ../src/transmageddon.py:840
+#: ../src/transmageddon.py:838
+msgid "Got an invalid response from codec installer, can not install missing codec."
+msgstr ""
+
+#: ../src/transmageddon.py:842
+msgid "No Codec installer helper application available."
+msgstr "Ni ustreznega programa za namestitev kodeka."
+
+#: ../src/transmageddon.py:846
 msgid "Plugins not found, choose different codecs."
 msgstr "Vstavkov ni mogoče najti; izberite druge kodeke."
 
-#: ../src/transmageddon.py:848
+#: ../src/transmageddon.py:856
 msgid "Codec installation aborted."
 msgstr "Namestitev kodeka je preklicana."
 
-#: ../src/transmageddon.py:857
-msgid "Missing plugin installation failed: "
-msgstr "Namestitev manjkajočega vstavka je spodletela:"
+#: ../src/transmageddon.py:864
+msgid "Missing plugin installation failed."
+msgstr "Namestitev manjkajočega vstavka je spodletela."
 
-#: ../src/transmageddon.py:939
+#: ../src/transmageddon.py:945
 #, python-format
 msgid "Pass %(count)d Progress"
 msgstr "Napredek prehoda %(count)d"
 
-#: ../src/transmageddon.py:1045
+#: ../src/transmageddon.py:1051
 msgid "Video passthrough"
 msgstr "Prehodi videa"
 
-#: ../src/transmageddon.py:1050
+#: ../src/transmageddon.py:1056
 msgid "Audio passthrough"
 msgstr "Prehodi zvoka"
 
