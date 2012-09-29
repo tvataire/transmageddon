@@ -832,7 +832,14 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                self._start_transcoding()
        elif donemessage == GstPbutils.InstallPluginsReturn.PARTIAL_SUCCESS:
            print("Plugin install not fully succesfull")
-           # self.check_for_elements()
+       elif donemessage == GstPbutils.InstallPluginsReturn.INVALID:
+           context_id = self.StatusBar.get_context_id("EOS")
+           self.StatusBar.push(context_id, \
+                   _("Got an invalid response from codec installer, can not install missing codec."))
+       elif donemessage == GstPbutils.InstallPluginsReturn.HELPER_MISSING:
+           context_id = self.StatusBar.get_context_id("EOS")
+           self.StatusBar.push(context_id, \
+                   _("No Codec installer helper application available."))
        elif donemessage == GstPbutils.InstallPluginsReturn.NOT_FOUND:
            context_id = self.StatusBar.get_context_id("EOS")
            self.StatusBar.push(context_id, \
@@ -845,7 +852,6 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        elif donemessage == GstPbutils.InstallPluginsReturn.USER_ABORT:
            self._cancel_encoding = \
                transcoder_engine.Transcoder.Pipeline(self._transcoder,"null")
-           print("user abort")
            context_id = self.StatusBar.get_context_id("EOS")
            self.StatusBar.push(context_id, _("Codec installation aborted."))
            self.FileChooser.set_sensitive(True)
@@ -855,7 +861,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            self.transcodebutton.set_sensitive(True)
        else:
            context_id = self.StatusBar.get_context_id("EOS")
-           self.StatusBar.push(context_id, _("Missing plugin installation failed: "))
+           self.StatusBar.push(context_id, _("Missing plugin installation failed."))
 
 
    def check_for_elements(self):
@@ -901,8 +907,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            for x in fail_info:
                missing.append(GstPbutils.missing_encoder_installer_detail_new(x))
            context = GstPbutils.InstallPluginsContext ()
-           context.set_xid(self.window.get_xid())
-           print("async called")
+           context.set_xid(self.get_window().get_xid())
            GstPbutils.install_plugins_async (missing, context, \
                        self.donemessage, "NULL")
 
