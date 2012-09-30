@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: transmageddon master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=transmageddon&keywords=I18N+L10N&component=General\n"
 "POT-Creation-Date: 2012-09-29 08:46+0000\n"
-"PO-Revision-Date: 2012-09-29 15:51+0100\n"
+"PO-Revision-Date: 2012-09-30 09:03+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: \n"
@@ -251,7 +251,7 @@ msgstr "Brez videa"
 
 #: ../src/transmageddon.py:838
 msgid "Got an invalid response from codec installer, can not install missing codec."
-msgstr ""
+msgstr "Prejet je neveljaven odziv namestilnika kodeka. Manjkajočih kodekov ni mogoče namestiti."
 
 #: ../src/transmageddon.py:842
 msgid "No Codec installer helper application available."
