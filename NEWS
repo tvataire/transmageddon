@@ -1,9 +1,12 @@
-0.22 - 15.09.2012
+0.24 - 29.09.2012
+  Switched to Python 3
+  Improved handling of missing codecs
+
+0.23 - 15.09.2012
   Switched to GTK3
   Switched to GStreamer 1.0
   Added notifications once file is finished
   Re-enabled support for multipass encoding  
-  Switch to Python3
 
 0.21
   Bugfix release for 0.10 branch
