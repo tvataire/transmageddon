@@ -722,13 +722,11 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                        if self.havevideo == True:
                            if videointersect.is_empty():
                               videointersect = sourcecaps.intersect(self.videodata['videotype'])
-                           else:
-                               # if self.vsourcecaps != False:
-                                   self.vsourcecaps = videointersect
+                              self.vsourcecaps = videointersect
                        if self.haveaudio == True:
                            if audiointersect.is_empty():
                                audiointersect = sourcecaps.intersect(self.audiodata['audiotype'])
-                           else:
+                           #else:
                                self.asourcecaps = audiointersect
                if videointersect.is_empty():
                    self.videopass=False

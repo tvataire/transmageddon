@@ -59,7 +59,6 @@ class Transcoder(GObject.GObject):
        # or switch to remuxing mode if any of the values are set to 'pastr'
        self.stoptoggle=False
        self.videocaps = VIDEOCODECVALUE # "novid" means we have a video file input, but do not want it
-                                        #  while False means we don't have any video
        self.audiopasstoggle = AUDIOPASSTOGGLE
        self.interlaced = INTERLACED
        self.videopasstoggle = VIDEOPASSTOGGLE
