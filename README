@@ -2,19 +2,20 @@ This is a simple python application for transcoding video into formats
 supported by GStreamer. 
 
 It depends on the following libraries:
-GStreamer
-GStreamer Plugins Base
-GStreamer Plugins Good
-Gtk
-Glib
-Python
+GStreamer-1.x
+GStreamer Plugins Base 1.x
+GStreamer Plugins Good 1.x
+Gtk3
+Glib2
+Python3
 notify-python
-pygobject2
+python3-gobject
+xdg-user-dirs-gtk
 
 Strongly recommended:
-GStreamer Plugins Ugly
-GStreamer Plugins Bad
-GStreamer libav
+GStreamer Plugins Ugly 1.x
+GStreamer Plugins Bad 1.x
+GStreamer libav 1.x
 
 Transmageddon should work with any properly implemented codec plugins out
 there, be that hardware plugins or proprietary ones, but I can make no promises
