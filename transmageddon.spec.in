@@ -16,6 +16,7 @@ Requires:	gstreamer1 >= @GST_REQ@
 Requires:       notify-python
 Requires:	python3-gobject
 Requires:	xdg-user-dirs-gtk
+Requires:	python-which
 
 BuildRequires:	gstreamer1-devel >= @GST_REQ@
 BuildRequires:  gettext

@@ -75,7 +75,8 @@ audiosuffixmap =   { 'Ogg' : ".ogg", \
         'FLV' : ".flv", \
         '3GPP' : ".3gp", \
         'ASF' : ".wma", \
-        'WebM' : ".webm" }
+        'WebM' : ".webm", \
+        'Opus' : ".opus" }
 
 nocontainersuffixmap = {
          'audio/mpeg, mpegversion=(int)1, layer=(int)3' : ".mp3", \
@@ -104,7 +105,8 @@ codecmap = { 'Vorbis' : "audio/x-vorbis", \
         'H263+' : "video/x-h263,variant=itu,h263version=h263p", \
         'On2 vp8' : "video/x-vp8", \
         'mp2' : "audio/mpeg,mpegversion=(int)1, layer=(int)2", \
-        'MPEG1' : "video/mpeg,mpegversion=(int)1,systemstream=false"}
+        'MPEG1' : "video/mpeg,mpegversion=(int)1,systemstream=false", \
+        'Opus'  :  "audio/x-opus" }
 
 #####
 #This code checks for available muxers and return a unique caps string

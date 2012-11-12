@@ -85,7 +85,8 @@ supported_audio_codecs = [
        "speex",
        "celt",
        "amrnb",
-       "wma2"
+       "wma2",
+       "Opus"
 ]
 
 supported_video_codecs = [
@@ -121,7 +122,7 @@ supported_video_container_map = {
 }
 
 supported_audio_container_map = {
-    'Ogg':         [ 'Vorbis', 'FLAC', 'Speex', 'Celt Ultra' ],
+    'Ogg':         [ 'Vorbis', 'FLAC', 'Speex', 'Celt Ultra', 'Opus' ],
     'MXF':         [ 'mp3', 'AAC', 'AC3' ],
     'Matroska':    [ 'FLAC', 'AAC', 'AC3', 'Vorbis' ],
     'AVI':         [ 'mp3', 'AC3', 'Windows Media Audio 2' ],
