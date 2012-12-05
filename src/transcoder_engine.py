@@ -36,9 +36,8 @@ class Transcoder(GObject.GObject):
             'got-error' : (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT,))
                     }
 
-   def __init__(self, FILECHOSEN, FILENAME, DESTDIR, CONTAINERCHOICE, AUDIODATA, VIDEOCODECVALUE, PRESET, 
-                      OHEIGHT, OWIDTH, FRATENUM, FRATEDEN, MULTIPASS, PASSCOUNTER, OUTPUTNAME, 
-                      TIMESTAMP, ROTATIONVALUE, AUDIOPASSTOGGLE, VIDEOPASSTOGGLE, INTERLACED, INPUTVIDEOCAPS):
+   def __init__(self, FILECHOSEN, FILENAME, DESTDIR, CONTAINERCHOICE, AUDIODATA, VIDEODATA, PRESET, 
+                      MULTIPASS, PASSCOUNTER, OUTPUTNAME, TIMESTAMP, ROTATIONVALUE):
        GObject.GObject.__init__(self)
 
        # Choose plugin based on Container name
