@@ -36,14 +36,17 @@ class Transcoder(GObject.GObject):
             'got-error' : (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT,))
                     }
 
-   def __init__(self, FILECHOSEN, FILENAME, DESTDIR, CONTAINERCHOICE, AUDIOCODECVALUE, VIDEOCODECVALUE, PRESET, 
-                      OHEIGHT, OWIDTH, FRATENUM, FRATEDEN, ACHANNELS, MULTIPASS, PASSCOUNTER, OUTPUTNAME, 
+   def __init__(self, FILECHOSEN, FILENAME, DESTDIR, CONTAINERCHOICE, AUDIODATA, VIDEOCODECVALUE, PRESET, 
+                      OHEIGHT, OWIDTH, FRATENUM, FRATEDEN, MULTIPASS, PASSCOUNTER, OUTPUTNAME, 
                       TIMESTAMP, ROTATIONVALUE, AUDIOPASSTOGGLE, VIDEOPASSTOGGLE, INTERLACED, INPUTVIDEOCAPS):
        GObject.GObject.__init__(self)
 
        # Choose plugin based on Container name
+       self.audiodata = AUDIODATA
+       print(self.audiodata)
        self.container = CONTAINERCHOICE
-       self.audiocaps = AUDIOCODECVALUE
+       self.audiocaps = self.audiodata[0]['audiotype']
+       print("audiocaps " +str(self.audiocaps))
        if self.container != False:
            self.containercaps = Gst.caps_from_string(codecfinder.containermap[CONTAINERCHOICE])
        # special case mp3 which is a no-container format with a container (id3mux)
@@ -69,15 +72,18 @@ class Transcoder(GObject.GObject):
        self.owidth = OWIDTH
        self.fratenum = FRATENUM
        self.frateden = FRATEDEN
-       self.achannels = ACHANNELS
+       self.achannels = self.audiodata[0]['audiochannels']
+       self.astreamid = self.audiodata[0]['streamid']
        self.blackborderflag = False
        self.multipass = MULTIPASS
        self.passcounter = PASSCOUNTER
        self.outputfilename = OUTPUTNAME
        self.timestamp = TIMESTAMP
        self.rotationvalue = int(ROTATIONVALUE)
-       self.vbox = {}
        self.missingplugin= False
+       self.probestreamid = False
+       self.sinkpad = False
+
           
 
        # switching width and height around for rotationchoices where it makes sense
@@ -327,6 +333,16 @@ class Transcoder(GObject.GObject):
      bus.add_signal_watch()
      bus.connect('message', self.on_message)
 
+   def padprobe(self, pad, probeinfo, userdata):
+       event = probeinfo.get_event()
+       eventtype=event.type
+       if eventtype==Gst.EventType.STREAM_START:
+           self.probestreamid = event.parse_stream_start()
+           if self.probestreamid==self.astreamid:
+               print("stream id matches")
+               pad.link(self.sinkpad)
+       return Gst.PadProbeReturn.OK
+
    def on_message(self, bus, message):
        mtype = message.type
        # print(mtype)
@@ -363,7 +379,6 @@ class Transcoder(GObject.GObject):
        return True
 
    def OnDynamicPad(self, uridecodebin, src_pad):
-       # print "src_pad is" +str(src_pad)
        origin = src_pad.query_caps(None)
        if (self.container==False):
            a =  origin.to_string()
@@ -390,14 +405,19 @@ class Transcoder(GObject.GObject):
                            sinkpad = self.encodebin.emit("request-pad", origin)
                if c.startswith("audio/"):
                    if self.passcounter == int(0):
-                       src_pad.link(sinkpad)
+                       self.sinkpad = self.encodebin.emit("request-pad", origin)
+                       src_pad.add_probe(Gst.PadProbeType.EVENT_DOWNSTREAM, self.padprobe, None)
+                       #if self.probestreamid==self.astreamid:
+                       #    print("got streamid from probe")
+                       #    src_pad.link(sinkpad)
                elif ((c.startswith("video/") or c.startswith("image/")) and (self.videocaps != False)):
                    if self.videopasstoggle==False:
                        if (self.multipass != 0) and (self.passcounter != int(0)):
+
                            videoencoderpad = self.videoencoder.get_static_pad("sink")
                            src_pad.link(videoencoderpad)
                        else:
-                       # print "self.colorspaceconverter before use " + str(self.colorspaceconverter)
+                           src_pad.add_probe(Gst.PadProbeType.EVENT_DOWNSTREAM, self.padprobe, None)
                            deinterlacerpad = self.deinterlacer.get_static_pad("sink")
                            src_pad.link(deinterlacerpad)
                            self.videoflipper.get_static_pad("src").link(sinkpad)   
