@@ -34,7 +34,7 @@
           <object class="GtkTable" id="table1">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="n_rows">9</property>
+            <property name="n_rows">8</property>
             <property name="n_columns">3</property>
             <child>
               <object class="GtkLabel" id="vspacer3">
@@ -55,7 +55,8 @@
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="xalign">0</property>
-                <property name="label" translatable="yes">&lt;small&gt;Audio Channels:&lt;/small&gt;</property>
+                <property name="label" translatable="yes">&lt;small&gt;Audio Channels:&lt;/small&gt;
+&lt;small&gt;Audio Codec:&lt;/small&gt;</property>
                 <property name="use_markup">True</property>
               </object>
               <packing>
@@ -71,7 +72,8 @@
                 <property name="can_focus">False</property>
                 <property name="xalign">0</property>
                 <property name="yalign">0</property>
-                <property name="label" translatable="yes">&lt;small&gt;Video height&amp;#47;width:&lt;/small&gt;</property>
+                <property name="label" translatable="yes">&lt;small&gt;Video height&amp;#47;width:&lt;/small&gt;
+&lt;small&gt;Video Codec:&lt;/small&gt;</property>
                 <property name="use_markup">True</property>
               </object>
               <packing>
@@ -88,8 +90,8 @@
                 <property name="use_markup">True</property>
               </object>
               <packing>
-                <property name="top_attach">5</property>
-                <property name="bottom_attach">6</property>
+                <property name="top_attach">4</property>
+                <property name="bottom_attach">5</property>
               </packing>
             </child>
             <child>
@@ -101,8 +103,8 @@
               <packing>
                 <property name="left_attach">1</property>
                 <property name="right_attach">2</property>
-                <property name="top_attach">5</property>
-                <property name="bottom_attach">6</property>
+                <property name="top_attach">4</property>
+                <property name="bottom_attach">5</property>
                 <property name="x_options"></property>
               </packing>
             </child>
@@ -150,8 +152,8 @@
               <packing>
                 <property name="left_attach">2</property>
                 <property name="right_attach">3</property>
-                <property name="top_attach">4</property>
-                <property name="bottom_attach">5</property>
+                <property name="top_attach">3</property>
+                <property name="bottom_attach">4</property>
                 <property name="y_options">GTK_EXPAND</property>
               </packing>
             </child>
@@ -164,8 +166,8 @@
               <packing>
                 <property name="left_attach">1</property>
                 <property name="right_attach">2</property>
-                <property name="top_attach">4</property>
-                <property name="bottom_attach">5</property>
+                <property name="top_attach">3</property>
+                <property name="bottom_attach">4</property>
                 <property name="x_options"></property>
               </packing>
             </child>
@@ -176,8 +178,8 @@
                 <property name="can_focus">False</property>
               </object>
               <packing>
-                <property name="top_attach">4</property>
-                <property name="bottom_attach">5</property>
+                <property name="top_attach">3</property>
+                <property name="bottom_attach">4</property>
                 <property name="y_options">GTK_EXPAND</property>
               </packing>
             </child>
@@ -230,8 +232,8 @@
                 <property name="can_focus">False</property>
               </object>
               <packing>
-                <property name="top_attach">8</property>
-                <property name="bottom_attach">9</property>
+                <property name="top_attach">7</property>
+                <property name="bottom_attach">8</property>
                 <property name="y_options">GTK_EXPAND</property>
               </packing>
             </child>
@@ -244,8 +246,8 @@
               <packing>
                 <property name="left_attach">2</property>
                 <property name="right_attach">3</property>
-                <property name="top_attach">8</property>
-                <property name="bottom_attach">9</property>
+                <property name="top_attach">7</property>
+                <property name="bottom_attach">8</property>
                 <property name="y_options">GTK_EXPAND</property>
               </packing>
             </child>
@@ -259,8 +261,8 @@
               <packing>
                 <property name="left_attach">1</property>
                 <property name="right_attach">2</property>
-                <property name="top_attach">8</property>
-                <property name="bottom_attach">9</property>
+                <property name="top_attach">7</property>
+                <property name="bottom_attach">8</property>
                 <property name="x_options"></property>
                 <property name="y_options">GTK_FILL</property>
               </packing>
@@ -274,8 +276,8 @@
                 <property name="use_markup">True</property>
               </object>
               <packing>
-                <property name="top_attach">6</property>
-                <property name="bottom_attach">7</property>
+                <property name="top_attach">5</property>
+                <property name="bottom_attach">6</property>
               </packing>
             </child>
             <child>
@@ -285,8 +287,8 @@
                 <property name="can_focus">False</property>
               </object>
               <packing>
-                <property name="top_attach">7</property>
-                <property name="bottom_attach">8</property>
+                <property name="top_attach">6</property>
+                <property name="bottom_attach">7</property>
                 <property name="y_options">GTK_EXPAND</property>
               </packing>
             </child>
@@ -299,8 +301,8 @@
               <packing>
                 <property name="left_attach">2</property>
                 <property name="right_attach">3</property>
-                <property name="top_attach">7</property>
-                <property name="bottom_attach">8</property>
+                <property name="top_attach">6</property>
+                <property name="bottom_attach">7</property>
                 <property name="y_options">GTK_EXPAND</property>
               </packing>
             </child>
@@ -314,8 +316,8 @@
               <packing>
                 <property name="left_attach">1</property>
                 <property name="right_attach">2</property>
-                <property name="top_attach">7</property>
-                <property name="bottom_attach">8</property>
+                <property name="top_attach">6</property>
+                <property name="bottom_attach">7</property>
                 <property name="x_options"></property>
                 <property name="y_options">GTK_FILL</property>
               </packing>
@@ -330,54 +332,10 @@
               <packing>
                 <property name="left_attach">1</property>
                 <property name="right_attach">2</property>
-                <property name="top_attach">6</property>
-                <property name="bottom_attach">7</property>
+                <property name="top_attach">5</property>
+                <property name="bottom_attach">6</property>
                 <property name="x_options"></property>
                 <property name="y_options">GTK_FILL</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkLabel" id="videocodec">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="xalign">0</property>
-                <property name="yalign">0</property>
-                <property name="label" translatable="yes">&lt;small&gt;Video codec:&lt;/small&gt;</property>
-                <property name="use_markup">True</property>
-              </object>
-              <packing>
-                <property name="top_attach">3</property>
-                <property name="bottom_attach">4</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkLabel" id="audiocodec">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="xalign">0</property>
-                <property name="yalign">0</property>
-                <property name="label" translatable="yes">&lt;small&gt;Audio codec:&lt;/small&gt;</property>
-                <property name="use_markup">True</property>
-              </object>
-              <packing>
-                <property name="left_attach">2</property>
-                <property name="right_attach">3</property>
-                <property name="top_attach">3</property>
-                <property name="bottom_attach">4</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkLabel" id="vspacer10">
-                <property name="width_request">12</property>
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-              </object>
-              <packing>
-                <property name="left_attach">1</property>
-                <property name="right_attach">2</property>
-                <property name="top_attach">3</property>
-                <property name="bottom_attach">4</property>
-                <property name="x_options"></property>
               </packing>
             </child>
             <child>
@@ -390,8 +348,8 @@
               <packing>
                 <property name="left_attach">2</property>
                 <property name="right_attach">3</property>
-                <property name="top_attach">5</property>
-                <property name="bottom_attach">6</property>
+                <property name="top_attach">4</property>
+                <property name="bottom_attach">5</property>
               </packing>
             </child>
             <child>
@@ -404,8 +362,8 @@
               <packing>
                 <property name="left_attach">2</property>
                 <property name="right_attach">3</property>
-                <property name="top_attach">6</property>
-                <property name="bottom_attach">7</property>
+                <property name="top_attach">5</property>
+                <property name="bottom_attach">6</property>
               </packing>
             </child>
           </object>
@@ -611,11 +569,9 @@
             <child>
               <object class="GtkButton" id="cancelbutton">
                 <property name="label">gtk-cancel</property>
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="use_action_appearance">False</property>
                 <property name="use_stock">True</property>
                 <signal name="clicked" handler="on_cancelbutton_clicked" swapped="no"/>
               </object>
@@ -628,11 +584,9 @@
             <child>
               <object class="GtkButton" id="transcodebutton">
                 <property name="label" translatable="yes">_Transcode</property>
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="use_action_appearance">False</property>
                 <property name="use_underline">True</property>
                 <signal name="clicked" handler="on_transcodebutton_clicked" swapped="no"/>
               </object>
