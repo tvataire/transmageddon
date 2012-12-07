@@ -42,10 +42,9 @@ class Transcoder(GObject.GObject):
 
        # Choose plugin based on Container name
        self.audiodata = AUDIODATA
-       print(self.audiodata)
+       self.videodata = VIDEODATA
        self.container = CONTAINERCHOICE
-       self.audiocaps = self.audiodata[0]['audiotype']
-       print("audiocaps " +str(self.audiocaps))
+       #self.audiocaps = self.audiodata[0]['outputaudiocaps']
        if self.container != False:
            self.containercaps = Gst.caps_from_string(codecfinder.containermap[CONTAINERCHOICE])
        # special case mp3 which is a no-container format with a container (id3mux)
@@ -60,19 +59,19 @@ class Transcoder(GObject.GObject):
        # Choose plugin based on Codec Name
        # or switch to remuxing mode if any of the values are set to 'pastr'
        self.stoptoggle=False
-       self.videocaps = VIDEOCODECVALUE # "novid" means we have a video file input, but do not want it
-       self.audiopasstoggle = AUDIOPASSTOGGLE
-       self.interlaced = INTERLACED
-       self.videopasstoggle = VIDEOPASSTOGGLE
-       self.inputvideocaps = INPUTVIDEOCAPS
+       #self.videocaps = self.videodata[0]['outputvideocaps']  # "novid" means we have a video file input, but do not want it
+       #self.audiopasstoggle = AUDIOPASSTOGGLE
+       #self.interlaced = INTERLACED
+       #self.videopasstoggle = VIDEOPASSTOGGLE
+       #self.inputvideocaps = INPUTVIDEOCAPS
        self.doaudio= False
        self.preset = PRESET
-       self.oheight = OHEIGHT
-       self.owidth = OWIDTH
-       self.fratenum = FRATENUM
-       self.frateden = FRATEDEN
-       self.achannels = self.audiodata[0]['audiochannels']
-       self.astreamid = self.audiodata[0]['streamid']
+       #self.oheight = OHEIGHT
+       #self.owidth = OWIDTH
+       #self.fratenum = FRATENUM
+       #self.frateden = FRATEDEN
+       #self.achannels = self.audiodata[0]['audiochannels']
+       #self.astreamid = self.audiodata[0]['streamid']
        self.blackborderflag = False
        self.multipass = MULTIPASS
        self.passcounter = PASSCOUNTER
@@ -82,6 +81,7 @@ class Transcoder(GObject.GObject):
        self.missingplugin= False
        self.probestreamid = False
        self.sinkpad = False
+       print(self.sinkpad)
 
           
 
@@ -126,10 +126,10 @@ class Transcoder(GObject.GObject):
        else:
            self.encodebinprofile = GstPbutils.EncodingContainerProfile.new("containerformat", None , self.containercaps, None)
  
-           # What to do if we are not doing video passthrough (we only support video 
-           # with container format
-           if self.videocaps !=False:
-               if (self.videopasstoggle==False and self.passcounter == int(0)):
+           # What to do if we are not doing video passthrough (we only support video inside a 
+           # container format
+           if self.videodata[0]['outputvideocaps'] !=False:
+               if (self.videodata[0]['dopassthrough']==False and self.passcounter == int(0)):
                    self.videoflipper = Gst.ElementFactory.make('videoflip', None)
                    self.videoflipper.set_property("method", self.rotationvalue)
                    self.pipeline.add(self.videoflipper)
@@ -146,25 +146,29 @@ class Transcoder(GObject.GObject):
                    self.colorspaceconverter.set_state(Gst.State.PAUSED)
                    self.videoflipper.set_state(Gst.State.PAUSED)
            # this part of the pipeline is used for both passthrough and re-encoding
-           if self.videocaps != "novid":
-               if (self.videocaps != False):
+           if self.videodata[0]['outputvideocaps'] != "novid":
+               if (self.videodata[0]['outputvideocaps'] != False):
                    videopreset=None
-                   self.videoprofile = GstPbutils.EncodingVideoProfile.new(self.videocaps, videopreset, Gst.Caps.new_any(), 0)
+                   self.videoprofile = GstPbutils.EncodingVideoProfile.new(self.videodata[0]['outputvideocaps'], videopreset, Gst.Caps.new_any(), 0)
                    self.encodebinprofile.add_profile(self.videoprofile)
 
        # We do not need to do anything special for passthrough for audio, since we are not
        # including any extra elements between uridecodebin and encodebin
-       if self.audiocaps != False:
+       if self.audiodata[0]['outputaudiocaps'] != False:
+           print("We should add only one audio pad to encodebin")
            if self.container==False:
-               self.encodebinprofile = GstPbutils.EncodingAudioProfile.new (self.audiocaps, audiopreset, Gst.Caps.new_any(), 0)
+               print("yo")
+               print(self.audiodata[0]['outputaudiocaps'])
+               self.encodebinprofile = GstPbutils.EncodingAudioProfile.new (self.audiodata[0]['outputaudiocaps'], audiopreset, Gst.Caps.new_any(), 0)
            else:
+               print("yay")
                audiopreset=None
-               self.audioprofile = GstPbutils.EncodingAudioProfile.new(self.audiocaps, audiopreset, Gst.Caps.new_any(), 0)
+               self.audioprofile = GstPbutils.EncodingAudioProfile.new(self.audiodata[0]['outputaudiocaps'], audiopreset, Gst.Caps.new_any(), 0)
                self.encodebinprofile.add_profile(self.audioprofile)
        
        if self.passcounter != int(0):
            passvalue = "Pass "+ str(self.passcounter)
-           videoencoderplugin = codecfinder.get_video_encoder_element(self.videocaps)
+           videoencoderplugin = codecfinder.get_video_encoder_element(self.videodata[0]['outputvideocaps'])
            self.videoencoder = Gst.ElementFactory.make(videoencoderplugin,"videoencoder")
            self.pipeline.add(self.videoencoder)
            GstPresetType = GObject.type_from_name("GstPreset")
@@ -188,21 +192,21 @@ class Transcoder(GObject.GObject):
        # put together remuxing caps to set on uridecodebin if doing 
        # passthrough on audio or video
 
-       if self.audiopasstoggle or self.videopasstoggle:
+       if self.audiodata[0]['dopassthrough'] or self.videodata[0]['dopassthrough']:
            self.remuxcaps = Gst.Caps.new_empty()
-       if self.audiopasstoggle:
-          self.remuxcaps.append(self.audiocaps)
-       if self.videopasstoggle:
-          self.remuxcaps.append(self.videocaps)
-       if self.audiopasstoggle and not self.videopasstoggle:
+       if self.audiodata[0]['dopassthrough']:
+          self.remuxcaps.append(self.audiodata[0]['inputaudiocaps'])
+       if self.videodata[0]['dopassthrough']:
+          self.remuxcaps.append(self.videodata[0]['inputvideocaps'])
+       if self.audiodata[0]['dopassthrough'] and not self.videodata[0]['dopassthrough']:
           videostruct=Gst.Structure.from_string("video/x-raw")
           self.remuxcaps.append_structure(videostruct[0])
-       if self.videopasstoggle and not self.audiopasstoggle:
+       if self.videodata[0]['dopassthrough'] and not self.audiodata[0]['dopassthrough']:
           audiostruct=Gst.Structure.from_string("audio/x-raw")
           self.remuxcaps.append_structure(audiostruct[0])
-       if self.videocaps=="novid":
-          if self.inputvideocaps != None:
-              self.remuxcaps.append(self.inputvideocaps)
+       if self.videodata[0]['outputvideocaps']=="novid":
+          if self.videodata[0]['inputvideocaps'] != None:
+              self.remuxcaps.append(self.videodata[0]['inputvideocaps'])
               audiostruct=Gst.Structure.from_string("audio/x-raw")
               self.remuxcaps.append_structure(audiostruct[0])
 
@@ -210,7 +214,7 @@ class Transcoder(GObject.GObject):
        self.uridecoder.set_property("uri", FILECHOSEN)
        self.uridecoder.connect("pad-added", self.OnDynamicPad)
 
-       if (self.audiopasstoggle) or (self.videopasstoggle) or(self.videocaps=="novid"):
+       if (self.audiodata[0]['dopassthrough']) or (self.videodata[0]['dopassthrough']) or (self.videodata[0]['outputvideocaps']=="novid"):
            self.uridecoder.set_property("caps", self.remuxcaps) 
        self.uridecoder.set_state(Gst.State.PAUSED)
        self.pipeline.add(self.uridecoder)
@@ -337,8 +341,7 @@ class Transcoder(GObject.GObject):
        eventtype=event.type
        if eventtype==Gst.EventType.STREAM_START:
            self.probestreamid = event.parse_stream_start()
-           if self.probestreamid==self.astreamid:
-               print("stream id matches")
+           if self.probestreamid==self.audiodata[0]['streamid']:
                pad.link(self.sinkpad)
        return Gst.PadProbeReturn.OK
 
@@ -385,7 +388,7 @@ class Transcoder(GObject.GObject):
                sinkpad = self.encodebin.get_static_pad("audio_0")
                src_pad.link(sinkpad)
        else:
-           if self.videocaps == "novid":
+           if self.videodata[0]['outputvideocaps'] == "novid":
                c = origin.to_string()
                if c.startswith("audio/"):
                    sinkpad = self.encodebin.emit("request-pad", origin)
@@ -397,31 +400,33 @@ class Transcoder(GObject.GObject):
                # currently.
                # Making sure that when we remove video from a file we don't
                # bother with the video pad.
+               print("we are where we want to be")
                c = origin.to_string()
                if not c.startswith("text/"):
-                   if not (c.startswith("video/") and (self.videocaps == False)):
+                   if not (c.startswith("video/") and (self.videodata[0]['outputvideocaps'] == False)):
                        if self.passcounter == int(0):
-                           sinkpad = self.encodebin.emit("request-pad", origin)
+                           self.sinkpad = self.encodebin.emit("request-pad", origin)
                if c.startswith("audio/"):
+                   print("ok, now we are getting somewhere")
                    if self.passcounter == int(0):
-                       self.sinkpad = self.encodebin.emit("request-pad", origin)
+                       # self.sinkpad = self.encodebin.emit("request-pad", origin)
                        src_pad.add_probe(Gst.PadProbeType.EVENT_DOWNSTREAM, self.padprobe, None)
                        #if self.probestreamid==self.astreamid:
                        #    print("got streamid from probe")
                        #    src_pad.link(sinkpad)
-               elif ((c.startswith("video/") or c.startswith("image/")) and (self.videocaps != False)):
-                   if self.videopasstoggle==False:
+               elif ((c.startswith("video/") or c.startswith("image/")) and (self.videodata[0]['outputvideocaps'] != False)):
+                   print("video detected")
+                   if self.videodata[0]['dopassthrough']==False:
                        if (self.multipass != 0) and (self.passcounter != int(0)):
-
                            videoencoderpad = self.videoencoder.get_static_pad("sink")
                            src_pad.link(videoencoderpad)
                        else:
-                           src_pad.add_probe(Gst.PadProbeType.EVENT_DOWNSTREAM, self.padprobe, None)
+                           # src_pad.add_probe(Gst.PadProbeType.EVENT_DOWNSTREAM, self.padprobe, None)
                            deinterlacerpad = self.deinterlacer.get_static_pad("sink")
                            src_pad.link(deinterlacerpad)
-                           self.videoflipper.get_static_pad("src").link(sinkpad)   
+                           self.videoflipper.get_static_pad("src").link(self.sinkpad)   
                    else:
-                           src_pad.link(sinkpad)
+                           src_pad.link(self.sinkpad)
 
    def OnEncodebinElementAdd(self, encodebin, element):
        factory=element.get_factory()
@@ -434,11 +439,10 @@ class Transcoder(GObject.GObject):
            
            # Set Transmageddon as Application name using Tagsetter interface
            tagyes = factory.has_interface("GstTagSetter")
-           # print str(name) + " got GstTagSetter Interface " +str(tagyes)
+           #print(str(name) + " got GstTagSetter Interface " +str(tagyes))
            if tagyes ==True:
                taglist=Gst.TagList.new_empty()
-               # Gst.TagList.add_value(taglist, Gst.TagMergeMode.APPEND, Gst.TAG_APPLICATION_NAME, "Transmageddon transcoder"
-               # tag_setting_element.merge_tags(taglist, Gst.TAG_MERGE_APPEND)
+               # Gst.TagList.add_value(taglist, Gst.TagMergeMode.APPEND, Gst.TAG_APPLICATION_NAME, "Transmageddon transcoder" tag_setting_element.merge_tags(taglist, Gst.TAG_MERGE_APPEND)
 
    def Pipeline (self, state):
        if state == ("playing"):

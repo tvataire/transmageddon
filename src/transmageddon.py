@@ -627,7 +627,6 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                        self.audiostreamids.append(streamid)
                        self.haveaudio=True
                        self.audiodata.append(self.add_audiodata_row(i.get_channels(), i.get_sample_rate(), i.get_caps(), False, streamid, False, False, i.get_language()))
-                       print(self.audiodata)
                        if self.audiostreamcounter > 0:
                            combo = Gtk.ComboBoxText.new()
                            self.audiorows.append(combo)
@@ -658,7 +657,6 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                        self.presetchoice.set_sensitive(False)
                        self.videorows[0].set_sensitive(False)
                        self.rotationchoice.set_sensitive(False)
-               print("disco " +str(self.audiodata))
                self.discover_done=True
 
                if self.waiting_for_signal == True:
@@ -733,7 +731,6 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                            y=0
                            count=len(self.audiostreamids)
                            while y < count:
-                               print("yahoo" +str(audiointersect))
                                if audiointersect[y].is_empty():
                                    audiointersect[y] = sourcecaps.intersect(self.audiodata[y]['inputaudiocaps'])
                                if audiointersect[y].is_empty():
