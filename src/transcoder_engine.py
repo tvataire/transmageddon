@@ -59,19 +59,9 @@ class Transcoder(GObject.GObject):
        # Choose plugin based on Codec Name
        # or switch to remuxing mode if any of the values are set to 'pastr'
        self.stoptoggle=False
-       #self.videocaps = self.videodata[0]['outputvideocaps']  # "novid" means we have a video file input, but do not want it
-       #self.audiopasstoggle = AUDIOPASSTOGGLE
-       #self.interlaced = INTERLACED
-       #self.videopasstoggle = VIDEOPASSTOGGLE
-       #self.inputvideocaps = INPUTVIDEOCAPS
+
        self.doaudio= False
        self.preset = PRESET
-       #self.oheight = OHEIGHT
-       #self.owidth = OWIDTH
-       #self.fratenum = FRATENUM
-       #self.frateden = FRATEDEN
-       #self.achannels = self.audiodata[0]['audiochannels']
-       #self.astreamid = self.audiodata[0]['streamid']
        self.blackborderflag = False
        self.multipass = MULTIPASS
        self.passcounter = PASSCOUNTER
@@ -81,16 +71,14 @@ class Transcoder(GObject.GObject):
        self.missingplugin= False
        self.probestreamid = False
        self.sinkpad = False
-       print(self.sinkpad)
-
-          
 
        # switching width and height around for rotationchoices where it makes sense
        if self.rotationvalue == 1 or self.rotationvalue == 3:
-           nwidth = self.oheight
-           nheight = self.owidth
-           self.oheight = nheight
-           self.owidth = nwidth 
+           print(self.videodata[0])
+           nwidth = self.videodata[0]['videoheight']
+           nheight = self.videodata[0]['videowidth']
+           self.videodata[0]['videoheight'] = nheight
+           self.videodata[0]['videowidth'] = nwidth 
 
        # if needed create a variable to store the filename of the multipass \
        # statistics file
@@ -154,17 +142,16 @@ class Transcoder(GObject.GObject):
 
        # We do not need to do anything special for passthrough for audio, since we are not
        # including any extra elements between uridecodebin and encodebin
-       if self.audiodata[0]['outputaudiocaps'] != False:
-           print("We should add only one audio pad to encodebin")
-           if self.container==False:
-               print("yo")
-               print(self.audiodata[0]['outputaudiocaps'])
-               self.encodebinprofile = GstPbutils.EncodingAudioProfile.new (self.audiodata[0]['outputaudiocaps'], audiopreset, Gst.Caps.new_any(), 0)
-           else:
-               print("yay")
-               audiopreset=None
-               self.audioprofile = GstPbutils.EncodingAudioProfile.new(self.audiodata[0]['outputaudiocaps'], audiopreset, Gst.Caps.new_any(), 0)
-               self.encodebinprofile.add_profile(self.audioprofile)
+       x=0
+       while x < len(self.audiodata): 
+           if self.audiodata[x]['outputaudiocaps'] != False:
+               if self.container==False:
+                   self.encodebinprofile = GstPbutils.EncodingAudioProfile.new (self.audiodata[x]['outputaudiocaps'], audiopreset, Gst.Caps.new_any(), 0)
+               else:
+                   audiopreset=None
+                   self.audioprofile = GstPbutils.EncodingAudioProfile.new(self.audiodata[x]['outputaudiocaps'], audiopreset, Gst.Caps.new_any(), 0)
+                   self.encodebinprofile.add_profile(self.audioprofile)
+           x=x+1 
        
        if self.passcounter != int(0):
            passvalue = "Pass "+ str(self.passcounter)
@@ -384,7 +371,7 @@ class Transcoder(GObject.GObject):
        origin = src_pad.query_caps(None)
        if (self.container==False):
            a =  origin.to_string()
-           if a.startswith("audio/"):
+           if a.startswith("audio/"): # FIXME : Currently an assumption here of one audio stream
                sinkpad = self.encodebin.get_static_pad("audio_0")
                src_pad.link(sinkpad)
        else:
@@ -400,28 +387,21 @@ class Transcoder(GObject.GObject):
                # currently.
                # Making sure that when we remove video from a file we don't
                # bother with the video pad.
-               print("we are where we want to be")
                c = origin.to_string()
                if not c.startswith("text/"):
                    if not (c.startswith("video/") and (self.videodata[0]['outputvideocaps'] == False)):
                        if self.passcounter == int(0):
                            self.sinkpad = self.encodebin.emit("request-pad", origin)
                if c.startswith("audio/"):
-                   print("ok, now we are getting somewhere")
                    if self.passcounter == int(0):
-                       # self.sinkpad = self.encodebin.emit("request-pad", origin)
                        src_pad.add_probe(Gst.PadProbeType.EVENT_DOWNSTREAM, self.padprobe, None)
-                       #if self.probestreamid==self.astreamid:
-                       #    print("got streamid from probe")
-                       #    src_pad.link(sinkpad)
                elif ((c.startswith("video/") or c.startswith("image/")) and (self.videodata[0]['outputvideocaps'] != False)):
-                   print("video detected")
                    if self.videodata[0]['dopassthrough']==False:
                        if (self.multipass != 0) and (self.passcounter != int(0)):
                            videoencoderpad = self.videoencoder.get_static_pad("sink")
                            src_pad.link(videoencoderpad)
                        else:
-                           # src_pad.add_probe(Gst.PadProbeType.EVENT_DOWNSTREAM, self.padprobe, None)
+                           # FIXME? if we want to do support multistream video we need a padprobe here too.
                            deinterlacerpad = self.deinterlacer.get_static_pad("sink")
                            src_pad.link(deinterlacerpad)
                            self.videoflipper.get_static_pad("src").link(self.sinkpad)   

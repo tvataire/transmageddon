@@ -587,7 +587,11 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            self.start_time = False
            self.multipass = 0
            self.passcounter = 0
-           self.audiodata['FIXME']['passthrough']=False # should be for both do and can passthrough
+           x=0
+           while x <= self.audiostreamcounter:
+               self.audiodata[x]['dopassthrough']=False
+               self.audiodata[x]['canpassthrough']=False
+               x=x+1
            self.videodata[0]['dopassthrough']=False
            self.videodata[0]['canpassthrough']=False
            self.houseclean=False # due to not knowing which APIs to use I need
@@ -627,6 +631,8 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                        self.audiostreamids.append(streamid)
                        self.haveaudio=True
                        self.audiodata.append(self.add_audiodata_row(i.get_channels(), i.get_sample_rate(), i.get_caps(), False, streamid, False, False, i.get_language()))
+                       if self.audiodata[self.audiostreamcounter]['language']== None:
+                           self.audiodata[self.audiostreamcounter]['language']=_("Unknown language")
                        if self.audiostreamcounter > 0:
                            combo = Gtk.ComboBoxText.new()
                            self.audiorows.append(combo)
@@ -651,13 +657,8 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                        self.presetchoice.set_sensitive(True)
                        self.videorows[0].set_sensitive(True)
                        self.rotationchoice.set_sensitive(True)
-
-                   if self.havevideo==False:
-                       self.videoinformation.set_markup(''.join(('<small>', _("No Video"), '</small>', "\n", '<small>', "", '</small>')))
-                       self.presetchoice.set_sensitive(False)
-                       self.videorows[0].set_sensitive(False)
-                       self.rotationchoice.set_sensitive(False)
                self.discover_done=True
+               self.transcodebutton.set_sensitive(True)
 
                if self.waiting_for_signal == True:
                    if self.containertoggle == True:
@@ -689,8 +690,15 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                        self.audioinformation.set_markup(''.join(('<small>', _("No Audio"), '</small>',"\n", '<small>', "",'</small>')))
 
 
-           if self.videodata[0]['videowidth'] and self.videodata[0]['videoheight']:
+           if self.havevideo==True:
                self.videoinformation.set_markup(''.join(('<small>', 'Video width&#47;height: ', str(self.videodata[0]['videowidth']), "x", str(self.videodata[0]['videoheight']), '</small>',"\n", '<small>', 'Video codec: ',  str(GstPbutils.pb_utils_get_codec_description   (self.videodata[0]['inputvideocaps'])), '</small>' )))
+           else: # in case of media being audio-only
+               if not self.videodata: # need to create this for non-video files too
+                   self.videodata.append(self.add_videodata_row(None, None, None, False, None, None, None, False, False, None)) 
+               self.videoinformation.set_markup(''.join(('<small>', _("No Video"), '</small>', "\n", '<small>', "", '</small>')))
+               self.presetchoice.set_sensitive(False)
+               self.videorows[0].set_sensitive(False)
+               self.rotationchoice.set_sensitive(False)
        else:
           print("hoped for a great discovery; got an error")
           print(result)
