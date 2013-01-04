@@ -244,41 +244,41 @@ class Transcoder(GObject.GObject):
            self.blackborderflag = False
        # calculate number of channels
        chanmin, chanmax = preset.acodec.channels
-       if int(self.achannels) < int(chanmax):
-           if int(self.achannels) > int(chanmin): 
-               self.channels = int(self.achannels)
+       if int(self.audiodata[0]['audiochannels']) < int(chanmax):
+           if int(self.audiodata[0]['audiochannels']) > int(chanmin): 
+               channels = int(self.audiodata[0]['audiochannels'])
            else:
-               self.channels = int(chanmin)
+               channels = int(chanmin)
        else:
-           self.channels = int(chanmax)
+           channels = int(chanmax)
+       self.audiodata[0]['outputaudiocaps']=Gst.caps_from_string(preset.acodec.name+","+"channels="+str(channels))
        # Check if rescaling is needed and calculate new video width/height keeping aspect ratio
        # Also add black borders if needed
        wmin, wmax  =  preset.vcodec.width
        hmin, hmax = preset.vcodec.height
-       width, height = self.owidth, self.oheight
+       owidth, oheight = self.videodata[0]['videowidth'], self.videodata[0]['videoheight']
 
        # Get Display aspect ratio
        pixelaspectratio = preset.vcodec.aspectratio
 
        # Scale width / height down
-       if self.owidth > wmax:
-           width = wmax
-           height = int((float(wmax) / self.owidth) * self.oheight)
-       if height > hmax:
-           height = hmax
-           width = int((float(hmax) / self.oheight) * self.owidth)
+       if self.videodata[0]['videowidth'] > wmax:
+           self.videodata[0]['videowidth'] = wmax
+           self.videodata[0]['videoheight'] = int((float(wmax) / owidth) * oheight)
+       if self.videodata[0]['videoheight'] > hmax:
+           self.videodata[0]['videoheight'] = hmax
+           self.videodata[0]['videowidth'] = int((float(hmax) / oheight) * owidth)
 
        # Some encoders like x264enc are not able to handle odd height or widths
-       if width % 2:
-           width += 1
-       if height % 2:
-           height += 1
-
+       if self.videodata[0]['videowidth'] % 2:
+           self.videodata[0]['videowidth'] += 1
+       if self.videodata[0]['videoheight'] % 2:
+           self.videodata[0]['videoheight'] += 1
 
        # Add any required padding
        if self.blackborderflag == True:
-           width=wmax
-           height=hmax
+           self.videodata[0]['videowidth']=wmax
+           self.videodata[0]['videoheight']=hmax
 
        # Setup video framerate and add to caps - 
        # FIXME: Is minimum framerate really worthwhile checking for?
@@ -286,7 +286,7 @@ class Transcoder(GObject.GObject):
        rmin = preset.vcodec.rate[0].num / float(preset.vcodec.rate[0].denom)
        rmax = preset.vcodec.rate[1].num / float(preset.vcodec.rate[1].denom)
        rmaxtest = preset.vcodec.rate[1]
-       orate = self.fratenum / self.frateden 
+       orate = self.videodata[0]['videonum']/ self.videodata[0]['videodenom'] 
        if orate > rmax:
            num = preset.vcodec.rate[1].num
            denom = preset.vcodec.rate[1].denom
@@ -294,18 +294,12 @@ class Transcoder(GObject.GObject):
            num = preset.vcodec.rate[0].num
            denom = preset.vcodec.rate[0].denom
        else:
-           num = self.fratenum
-           denom = self.frateden
+           num = self.videodata[0]['videonum']
+           denom = self.videodata[0]['videodenom']
 
-       # set audio and video caps from preset file
-       self.audiocaps=Gst.caps_from_string(preset.acodec.name+","+"channels="+str(self.channels))
-       self.videocaps=Gst.caps_from_string(preset.vcodec.name+","+"height="+str(height)+","+"width="+str(width)+","+"framerate="+str(num)+"/"+str(denom))
+       self.videodata[0]['outputvideocaps']=Gst.caps_from_string(preset.vcodec.name+","+"height="+str(self.videodata[0]['videoheight'])+","+"width="+str(self.videodata[0]['videowidth'])+","+"framerate="+str(num)+"/"+str(denom))
        # self.videocaps.set_value("pixelaspectratio", pixelaspectratio) this doesn't work due to pixelaspectratio being a fraction, 
        # needs further investigation
-
-
-       # print "final height " + str(height) + " final width " + str(width)
-       # return height, width, num, denom, pixelaspectratio
 
    def noMorePads(self, dbin):
        if self.passcounter == int(0):
