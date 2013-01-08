@@ -1,14 +1,14 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# Miroslav Nikolić <miroslavnikolic@rocketmail.com>, 2012.
+# Miroslav Nikolić <miroslavnikolic@rocketmail.com>, 2012, 2013.
 msgid ""
 msgstr ""
 "Project-Id-Version: transmageddon\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=transm"
 "ageddon&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2012-09-29 08:46+0000\n"
-"PO-Revision-Date: 2012-09-29 20:35+0200\n"
+"POT-Creation-Date: 2013-01-04 14:10+0000\n"
+"PO-Revision-Date: 2013-01-08 21:42+0200\n"
 "Last-Translator: Miroslav Nikolić <miroslavnikolic@rocketmail.com>\n"
 "Language-Team: Serbian <gnom@prevod.org>\n"
 "Language: sr\n"
@@ -37,7 +37,10 @@ msgstr "Matična stranica Transmagedona"
 
 #: ../src/about.py.in:52
 msgid "translator-credits"
-msgstr "Miroslav Nikolić <miroslavnikolic@rocketmail.com>"
+msgstr ""
+"  Miroslav Nikolić <miroslavnikolic@rocketmail.com>\n"
+"\n"
+"http://prevod.org — prevod na srpski jezik"
 
 #: ../src/presets.py:78
 #, python-format
@@ -103,32 +106,34 @@ msgid "All device presets are up to date!"
 msgstr "Sva pretpodešavanja uređaja su najnovija!"
 
 #: ../src/transmageddon.ui.h:1
-msgid "<small>Audio Channels:</small>"
-msgstr "<small>Zvučni kanali:</small>"
-
-#: ../src/transmageddon.ui.h:2
-msgid "<small>Video height&#47;width:</small>"
-msgstr "<small>Visina&#47;širina snimka:</small>"
+#| msgid "<small>Audio Channels:</small>"
+msgid ""
+"<small>Audio Channels:</small>\n"
+"<small>Audio Codec:</small>"
+msgstr ""
+"<small>Zvučni kanali:</small>\n"
+"<small>Kodek zvuka:</small>"
 
 #: ../src/transmageddon.ui.h:3
+#| msgid "<small>Video height&#47;width:</small>"
+msgid ""
+"<small>Video height&#47;width:</small>\n"
+"<small>Video Codec:</small>"
+msgstr ""
+"<small>Visina&#47;širina snimka:</small>\n"
+"<small>Kodek snimka:</small>"
+
+#: ../src/transmageddon.ui.h:5
 msgid "<b>Presets:</b>"
 msgstr "<b>Pretpodešavanja:</b>"
 
-#: ../src/transmageddon.ui.h:4
+#: ../src/transmageddon.ui.h:6
 msgid "<b>Choose Input File:</b>"
 msgstr "<b>Izaberi ulaznu datoteku:</b>"
 
-#: ../src/transmageddon.ui.h:5
+#: ../src/transmageddon.ui.h:7
 msgid "<b>Output Format:</b>"
 msgstr "<b>Izlazni format:</b>"
-
-#: ../src/transmageddon.ui.h:6
-msgid "<small>Video codec:</small>"
-msgstr "<small>Kodek snimka:</small>"
-
-#: ../src/transmageddon.ui.h:7
-msgid "<small>Audio codec:</small>"
-msgstr "<small>Kodek zvuka:</small>"
 
 #: ../src/transmageddon.ui.h:8
 msgid "<b>Choose Audio Codec</b>:"
@@ -159,129 +164,132 @@ msgstr "Izađi"
 msgid "Debug"
 msgstr "Pročisti"
 
-#: ../src/transmageddon.py:375 ../src/transmageddon.py:752
-#: ../src/transmageddon.py:973 ../src/transmageddon.py:1063
+#. set default values for various variables
+#: ../src/transmageddon.py:360 ../src/transmageddon.py:760
+#: ../src/transmageddon.py:954 ../src/transmageddon.py:1055
 msgid "Transcoding Progress"
 msgstr "Napredovanje prekodiranja"
 
 #. add i18n "No container"option
-#: ../src/transmageddon.py:411
+#: ../src/transmageddon.py:400
 msgid "No container (Audio-only)"
 msgstr "Bez sadržaoca (samo zvuk)"
 
 #. Populate the rotatation box
 #. print("populating rotationbox")
-#: ../src/transmageddon.py:415
+#: ../src/transmageddon.py:404
 msgid "No rotation (default)"
 msgstr "Bez zaokretanja (osnovno)"
 
-#: ../src/transmageddon.py:416
+#: ../src/transmageddon.py:405
 msgid "Clockwise 90 degrees"
 msgstr "90 stepeni u smeru kazaljke"
 
-#: ../src/transmageddon.py:417
+#: ../src/transmageddon.py:406
 msgid "Rotate 180 degrees"
 msgstr "Okreni za 180 stepeni"
 
-#: ../src/transmageddon.py:418
+#: ../src/transmageddon.py:407
 msgid "Counterclockwise 90 degrees"
 msgstr "90 stepeni suprotno smeru kazaljke"
 
-#: ../src/transmageddon.py:419
+#: ../src/transmageddon.py:408
 msgid "Horizontal flip"
 msgstr "Vodoravno prevrtanje"
 
-#: ../src/transmageddon.py:420
+#: ../src/transmageddon.py:409
 msgid "Vertical flip"
 msgstr "Uspravno prevrtanje"
 
-#: ../src/transmageddon.py:421
+#: ../src/transmageddon.py:410
 msgid "Upper left diagonal flip"
 msgstr "Prevrtanje po gornjoj levoj dijagonali"
 
-#: ../src/transmageddon.py:422
+#: ../src/transmageddon.py:411
 msgid "Upper right diagnonal flip"
 msgstr "Prevrtanje po gornjoj desnoj dijagonali"
 
-#: ../src/transmageddon.py:445
+#: ../src/transmageddon.py:434
 msgid "No Presets"
 msgstr "Bez pretpodešavanja"
 
-#: ../src/transmageddon.py:537
+#: ../src/transmageddon.py:542
 #, python-format
 msgid "%(min)d:%(sec)02d"
 msgstr "%(min)d:%(sec)02d"
 
-#: ../src/transmageddon.py:567
+#: ../src/transmageddon.py:572
 #, python-format
 msgid "File saved to %(dir)s"
 msgstr "Datoteka je sačuvana u %(dir)s"
 
-#: ../src/transmageddon.py:570
+#: ../src/transmageddon.py:575
 #, python-format
 msgid "%(file)s saved to %(dir)s"
 msgstr "„%(file)s“ je sačuvana u %(dir)s"
 
-#: ../src/transmageddon.py:580
+#: ../src/transmageddon.py:585
 msgid "Done Transcoding"
 msgstr "Prekodiranje je obavljeno"
 
-#: ../src/transmageddon.py:593 ../src/transmageddon.py:942
+#: ../src/transmageddon.py:603 ../src/transmageddon.py:923
 #, python-format
 msgid "Writing %(filename)s"
 msgstr "Zapisujem %(filename)s"
 
-#: ../src/transmageddon.py:597
+#: ../src/transmageddon.py:607
 #, python-format
 msgid "Pass %(count)d Complete. "
 msgstr "Korak %(count)d je obavljen."
 
-#: ../src/transmageddon.py:642
+#: ../src/transmageddon.py:635
+msgid "Unknown language"
+msgstr "Nepoznat jezik"
+
+#: ../src/transmageddon.py:690
 msgid "No Audio"
 msgstr "Bez zvuka"
 
 #. add a 'No Video option'
-#: ../src/transmageddon.py:664 ../src/transmageddon.py:1045
+#: ../src/transmageddon.py:698 ../src/transmageddon.py:1042
 msgid "No Video"
 msgstr "Bez snimka"
 
-#: ../src/transmageddon.py:838
+#: ../src/transmageddon.py:819
 msgid ""
 "Got an invalid response from codec installer, can not install missing codec."
 msgstr ""
 "Dobih neispravan odgovor od instalatera kodeka, ne mogu da instaliram "
 "nedostajući kodek."
 
-#: ../src/transmageddon.py:842
-#| msgid "Codec installation aborted."
+#: ../src/transmageddon.py:823
 msgid "No Codec installer helper application available."
 msgstr "Nije dostupan program pomoćnika instalatera kodeka."
 
-#: ../src/transmageddon.py:846
+#: ../src/transmageddon.py:827
 msgid "Plugins not found, choose different codecs."
 msgstr "Priključci nisu pronađeni, izaberite druge kodeke."
 
-#: ../src/transmageddon.py:856
+#: ../src/transmageddon.py:837
 msgid "Codec installation aborted."
 msgstr "Instalacija kodeka je prekinuta."
 
-#: ../src/transmageddon.py:864
-#| msgid "Missing plugin installation failed: "
+#: ../src/transmageddon.py:845
 msgid "Missing plugin installation failed."
 msgstr "Instalacija nedostajućeg priključka nije uspela."
 
-#: ../src/transmageddon.py:945
+#: ../src/transmageddon.py:926
 #, python-format
 msgid "Pass %(count)d Progress"
 msgstr "Napredovanje %(count)d. koraka"
 
-#: ../src/transmageddon.py:1051
-msgid "Video passthrough"
-msgstr "Prolaz snimka"
-
-#: ../src/transmageddon.py:1056
+#: ../src/transmageddon.py:1011
 msgid "Audio passthrough"
 msgstr "Prolaz zvuka"
+
+#: ../src/transmageddon.py:1048
+msgid "Video passthrough"
+msgstr "Prolaz snimka"
 
 #: ../src/utils.py:76
 #, python-format
@@ -295,6 +303,12 @@ msgstr "Transmagedon prekoder snimka"
 #: ../transmageddon.desktop.in.in.h:2
 msgid "Video format conversion tool"
 msgstr "Alat za pretvaranje formata snimka"
+
+#~ msgid "<small>Video codec:</small>"
+#~ msgstr "<small>Kodek snimka:</small>"
+
+#~ msgid "<small>Audio codec:</small>"
+#~ msgstr "<small>Kodek zvuka:</small>"
 
 #~ msgid "_Help"
 #~ msgstr "Po_moć"
