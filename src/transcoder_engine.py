@@ -297,9 +297,9 @@ class Transcoder(GObject.GObject):
            num = self.videodata[0]['videonum']
            denom = self.videodata[0]['videodenom']
 
+       # FIXME Question - should num and denom values be updated in self.videodata?
+
        self.videodata[0]['outputvideocaps']=Gst.caps_from_string(preset.vcodec.name+","+"height="+str(self.videodata[0]['videoheight'])+","+"width="+str(self.videodata[0]['videowidth'])+","+"framerate="+str(num)+"/"+str(denom))
-       # self.videocaps.set_value("pixelaspectratio", pixelaspectratio) this doesn't work due to pixelaspectratio being a fraction, 
-       # needs further investigation
 
    def noMorePads(self, dbin):
        if self.passcounter == int(0):
@@ -416,7 +416,8 @@ class Transcoder(GObject.GObject):
            #print(str(name) + " got GstTagSetter Interface " +str(tagyes))
            if tagyes ==True:
                taglist=Gst.TagList.new_empty()
-               # Gst.TagList.add_value(taglist, Gst.TagMergeMode.APPEND, Gst.TAG_APPLICATION_NAME, "Transmageddon transcoder" tag_setting_element.merge_tags(taglist, Gst.TAG_MERGE_APPEND)
+               taglist.add_value(Gst.TagMergeMode.APPEND, Gst.TAG_APPLICATION_NAME, "Transmageddon transcoder")
+               element.merge_tags(taglist, Gst.TagMergeMode.APPEND)
 
    def Pipeline (self, state):
        if state == ("playing"):

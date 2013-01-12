@@ -627,7 +627,6 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                    streamid=i.get_stream_id()
                    if streamid not in self.audiostreamids:
                        self.audiostreamcounter=self.audiostreamcounter+1
-                       # self.inputaudiocaps.append(i.get_caps())
                        self.audiostreamids.append(streamid)
                        self.haveaudio=True
                        self.audiodata.append(self.add_audiodata_row(i.get_channels(), i.get_sample_rate(), i.get_caps(), False, streamid, False, False, i.get_language()))
@@ -686,9 +685,10 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                            self.audioinformation.set_markup("".join(self.markupaudioinfo))
                            x=x+1
 
-               if self.haveaudio==False:
-                       self.audioinformation.set_markup(''.join(('<small>', _("No Audio"), '</small>',"\n", '<small>', "",'</small>')))
-
+           else: # if there is no audio streams
+               self.audioinformation.set_markup(''.join(('<small>', _("No Audio"), '</small>',"\n", '<small>', "",'</small>')))
+               if not self.audiodata: # creates empty data set
+                   self.audiodata.append(self.add_audiodata_row(None, None, None, False, None, False, False, None))
 
            if self.havevideo==True:
                self.videoinformation.set_markup(''.join(('<small>', 'Video width&#47;height: ', str(self.videodata[0]['videowidth']), "x", str(self.videodata[0]['videoheight']), '</small>',"\n", '<small>', 'Video codec: ',  str(GstPbutils.pb_utils_get_codec_description   (self.videodata[0]['inputvideocaps'])), '</small>' )))
