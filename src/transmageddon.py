@@ -42,6 +42,7 @@ import about
 import presets
 import utils
 import datetime
+import langchooser
 
 major, minor, patch, micro = Gst.version()
 if (major == 1) and (patch < 0):
@@ -631,6 +632,12 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                        self.haveaudio=True
                        self.audiodata.append(self.add_audiodata_row(i.get_channels(), i.get_sample_rate(), i.get_caps(), False, streamid, False, False, i.get_language()))
                        if self.audiodata[self.audiostreamcounter]['language']== None:
+                           # load language setting ui
+                           output=langchooser.languagechooser(self)
+                           output.languagewindow.run()
+                           langcode=output.langcode
+                           print(langcode)
+
                            self.audiodata[self.audiostreamcounter]['language']=_("Unknown language")
                        if self.audiostreamcounter > 0:
                            combo = Gtk.ComboBoxText.new()
@@ -751,7 +758,12 @@ class TransmageddonUI(Gtk.ApplicationWindow):
    # define the behaviour of the other buttons
    def on_FileChooser_file_set(self, widget):
        self.filename = self.builder.get_object ("FileChooser").get_filename()
-       self.audiodata = []
+       # These two list objects will hold all crucial media data in the form of python dictionaries.
+       self.audiodata =[]
+       self.videodata =[]
+       self.audiostreamids=[] # (list of stream ids)
+       self.videostreamids=[]
+       self.audiostreamcounter=-1
        if self.filename is not None: 
            self.haveaudio=False #make sure to reset these for each file
            self.havevideo=False #
