@@ -122,7 +122,7 @@ supported_video_container_map = {
 }
 
 supported_audio_container_map = {
-    'Ogg':         [ 'Vorbis', 'FLAC', 'Speex', 'Celt Ultra', 'Opus' ],
+    'Ogg':   [ 'Vorbis', 'FLAC', 'Speex', 'Celt Ultra', 'Opus' ],
     'MXF':         [ 'mp3', 'AAC', 'AC3' ],
     'Matroska':    [ 'FLAC', 'AAC', 'AC3', 'Vorbis' ],
     'AVI':         [ 'mp3', 'AC3', 'Windows Media Audio 2' ],
@@ -308,16 +308,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                uri = selection.data.strip('\r\n\x00')
                self.builder.get_object ("FileChooser").set_uri(uri)
 
-
-       # self.connect('drag_data_received', on_drag_data_received)
-       #Gtk.drag_dest_set(self,  Gtk.DEST_DEFAULT_MOTION |
-       #        Gtk.DEST_DEFAULT_HIGHLIGHT | Gtk.DEST_DEFAULT_DROP, dnd_list, \
-       #        Gdk.DragAction.COPY)
-
-
        self.start_time = False
-       self.multipass = 0
-       self.passcounter = 0
        
        # Set the Videos XDG UserDir as the default directory for the filechooser
        # also make sure directory exists
@@ -359,15 +350,13 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        
        # set default values for various variables
        self.ProgressBar.set_text(_("Transcoding Progress"))
-       self.codeccontainer = False
        self.containertoggle=False # used to not check for encoders with pbutils
        self.discover_done=False # lets us know that discover is finished
        self.missingtoggle=False
        self.havevideo=False # tracks if input file got video
        self.haveaudio=False
-       self.devicename = "nopreset"
        self.nocontaineroptiontoggle=False
-       self.outputdirectory=False # directory for holding output directory value
+
        # create variables to store passthrough options slot in the menu
        self.audiopassmenuno=1
        self.videopassmenuno=1
@@ -388,10 +377,15 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        # these 2 variables is for handling the text generated from discoverer
        self.markupaudioinfo=[]
        self.markupvideoinfo=[]
+
+       # this value will store the short name for the container formats that we use in the UI
+       self.containershort="Ogg"
        
        # These two list objects will hold all crucial media data in the form of python dictionaries.
        self.audiodata =[]
        self.videodata =[]
+       # all other data will go into streamdata
+       self.streamdata = {'filechoice' : False, 'filename' : False, 'outputdirectory' : False, 'container' : False, 'devicename' : "nopreset", 'multipass': 0, 'passcounter': 0, 'outputfilename' : False, 'timestamp': False}
 
        # Populate the Container format combobox
        # print("do we try to populate container choice")
@@ -415,7 +409,8 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            self.rotationchoice.append_text(y)
 
        self.rotationchoice.set_active(0)
-       self.rotationvalue = int(0)
+       if self.videodata:
+           self.videodata[0]['rotationvalue'] = int(0)
       
        # Populate Device Presets combobox
        # print("starting preset population")
@@ -437,19 +432,23 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        self.waiting_for_signal="False"
 
 
-   # define the audiodata structure here as the canonical location. This structure should include everything
-   # needed for the audio pipelines. Use strings to describe the type of data to be stored.
-   # The two caps values should be GStreamer caps objects, not caps in string format. 
-   # When a row is added, any data you are missing at that point should be replaced by 'False' values
-   #
-   # difference between passthrough and do passthrough is that the first one is for if passthrough mode 
-   # is possible, the second is for if the user actually wants the stream to be passed through.
+   # define the media structures here as the canonical location. This structure should include 
+   # everything needed for the pipelines. 
+   # * Use strings to describe the type of data to be stored.
+   # * The two caps values should be GStreamer caps objects, not caps in string format. 
+   # * When a row is added, any data you are missing at that point should be replaced by '
+   #   False' 
+   # * The difference between passthrough and do passthrough is that the first one 
+   #   states if passthrough mode is possible, the second states if the user actually 
+   #   wants the stream to be passed through or not.
+   # * Any value which doesn't belong into audiodata or videodata, should go into streamdata
+
    def add_audiodata_row(self, audiochannels, samplerate, inputaudiocaps, outputaudiocaps, streamid, canpassthrough, dopassthrough, language):
        audiodata = {'audiochannels' : audiochannels, 'samplerate' : samplerate, 'inputaudiocaps' : inputaudiocaps, 'outputaudiocaps' : outputaudiocaps , 'streamid' : streamid, 'canpassthrough' : canpassthrough, 'dopassthrough' : dopassthrough, 'language' : language }
        return audiodata
 
-   def add_videodata_row(self, videowidth, videoheight, inputvideocaps, outputvideocaps, videonum, videodenom, streamid, canpassthrough, dopassthrough, interlaced):
-        videodata = { 'videowidth' : videowidth, 'videoheight' : videoheight, 'inputvideocaps' : inputvideocaps, 'outputvideocaps' : outputvideocaps, 'videonum' : videonum, 'videodenom' :  videodenom, 'streamid' : streamid, 'canpassthrough' : canpassthrough, 'dopassthrough' : dopassthrough, 'interlaced' : interlaced }
+   def add_videodata_row(self, videowidth, videoheight, inputvideocaps, outputvideocaps, videonum, videodenom, streamid, canpassthrough, dopassthrough, interlaced, rotationvalue):
+        videodata = { 'videowidth' : videowidth, 'videoheight' : videoheight, 'inputvideocaps' : inputvideocaps, 'outputvideocaps' : outputvideocaps, 'videonum' : videonum, 'videodenom' :  videodenom, 'streamid' : streamid, 'canpassthrough' : canpassthrough, 'dopassthrough' : dopassthrough, 'interlaced' : interlaced, 'rotationvalue' : rotationvalue }
         return videodata
 
    # Get all preset values
@@ -501,10 +500,10 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        # Check for number of passes
        passes = preset.vcodec.passes
        if passes == "0":
-           self.multipass = 0
+           self.streamdata['multipass'] = 0
        else:
-           self.multipass = int(passes)
-           self.passcounter = int(0)
+           self.streamdata['multipass'] = int(passes)
+           self.streamdata['passcounter'] = int(0)
 
    # Create query on uridecoder to get values to populate progressbar 
    # Notes:
@@ -545,14 +544,14 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                        "sec": sec,
                        }
                    if percent_remain > 0.5:
-                       if self.passcounter == int(0):
+                       if self.streamdata['passcounter'] == int(0):
                            txt = "Estimated time remaining: %(time)s"
                            self.ProgressBar.set_text(_(txt) % \
                                 {'time': str(time_rem)})
                        else:
                            txt = "Pass %(count)d time remaining: %(time)s"
                            self.ProgressBar.set_text(_(txt) % { \
-                               'count': self.passcounter, \
+                               'count': self.streamdata['passcounter'], \
                                'time': str(time_rem), })
                    return True
                else:
@@ -569,11 +568,11 @@ class TransmageddonUI(Gtk.ApplicationWindow):
 
    def _on_eos(self, source):
        context_id = self.StatusBar.get_context_id("EOS")
-       if self.passcounter == int(0):
+       if self.streamdata['passcounter'] == int(0):
            self.StatusBar.push(context_id, (_("File saved to %(dir)s") % \
-                   {'dir': self.outputdirectory}))
+                   {'dir': self.streamdata['outputdirectory']}))
            uri = "file://" + os.path.abspath(os.path.curdir) + "/transmageddon.svg"
-           notification = Notify.Notification.new("Transmageddon", (_("%(file)s saved to %(dir)s") % {'dir': self.outputdirectory, 'file': self.outputfilename}), uri)
+           notification = Notify.Notification.new("Transmageddon", (_("%(file)s saved to %(dir)s") % {'dir': self.streamdata['outputdirectory'], 'file': self.streamdata['outputfilename']}), uri)
            notification.show()
            self.FileChooser.set_sensitive(True)
            self.containerchoice.set_sensitive(True)
@@ -586,8 +585,8 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            self.ProgressBar.set_text(_("Done Transcoding"))
            self.ProgressBar.set_fraction(1.0)
            self.start_time = False
-           self.multipass = 0
-           self.passcounter = 0
+           self.streamdata['multipass'] = 0
+           self.streamdata['passcounter'] = 0
            x=0
            while x <= self.audiostreamcounter:
                self.audiodata[x]['dopassthrough']=False
@@ -600,14 +599,14 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                                  # the codec comboboxes
        else:
            self.start_time = False
-           if self.passcounter == (self.multipass-1):
-               self.StatusBar.push(context_id, (_("Writing %(filename)s") % {'filename': self.outputfilename}))
-               self.passcounter = int(0)
+           if self.streamdata['passcounter'] == (self.streamdata['multipass']-1):
+               self.StatusBar.push(context_id, (_("Writing %(filename)s") % {'filename': self.streamdata['outputfilename']}))
+               self.streamdata['passcounter'] = int(0)
                self._start_transcoding()
            else:
                self.StatusBar.push(context_id, (_("Pass %(count)d Complete. ") % \
-                   {'count': self.passcounter}))
-               self.passcounter = self.passcounter+1
+                   {'count': self.streamdata['passcounter']}))
+               self.streamdtata['passcounter'] = self.streamdata['passcounter']+1
                self._start_transcoding()
 
  
@@ -617,7 +616,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        if result != GstPbutils.DiscovererResult.ERROR:
            streaminfo=info.get_stream_info()
            if streaminfo != None:
-               container = streaminfo.get_caps()
+               self.streamdata['container'] = streaminfo.get_caps()
            else:
                print("FIXME")
                #self.check_for_elements()
@@ -635,10 +634,9 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                            # load language setting ui
                            output=langchooser.languagechooser(self)
                            output.languagewindow.run()
-                           langcode=output.langcode
-                           print(langcode)
+                           self.audiodata[self.audiostreamcounter]['language'] = output.langcode
 
-                           self.audiodata[self.audiostreamcounter]['language']=_("Unknown language")
+                           # self.audiodata[self.audiostreamcounter]['language']=_("Unknown language")
                        if self.audiostreamcounter > 0:
                            combo = Gtk.ComboBoxText.new()
                            self.audiorows.append(combo)
@@ -658,7 +656,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                        self.videostreamids.append(streamid)
                        # put all video data into a dictionary. The two False values are ouputvideocaps and 
                        # the two passthrough booleans which will be set later.
-                       self.videodata.append(self.add_videodata_row(i.get_width(),i.get_height(), i.get_caps(), False, i.get_framerate_num(), i.get_framerate_denom(), streamid, False, False, i.is_interlaced()))
+                       self.videodata.append(self.add_videodata_row(i.get_width(),i.get_height(), i.get_caps(), False, i.get_framerate_num(), i.get_framerate_denom(), streamid, False, False, i.is_interlaced(), False))
                        self.populate_menu_choices() # run this to ensure video menu gets filled
                        self.presetchoice.set_sensitive(True)
                        self.videorows[0].set_sensitive(True)
@@ -668,14 +666,14 @@ class TransmageddonUI(Gtk.ApplicationWindow):
 
                if self.waiting_for_signal == True:
                    if self.containertoggle == True:
-                       if self.codeccontainer != False:
-                           self.check_for_passthrough(self.codeccontainer)
+                       if self.streamdata['container'] != False:
+                           self.check_for_passthrough(self.streamdata['container'])
                    else:
                        # self.check_for_elements()
                        if self.missingtoggle==False:
                            self._start_transcoding()
-               if self.codeccontainer != False:
-                   self.check_for_passthrough(self.codeccontainer)
+               if self.streamdata['container'] != False:
+                   self.check_for_passthrough(self.streamdata['container'])
        
            # set UI markup, will wary in size depending on number of streams         
 
@@ -725,8 +723,8 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        for x in self.audiostreamids:
            audiointersect.append(Gst.Caps.new_empty())
        if containerchoice != False:
-           container = codecfinder.containermap[containerchoice]
-           containerelement = codecfinder.get_muxer_element(container)
+           # container = codecfinder.containermap[containerchoice]
+           containerelement = codecfinder.get_muxer_element(containerchoice)
            if containerelement == False:
                self.containertoggle = True
            else:
@@ -784,17 +782,15 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            self.containerchoice.set_sensitive(True)
 
    def _start_transcoding(self): 
-       filechoice = self.builder.get_object ("FileChooser").get_uri()
-       self.filename = self.builder.get_object ("FileChooser").get_filename()
+       self.streamdata['filechoice'] = self.builder.get_object ("FileChooser").get_uri()
+       # self.filename = self.builder.get_object ("FileChooser").get_filename()
        if (self.havevideo and (self.videodata[0]['outputvideocaps'] != "novid")):
-           self.outputdirectory=self.videodirectory
+           self.streamdata['outputdirectory']=self.videodirectory
        else:
-           self.outputdirectory=self.audiodirectory
+           self.streamdata['outputdirectory']=self.audiodirectory
 
-       self._transcoder = transcoder_engine.Transcoder(filechoice, self.filename,
-                        self.outputdirectory, self.codeccontainer, self.audiodata,
-                        self.videodata, self.devicename, self.multipass, self.passcounter, 
-                        self.outputfilename, self.timestamp, self.rotationvalue)
+       self._transcoder = transcoder_engine.Transcoder(self.streamdata,
+                        self.audiodata, self.videodata)
         
 
        self._transcoder.connect("ready-for-querying", self.ProgressBarUpdate)
@@ -860,7 +856,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
    def check_for_elements(self, streamno):
        # print("checking for elements")
        # this function checks for missing plugins using pbutils
-       if self.codeccontainer==False:
+       if self.streamdata['container']==False:
            containerstatus=True
            videostatus=True
        else:
@@ -918,22 +914,22 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        self.ProgressBar.set_fraction(0.0)
        # create a variable with a timestamp code
        timeget = datetime.datetime.now()
-       self.timestamp = str(timeget.strftime("-%H%M%S-%d%m%Y"))
+       self.streamdata['timestamp'] = str(timeget.strftime("-%H%M%S-%d%m%Y"))
        # Remove suffix from inbound filename so we can reuse it together with suffix to create outbound filename
        self.nosuffix = os.path.splitext(os.path.basename(self.filename))[0]
        # pick output suffix
        container = self.builder.get_object("containerchoice").get_active_text()
-       if self.codeccontainer==False: # deal with container less formats
+       if self.streamdata['container']==False: # deal with container less formats
            self.ContainerFormatSuffix = codecfinder.nocontainersuffixmap[Gst.Caps.to_string(self.audiodata['outputaudiocaps'])]
        else:
            if self.havevideo == False:
                self.ContainerFormatSuffix = codecfinder.audiosuffixmap[container]
            else:
                self.ContainerFormatSuffix = codecfinder.csuffixmap[container]
-       self.outputfilename = str(self.nosuffix+self.timestamp+self.ContainerFormatSuffix)
+       self.streamdata['outputfilename'] = str(self.nosuffix+self.streamdata['timestamp']+self.ContainerFormatSuffix)
        context_id = self.StatusBar.get_context_id("EOS")
-       self.StatusBar.push(context_id, (_("Writing %(filename)s") % {'filename': self.outputfilename}))
-       if self.multipass != 0:
+       self.StatusBar.push(context_id, (_("Writing %(filename)s") % {'filename': self.streamdata['outputfilename']}))
+       if self.streamdata['multipass'] != 0:
            self.passcounter=int(1)
            self.StatusBar.push(context_id, (_("Pass %(count)d Progress") % {'count': self.passcounter}))
        if self.haveaudio:
@@ -982,7 +978,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                if x==self.audiostreamcounter:
                    self.audiocodecs=[]
            if self.havevideo==True:
-               if self.codeccontainer != False:
+               if self.streamdata['container'] != False:
                    for c in self.videocodecs:
                        self.videorows[x].remove(0)
                    self.videocodecs=[]
@@ -1002,7 +998,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                        self.audiorows[x].append_text(str(GstPbutils.pb_utils_get_codec_description(self.presetaudiocodec)))
                        self.audiorows[x].set_active(0)
                        self.audiocodecs[x].append(self.presetaudiocodec)
-               elif self.codeccontainer==False: # special setup for container less case, looks ugly, but good enough for now
+               elif self.streamdata['container']==False: # special setup for container less case, looks ugly, but good enough for now
                        self.audiorows[x].append_text(str(GstPbutils.pb_utils_get_codec_description(Gst.caps_from_string("audio/mpeg, mpegversion=(int)1, layer=(int)3"))))
                        self.audiorows[x].append_text(str(GstPbutils.pb_utils_get_codec_description(Gst.caps_from_string("audio/mpeg, mpegversion=4, stream-format=adts"))))
                        self.audiorows[x].append_text(str(GstPbutils.pb_utils_get_codec_description(Gst.caps_from_string("audio/x-flac"))))
@@ -1013,7 +1009,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                        self.audiorows[x].set_sensitive(True)
                else:
                        audiolist = []
-                       audio_codecs = supported_audio_container_map[self.codeccontainer]
+                       audio_codecs = supported_audio_container_map[self.containershort]
                        for c in audio_codecs:
                            self.audiocodecs[x].append(Gst.caps_from_string(codecfinder.codecmap[c]))
                        for c in self.audiocodecs[x]: # Use codec descriptions from GStreamer
@@ -1032,7 +1028,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
 
        # fill in with video
        if self.havevideo==True:
-           if self.codeccontainer != False:
+           if self.streamdata['container'] != False:
                if self.usingpreset==True:
                    testforempty = self.presetvideocodec.to_string()
                    if testforempty != "EMPTY":
@@ -1041,7 +1037,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                        self.videocodecs.append(self.presetvideocodec)
                else:
                    video_codecs=[]
-                   video_codecs = supported_video_container_map[self.codeccontainer]
+                   video_codecs = supported_video_container_map[self.containershort]
                    self.rotationchoice.set_sensitive(True)
                    for c in video_codecs:
                        self.videocodecs.append(Gst.caps_from_string(codecfinder.codecmap[c]))
@@ -1066,15 +1062,16 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        self.ProgressBar.set_fraction(0.0)
        self.ProgressBar.set_text(_("Transcoding Progress"))
        if self.builder.get_object("containerchoice").get_active() == self.nocontainernumber:
-               self.codeccontainer = False
+               self.streamdata['container'] = False
                self.videorows[0].set_active(self.videonovideomenuno)
                self.videorows[0].set_sensitive(False)
        else:
            if self.builder.get_object("containerchoice").get_active()!= -1:
-               self.codeccontainer = self.builder.get_object ("containerchoice").get_active_text()
+               self.containershort=self.builder.get_object ("containerchoice").get_active_text()
+               self.streamdata['container'] = Gst.caps_from_string(codecfinder.containermap[self.containershort])
                # self.check_for_elements()
        if self.discover_done == True:
-           self.check_for_passthrough(self.codeccontainer)
+           self.check_for_passthrough(self.streamdata['container'])
            self.populate_menu_choices()
            self.transcodebutton.set_sensitive(True)
 
@@ -1084,11 +1081,11 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        self.ProgressBar.set_fraction(0.0)
        if presetchoice == 0:
            self.usingpreset=False
-           self.devicename = "nopreset"
+           self.streamdata['devicename'] = "nopreset"
            self.containerchoice.set_sensitive(True)
            self.containerchoice.set_active(0)
            self.start_time = False
-           self.multipass = 0
+           self.streamdata['multipass'] = 0
            self.passcounter = 0
            self.rotationchoice.set_sensitive(True)
            if self.builder.get_object("containerchoice").get_active():
@@ -1099,8 +1096,8 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            self.usingpreset=True
            self.ProgressBar.set_fraction(0.0)
            if presetchoice != None:
-               self.devicename= self.presetchoices[presetchoice-1]
-               self.provide_presets(self.devicename)
+               self.streamdata['devicename']= self.presetchoices[presetchoice-1]
+               self.provide_presets(self.streamdata['devicename'])
                self.containerchoice.set_sensitive(False)
                self.CodecBox.set_sensitive(False)
                self.rotationchoice.set_sensitive(False)
@@ -1109,7 +1106,8 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                    self.transcodebutton.set_sensitive(True)
 
    def on_rotationchoice_changed(self, widget):
-       self.rotationvalue = self.rotationchoice.get_active()
+       if self.videodata:
+           self.videodata[0]['rotationvalue'] = self.rotationchoice.get_active()
 
    def on_audiocodec_changed(self, widget):
        name=widget.get_name()
@@ -1120,7 +1118,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        if (self.houseclean == False and self.usingpreset==False):
                no=self.audiorows[x].get_active()
                self.audiodata[x]['outputaudiocaps'] = self.audiocodecs[x][no]
-               if self.codeccontainer != False:
+               if self.streamdata['container'] != False:
                    if self.audiorows[x].get_active() ==  self.audiopassmenuno:
                        self.audiodata[x]['dopassthrough']= True
                elif self.usingpreset==True:
@@ -1129,7 +1127,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
    def on_videocodec_changed(self, widget):
        self.videodata[0]['dopassthrough']=False
        if (self.houseclean == False and self.usingpreset==False):
-           if self.codeccontainer != False:
+           if self.streamdata['container'] != False:
                no=self.videorows[0].get_active()
                self.videodata[0]['outputvideocaps'] = self.videocodecs[no]
            else:

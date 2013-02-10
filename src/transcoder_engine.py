@@ -36,17 +36,16 @@ class Transcoder(GObject.GObject):
             'got-error' : (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT,))
                     }
 
-   def __init__(self, FILECHOSEN, FILENAME, DESTDIR, CONTAINERCHOICE, AUDIODATA, VIDEODATA, PRESET, 
-                      MULTIPASS, PASSCOUNTER, OUTPUTNAME, TIMESTAMP, ROTATIONVALUE):
+   def __init__(self, STREAMDATA, AUDIODATA, VIDEODATA):
        GObject.GObject.__init__(self)
 
        # Choose plugin based on Container name
        self.audiodata = AUDIODATA
        self.videodata = VIDEODATA
-       self.container = CONTAINERCHOICE
-       #self.audiocaps = self.audiodata[0]['outputaudiocaps']
-       if self.container != False:
-           self.containercaps = Gst.caps_from_string(codecfinder.containermap[CONTAINERCHOICE])
+       self.streamdata = STREAMDATA
+       self.container = self.streamdata['container']
+       if self.container != False: 
+           self.containercaps = self.container #FIXME This double variable is a leftover from old code
        # special case mp3 which is a no-container format with a container (id3mux)
        else:
            if self.audiocaps.intersect(Gst.caps_from_string("audio/mpeg, mpegversion=1, layer=3")):
@@ -61,20 +60,19 @@ class Transcoder(GObject.GObject):
        self.stoptoggle=False
 
        self.doaudio= False
-       self.preset = PRESET
+       self.preset = self.streamdata['devicename']
        self.blackborderflag = False
-       self.multipass = MULTIPASS
-       self.passcounter = PASSCOUNTER
-       self.outputfilename = OUTPUTNAME
-       self.timestamp = TIMESTAMP
-       self.rotationvalue = int(ROTATIONVALUE)
+       self.multipass = self.streamdata['multipass']
+       self.passcounter = self.streamdata['passcounter']
+       self.outputfilename = self.streamdata['outputfilename']
+       self.timestamp = self.streamdata['timestamp']
+       self.rotationvalue = int(self.videodata[0]['rotationvalue'])
        self.missingplugin= False
        self.probestreamid = False
        self.sinkpad = False
 
        # switching width and height around for rotationchoices where it makes sense
        if self.rotationvalue == 1 or self.rotationvalue == 3:
-           print(self.videodata[0])
            nwidth = self.videodata[0]['videoheight']
            nheight = self.videodata[0]['videowidth']
            self.videodata[0]['videoheight'] = nheight
@@ -198,7 +196,7 @@ class Transcoder(GObject.GObject):
               self.remuxcaps.append_structure(audiostruct[0])
 
        self.uridecoder = Gst.ElementFactory.make("uridecodebin", "uridecoder")
-       self.uridecoder.set_property("uri", FILECHOSEN)
+       self.uridecoder.set_property("uri", self.streamdata['filechoice'])
        self.uridecoder.connect("pad-added", self.OnDynamicPad)
 
        if (self.audiodata[0]['dopassthrough']) or (self.videodata[0]['dopassthrough']) or (self.videodata[0]['outputvideocaps']=="novid"):
@@ -212,7 +210,7 @@ class Transcoder(GObject.GObject):
            self.transcodefileoutput = Gst.ElementFactory.make("filesink", \
                "transcodefileoutput")
            self.transcodefileoutput.set_property("location", \
-               (DESTDIR+"/"+self.outputfilename))
+               (self.streamdata['outputdirectory']+"/"+self.outputfilename))
            self.pipeline.add(self.transcodefileoutput)
            self.encodebin.link(self.transcodefileoutput)
            self.transcodefileoutput.set_state(Gst.State.PAUSED)
@@ -404,7 +402,6 @@ class Transcoder(GObject.GObject):
 
    def OnEncodebinElementAdd(self, encodebin, element):
        factory=element.get_factory()
-       name=element.get_name()
        if factory != None:
            # set multipass cache file on video encoder element
            if (self.multipass != 0) and (self.passcounter == int(0)):
@@ -413,11 +410,16 @@ class Transcoder(GObject.GObject):
            
            # Set Transmageddon as Application name using Tagsetter interface
            tagyes = factory.has_interface("GstTagSetter")
-           #print(str(name) + " got GstTagSetter Interface " +str(tagyes))
            if tagyes ==True:
                taglist=Gst.TagList.new_empty()
                taglist.add_value(Gst.TagMergeMode.APPEND, Gst.TAG_APPLICATION_NAME, "Transmageddon transcoder")
-               element.merge_tags(taglist, Gst.TagMergeMode.APPEND)
+               element.merge_tags(taglist, Gst.TagMergeMode.REPLACE)
+               if Gst.ElementFactory.list_is_type(factory, 1125899906842626): # Audio Encoders factory code
+                   taglist=Gst.TagList.new_empty()
+                   taglist.add_value(Gst.TagMergeMode.APPEND, Gst.TAG_LANGUAGE_CODE, self.audiodata[0]['language'])  # FIXME: Currently only doing 1 stream
+                   longname=factory.get_metadata('long-name')
+                   taglist.add_value(Gst.TagMergeMode.APPEND, Gst.TAG_ENCODER, longname)
+                   element.merge_tags(taglist, Gst.TagMergeMode.REPLACE)
 
    def Pipeline (self, state):
        if state == ("playing"):
