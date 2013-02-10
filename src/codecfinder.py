@@ -122,7 +122,6 @@ def get_muxer_element(containercaps):
    Check all muxers for their caps and create a dictionary mapping caps 
    to element names. Then return elementname
    """
-
    flist = Gst.Registry.get().get_feature_list(Gst.ElementFactory)
    muxers = []
    features = []
@@ -134,15 +133,13 @@ def get_muxer_element(containercaps):
            muxers.append(fact.get_name())
            features.append(fact)
    muxerfeature = dict(list(zip(muxers, features)))
-   incomingcaps = Gst.caps_from_string(containercaps)
-   # print "incomingcaps is " + str(containercaps)
    for muxer in muxers:
            element = muxer
            factory = Gst.Registry.get().lookup_feature(str(muxer))
            sinkcaps = [x.get_caps() for x in factory.get_static_pad_templates() \
                    if x.direction == Gst.PadDirection.SRC]
            for caps in sinkcaps:
-               intersect = caps.intersect(incomingcaps).to_string()
+               intersect = caps.intersect(containercaps)
                # intersect is EMPTY, not FALSE is this a bindings bug?
                if intersect != "EMPTY":
                    if elementname == False:
