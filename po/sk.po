@@ -1,16 +1,16 @@
 # Slovak translation for transmageddon.
-# Copyright (C) 2011, 2012 Free Software Foundation, Inc.
+# Copyright (C) 2011-2013 Free Software Foundation, Inc.
 # This file is distributed under the same license as the transmageddon package.
 # Stanislav Petrek <stanislav.petrek@gmail.com>, 2011.
-# Ján Kyselica <kyselica.jan@gmail.com>, 2012.
+# Ján Kyselica <kyselica.jan@gmail.com>, 2012, 2013.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: transmageddon\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=transmageddon&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2012-12-22 07:48+0000\n"
-"PO-Revision-Date: 2012-12-25 19:12+0100\n"
+"POT-Creation-Date: 2013-02-10 17:42+0000\n"
+"PO-Revision-Date: 2013-02-13 22:56+0000\n"
 "Last-Translator: Ján Kyselica <kyselica.jan@gmail.com>\n"
 "Language-Team: Slovak <gnome-sk-list@gnome.org>\n"
 "Language: sk\n"
@@ -106,33 +106,33 @@ msgid "All device presets are up to date!"
 msgstr "Všetky predvoľby zariadenia sú aktuálne!"
 
 #: ../src/transmageddon.ui.h:1
-msgid "<small>Audio Channels:</small>"
-msgstr "<small>Audio kanály:</small>"
-
-#: ../src/transmageddon.ui.h:2
-msgid "<small>Video height&#47;width:</small>"
-msgstr "<small>Výška&#47;šírka videa:</small>"
+msgid ""
+"<small>Audio Channels:</small>\n"
+"<small>Audio Codec:</small>"
+msgstr ""
+"<small>Audio kanály:</small>\n"
+"<small>Audio kodek:</small>"
 
 #: ../src/transmageddon.ui.h:3
+msgid ""
+"<small>Video height&#47;width:</small>\n"
+"<small>Video Codec:</small>"
+msgstr ""
+"<small>Výška&#47;šírka videa:</small>\n"
+"<small>Video kodek:</small>"
+
+#: ../src/transmageddon.ui.h:5
 msgid "<b>Presets:</b>"
 msgstr "<b>Prevoľby:</b>"
 
-# label
-#: ../src/transmageddon.ui.h:4
+#  label
+#: ../src/transmageddon.ui.h:6
 msgid "<b>Choose Input File:</b>"
 msgstr "<b>Vyberte vstupný súbor:</b>"
 
-#: ../src/transmageddon.ui.h:5
+#: ../src/transmageddon.ui.h:7
 msgid "<b>Output Format:</b>"
 msgstr "<b>Výstupný formát:</b>"
-
-#: ../src/transmageddon.ui.h:6
-msgid "<small>Video codec:</small>"
-msgstr "<small>Video kodek:</small>"
-
-#: ../src/transmageddon.ui.h:7
-msgid "<small>Audio codec:</small>"
-msgstr "<small>Audio kodek:</small>"
 
 # label
 #: ../src/transmageddon.ui.h:8
@@ -165,135 +165,134 @@ msgstr "Ukončiť"
 msgid "Debug"
 msgstr "Ladiť"
 
-#: ../src/transmageddon.py:376 ../src/transmageddon.py:751
-#: ../src/transmageddon.py:972 ../src/transmageddon.py:1062
+#. set default values for various variables
+#: ../src/transmageddon.py:352 ../src/transmageddon.py:770
+#: ../src/transmageddon.py:962 ../src/transmageddon.py:1063
 msgid "Transcoding Progress"
 msgstr "Priebeh prekódovania"
 
 #. add i18n "No container"option
-#: ../src/transmageddon.py:412
+#: ../src/transmageddon.py:395
 msgid "No container (Audio-only)"
 msgstr "Bez kontajnera (iba zvuk)"
 
 #. Populate the rotatation box
 #. print("populating rotationbox")
-#: ../src/transmageddon.py:416
+#: ../src/transmageddon.py:399
 msgid "No rotation (default)"
 msgstr "Bez otočenia (predvolené)"
 
-#: ../src/transmageddon.py:417
+#: ../src/transmageddon.py:400
 msgid "Clockwise 90 degrees"
 msgstr "Otočiť o 90 stupňov vpravo"
 
-#: ../src/transmageddon.py:418
+#: ../src/transmageddon.py:401
 msgid "Rotate 180 degrees"
 msgstr "Otočiť o 180 stupňov"
 
-#: ../src/transmageddon.py:419
+#: ../src/transmageddon.py:402
 msgid "Counterclockwise 90 degrees"
 msgstr "Otočiť o 90 stupňov vľavo"
 
-#: ../src/transmageddon.py:420
+#: ../src/transmageddon.py:403
 msgid "Horizontal flip"
 msgstr "Prevrátiť vodorovne"
 
-#: ../src/transmageddon.py:421
+#: ../src/transmageddon.py:404
 msgid "Vertical flip"
 msgstr "Prevrátiť zvisle"
 
-#: ../src/transmageddon.py:422
+#: ../src/transmageddon.py:405
 msgid "Upper left diagonal flip"
 msgstr "Preklopiť podľa uhlopriečky smerujúcej vľavo hore"
 
-#: ../src/transmageddon.py:423
+#: ../src/transmageddon.py:406
 msgid "Upper right diagnonal flip"
 msgstr "Preklopiť podľa uhlopriečky smerujúcej vpravo hore"
 
-#: ../src/transmageddon.py:446
+#: ../src/transmageddon.py:430
 msgid "No Presets"
 msgstr "Bez predvolieb"
 
-#: ../src/transmageddon.py:538
+#: ../src/transmageddon.py:542
 #, python-format
 msgid "%(min)d:%(sec)02d"
 msgstr "%(min)d:%(sec)02d"
 
-#: ../src/transmageddon.py:568
+#: ../src/transmageddon.py:572
 #, python-format
 msgid "File saved to %(dir)s"
 msgstr "Súbor uložený do %(dir)s"
 
-#: ../src/transmageddon.py:571
+#: ../src/transmageddon.py:575
 #, python-format
 msgid "%(file)s saved to %(dir)s"
 msgstr "%(file)s uložený do %(dir)s"
 
-#: ../src/transmageddon.py:581
+#: ../src/transmageddon.py:585
 msgid "Done Transcoding"
 msgstr "Prekódovanie je dokončené"
 
-#: ../src/transmageddon.py:594 ../src/transmageddon.py:941
+#: ../src/transmageddon.py:603 ../src/transmageddon.py:931
 #, python-format
 msgid "Writing %(filename)s"
 msgstr "Zapisuje sa súbor %(filename)s"
 
-# PK: co je toto?
-#: ../src/transmageddon.py:598
+# PK: ako to vyzera vo vyslednom programe?
+#: ../src/transmageddon.py:607
 #, fuzzy, python-format
 msgid "Pass %(count)d Complete. "
-msgstr "Prechod %(count)d je dokončený. "
+msgstr "Konverzia %(count)d dokončená. "
 
-#: ../src/transmageddon.py:643
+#. if there is no audio streams
+#: ../src/transmageddon.py:694
 msgid "No Audio"
 msgstr "Bez zvuku"
 
-# PK: kde to je?
 #. add a 'No Video option'
-#: ../src/transmageddon.py:665 ../src/transmageddon.py:1044
+#: ../src/transmageddon.py:703 ../src/transmageddon.py:1050
 msgid "No Video"
 msgstr "Bez videa"
 
-#: ../src/transmageddon.py:837
+#: ../src/transmageddon.py:827
 msgid ""
 "Got an invalid response from codec installer, can not install missing codec."
 msgstr ""
 "Bola získaná neplatná odpoveď od inštalátoru kodeku. Kodek sa nedá "
 "nainštalovať."
 
-#: ../src/transmageddon.py:841
+#: ../src/transmageddon.py:831
 msgid "No Codec installer helper application available."
 msgstr "Nie je dostupná žiadna aplikácia pre pomoc pri inštalácií kodeku."
 
-#: ../src/transmageddon.py:845
+#: ../src/transmageddon.py:835
 msgid "Plugins not found, choose different codecs."
 msgstr "Zásuvné moduly neboli nájdené, vyberte iné kodeky."
 
-#: ../src/transmageddon.py:855
+#: ../src/transmageddon.py:845
 msgid "Codec installation aborted."
 msgstr "Inštalácia kodeku bola prerušená."
 
-#: ../src/transmageddon.py:863
+#: ../src/transmageddon.py:853
 msgid "Missing plugin installation failed."
 msgstr "Zlyhala inštalácia chýbajúceho zásuvného modulu."
 
-# PK: co je toto?
-#: ../src/transmageddon.py:944
+# PK: ako to vyzera vo vyslednom programe?
+#: ../src/transmageddon.py:934
 #, fuzzy, python-format
 msgid "Pass %(count)d Progress"
-msgstr "Prebieha %(count)d. prechod"
+msgstr "Priebeh konverzie %(count)d"
 
-# SP: ak bude zaškrtnuté "video nemeniť", tak sa nedá už video otáčať.
-# PM: OK
-#: ../src/transmageddon.py:1050
-msgid "Video passthrough"
-msgstr "Nemeniť video"
-
-#: ../src/transmageddon.py:1055
+#: ../src/transmageddon.py:1019
 msgid "Audio passthrough"
 msgstr "Nemeniť zvuk"
 
-# DK: nezda sa mi nejako ten slovosled..co tak "Neda sa najst cesta %(path)s v ziadnom znamom prefixe!"
-# DK: dalsia vec je, ci moze byt prefix prelozeny ako cesta.necham na druhom kontrolorovi
+# SP: ak bude zaškrtnuté "video nemeniť", tak sa nedá už video otáčať.
+# PM: OK
+#: ../src/transmageddon.py:1056
+msgid "Video passthrough"
+msgstr "Nemeniť video"
+
 #: ../src/utils.py:76
 #, python-format
 msgid "Can't find %(path)s in any known prefix!"
