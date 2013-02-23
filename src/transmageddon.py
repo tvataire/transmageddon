@@ -32,7 +32,8 @@ import which
 import time
 from gi.repository import Notify
 from gi.repository import GdkX11, Gio, Gtk, GLib, Gst, GstPbutils, GstTag
-from gi.repository import GObject
+from gi.repository import GUdev
+from gi.repository import GObject, GdkPixbuf
 GObject.threads_init()
 
 import transcoder_engine
@@ -42,7 +43,7 @@ import about
 import presets
 import utils
 import datetime
-import langchooser
+import langchooser, batch
 
 major, minor, patch, micro = Gst.version()
 if (major == 1) and (patch < 0):
@@ -54,7 +55,11 @@ if (major == 2) and (minor < 18):
    print("You need version 2.18.0 or higher of pygobject for Transmageddon")
    sys.exit(1)
 
-
+# we need to increase the rank of the dvdreadsrc element to make sure it 
+# and not resindvd is used
+dvdfactory=Gst.ElementFactory.find("dvdreadsrc")
+if dvdfactory:
+    dvdfactory.set_rank(300)
 
 TARGET_TYPE_URI_LIST = 80
 dnd_list = [ ( 'text/uri-list', 0, TARGET_TYPE_URI_LIST ) ]
@@ -167,8 +172,6 @@ class Transmageddon(Gtk.Application):
        debug_action.connect("activate", self.debug_cb)
        self.add_action(debug_action)
 
-       
-
        # option "about"
        about_action = Gio.SimpleAction.new("about", None)
        about_action.connect("activate", self.about_cb)
@@ -227,6 +230,8 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        self.videorows=[]
        self.audiocodecs=[]
        self.videocodecs=[]
+       
+       self.fileiter = None
 
        # set flag so we remove bogus value from menu only once
        self.bogus=0
@@ -257,7 +262,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
 
        #Define functionality of our button and main window
        self.box = self.builder.get_object("window")
-       self.FileChooser = self.builder.get_object("FileChooser")
+       #self.FileChooser = self.builder.get_object("FileChooser")
        self.videoinformation = self.builder.get_object("videoinformation")
        self.audioinformation = self.builder.get_object("audioinformation")
        self.videocodec = self.builder.get_object("videocodec")
@@ -272,6 +277,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        self.ProgressBar = self.builder.get_object("ProgressBar")
        self.cancelbutton = self.builder.get_object("cancelbutton")
        self.StatusBar = self.builder.get_object("StatusBar")
+       self.table1 = self.builder.get_object("table1")
        self.CodecBox.attach(self.audiobox, 0, 1, 1, 2, yoptions = Gtk.AttachOptions.FILL)
        self.CodecBox.attach(self.videobox, 2, 3, 1, 2, yoptions = Gtk.AttachOptions.FILL)
        self.CodecBox.show_all()
@@ -306,10 +312,10 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                timestamp):
            if target_type == TARGET_TYPE_URI_LIST:
                uri = selection.data.strip('\r\n\x00')
-               self.builder.get_object ("FileChooser").set_uri(uri)
+               # self.builder.get_object ("FileChooser").set_uri(uri)
 
        self.start_time = False
-       
+       self.setup_source()
        # Set the Videos XDG UserDir as the default directory for the filechooser
        # also make sure directory exists
        #if 'get_user_special_dir' in GLib.__dict__:
@@ -326,16 +332,16 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        CheckDir = os.path.isdir(self.audiodirectory)
        if CheckDir == (False):
            os.mkdir(self.audiodirectory)
-       self.FileChooser.set_current_folder(self.videodirectory)
+       # self.FileChooser.set_current_folder(self.videodirectory)
 
        # Setting AppIcon
-       FileExist = os.path.isfile("../../share/pixmaps/transmageddon.svg")
+       FileExist = os.path.isfile("../../share/pixmaps/transmageddon.png")
        if FileExist:
            self.set_icon_from_file( \
-                   "../../share/pixmaps/transmageddon.svg")
+                   "../../share/pixmaps/transmageddon.png")
        else:
            try:
-               self.set_icon_from_file("transmageddon.svg")
+               self.set_icon_from_file("transmageddon.png")
            except:
                print("failed to find appicon")
 
@@ -443,8 +449,8 @@ class TransmageddonUI(Gtk.ApplicationWindow):
    #   wants the stream to be passed through or not.
    # * Any value which doesn't belong into audiodata or videodata, should go into streamdata
 
-   def add_audiodata_row(self, audiochannels, samplerate, inputaudiocaps, outputaudiocaps, streamid, canpassthrough, dopassthrough, language):
-       audiodata = {'audiochannels' : audiochannels, 'samplerate' : samplerate, 'inputaudiocaps' : inputaudiocaps, 'outputaudiocaps' : outputaudiocaps , 'streamid' : streamid, 'canpassthrough' : canpassthrough, 'dopassthrough' : dopassthrough, 'language' : language }
+   def add_audiodata_row(self, audiochannels, samplerate, inputaudiocaps, outputaudiocaps, streamid, canpassthrough, dopassthrough, language, languagecode):
+       audiodata = {'audiochannels' : audiochannels, 'samplerate' : samplerate, 'inputaudiocaps' : inputaudiocaps, 'outputaudiocaps' : outputaudiocaps , 'streamid' : streamid, 'canpassthrough' : canpassthrough, 'dopassthrough' : dopassthrough, 'language' : language, 'languagecode': languagecode }
        return audiodata
 
    def add_videodata_row(self, videowidth, videoheight, inputvideocaps, outputvideocaps, videonum, videodenom, streamid, canpassthrough, dopassthrough, interlaced, rotationvalue):
@@ -571,10 +577,10 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        if self.streamdata['passcounter'] == int(0):
            self.StatusBar.push(context_id, (_("File saved to %(dir)s") % \
                    {'dir': self.streamdata['outputdirectory']}))
-           uri = "file://" + os.path.abspath(os.path.curdir) + "/transmageddon.svg"
+           uri = "file://" + os.path.abspath(os.path.curdir) + "/transmageddon.png"
            notification = Notify.Notification.new("Transmageddon", (_("%(file)s saved to %(dir)s") % {'dir': self.streamdata['outputdirectory'], 'file': self.streamdata['outputfilename']}), uri)
            notification.show()
-           self.FileChooser.set_sensitive(True)
+           # self.FileChooser.set_sensitive(True)
            self.containerchoice.set_sensitive(True)
            self.CodecBox.set_sensitive(True)
            self.presetchoice.set_sensitive(True)
@@ -629,12 +635,14 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                        self.audiostreamcounter=self.audiostreamcounter+1
                        self.audiostreamids.append(streamid)
                        self.haveaudio=True
-                       self.audiodata.append(self.add_audiodata_row(i.get_channels(), i.get_sample_rate(), i.get_caps(), False, streamid, False, False, i.get_language()))
+                       self.audiodata.append(self.add_audiodata_row(i.get_channels(), i.get_sample_rate(), i.get_caps(), False, streamid, False, False, i.get_language(), False))
                        if self.audiodata[self.audiostreamcounter]['language']== None:
                            # load language setting ui
                            output=langchooser.languagechooser(self)
                            output.languagewindow.run()
-                           self.audiodata[self.audiostreamcounter]['language'] = output.langcode
+                           self.audiodata[self.audiostreamcounter]['languagecode'] = output.langcode
+                           self.audiodata[self.audiostreamcounter]['language'] = GstTag.tag_get_language_name(output.langcode)
+                             
 
                            # self.audiodata[self.audiostreamcounter]['language']=_("Unknown language")
                        if self.audiostreamcounter > 0:
@@ -754,18 +762,18 @@ class TransmageddonUI(Gtk.ApplicationWindow):
               
 
    # define the behaviour of the other buttons
-   def on_FileChooser_file_set(self, widget):
-       self.filename = self.builder.get_object ("FileChooser").get_filename()
+   def on_filechooser_file_set(self, widget, filename):
+       self.streamdata['filename'] = filename
        # These two list objects will hold all crucial media data in the form of python dictionaries.
        self.audiodata =[]
        self.videodata =[]
        self.audiostreamids=[] # (list of stream ids)
        self.videostreamids=[]
        self.audiostreamcounter=-1
-       if self.filename is not None: 
+       if self.streamdata['filename'] is not None: 
            self.haveaudio=False #make sure to reset these for each file
            self.havevideo=False #
-           self.mediacheck(self.filename)
+           self.mediacheck(self.streamdata['filename'])
            self.ProgressBar.set_fraction(0.0)
            self.ProgressBar.set_text(_("Transcoding Progress"))
            if (self.havevideo==False and self.nocontaineroptiontoggle==False):
@@ -782,13 +790,6 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            self.containerchoice.set_sensitive(True)
 
    def _start_transcoding(self): 
-       self.streamdata['filechoice'] = self.builder.get_object ("FileChooser").get_uri()
-       # self.filename = self.builder.get_object ("FileChooser").get_filename()
-       if (self.havevideo and (self.videodata[0]['outputvideocaps'] != "novid")):
-           self.streamdata['outputdirectory']=self.videodirectory
-       else:
-           self.streamdata['outputdirectory']=self.audiodirectory
-
        self._transcoder = transcoder_engine.Transcoder(self.streamdata,
                         self.audiodata, self.videodata)
         
@@ -833,7 +834,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            context_id = self.StatusBar.get_context_id("EOS")
            self.StatusBar.push(context_id, \
                    _("Plugins not found, choose different codecs."))
-           self.FileChooser.set_sensitive(True)
+           self.combo.set_sensitive(True)
            self.containerchoice.set_sensitive(True)
            self.CodecBox.set_sensitive(True)
            self.cancelbutton.set_sensitive(False)
@@ -843,7 +844,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                transcoder_engine.Transcoder.Pipeline(self._transcoder,"null")
            context_id = self.StatusBar.get_context_id("EOS")
            self.StatusBar.push(context_id, _("Codec installation aborted."))
-           self.FileChooser.set_sensitive(True)
+           self.combo.set_sensitive(True)
            self.containerchoice.set_sensitive(True)
            self.CodecBox.set_sensitive(True)
            self.cancelbutton.set_sensitive(False)
@@ -900,23 +901,12 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            GstPbutils.install_plugins_async (missing, context, \
                        self.donemessage, "NULL")
 
-   # The transcodebutton is the one that calls the Transcoder class and thus
-   # starts the transcoding
-   def on_transcodebutton_clicked(self, widget):
-       self.containertoggle = False
-       self.FileChooser.set_sensitive(False)
-       self.containerchoice.set_sensitive(False)
-       self.presetchoice.set_sensitive(False)
-       self.CodecBox.set_sensitive(False)
-       self.transcodebutton.set_sensitive(False)
-       self.rotationchoice.set_sensitive(False)
-       self.cancelbutton.set_sensitive(True)
-       self.ProgressBar.set_fraction(0.0)
+   def gather_streamdata(self):
        # create a variable with a timestamp code
        timeget = datetime.datetime.now()
        self.streamdata['timestamp'] = str(timeget.strftime("-%H%M%S-%d%m%Y"))
        # Remove suffix from inbound filename so we can reuse it together with suffix to create outbound filename
-       self.nosuffix = os.path.splitext(os.path.basename(self.filename))[0]
+       self.nosuffix = os.path.splitext(os.path.basename(self.streamdata['filename']))[0]
        # pick output suffix
        container = self.builder.get_object("containerchoice").get_active_text()
        if self.streamdata['container']==False: # deal with container less formats
@@ -927,6 +917,24 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            else:
                self.ContainerFormatSuffix = codecfinder.csuffixmap[container]
        self.streamdata['outputfilename'] = str(self.nosuffix+self.streamdata['timestamp']+self.ContainerFormatSuffix)
+       if (self.havevideo and (self.videodata[0]['outputvideocaps'] != "novid")):
+           self.streamdata['outputdirectory']=self.videodirectory
+       else:
+           self.streamdata['outputdirectory']=self.audiodirectory
+
+   # The transcodebutton is the one that calls the Transcoder class and thus
+   # starts the transcoding
+   def on_transcodebutton_clicked(self, widget):
+       self.containertoggle = False
+       self.combo.set_sensitive(False)
+       self.containerchoice.set_sensitive(False)
+       self.presetchoice.set_sensitive(False)
+       self.CodecBox.set_sensitive(False)
+       self.transcodebutton.set_sensitive(False)
+       self.rotationchoice.set_sensitive(False)
+       self.cancelbutton.set_sensitive(True)
+       self.ProgressBar.set_fraction(0.0)
+       self.gather_streamdata()
        context_id = self.StatusBar.get_context_id("EOS")
        self.StatusBar.push(context_id, (_("Writing %(filename)s") % {'filename': self.streamdata['outputfilename']}))
        if self.streamdata['multipass'] != 0:
@@ -947,8 +955,15 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            else:
                self.waiting_for_signal="True"
 
+   def on_queuebutton_clicked(self, widget):
+       # load queue window
+       self.gather_streamdata()
+       output=batch.batchchooser(self,self.streamdata, self.audiodata, self.videodata)
+       output.batchwindow.run()
+       print("queue")
+
    def on_cancelbutton_clicked(self, widget):
-       self.FileChooser.set_sensitive(True)
+       self.combo.set_sensitive(True)
        self.containerchoice.set_sensitive(True)
        self.CodecBox.set_sensitive(True)
        self.presetchoice.set_sensitive(True)
@@ -1137,6 +1152,144 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                self.videodata[0]['dopassthrough']=True
        elif self.usingpreset==True:
            self.videodata[0]['outputvideocaps'] = self.presetvideocodec
+
+   def get_filename_icon(self, filename):
+    """
+        Get the icon from a filename using GIO.
+        
+            >>> icon = _get_filename_icon("test.mp4")
+            >>> if icon:
+            >>>     # Do something here using icon.load_icon()
+            >>>     ...
+        
+        @type filename: str
+        @param filename: The name of the file whose icon to fetch
+        @rtype: gtk.ThemedIcon or None
+        @return: The requested unloaded icon or nothing if it cannot be found
+    """
+    theme = Gtk.IconTheme.get_default()
+    size= Gtk.icon_size_lookup(Gtk.IconSize.MENU)[1]
+    
+    guess=Gio.content_type_guess(filename, data=None)
+    image = Gio.content_type_get_icon(guess[0])
+    names=image.get_property("names")
+    icon=theme.choose_icon(names, size, 0).load_icon()
+
+    return icon
+
+   def setup_source(self):
+       """
+           Setup the source widget. Creates a combo box or a file input button
+           depending on the settings and available devices.
+       """
+      
+       self.path=False
+       self.source_hbox=False
+       self.combo=[]        
+       # Already exists? Remove it!
+       if self.combo:
+           self.source_hbox.remove(self.combo)
+           self.combo.destroy()
+        
+       # udev code to find DVD drive on system - This code needs to go into Transmageddon proper
+       client = GUdev.Client(subsystems=['block'])
+       for device in client.query_by_subsystem("block"):
+           if device.has_property("ID_CDROM"):
+               self.path=device.get_device_file()
+
+       if self.path:
+
+           theme = Gtk.IconTheme.get_default()
+           size= Gtk.icon_size_lookup(Gtk.IconSize.MENU)[1]
+           cdrom=theme.load_icon(Gtk.STOCK_CDROM, size, 0)
+           fileopen=theme.load_icon(Gtk.STOCK_OPEN, size, 0)
+
+
+           liststore = Gtk.ListStore(GdkPixbuf.Pixbuf, GObject.TYPE_STRING)
+           liststore.append([cdrom, "dvd://" +str(self.path)])
+           liststore.append([fileopen, "Choose File..."])
+
+           self.combo = Gtk.ComboBox(model=liststore)
+
+           renderer_text = Gtk.CellRendererText()
+           renderer_pixbuf = Gtk.CellRendererPixbuf()
+
+           self.combo.pack_start(renderer_pixbuf, False)
+           self.combo.pack_start(renderer_text, True)
+           self.combo.add_attribute(renderer_pixbuf, 'pixbuf', 0)
+           self.combo.add_attribute(renderer_text, 'text', 1)
+                
+           self.combo.set_active(0)
+           self.combo.connect("changed", self.on_source_changed)
+
+       else:
+           self.combo = Gtk.FileChooserButton(_("(None)"))
+          
+       #if not self.source_hbox:
+       self.source_hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
+       self.source_hbox.pack_start(self.combo, True, True, 0)
+       self.table1.attach(self.source_hbox, 2, 3, 0, 1) #, yoptions = GTK_FILL)
+        
+       # Attach and show the source
+       self.source_hbox.show_all()
+
+   def on_source_changed(self, widget):
+        """
+            The source combo box or file chooser button has changed, update!
+        """
+        theme = Gtk.IconTheme.get_default()
+        
+        iter = widget.get_active_iter()
+        model = widget.get_model()
+        item = model.get_value(iter, 1)
+        if item == _("Choose File..."):
+            dialog = Gtk.FileChooserDialog(title=_("Choose Source File..."),
+                        buttons=(Gtk.STOCK_CANCEL, Gtk.ResponseType.REJECT,
+                                 Gtk.STOCK_OPEN, Gtk.ResponseType.ACCEPT))
+            dialog.set_property("local-only", False)
+            dialog.set_current_folder(self.videodirectory)
+            response = dialog.run()
+            dialog.hide()
+            filename = None
+            if response == Gtk.ResponseType.ACCEPT:
+                if self.fileiter:
+                    model.remove(self.fileiter)
+                self.streamdata['filename'] = dialog.get_filename()
+                self.streamdata['filechoice'] = dialog.get_uri()
+
+                self.set_source_to_path(self.streamdata['filename'])
+            else:
+                if self.fileiter:
+                    pos = widget.get_active()
+                    widget.set_active(pos - 1)
+                else:
+                    widget.set_active(0)
+
+    
+   def set_source_to_path(self, path):
+       """
+            Set the source selector widget to a path.
+       """
+       if not hasattr(self.combo, "get_model"):
+           self.combo.set_filename(path)
+           return
+        
+       model = self.combo.get_model()
+       pos = self.combo.get_active()
+       newiter = model.insert(pos)
+
+       icon = self.get_filename_icon(path)
+
+       model.set_value(newiter, 0, icon)
+        
+       basename = os.path.basename(path.rstrip("/"))
+       if len(basename) > 25:
+           basename = basename[:22] + "..."
+       model.set_value(newiter, 1, basename)
+        
+       self.fileiter = newiter
+       self.combo.set_active(pos)
+       self.on_filechooser_file_set(self,path)
 
 
 # Setup i18n support
