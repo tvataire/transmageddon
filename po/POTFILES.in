@@ -1,6 +1,7 @@
 src/about.py.in
 src/presets.py
-[type: gettext/glade]src/transmageddon.ui
+[type: gettext/glade]src/transmageddon-dvdtrack-chooser.ui
 src/transmageddon.py
+[type: gettext/glade]src/transmageddon.ui
 src/utils.py
 transmageddon.desktop.in.in
