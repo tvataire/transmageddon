@@ -43,7 +43,7 @@ import about
 import presets
 import utils
 import datetime
-import langchooser
+import langchooser, dvdtrackchooser
 
 major, minor, patch, micro = Gst.version()
 if (major == 1) and (patch < 0):
@@ -633,6 +633,10 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                    if streamid not in self.audiostreamids:
                        self.audiostreamcounter=self.audiostreamcounter+1
                        self.audiostreamids.append(streamid)
+
+           # Will use language code if found, if not it will assume that it is a free 
+           # form language description.
+
                        languagedata=i.get_language()
                        if languagedata != None:
                            if GstTag.tag_check_language_code(languagedata):
@@ -640,10 +644,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                                languagename=GstTag.tag_get_language_name(languagedata)
                            else:
                                languagecode = False
-                               languagename = languagedata
-                       else:
-                               languagecode = False
-                               languagename = _("Unknown")            
+                               languagename = languagedata            
 
                        self.haveaudio=True
                        self.audiodata.append(self.add_audiodata_row(i.get_channels(), i.get_sample_rate(), i.get_caps(), False, streamid, False, False, languagename, languagecode))
