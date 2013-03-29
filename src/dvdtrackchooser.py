@@ -25,7 +25,6 @@ class dvdtrackchooser(Gtk.Dialog):
        self.Title = False
        self.Tracks = False
        self.dvdread(self.path)
-       print(self.Title)
        scounter=0
        longesttime = 0
        self.listoftracks=[]
@@ -35,8 +34,13 @@ class dvdtrackchooser(Gtk.Dialog):
            while tcounter <  len(self.Tracks[scounter]['audio']):
                if self.Tracks[scounter]['audio']:
                    if GstTag.tag_check_language_code(self.Tracks[scounter]['audio'][tcounter]['langcode']):
-                       self.listoftracks.append("Track " + str(scounter) + " " + GstTag.tag_get_language_name(self.Tracks[scounter]['audio'][tcounter]['langcode']) + " " +(self.Tracks[scounter]['audio'][tcounter]['format']+ " " +str((self.Tracks[scounter]['audio'][tcounter]['channels']))))
+                       languages=GstTag.tag_get_language_name(self.Tracks[scounter]['audio'][tcounter]['langcode']) + " " +(self.Tracks[scounter]['audio'][tcounter]['format'])
+                       print(languages)
+                       # ''.join('{}{}'.format(key, val) for key, val in adict.items())
                tcounter=tcounter+1
+
+           # create a string to push into the listview
+           self.listoftracks.append(_("Track ") + str(scounter) + "," + _(" Lenght: ") + str(self.Tracks[scounter]['length']))
 
            # For testing purposes look for longest track
            lenght=self.Tracks[scounter]['length']
@@ -45,7 +49,6 @@ class dvdtrackchooser(Gtk.Dialog):
                self.longestrack = self.ix
            time=str(datetime.timedelta(seconds=lenght))
            scounter=scounter+1
-       print("THE longest track " + str(self.longestrack))   
 
 
        for act in self.listoftracks:

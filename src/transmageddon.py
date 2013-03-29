@@ -222,6 +222,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        
        # create discoverer object
        self.discovered = GstPbutils.Discoverer.new(50000000000)
+       self.discovered.connect('source-setup', self.discovererproperties)
        self.discovered.connect('discovered', self.succeed)
        self.discovered.start()
 
@@ -229,6 +230,8 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        self.videorows=[]
        self.audiocodecs=[]
        self.videocodecs=[]
+
+       self.isdvd = False
        
        self.fileiter = None
 
@@ -614,6 +617,12 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                self.streamdtata['passcounter'] = self.streamdata['passcounter']+1
                self._start_transcoding()
 
+   def discovererproperties(self, parent, element):
+       if self.isdvd:
+           element.set_property("device", self.dvdpath)
+           element.set_property("chapter", 1)
+           print("set dvd properties")
+
  
    def succeed(self, discoverer, info, error):
 
@@ -729,13 +738,8 @@ class TransmageddonUI(Gtk.ApplicationWindow):
           print(result)
           print(error)
 
-   def discover(self, path):
-       self.discovered.discover_uri_async("file://"+path)
-
-   def mediacheck(self, FileChosen):
-       uri = urlparse (FileChosen)
-       path = uri.path
-       self.discover(path)
+   def discover(self, uri):
+       self.discovered.discover_uri_async(uri)
    
    def check_for_passthrough(self, containerchoice):
        videointersect = Gst.Caps.new_empty()
@@ -776,6 +780,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
    # define the behaviour of the other buttons
    def on_filechooser_file_set(self, widget, filename):
        self.streamdata['filename'] = filename
+       print(filename)
        # These two list objects will hold all crucial media data in the form of python dictionaries.
        self.audiodata =[]
        self.videodata =[]
@@ -785,7 +790,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        if self.streamdata['filename'] is not None: 
            self.haveaudio=False #make sure to reset these for each file
            self.havevideo=False #
-           self.mediacheck(self.streamdata['filename'])
+           self.discover("dvd://"+self.streamdata['filename'])
            self.ProgressBar.set_fraction(0.0)
            self.ProgressBar.set_text(_("Transcoding Progress"))
            if (self.havevideo==False and self.nocontaineroptiontoggle==False):
@@ -1225,6 +1230,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        for device in client.query_by_subsystem("block"):
            if device.has_property("ID_CDROM"):
                self.dvdpath=device.get_device_file()
+               self.dvdname=device.get_property("ID_FS_LABEL")
 
        if self.dvdpath:
 
@@ -1237,7 +1243,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            liststore = Gtk.ListStore(GdkPixbuf.Pixbuf, GObject.TYPE_STRING)
            liststore.append([None, ""])
            liststore.append([fileopen, "Choose File..."])
-           liststore.append([cdrom, "dvd://" +str(self.dvdpath)])
+           liststore.append([cdrom, self.dvdname	])
 
            self.combo = Gtk.ComboBox(model=liststore)
 
@@ -1294,10 +1300,9 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                else:
                    widget.set_active(0)
        else:
-           print("dvd")
            dvd=dvdtrackchooser.dvdtrackchooser(self)
            dvd.dvdwindow.run()
-           print("track number is " +str(dvd.dvdtrack))
+           self.isdvd=True
            self.on_filechooser_file_set(self,self.dvdpath)
 
     
