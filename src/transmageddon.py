@@ -43,7 +43,7 @@ import about
 import presets
 import utils
 import datetime
-# import langchooser
+import langchooser
 
 major, minor, patch, micro = Gst.version()
 if (major == 1) and (patch < 0):
@@ -77,7 +77,6 @@ supported_containers = [
         "3GPP",		#9
         "MXF",		#10
         "ASF", 		#11
-        "I can not get this item to show for some reason",
         "WebM"		#12
 ]
 
@@ -634,9 +633,21 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                    if streamid not in self.audiostreamids:
                        self.audiostreamcounter=self.audiostreamcounter+1
                        self.audiostreamids.append(streamid)
+                       languagedata=i.get_language()
+                       if languagedata != None:
+                           if GstTag.tag_check_language_code(languagedata):
+                               languagecode = languagedata
+                               languagename=GstTag.tag_get_language_name(languagedata)
+                           else:
+                               languagecode = False
+                               languagename = languagedata
+                       else:
+                               languagecode = False
+                               languagename = _("Unknown")            
+
                        self.haveaudio=True
-                       self.audiodata.append(self.add_audiodata_row(i.get_channels(), i.get_sample_rate(), i.get_caps(), False, streamid, False, False, i.get_language(), False))
-                       if self.audiodata[self.audiostreamcounter]['language']== None:
+                       self.audiodata.append(self.add_audiodata_row(i.get_channels(), i.get_sample_rate(), i.get_caps(), False, streamid, False, False, languagename, languagecode))
+                       if languagedata == None:
                            # load language setting ui
                            output=langchooser.languagechooser(self)
                            output.languagewindow.run()
@@ -873,7 +884,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                    else:
                        videostatus=True
        if self.haveaudio:
-           if self.audiodata[FIXME]['dopassthrough'] != True:
+           if self.audiodata[0]['dopassthrough'] != True:
                audiostatus = codecfinder.get_audio_encoder_element(self.audiodata[streamno]['outputaudiocaps'])
            else:
                audiostatus=True
@@ -955,12 +966,12 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            else:
                self.waiting_for_signal="True"
 
-   def on_queuebutton_clicked(self, widget):
-       # load queue window
-       self.gather_streamdata()
-       output=batch.batchchooser(self,self.streamdata, self.audiodata, self.videodata)
-       output.batchwindow.run()
-       print("queue")
+   #def on_queuebutton_clicked(self, widget):
+   #    # load queue window
+   #    self.gather_streamdata()
+   #    output=batch.batchchooser(self,self.streamdata, self.audiodata, self.videodata)
+   #    output.batchwindow.run()
+   #    print("queue")
 
    def on_cancelbutton_clicked(self, widget):
        self.combo.set_sensitive(True)
@@ -1005,6 +1016,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        if self.haveaudio==True:
            x=0
            while x <= self.audiostreamcounter:
+               
                self.audiocodecs.append([])
                if self.usingpreset==True: # First fill menu based on presetvalue
                    testforempty = self.presetaudiocodec.to_string()
