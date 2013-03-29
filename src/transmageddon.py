@@ -1220,13 +1220,13 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            self.source_hbox.remove(self.combo)
            self.combo.destroy()
         
-       # udev code to find DVD drive on system - This code needs to go into Transmageddon proper
+       # udev code to find DVD drive on system
        client = GUdev.Client(subsystems=['block'])
        for device in client.query_by_subsystem("block"):
            if device.has_property("ID_CDROM"):
-               self.path=device.get_device_file()
+               self.dvdpath=device.get_device_file()
 
-       if self.path:
+       if self.dvdpath:
 
            theme = Gtk.IconTheme.get_default()
            size= Gtk.icon_size_lookup(Gtk.IconSize.MENU)[1]
@@ -1235,8 +1235,9 @@ class TransmageddonUI(Gtk.ApplicationWindow):
 
 
            liststore = Gtk.ListStore(GdkPixbuf.Pixbuf, GObject.TYPE_STRING)
-           liststore.append([cdrom, "dvd://" +str(self.path)])
+           liststore.append([None, ""])
            liststore.append([fileopen, "Choose File..."])
+           liststore.append([cdrom, "dvd://" +str(self.dvdpath)])
 
            self.combo = Gtk.ComboBox(model=liststore)
 
@@ -1263,36 +1264,41 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        self.source_hbox.show_all()
 
    def on_source_changed(self, widget):
-        """
-            The source combo box or file chooser button has changed, update!
-        """
-        theme = Gtk.IconTheme.get_default()
+       """
+           The source combo box or file chooser button has changed, update!
+       """
+       theme = Gtk.IconTheme.get_default()
         
-        iter = widget.get_active_iter()
-        model = widget.get_model()
-        item = model.get_value(iter, 1)
-        if item == _("Choose File..."):
-            dialog = Gtk.FileChooserDialog(title=_("Choose Source File..."),
+       iter = widget.get_active_iter()
+       model = widget.get_model()
+       item = model.get_value(iter, 1)
+       if item == _("Choose File..."):
+           dialog = Gtk.FileChooserDialog(title=_("Choose Source File..."),
                         buttons=(Gtk.STOCK_CANCEL, Gtk.ResponseType.REJECT,
                                  Gtk.STOCK_OPEN, Gtk.ResponseType.ACCEPT))
-            dialog.set_property("local-only", False)
-            dialog.set_current_folder(self.videodirectory)
-            response = dialog.run()
-            dialog.hide()
-            filename = None
-            if response == Gtk.ResponseType.ACCEPT:
-                if self.fileiter:
-                    model.remove(self.fileiter)
-                self.streamdata['filename'] = dialog.get_filename()
-                self.streamdata['filechoice'] = dialog.get_uri()
-
-                self.set_source_to_path(self.streamdata['filename'])
-            else:
-                if self.fileiter:
-                    pos = widget.get_active()
-                    widget.set_active(pos - 1)
-                else:
-                    widget.set_active(0)
+           dialog.set_property("local-only", False)
+           dialog.set_current_folder(self.videodirectory)
+           response = dialog.run()
+           dialog.hide()
+           filename = None
+           if response == Gtk.ResponseType.ACCEPT:
+               if self.fileiter:
+                   model.remove(self.fileiter)
+               self.streamdata['filename'] = dialog.get_filename()
+               self.streamdata['filechoice'] = dialog.get_uri()
+               self.set_source_to_path(self.streamdata['filename'])
+           else:
+               if self.fileiter:
+                   pos = widget.get_active()
+                   widget.set_active(pos - 1)
+               else:
+                   widget.set_active(0)
+       else:
+           print("dvd")
+           dvd=dvdtrackchooser.dvdtrackchooser(self)
+           dvd.dvdwindow.run()
+           print("track number is " +str(dvd.dvdtrack))
+           self.on_filechooser_file_set(self,self.dvdpath)
 
     
    def set_source_to_path(self, path):

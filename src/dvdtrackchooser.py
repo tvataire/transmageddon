@@ -1,12 +1,12 @@
-import os
+import os,datetime
 from gi.repository import Gtk, GLib, Gst, GstTag
 from gi.repository import GUdev
 
 class dvdtrackchooser(Gtk.Dialog): 
-   def __init__(self): #, parent): 
+   def __init__(self, parent): 
        self.dvdpickui = Gtk.Builder()
        self.dvdpickui.add_from_file("transmageddon-dvdtrack-chooser.ui")
-       langscroll = self.dvdpickui.get_object("dvdscroll")
+       dvdscroll = self.dvdpickui.get_object("dvdscroll")
        cancelbutton = self.dvdpickui.get_object("cancelbutton")
        selectbutton = self.dvdpickui.get_object("selectbutton")
 
@@ -28,13 +28,14 @@ class dvdtrackchooser(Gtk.Dialog):
        print(self.Title)
        scounter=0
        longesttime = 0
+       self.listoftracks=[]
        while scounter < len(self.Tracks):
            tcounter=0
            self.ix=int(self.Tracks[scounter]['ix'])
            while tcounter <  len(self.Tracks[scounter]['audio']):
                if self.Tracks[scounter]['audio']:
                    if GstTag.tag_check_language_code(self.Tracks[scounter]['audio'][tcounter]['langcode']):
-                       print(GstTag.tag_get_language_name(self.Tracks[scounter]['audio'][tcounter]['langcode']) + " " +(self.Tracks[scounter]['audio'][tcounter]['format']+ " " +str((self.Tracks[scounter]['audio'][tcounter]['channels']))))
+                       self.listoftracks.append("Track " + str(scounter) + " " + GstTag.tag_get_language_name(self.Tracks[scounter]['audio'][tcounter]['langcode']) + " " +(self.Tracks[scounter]['audio'][tcounter]['format']+ " " +str((self.Tracks[scounter]['audio'][tcounter]['channels']))))
                tcounter=tcounter+1
 
            # For testing purposes look for longest track
@@ -47,8 +48,8 @@ class dvdtrackchooser(Gtk.Dialog):
        print("THE longest track " + str(self.longestrack))   
 
 
-       for act in self.Tracks:
-           store.append([act[0]])
+       for act in self.listoftracks:
+           store.append([act])
                            
        self.dvdtrackview = Gtk.TreeView(store)
        self.dvdtrackview.set_reorderable(False)
@@ -66,20 +67,20 @@ class dvdtrackchooser(Gtk.Dialog):
        rendererText = Gtk.CellRendererText()
        column = Gtk.TreeViewColumn(None, rendererText, text=0)
        column.set_sort_indicator(False)
-       self.langview.append_column(column)
+       self.dvdtrackview.append_column(column)
 
    def on_cancelbutton_clicked(self, widget):
-       self.languagewindow.destroy()
+       self.dvdwindow.destroy()
 
 
    def on_selectbutton_clicked(self, widget):
        dvdtrack=self.dvdtrackview.get_selection()
-       (model, pathlist) = language.get_selected_rows()
+       (model, pathlist) = dvdtrack.get_selected_rows()
        for path in pathlist :
            tree_iter = model.get_iter(path)
            value = model.get_value(tree_iter,0)
            numvalue=path.to_string()
-           self.langcode=self.langcodeList[int(numvalue)]
+           self.dvdtrack=1 #FIXME
        self.dvdwindow.destroy()
 
    def dvdread(self, device):
