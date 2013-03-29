@@ -141,6 +141,7 @@ class Transcoder(GObject.GObject):
        # We do not need to do anything special for passthrough for audio, since we are not
        # including any extra elements between uridecodebin and encodebin
        x=0
+       self.audioprofilenames=[]
        while x < len(self.audiodata): 
            if self.audiodata[x]['outputaudiocaps'] != False:
                if self.container==False:
@@ -148,6 +149,8 @@ class Transcoder(GObject.GObject):
                else:
                    audiopreset=None
                    self.audioprofile = GstPbutils.EncodingAudioProfile.new(self.audiodata[x]['outputaudiocaps'], audiopreset, Gst.Caps.new_any(), 0)
+                   self.audioprofilenames.append("audioprofilename"+str(x))
+                   self.audioprofile.set_name(self.audioprofilenames[x])
                    self.encodebinprofile.add_profile(self.audioprofile)
            x=x+1 
        
@@ -315,13 +318,18 @@ class Transcoder(GObject.GObject):
      bus.add_signal_watch()
      bus.connect('message', self.on_message)
 
+   # this function probes for the stream id, then based on which 
    def padprobe(self, pad, probeinfo, userdata):
        event = probeinfo.get_event()
        eventtype=event.type
        if eventtype==Gst.EventType.STREAM_START:
            self.probestreamid = event.parse_stream_start()
-           if self.probestreamid==self.audiodata[0]['streamid']:
-               pad.link(self.sinkpad)
+           x=0
+           while x < len(self.audiodata):
+               if self.probestreamid==self.audiodata[x]['streamid']:
+                   self.sinkpad = self.encodebin.emit("request-profile-pad", self.audioprofilenames[x])
+                   pad.link(self.sinkpad)
+               x=x+1
        return Gst.PadProbeReturn.OK
 
    def on_message(self, bus, message):
@@ -363,7 +371,7 @@ class Transcoder(GObject.GObject):
        origin = src_pad.query_caps(None)
        if (self.container==False):
            a =  origin.to_string()
-           if a.startswith("audio/"): # FIXME : Currently an assumption here of one audio stream
+           if a.startswith("audio/"):
                sinkpad = self.encodebin.get_static_pad("audio_0")
                src_pad.link(sinkpad)
        else:
@@ -383,7 +391,8 @@ class Transcoder(GObject.GObject):
                if not c.startswith("text/"):
                    if not (c.startswith("video/") and (self.videodata[0]['outputvideocaps'] == False)):
                        if self.passcounter == int(0):
-                           self.sinkpad = self.encodebin.emit("request-pad", origin)
+                           if not c.startswith("audio/"):
+                               self.sinkpad = self.encodebin.emit("request-pad", origin)
                if c.startswith("audio/"):
                    if self.passcounter == int(0):
                        src_pad.add_probe(Gst.PadProbeType.EVENT_DOWNSTREAM, self.padprobe, None)
@@ -416,7 +425,8 @@ class Transcoder(GObject.GObject):
                element.merge_tags(taglist, Gst.TagMergeMode.REPLACE)
                if Gst.ElementFactory.list_is_type(factory, 1125899906842626): # Audio Encoders factory code
                    taglist=Gst.TagList.new_empty()
-                   taglist.add_value(Gst.TagMergeMode.APPEND, Gst.TAG_LANGUAGE_CODE, self.audiodata[0]['language'])  # FIXME: Currently only doing 1 stream
+                   if self.audiodata[0]['language'] != None:
+                       taglist.add_value(Gst.TagMergeMode.APPEND, Gst.TAG_LANGUAGE_CODE, self.audiodata[0]['language'])  # FIXME: Currently only doing 1 stream
                    longname=factory.get_metadata('long-name')
                    taglist.add_value(Gst.TagMergeMode.APPEND, Gst.TAG_ENCODER, longname)
                    element.merge_tags(taglist, Gst.TagMergeMode.REPLACE)

@@ -43,7 +43,7 @@ import about
 import presets
 import utils
 import datetime
-import langchooser, batch
+# import langchooser
 
 major, minor, patch, micro = Gst.version()
 if (major == 1) and (patch < 0):
@@ -688,7 +688,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            if self.haveaudio:
                self.markupaudioinfo=[]
                if self.audiostreamcounter==0:
-                   self.markupaudioinfo.append(''.join(('<small>','Audio channels: ', str(self.audiodata[self.audiostreamcounter]['audiochannels']), '</small>',"\n", '<small>','Audio codec: ',str(GstPbutils.pb_utils_get_codec_description(self.audiodata[self.audiostreamcounter]['inputaudiocaps'])), "\n", 'Language: ', self.audiodata[self.audiostreamcounter]['language'],'</small>')))
+                   self.markupaudioinfo.append(''.join(('<small>','Audio channels: ', str(self.audiodata[self.audiostreamcounter]['audiochannels']), '</small>',"\n", '<small>','Audio codec: ',str(GstPbutils.pb_utils_get_codec_description(self.audiodata[self.audiostreamcounter]['inputaudiocaps'])), "\n", 'Language: ', str(self.audiodata[self.audiostreamcounter]['language']),'</small>')))
                    self.audioinformation.set_markup("".join(self.markupaudioinfo))
                else:
                    if self.audiostreamcounter==1:
@@ -986,7 +986,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        # clean up stuff from previous run
        self.houseclean=True # set this to avoid triggering events when cleaning out menus
        x=0
-       while x <= self.audiostreamcounter:
+       while x < len(self.audiocodecs): #self.audiostreamcounter:
            if self.audiocodecs:
                for c in self.audiocodecs[x]: # 
                    self.audiorows[x].remove(0)
@@ -999,8 +999,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                    self.videocodecs=[]
            x=x+1
        self.houseclean=False
-
-           # end of housecleaning
+       # end of housecleaning
 
        # start filling audio
        if self.haveaudio==True:
@@ -1010,36 +1009,52 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                if self.usingpreset==True: # First fill menu based on presetvalue
                    testforempty = self.presetaudiocodec.to_string()
                    if testforempty != "EMPTY": 
-                       self.audiorows[x].append_text(str(GstPbutils.pb_utils_get_codec_description(self.presetaudiocodec)))
-                       self.audiorows[x].set_active(0)
                        self.audiocodecs[x].append(self.presetaudiocodec)
                elif self.streamdata['container']==False: # special setup for container less case, looks ugly, but good enough for now
-                       self.audiorows[x].append_text(str(GstPbutils.pb_utils_get_codec_description(Gst.caps_from_string("audio/mpeg, mpegversion=(int)1, layer=(int)3"))))
-                       self.audiorows[x].append_text(str(GstPbutils.pb_utils_get_codec_description(Gst.caps_from_string("audio/mpeg, mpegversion=4, stream-format=adts"))))
-                       self.audiorows[x].append_text(str(GstPbutils.pb_utils_get_codec_description(Gst.caps_from_string("audio/x-flac"))))
                        self.audiocodecs[x].append(Gst.caps_from_string("audio/mpeg, mpegversion=(int)1, layer=(int)3"))
                        self.audiocodecs[x].append(Gst.caps_from_string("audio/mpeg, mpegversion=4, stream-format=adts"))
                        self.audiocodecs[x].append(Gst.caps_from_string("audio/x-flac"))
-                       self.audiorows[x].set_active(0)
-                       self.audiorows[x].set_sensitive(True)
                else:
                        audiolist = []
                        audio_codecs = supported_audio_container_map[self.containershort]
                        for c in audio_codecs:
                            self.audiocodecs[x].append(Gst.caps_from_string(codecfinder.codecmap[c]))
-                       for c in self.audiocodecs[x]: # Use codec descriptions from GStreamer
-                           self.audiorows[x].append_text(GstPbutils.pb_utils_get_codec_description(c))
-
                if self.audiodata[x]['canpassthrough']==True:
-                       self.audiorows[x].append_text(_("Audio passthrough"))
                        self.audiocodecs[x].append("pass")
                        self.audiopassmenuno=(len(self.audiocodecs[x]))-1 #FIXME
 
-               self.audiorows[x].set_sensitive(True)
-               self.audiorows[x].set_active(0)
                x=x+1
-       else:
-           self.audiorows[x].set_sensitive(False)
+
+       # populate menu 
+
+           y=0
+           while y <= self.audiostreamcounter:
+               if self.usingpreset==True: # First fill menu based on presetvalue
+                   testforempty = self.presetaudiocodec.to_string()
+                   if testforempty != "EMPTY": 
+                       self.audiorows[y].append_text(str(GstPbutils.pb_utils_get_codec_description(self.presetaudiocodec)))
+                       self.audiorows[y].set_active(0)
+               elif self.streamdata['container']==False: # special setup for container less case, looks ugly, but good enough for now
+                       self.audiorows[y].append_text(str(GstPbutils.pb_utils_get_codec_description(Gst.caps_from_string("audio/mpeg, mpegversion=(int)1, layer=(int)3"))))
+                       self.audiorows[y].append_text(str(GstPbutils.pb_utils_get_codec_description(Gst.caps_from_string("audio/mpeg, mpegversion=4, stream-format=adts"))))
+                       self.audiorows[y].append_text(str(GstPbutils.pb_utils_get_codec_description(Gst.caps_from_string("audio/x-flac"))))
+                       self.audiorows[y].set_active(0)
+                       self.audiorows[y].set_sensitive(True)
+               else:
+                       audiolist = []
+                       for c in self.audiocodecs[y]: # Use codec descriptions from GStreamer
+                           if c != "pass":
+                               self.audiorows[y].append_text(GstPbutils.pb_utils_get_codec_description(c))
+
+               if self.audiodata[y]['canpassthrough']==True:
+                   self.audiorows[y].append_text(_("Audio passthrough"))
+
+                   self.audiorows[y].set_sensitive(True)
+                   self.audiorows[y].set_active(0)
+
+               else:
+                   self.audiorows[y].set_sensitive(False)
+               y=y+1
 
        # fill in with video
        if self.havevideo==True:
@@ -1057,7 +1072,8 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                    for c in video_codecs:
                        self.videocodecs.append(Gst.caps_from_string(codecfinder.codecmap[c]))
                    for c in self.videocodecs: # Use descriptions from GStreamer
-                       self.videorows[0].append_text(GstPbutils.pb_utils_get_codec_description(c))
+                       if c != "pass" and c != "novid":
+                           self.videorows[0].append_text(GstPbutils.pb_utils_get_codec_description(c))
                    self.videorows[0].set_sensitive(True)
                    self.videorows[0].set_active(0)
 
