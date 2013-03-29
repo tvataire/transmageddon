@@ -56,7 +56,8 @@
                 <property name="can_focus">False</property>
                 <property name="xalign">0</property>
                 <property name="label" translatable="yes">&lt;small&gt;Audio Channels:&lt;/small&gt;
-&lt;small&gt;Audio Codec:&lt;/small&gt;</property>
+&lt;small&gt;Audio Codec:&lt;/small&gt;
+&lt;small&gt;Language:&lt;/small&gt;</property>
                 <property name="use_markup">True</property>
               </object>
               <packing>
