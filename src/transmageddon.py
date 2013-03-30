@@ -770,7 +770,6 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                        if self.haveaudio == True:
                            y=0
                            count=len(self.audiostreamids)
-                           #print(self.audiostreamids)
                            while y < count:
                                if audiointersect[y].is_empty():
                                    audiointersect[y] = sourcecaps.intersect(self.audiodata[y]['inputaudiocaps'])

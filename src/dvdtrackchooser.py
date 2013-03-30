@@ -1,4 +1,4 @@
-import os,datetime
+import os,datetime, sys
 from gi.repository import Gtk, GLib, Gst, GstTag
 from gi.repository import GUdev
 
@@ -9,6 +9,12 @@ class dvdtrackchooser(Gtk.Dialog):
        dvdscroll = self.dvdpickui.get_object("dvdscroll")
        cancelbutton = self.dvdpickui.get_object("cancelbutton")
        selectbutton = self.dvdpickui.get_object("selectbutton")
+
+       self.cachedir=GLib.get_user_cache_dir()+"/transmageddon"
+       CheckDir = os.path.isdir(self.cachedir)
+       if CheckDir == (False):
+           os.mkdir(self.cachedir)
+       sys.path.append(self.cachedir)
 
        self.dvdpickui.connect_signals(self) # Initialize User Interface
        self.dvdtrack=None # this will hold the selected DVD track value
@@ -90,13 +96,13 @@ class dvdtrackchooser(Gtk.Dialog):
        self.dvdwindow.destroy()
 
    def dvdread(self, device):
-        file = open('lsdvdout.py', 'w')
+        file = open('%s/lsdvdout.py' % self.cachedir, 'w')
         file.write('#!/usr/bin/python3\n')
         file.write('# -*- coding: ISO-8859-1 -*-\n')
         file.close()
-        cmd = 'lsdvd -a -Oy %s >> lsdvdout.py' % (device);
+        cmd = 'lsdvd -a -Oy %s >> %s/lsdvdout.py' % (device, self.cachedir);
         os.system(cmd)
-        # try:
+
         from lsdvdout import lsdvd
         self.Title = lsdvd['title']
         self.Tracks = lsdvd['track']

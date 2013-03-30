@@ -142,8 +142,6 @@ class Transcoder(GObject.GObject):
        # including any extra elements between uridecodebin and encodebin
        x=0
        self.audioprofilenames=[]
-       print("x is " +str(x))
-       print(self.audiodata)
        while x < len(self.audiodata): 
            if self.audiodata[x]['outputaudiocaps'] != False:
                if self.container==False:
@@ -153,6 +151,7 @@ class Transcoder(GObject.GObject):
                    self.audioprofile = GstPbutils.EncodingAudioProfile.new(self.audiodata[x]['outputaudiocaps'], audiopreset, Gst.Caps.new_any(), 0)
                    self.audioprofilenames.append("audioprofilename"+str(x))
                    self.audioprofile.set_name(self.audioprofilenames[x])
+                   print("audioprofilenames " + str(self.audioprofilenames))
                    self.encodebinprofile.add_profile(self.audioprofile)
            x=x+1 
        
@@ -330,8 +329,9 @@ class Transcoder(GObject.GObject):
            x=0
            while x < len(self.audiodata):
                if self.probestreamid==self.audiodata[x]['streamid']:
-                   self.sinkpad = self.encodebin.emit("request-profile-pad", self.audioprofilenames[x])
-                   pad.link(self.sinkpad)
+                       print(str(pad)+" - "+"streamid from parse_stream_start "+ str(self.probestreamid))
+                       self.sinkpad = self.encodebin.emit("request-profile-pad", self.audioprofilenames[x])
+                       pad.link(self.sinkpad)
                x=x+1
        return Gst.PadProbeReturn.OK
 
@@ -397,8 +397,17 @@ class Transcoder(GObject.GObject):
                            if not c.startswith("audio/"):
                                self.sinkpad = self.encodebin.emit("request-pad", origin)
                if c.startswith("audio/"):
+                   # print(c)
                    if self.passcounter == int(0):
-                       src_pad.add_probe(Gst.PadProbeType.EVENT_DOWNSTREAM, self.padprobe, None)
+                       stick=src_pad.get_sticky_event(Gst.EventType.STREAM_START, 0)
+                       print(stick)
+                       while x < len(self.audiodata):
+                           if stick==self.audiodata[x]['streamid']:
+                               #print(str(pad)+" - "+"streamid from parse_stream_start "+ str(self.probestreamid))
+                               sinkpad = self.encodebin.emit("request-profile-pad", self.audioprofilenames[x])
+                               src_pad.link(sinkpad)
+                       x=x+1
+                       #src_pad.add_probe(Gst.PadProbeType.EVENT_DOWNSTREAM, self.padprobe, None)
                elif ((c.startswith("video/") or c.startswith("image/")) and (self.videodata[0]['outputvideocaps'] != False)):
                    if self.videodata[0]['dopassthrough']==False:
                        if (self.multipass != 0) and (self.passcounter != int(0)):
