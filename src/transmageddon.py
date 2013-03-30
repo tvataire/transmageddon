@@ -222,7 +222,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        
        # create discoverer object
        self.discovered = GstPbutils.Discoverer.new(50000000000)
-       self.discovered.connect('source-setup', self.discovererproperties)
+       self.discovered.connect('source-setup', self.dvdreadproperties)
        self.discovered.connect('discovered', self.succeed)
        self.discovered.start()
 
@@ -617,9 +617,9 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                self.streamdtata['passcounter'] = self.streamdata['passcounter']+1
                self._start_transcoding()
 
-   def discovererproperties(self, parent, element):
+   def dvdreadproperties(self, parent, element):
        if self.isdvd:
-           element.set_property("device", self.dvdpath)
+           element.set_property("device", self.dvddevice)
            element.set_property("chapter", 1)
            print("set dvd properties")
 
@@ -653,7 +653,10 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                                languagename=GstTag.tag_get_language_name(languagedata)
                            else:
                                languagecode = False
-                               languagename = languagedata            
+                               languagename = languagedata
+                       else:
+                               languagecode = False
+                               languagename = False     
 
                        self.haveaudio=True
                        self.audiodata.append(self.add_audiodata_row(i.get_channels(), i.get_sample_rate(), i.get_caps(), False, streamid, False, False, languagename, languagecode))
@@ -683,8 +686,9 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                        videotags=i.get_tags()
                        self.havevideo=True
                        self.videostreamids.append(streamid)
-                       # put all video data into a dictionary. The two False values are ouputvideocaps and 
-                       # the two passthrough booleans which will be set later.
+                       # put all video data into a dictionary. The two False values
+                       # are ouputvideocaps and the two passthrough booleans 
+                       # which will be set later.
                        self.videodata.append(self.add_videodata_row(i.get_width(),i.get_height(), i.get_caps(), False, i.get_framerate_num(), i.get_framerate_denom(), streamid, False, False, i.is_interlaced(), False))
                        self.populate_menu_choices() # run this to ensure video menu gets filled
                        self.presetchoice.set_sensitive(True)
@@ -712,10 +716,10 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                    self.markupaudioinfo.append(''.join(('<small>','Audio channels: ', str(self.audiodata[self.audiostreamcounter]['audiochannels']), '</small>',"\n", '<small>','Audio codec: ',str(GstPbutils.pb_utils_get_codec_description(self.audiodata[self.audiostreamcounter]['inputaudiocaps'])), "\n", 'Language: ', str(self.audiodata[self.audiostreamcounter]['language']),'</small>')))
                    self.audioinformation.set_markup("".join(self.markupaudioinfo))
                else:
-                   if self.audiostreamcounter==1:
+                   if self.audiostreamcounter > 0:
                        x=0
                        while x <= self.audiostreamcounter:
-                           self.markupaudioinfo.append(''.join(('<small>','<b>','Audiostream no: ',str(x+1),'</b>','</small>',"\n",'<small>','Audio channels: ', str(self.audiodata[x]['audiochannels']), '</small>',"\n", '<small>','Audio codec: ',str(GstPbutils.pb_utils_get_codec_description(self.audiodata[x]['inputaudiocaps'])), "\n", 'Language: ', self.audiodata[x]['language'],'</small>',"\n")))
+                           self.markupaudioinfo.append(''.join(('<small>','<b>','Audiostream no: ',str(x+1),'</b>','</small>'," ",'<small>','Channels: ', str(self.audiodata[x]['audiochannels']), '</small>'," - ", '<small>',str(GstPbutils.pb_utils_get_codec_description(self.audiodata[x]['inputaudiocaps'])), " - ", self.audiodata[x]['language'],'</small>',"\n")))
                            self.audioinformation.set_markup("".join(self.markupaudioinfo))
                            x=x+1
 
@@ -747,7 +751,6 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        for x in self.audiostreamids:
            audiointersect.append(Gst.Caps.new_empty())
        if containerchoice != False:
-           # container = codecfinder.containermap[containerchoice]
            containerelement = codecfinder.get_muxer_element(containerchoice)
            if containerelement == False:
                self.containertoggle = True
@@ -767,6 +770,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                        if self.haveaudio == True:
                            y=0
                            count=len(self.audiostreamids)
+                           #print(self.audiostreamids)
                            while y < count:
                                if audiointersect[y].is_empty():
                                    audiointersect[y] = sourcecaps.intersect(self.audiodata[y]['inputaudiocaps'])
@@ -780,7 +784,6 @@ class TransmageddonUI(Gtk.ApplicationWindow):
    # define the behaviour of the other buttons
    def on_filechooser_file_set(self, widget, filename):
        self.streamdata['filename'] = filename
-       print(filename)
        # These two list objects will hold all crucial media data in the form of python dictionaries.
        self.audiodata =[]
        self.videodata =[]
@@ -790,7 +793,10 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        if self.streamdata['filename'] is not None: 
            self.haveaudio=False #make sure to reset these for each file
            self.havevideo=False #
-           self.discover("dvd://"+self.streamdata['filename'])
+           if self.isdvd:
+               self.discover("dvd://"+self.streamdata['filename'])
+           else:
+               self.discover("file://"+self.streamdata['filename'])
            self.ProgressBar.set_fraction(0.0)
            self.ProgressBar.set_text(_("Transcoding Progress"))
            if (self.havevideo==False and self.nocontaineroptiontoggle==False):
@@ -1022,57 +1028,40 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        if self.haveaudio==True:
            x=0
            while x <= self.audiostreamcounter:
-               
                self.audiocodecs.append([])
                if self.usingpreset==True: # First fill menu based on presetvalue
                    testforempty = self.presetaudiocodec.to_string()
-                   if testforempty != "EMPTY": 
+                   if testforempty != "EMPTY":
+                       self.audiorows[x].append_text(str(GstPbutils.pb_utils_get_codec_description(self.presetaudiocodec)))
+                       self.audiorows[x].set_active(0)
                        self.audiocodecs[x].append(self.presetaudiocodec)
                elif self.streamdata['container']==False: # special setup for container less case, looks ugly, but good enough for now
+                       self.audiorows[x].append_text(str(GstPbutils.pb_utils_get_codec_description(Gst.caps_from_string("audio/mpeg, mpegversion=(int)1, layer=(int)3"))))
+                       self.audiorows[x].append_text(str(GstPbutils.pb_utils_get_codec_description(Gst.caps_from_string("audio/mpeg, mpegversion=4, stream-format=adts"))))
+                       self.audiorows[x].append_text(str(GstPbutils.pb_utils_get_codec_description(Gst.caps_from_string("audio/x-flac"))))
                        self.audiocodecs[x].append(Gst.caps_from_string("audio/mpeg, mpegversion=(int)1, layer=(int)3"))
                        self.audiocodecs[x].append(Gst.caps_from_string("audio/mpeg, mpegversion=4, stream-format=adts"))
                        self.audiocodecs[x].append(Gst.caps_from_string("audio/x-flac"))
+                       self.audiorows[x].set_active(0)
+                       self.audiorows[x].set_sensitive(True)
                else:
                        audiolist = []
                        audio_codecs = supported_audio_container_map[self.containershort]
                        for c in audio_codecs:
                            self.audiocodecs[x].append(Gst.caps_from_string(codecfinder.codecmap[c]))
+                       for c in self.audiocodecs[x]: # Use codec descriptions from GStreamer
+                           self.audiorows[x].append_text(GstPbutils.pb_utils_get_codec_description(c))
+
                if self.audiodata[x]['canpassthrough']==True:
+                       self.audiorows[x].append_text(_("Audio passthrough"))
                        self.audiocodecs[x].append("pass")
                        self.audiopassmenuno=(len(self.audiocodecs[x]))-1 #FIXME
 
+               self.audiorows[x].set_sensitive(True)
+               self.audiorows[x].set_active(0)
                x=x+1
-
-       # populate menu 
-
-           y=0
-           while y <= self.audiostreamcounter:
-               if self.usingpreset==True: # First fill menu based on presetvalue
-                   testforempty = self.presetaudiocodec.to_string()
-                   if testforempty != "EMPTY": 
-                       self.audiorows[y].append_text(str(GstPbutils.pb_utils_get_codec_description(self.presetaudiocodec)))
-                       self.audiorows[y].set_active(0)
-               elif self.streamdata['container']==False: # special setup for container less case, looks ugly, but good enough for now
-                       self.audiorows[y].append_text(str(GstPbutils.pb_utils_get_codec_description(Gst.caps_from_string("audio/mpeg, mpegversion=(int)1, layer=(int)3"))))
-                       self.audiorows[y].append_text(str(GstPbutils.pb_utils_get_codec_description(Gst.caps_from_string("audio/mpeg, mpegversion=4, stream-format=adts"))))
-                       self.audiorows[y].append_text(str(GstPbutils.pb_utils_get_codec_description(Gst.caps_from_string("audio/x-flac"))))
-                       self.audiorows[y].set_active(0)
-                       self.audiorows[y].set_sensitive(True)
-               else:
-                       audiolist = []
-                       for c in self.audiocodecs[y]: # Use codec descriptions from GStreamer
-                           if c != "pass":
-                               self.audiorows[y].append_text(GstPbutils.pb_utils_get_codec_description(c))
-
-               if self.audiodata[y]['canpassthrough']==True:
-                   self.audiorows[y].append_text(_("Audio passthrough"))
-
-                   self.audiorows[y].set_sensitive(True)
-                   self.audiorows[y].set_active(0)
-
-               else:
-                   self.audiorows[y].set_sensitive(False)
-               y=y+1
+       else:
+           self.audiorows[x].set_sensitive(False)
 
        # fill in with video
        if self.havevideo==True:
@@ -1229,10 +1218,10 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        client = GUdev.Client(subsystems=['block'])
        for device in client.query_by_subsystem("block"):
            if device.has_property("ID_CDROM"):
-               self.dvdpath=device.get_device_file()
+               self.dvddevice=device.get_device_file()
                self.dvdname=device.get_property("ID_FS_LABEL")
 
-       if self.dvdpath:
+       if self.dvddevice:
 
            theme = Gtk.IconTheme.get_default()
            size= Gtk.icon_size_lookup(Gtk.IconSize.MENU)[1]
@@ -1240,10 +1229,10 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            fileopen=theme.load_icon(Gtk.STOCK_OPEN, size, 0)
 
 
-           liststore = Gtk.ListStore(GdkPixbuf.Pixbuf, GObject.TYPE_STRING)
-           liststore.append([None, ""])
-           liststore.append([fileopen, "Choose File..."])
-           liststore.append([cdrom, self.dvdname	])
+           liststore = Gtk.ListStore(GdkPixbuf.Pixbuf, GObject.TYPE_STRING, GObject.TYPE_INT)
+           liststore.append([None, "", 0])
+           liststore.append([fileopen, "Choose File...", 1])
+           liststore.append([cdrom, self.dvdname, 2])
 
            self.combo = Gtk.ComboBox(model=liststore)
 
@@ -1277,8 +1266,10 @@ class TransmageddonUI(Gtk.ApplicationWindow):
         
        iter = widget.get_active_iter()
        model = widget.get_model()
-       item = model.get_value(iter, 1)
-       if item == _("Choose File..."):
+       item = model.get_value(iter, 2)
+
+       if item == 1:
+
            dialog = Gtk.FileChooserDialog(title=_("Choose Source File..."),
                         buttons=(Gtk.STOCK_CANCEL, Gtk.ResponseType.REJECT,
                                  Gtk.STOCK_OPEN, Gtk.ResponseType.ACCEPT))
@@ -1299,11 +1290,13 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                    widget.set_active(pos - 1)
                else:
                    widget.set_active(0)
-       else:
+       elif item == 2:
            dvd=dvdtrackchooser.dvdtrackchooser(self)
            dvd.dvdwindow.run()
-           self.isdvd=True
-           self.on_filechooser_file_set(self,self.dvdpath)
+           self.isdvd=dvd.isdvd
+           self.streamdata['filename'] = self.dvddevice
+           self.streamdata['filechoice'] = "dvd://"+self.dvddevice
+           self.on_filechooser_file_set(self,self.dvddevice)
 
     
    def set_source_to_path(self, path):

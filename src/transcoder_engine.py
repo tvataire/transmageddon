@@ -142,6 +142,8 @@ class Transcoder(GObject.GObject):
        # including any extra elements between uridecodebin and encodebin
        x=0
        self.audioprofilenames=[]
+       print("x is " +str(x))
+       print(self.audiodata)
        while x < len(self.audiodata): 
            if self.audiodata[x]['outputaudiocaps'] != False:
                if self.container==False:
@@ -201,6 +203,7 @@ class Transcoder(GObject.GObject):
        self.uridecoder = Gst.ElementFactory.make("uridecodebin", "uridecoder")
        self.uridecoder.set_property("uri", self.streamdata['filechoice'])
        self.uridecoder.connect("pad-added", self.OnDynamicPad)
+       self.uridecoder.connect('source-setup', self.dvdreadproperties)
 
        if (self.audiodata[0]['dopassthrough']) or (self.videodata[0]['dopassthrough']) or (self.videodata[0]['outputvideocaps']=="novid"):
            self.uridecoder.set_property("caps", self.remuxcaps) 
@@ -408,6 +411,10 @@ class Transcoder(GObject.GObject):
                            self.videoflipper.get_static_pad("src").link(self.sinkpad)   
                    else:
                            src_pad.link(self.sinkpad)
+   def dvdreadproperties(self, parent, element):
+       # if self.isdvd:
+           element.set_property("device", self.streamdata['filename'])
+           element.set_property("chapter", 1)
 
    def OnEncodebinElementAdd(self, encodebin, element):
        factory=element.get_factory()
