@@ -19,8 +19,9 @@ class dvdtrackchooser(Gtk.Dialog):
        self.dvdpickui.connect_signals(self) # Initialize User Interface
        self.dvdtrack=None # this will hold the selected DVD track value
        self.isdvd=False
+       self.dvdtitle=False
 
-       store = Gtk.ListStore(str)
+       store = Gtk.ListStore(str, int)
        # udev code to find DVD drive on system - This code needs to go into Transmageddon proper
        client = GUdev.Client(subsystems=['block'])
        for device in client.query_by_subsystem("block"):
@@ -52,14 +53,15 @@ class dvdtrackchooser(Gtk.Dialog):
            languages.append(language)
            
            # create a string to push into the listview
-           self.listoftracks.append(_("Track ") + str(scounter) + ", " + _("Languages: ") + languages[scounter] + _(" Lenght: ") + str(round((self.Tracks[scounter]['length']/60), 2)) + " Minutes")
+           self.listoftracks.append(_("Title:b ") + str(scounter) + ", " + _("Languages: ") + languages[scounter] + _(" Lenght: ") + str(round((self.Tracks[scounter]['length']/60), 2)) + " Minutes")
 
            # For testing purposes look for longest track
            scounter=scounter+1
 
-
+       x=1
        for act in self.listoftracks:
-           store.append([act])
+           store.append([act,x])
+           x=x+1
                            
        self.dvdtrackview = Gtk.TreeView(store)
        self.dvdtrackview.set_reorderable(False)
@@ -85,13 +87,13 @@ class dvdtrackchooser(Gtk.Dialog):
 
 
    def on_selectbutton_clicked(self, widget):
-       dvdtrack=self.dvdtrackview.get_selection()
-       (model, pathlist) = dvdtrack.get_selected_rows()
+       dvdtitle = self.dvdtrackview.get_selection()
+       (model, pathlist) = dvdtitle.get_selected_rows()
        for path in pathlist :
            tree_iter = model.get_iter(path)
-           value = model.get_value(tree_iter,0)
-           numvalue=path.to_string()
-           self.dvdtrack=1 #FIXME
+           value = model.get_value(tree_iter,1)
+           self.dvdtitle=value
+           print("TITLE IS " +str(value))
            self.isdvd=True
        self.dvdwindow.destroy()
 

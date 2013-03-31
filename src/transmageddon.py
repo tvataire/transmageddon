@@ -280,8 +280,8 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        self.cancelbutton = self.builder.get_object("cancelbutton")
        self.StatusBar = self.builder.get_object("StatusBar")
        self.table1 = self.builder.get_object("table1")
-       self.CodecBox.attach(self.audiobox, 0, 1, 1, 2, yoptions = Gtk.AttachOptions.FILL)
-       self.CodecBox.attach(self.videobox, 2, 3, 1, 2, yoptions = Gtk.AttachOptions.FILL)
+       self.CodecBox.attach(self.audiobox, 0, 1, 1, 2) #, yoptions = Gtk.AttachOptions.FILL)
+       self.CodecBox.attach(self.videobox, 2, 3, 1, 2, yoptions = Gtk.AttachOptions.SHRINK)
        self.CodecBox.show_all()
        self.containerchoice.connect("changed", self.on_containerchoice_changed)
        self.presetchoice.connect("changed", self.on_presetchoice_changed)
@@ -393,7 +393,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        self.audiodata =[]
        self.videodata =[]
        # all other data will go into streamdata
-       self.streamdata = {'filechoice' : False, 'filename' : False, 'outputdirectory' : False, 'container' : False, 'devicename' : "nopreset", 'multipass': 0, 'passcounter': 0, 'outputfilename' : False, 'timestamp': False}
+       self.streamdata = {'filechoice' : False, 'filename' : False, 'outputdirectory' : False, 'container' : False, 'devicename' : "nopreset", 'multipass': 0, 'passcounter': 0, 'outputfilename' : False, 'timestamp': False, 'dvdtitle': False}
 
        # Populate the Container format combobox
        # print("do we try to populate container choice")
@@ -620,8 +620,9 @@ class TransmageddonUI(Gtk.ApplicationWindow):
    def dvdreadproperties(self, parent, element):
        if self.isdvd:
            element.set_property("device", self.dvddevice)
-           element.set_property("chapter", 1)
-           print("set dvd properties")
+           # print("Title " + str(self.dvdttitle))
+           element.set_property("title", 0)
+
 
  
    def succeed(self, discoverer, info, error):
@@ -1295,6 +1296,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            self.isdvd=dvd.isdvd
            self.streamdata['filename'] = self.dvddevice
            self.streamdata['filechoice'] = "dvd://"+self.dvddevice
+           self.streamdata['dvdtitle']=dvd.dvdtitle
            self.on_filechooser_file_set(self,self.dvddevice)
 
     

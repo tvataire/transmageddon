@@ -70,6 +70,7 @@ class Transcoder(GObject.GObject):
        self.missingplugin= False
        self.probestreamid = False
        self.sinkpad = False
+       self.usedstreamids = []
 
        # switching width and height around for rotationchoices where it makes sense
        if self.rotationvalue == 1 or self.rotationvalue == 3:
@@ -151,7 +152,6 @@ class Transcoder(GObject.GObject):
                    self.audioprofile = GstPbutils.EncodingAudioProfile.new(self.audiodata[x]['outputaudiocaps'], audiopreset, Gst.Caps.new_any(), 0)
                    self.audioprofilenames.append("audioprofilename"+str(x))
                    self.audioprofile.set_name(self.audioprofilenames[x])
-                   print("audioprofilenames " + str(self.audioprofilenames))
                    self.encodebinprofile.add_profile(self.audioprofile)
            x=x+1 
        
@@ -329,7 +329,10 @@ class Transcoder(GObject.GObject):
            x=0
            while x < len(self.audiodata):
                if self.probestreamid==self.audiodata[x]['streamid']:
-                       print(str(pad)+" - "+"streamid from parse_stream_start "+ str(self.probestreamid))
+                   if self.probestreamid not in self.usedstreamids:
+                       #FIXME - Need to clean usedstreamid list at some point
+                       self.usedstreamids.append(self.probestreamid)
+                       # print(str(pad)+" - "+"streamid from parse_stream_start "+ str(self.probestreamid))
                        self.sinkpad = self.encodebin.emit("request-profile-pad", self.audioprofilenames[x])
                        pad.link(self.sinkpad)
                x=x+1
@@ -360,6 +363,7 @@ class Transcoder(GObject.GObject):
        elif mtype == Gst.MessageType.EOS:
            if (self.multipass != 0):
                if (self.passcounter == 0):
+                   self.usedstreamids=[]
                    #removing multipass cache file when done
                    if os.access(self.cachefile, os.F_OK):
                        os.remove(self.cachefile)
@@ -399,15 +403,16 @@ class Transcoder(GObject.GObject):
                if c.startswith("audio/"):
                    # print(c)
                    if self.passcounter == int(0):
-                       stick=src_pad.get_sticky_event(Gst.EventType.STREAM_START, 0)
-                       print(stick)
-                       while x < len(self.audiodata):
-                           if stick==self.audiodata[x]['streamid']:
-                               #print(str(pad)+" - "+"streamid from parse_stream_start "+ str(self.probestreamid))
-                               sinkpad = self.encodebin.emit("request-profile-pad", self.audioprofilenames[x])
-                               src_pad.link(sinkpad)
-                       x=x+1
-                       #src_pad.add_probe(Gst.PadProbeType.EVENT_DOWNSTREAM, self.padprobe, None)
+                       #stick=src_pad.get_sticky_event(Gst.EventType.STREAM_START, 0)
+                       #print("stick is " +str(stick))
+                       #x=0
+                       #while x < len(self.audiodata):
+                       #    if stick==self.audiodata[x]['streamid']:
+                       #        print(str(pad)+" - "+"streamid from parse_stream_start "+ str(self.probestreamid))
+                       #        sinkpad = self.encodebin.emit("request-profile-pad", self.audioprofilenames[x])
+                       #        src_pad.link(sinkpad)
+                       #x=x+1
+                       src_pad.add_probe(Gst.PadProbeType.EVENT_DOWNSTREAM, self.padprobe, None)
                elif ((c.startswith("video/") or c.startswith("image/")) and (self.videodata[0]['outputvideocaps'] != False)):
                    if self.videodata[0]['dopassthrough']==False:
                        if (self.multipass != 0) and (self.passcounter != int(0)):
@@ -421,9 +426,12 @@ class Transcoder(GObject.GObject):
                    else:
                            src_pad.link(self.sinkpad)
    def dvdreadproperties(self, parent, element):
-       # if self.isdvd:
-           element.set_property("device", self.streamdata['filename'])
-           element.set_property("chapter", 1)
+        print("setting DVD properties")
+        print(self.streamdata['filename'])
+        print(self.streamdata['dvdtitle'])
+        #if self.streamdata['dvdtitle']:
+        element.set_property("device", self.streamdata['filename'])
+        element.set_property("title", self.streamdata['dvdtitle'])
 
    def OnEncodebinElementAdd(self, encodebin, element):
        factory=element.get_factory()
