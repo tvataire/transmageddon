@@ -179,7 +179,7 @@ class Transcoder(GObject.GObject):
            self.encodebin.set_state(Gst.State.PAUSED)
        
        # put together remuxing caps to set on uridecodebin if doing 
-       # passthrough on audio or video
+       # passthrough on audio or video # FIXME needs to be made multistream ready
 
        if self.audiodata[0]['dopassthrough'] or self.videodata[0]['dopassthrough']:
            self.remuxcaps = Gst.Caps.new_empty()

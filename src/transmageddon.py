@@ -1049,9 +1049,17 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                        audio_codecs = supported_audio_container_map[self.containershort]
                        for c in audio_codecs:
                            self.audiocodecs[x].append(Gst.caps_from_string(codecfinder.codecmap[c]))
-                       for c in self.audiocodecs[x]: # Use codec descriptions from GStreamer
-                           self.audiorows[x].append_text(GstPbutils.pb_utils_get_codec_description(c))
 
+                       for c in self.audiocodecs[x]: # Use codec descriptions from GStreamer
+                           if c != "pass" and c != "noaud":
+                               self.audiorows[x].append_text(GstPbutils.pb_utils_get_codec_description(c))
+
+               #add a 'No Audio option'
+               self.audiorows[x].append_text(_("No Audio"))
+               self.audiocodecs[x].append("noaud")
+               self.noaudiomenuno=(len(self.audiocodecs[x]))-1
+
+               # add a passthrough option
                if self.audiodata[x]['canpassthrough']==True:
                        self.audiorows[x].append_text(_("Audio passthrough"))
                        self.audiocodecs[x].append("pass")
