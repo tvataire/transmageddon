@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: transmageddon\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-30 16:34+0100\n"
-"PO-Revision-Date: 2013-03-30 16:35+0100\n"
+"POT-Creation-Date: 2013-04-01 20:47+0200\n"
+"PO-Revision-Date: 2013-04-01 20:48+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -57,12 +57,16 @@ msgstr ""
 "Aviary.pl <gnomepl@aviary.pl>, 2009-2013"
 
 #. create a string to push into the listview
-#: ../src/dvdtrackchooser.py:43
-msgid "Track "
-msgstr "Ścieżka "
+#: ../src/dvdtrackchooser.py:56
+msgid "Title:b "
+msgstr "Tytuł:b "
 
-#: ../src/dvdtrackchooser.py:43
-msgid " Lenght: "
+#: ../src/dvdtrackchooser.py:56
+msgid "Languages: "
+msgstr "Język: "
+
+#: ../src/dvdtrackchooser.py:56
+msgid " Length: "
 msgstr " Długość: "
 
 #: ../src/presets.py:78
@@ -132,8 +136,8 @@ msgid "All device presets are up to date!"
 msgstr "Wszystkie profile urządzeń są aktualne."
 
 #: ../src/transmageddon-dvdtrack-chooser.ui.h:1
-msgid "Select a DVD track"
-msgstr "Wybór ścieżki DVD"
+msgid "Select a DVD title"
+msgstr "Wybór tytułu DVD"
 
 #: ../src/transmageddon-dvdtrack-chooser.ui.h:2
 #: ../src/transmageddon-language-chooser.ui.h:2
@@ -163,8 +167,8 @@ msgid "Debug"
 msgstr "Debugowanie"
 
 #. set default values for various variables
-#: ../src/transmageddon.py:360 ../src/transmageddon.py:795
-#: ../src/transmageddon.py:994 ../src/transmageddon.py:1112
+#: ../src/transmageddon.py:360 ../src/transmageddon.py:801
+#: ../src/transmageddon.py:1000 ../src/transmageddon.py:1109
 msgid "Transcoding Progress"
 msgstr "Postęp przekodowywania"
 
@@ -230,7 +234,7 @@ msgstr "Plik %(file)s zapisany do %(dir)s"
 msgid "Done Transcoding"
 msgstr "Ukończono przekodowywanie"
 
-#: ../src/transmageddon.py:611 ../src/transmageddon.py:956
+#: ../src/transmageddon.py:611 ../src/transmageddon.py:962
 #, python-format
 msgid "Writing %(filename)s"
 msgstr "Zapisywanie %(filename)s"
@@ -241,60 +245,57 @@ msgid "Pass %(count)d Complete. "
 msgstr "Ukończono przebieg %(count)d. "
 
 #. if there is no audio streams
-#: ../src/transmageddon.py:723
+#. add a 'No Audio option'
+#: ../src/transmageddon.py:728 ../src/transmageddon.py:1058
 msgid "No Audio"
 msgstr "Brak dźwięku"
 
 #. add a 'No Video option'
-#: ../src/transmageddon.py:732 ../src/transmageddon.py:1099
+#: ../src/transmageddon.py:737 ../src/transmageddon.py:1096
 msgid "No Video"
 msgstr "Brak wideo"
 
-#: ../src/transmageddon.py:845
+#: ../src/transmageddon.py:851
 msgid ""
 "Got an invalid response from codec installer, can not install missing codec."
 msgstr ""
 "Otrzymano nieprawidłową odpowiedź od instalatora kodeków. Nie można "
 "zainstalować brakującego kodeka."
 
-#: ../src/transmageddon.py:849
+#: ../src/transmageddon.py:855
 msgid "No Codec installer helper application available."
 msgstr "Brak dostępnego programu pomocniczego instalatora kodeków."
 
-#: ../src/transmageddon.py:853
+#: ../src/transmageddon.py:859
 msgid "Plugins not found, choose different codecs."
 msgstr "Nie odnaleziono wtyczek. Proszę wybrać inne kodeki."
 
-#: ../src/transmageddon.py:863
+#: ../src/transmageddon.py:869
 msgid "Codec installation aborted."
 msgstr "Przerwano instalację kodeka."
 
-#: ../src/transmageddon.py:871
+#: ../src/transmageddon.py:877
 msgid "Missing plugin installation failed."
 msgstr "Instalacja brakującej wtyczki się nie powiodła."
 
-#: ../src/transmageddon.py:959
+#: ../src/transmageddon.py:965
 #, python-format
 msgid "Pass %(count)d Progress"
 msgstr "Postęp przebiegu %(count)d"
 
-#: ../src/transmageddon.py:1068
+#: ../src/transmageddon.py:1064
 msgid "Audio passthrough"
 msgstr "Dźwięk bez zmian"
 
-#: ../src/transmageddon.py:1105
+#: ../src/transmageddon.py:1102
 msgid "Video passthrough"
 msgstr "Wideo bez zmian"
 
-#: ../src/transmageddon.py:1262
+#: ../src/transmageddon.py:1259
 msgid "(None)"
 msgstr "(Brak)"
 
 #: ../src/transmageddon.py:1281
-msgid "Choose File..."
-msgstr "Wybierz plik..."
-
-#: ../src/transmageddon.py:1282
 msgid "Choose Source File..."
 msgstr "Wybierz plik źródłowy..."
 
