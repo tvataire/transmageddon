@@ -53,7 +53,7 @@ class dvdtrackchooser(Gtk.Dialog):
            languages.append(language)
            
            # create a string to push into the listview
-           self.listoftracks.append(_("Title:b ") + str(scounter) + ", " + _("Languages: ") + languages[scounter] + _(" Length: ") + str(round((self.Tracks[scounter]['length']/60), 2)) + " Minutes")
+           self.listoftracks.append(_("Title:") + " " + str(scounter) + ", " + _("Languages:") + " " + languages[scounter] + " " + _("Length:") + " " + str(round((self.Tracks[scounter]['length']/60), 2)) + " " + _("Minutes"))
 
            # For testing purposes look for longest track
            scounter=scounter+1
