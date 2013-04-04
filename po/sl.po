@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: transmageddon master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=transmageddon&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2013-03-31 10:26+0000\n"
-"PO-Revision-Date: 2013-03-31 20:04+0100\n"
+"POT-Creation-Date: 2013-04-03 07:57+0000\n"
+"PO-Revision-Date: 2013-04-04 21:54+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl_SI\n"
@@ -53,16 +53,20 @@ msgstr "Andrej Žnidaršič <andrej.znidarsic@gmail.com>"
 
 #. create a string to push into the listview
 #: ../src/dvdtrackchooser.py:56
-msgid "Title:b "
+msgid "Title:"
 msgstr "Naslov:"
 
 #: ../src/dvdtrackchooser.py:56
-msgid "Languages: "
+msgid "Languages:"
 msgstr "Jeziki:"
 
 #: ../src/dvdtrackchooser.py:56
-msgid " Lenght: "
+msgid "Length:"
 msgstr "Dolžina:"
+
+#: ../src/dvdtrackchooser.py:56
+msgid "Minutes"
+msgstr "Minute"
 
 #: ../src/presets.py:78
 #, python-format
@@ -129,8 +133,8 @@ msgid "All device presets are up to date!"
 msgstr "Vse prednastavljene naprave so posodobljene!"
 
 #: ../src/transmageddon-dvdtrack-chooser.ui.h:1
-msgid "Select a DVD track"
-msgstr "Izberite sled DVD"
+msgid "Select a DVD title"
+msgstr "Izbor naslova DVD"
 
 #: ../src/transmageddon-dvdtrack-chooser.ui.h:2
 #: ../src/transmageddon-language-chooser.ui.h:2
@@ -161,7 +165,7 @@ msgstr "Razhroščevanje"
 
 #. set default values for various variables
 #: ../src/transmageddon.py:360 ../src/transmageddon.py:801
-#: ../src/transmageddon.py:1000 ../src/transmageddon.py:1101
+#: ../src/transmageddon.py:1000 ../src/transmageddon.py:1109
 msgid "Transcoding Progress"
 msgstr "Napredek pretvorbe"
 
@@ -238,12 +242,13 @@ msgid "Pass %(count)d Complete. "
 msgstr "Prehod %(count)d je končan."
 
 #. if there is no audio streams
-#: ../src/transmageddon.py:728
+#. add a 'No Audio option'
+#: ../src/transmageddon.py:728 ../src/transmageddon.py:1058
 msgid "No Audio"
 msgstr "Brez zvoka"
 
 #. add a 'No Video option'
-#: ../src/transmageddon.py:737 ../src/transmageddon.py:1088
+#: ../src/transmageddon.py:737 ../src/transmageddon.py:1096
 msgid "No Video"
 msgstr "Brez videa"
 
@@ -275,19 +280,19 @@ msgstr "Namestitev manjkajočega vstavka je spodletela."
 msgid "Pass %(count)d Progress"
 msgstr "Napredek prehoda %(count)d"
 
-#: ../src/transmageddon.py:1056
+#: ../src/transmageddon.py:1064
 msgid "Audio passthrough"
 msgstr "Prehodi zvoka"
 
-#: ../src/transmageddon.py:1094
+#: ../src/transmageddon.py:1102
 msgid "Video passthrough"
 msgstr "Prehodi videa"
 
-#: ../src/transmageddon.py:1251
+#: ../src/transmageddon.py:1259
 msgid "(None)"
 msgstr "(brez)"
 
-#: ../src/transmageddon.py:1273
+#: ../src/transmageddon.py:1281
 msgid "Choose Source File..."
 msgstr "Izberite izvorno datoteko ..."
 
