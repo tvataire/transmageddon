@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: transmageddon\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-01 20:47+0200\n"
-"PO-Revision-Date: 2013-04-01 20:48+0200\n"
+"POT-Creation-Date: 2013-04-05 03:18+0200\n"
+"PO-Revision-Date: 2013-04-05 03:19+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -58,16 +58,20 @@ msgstr ""
 
 #. create a string to push into the listview
 #: ../src/dvdtrackchooser.py:56
-msgid "Title:b "
-msgstr "Tytuł:b "
+msgid "Title:"
+msgstr "Tytuł:"
 
 #: ../src/dvdtrackchooser.py:56
-msgid "Languages: "
-msgstr "Język: "
+msgid "Languages:"
+msgstr "Język:"
 
 #: ../src/dvdtrackchooser.py:56
-msgid " Length: "
-msgstr " Długość: "
+msgid "Length:"
+msgstr "Długość:"
+
+#: ../src/dvdtrackchooser.py:56
+msgid "Minutes"
+msgstr "Minuty"
 
 #: ../src/presets.py:78
 #, python-format
