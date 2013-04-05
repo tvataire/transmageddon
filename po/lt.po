@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: transmageddon master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=transmageddon&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2013-04-01 16:59+0000\n"
-"PO-Revision-Date: 2013-04-01 20:26+0300\n"
+"POT-Creation-Date: 2013-04-03 07:48+0000\n"
+"PO-Revision-Date: 2013-04-05 22:22+0300\n"
 "Last-Translator: Aurimas Černius <aurisc4@gmail.com>\n"
 "Language-Team: Lietuvių <gnome-lt@lists.akl.lt>\n"
 "Language: lt\n"
@@ -51,16 +51,23 @@ msgstr "Gintautas Miliauskas <gintautas@miliauskas.lt>"
 
 #. create a string to push into the listview
 #: ../src/dvdtrackchooser.py:56
-msgid "Title:b "
-msgstr "Pavadinimas:b"
+#| msgid "Title:b "
+msgid "Title:"
+msgstr "Pavadinimas:"
 
 #: ../src/dvdtrackchooser.py:56
-msgid "Languages: "
+#| msgid "Languages: "
+msgid "Languages:"
 msgstr "Kalbos:"
 
 #: ../src/dvdtrackchooser.py:56
-msgid " Length: "
-msgstr " Trukmė:"
+#| msgid " Length: "
+msgid "Length:"
+msgstr "Trukmė:"
+
+#: ../src/dvdtrackchooser.py:56
+msgid "Minutes"
+msgstr "Minutės"
 
 #: ../src/presets.py:78
 #, python-format
@@ -126,7 +133,6 @@ msgid "All device presets are up to date!"
 msgstr "Įrenginių konfigūracijos naujausios!"
 
 #: ../src/transmageddon-dvdtrack-chooser.ui.h:1
-#| msgid "Select a DVD track"
 msgid "Select a DVD title"
 msgstr "Pasirinkite DVD pavadinimą"
 
@@ -291,9 +297,6 @@ msgid "Choose Source File..."
 msgstr "Pasirinkite šaltinio failą..."
 
 #: ../src/transmageddon.ui.h:1
-#| msgid ""
-#| "<small>Audio Channels:</small>\n"
-#| "<small>Audio Codec:</small>"
 msgid ""
 "<small>Audio Channels:</small>\n"
 "<small>Audio Codec:</small>\n"
@@ -343,4 +346,3 @@ msgstr "_Perkoduoti"
 #, python-format
 msgid "Can't find %(path)s in any known prefix!"
 msgstr "Nepavyko rasti %(path)s jokiame žinomame prefikse!"
-
