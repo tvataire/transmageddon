@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: transmageddon\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=transm"
 "ageddon&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2013-04-01 16:59+0000\n"
-"PO-Revision-Date: 2013-04-02 10:39+0200\n"
+"POT-Creation-Date: 2013-04-03 07:48+0000\n"
+"PO-Revision-Date: 2013-05-14 18:57+0200\n"
 "Last-Translator: Мирослав Николић <miroslavnikolic@rocketmail.com>\n"
 "Language-Team: Serbian <gnom@prevod.org>\n"
 "Language: sr\n"
@@ -52,16 +52,23 @@ msgstr ""
 
 #. create a string to push into the listview
 #: ../src/dvdtrackchooser.py:56
-msgid "Title:b "
-msgstr "Наслов:б "
+#| msgid "Title:b "
+msgid "Title:"
+msgstr "Наслов:"
 
 #: ../src/dvdtrackchooser.py:56
-msgid "Languages: "
-msgstr "Језици: "
+#| msgid "Languages: "
+msgid "Languages:"
+msgstr "Језици:"
 
 #: ../src/dvdtrackchooser.py:56
-msgid " Length: "
-msgstr " Трајање: "
+#| msgid " Length: "
+msgid "Length:"
+msgstr "Трајање:"
+
+#: ../src/dvdtrackchooser.py:56
+msgid "Minutes"
+msgstr "Минута"
 
 #: ../src/presets.py:78
 #, python-format
@@ -127,7 +134,6 @@ msgid "All device presets are up to date!"
 msgstr "Сва претподешавања уређаја су најновија!"
 
 #: ../src/transmageddon-dvdtrack-chooser.ui.h:1
-#| msgid "Select a DVD track"
 msgid "Select a DVD title"
 msgstr "Изаберите наслов ДВД-а"
 
@@ -292,9 +298,6 @@ msgid "Choose Source File..."
 msgstr "Изабери датотеку извора..."
 
 #: ../src/transmageddon.ui.h:1
-#| msgid ""
-#| "<small>Audio Channels:</small>\n"
-#| "<small>Audio Codec:</small>"
 msgid ""
 "<small>Audio Channels:</small>\n"
 "<small>Audio Codec:</small>\n"
