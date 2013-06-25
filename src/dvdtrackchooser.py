@@ -53,7 +53,11 @@ class dvdtrackchooser(Gtk.Dialog):
            languages.append(language)
            
            # create a string to push into the listview
+<<<<<<< HEAD
            self.listoftracks.append(_("Title:") + " " + str(scounter) + ", " + _("Languages:") + " " + languages[scounter] + " " + _("Length:") + " " + str(round((self.Tracks[scounter]['length']/60), 2)) + " " + _("Minutes"))
+=======
+           self.listoftracks.append(_("Title: ") + str(scounter) + ", " + _("Languages: ") + languages[scounter] + _(" Length: ") + str(round((self.Tracks[scounter]['length']/60), 2)) + " Minutes")
+>>>>>>> fix typo in string
 
            # For testing purposes look for longest track
            scounter=scounter+1
@@ -93,7 +97,6 @@ class dvdtrackchooser(Gtk.Dialog):
            tree_iter = model.get_iter(path)
            value = model.get_value(tree_iter,1)
            self.dvdtitle=value
-           print("TITLE IS " +str(value))
            self.isdvd=True
        self.dvdwindow.destroy()
 
