@@ -40,7 +40,7 @@ import transcoder_engine
 from urllib.parse import urlparse
 import codecfinder
 import about
-import presets
+import presets, udevdisco
 import utils
 import datetime
 import langchooser, dvdtrackchooser
@@ -231,6 +231,10 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        self.audiocodecs=[]
        self.videocodecs=[]
 
+       # The variables are used for the DVD discovery
+       self.finder = None
+       self.finder_video_found = None
+       self.finder_video_lost = None
        self.isdvd = False
        
        self.fileiter = None
@@ -621,7 +625,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        if self.isdvd:
            element.set_property("device", self.dvddevice)
            # print("Title " + str(self.dvdttitle))
-           element.set_property("title", 0)
+           element.set_property("title", 0) # FIXME
 
 
  
@@ -1208,6 +1212,34 @@ class TransmageddonUI(Gtk.ApplicationWindow):
 
     return icon
 
+   def on_disc_found(self, finder, device, label):
+       """
+       A video DVD has been found, update the source combo box!
+       """
+       print("dvd found")
+       model = self.combo.get_model()
+       for pos, item in enumerate(model):
+           print("model is " +str(model))
+           if item[2] and item[2][0].endswith(device.path):
+               model[pos] = (item[0], device.nice_label, (item[2][0], True))
+               break
+    
+   def on_disc_lost(self, finder, device, label):
+       """
+            A video DVD has been removed, update the source combo box!
+       """
+       print("dvd lost")
+       model = self.combo.get_model()
+       for pos, item in enumerate(model):
+           print("pos is " +str(pos))
+           print("item0 is " +str(item[0]))
+           print("item1 is " +str(item[1]))
+           print("item2 is " +str(item[2]))
+           print("device path " +str(device.path))
+           if item[2] and item[2][0].endswith(device.path):
+               model[pos] = (item[0], device.nice_label, (item[2][0], False))
+               break
+
    def setup_source(self):
        """
            Setup the source widget. Creates a combo box or a file input button
@@ -1222,12 +1254,34 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            self.source_hbox.remove(self.combo)
            self.combo.destroy()
         
+
+       if self.finder:
+            if self.finder_disc_found is not None:
+                self.finder.disconnect(self.finder_disc_found)
+                self.finder_disc_found = None
+            
+            if self.finder_disc_lost is not None:
+                self.finder.disconnect(self.finder_disc_lost)
+                self.finder_disc_lost = None
+
        # udev code to find DVD drive on system
+
        client = GUdev.Client(subsystems=['block'])
        for device in client.query_by_subsystem("block"):
            if device.has_property("ID_CDROM"):
                self.dvddevice=device.get_device_file()
                self.dvdname=device.get_property("ID_FS_LABEL")
+
+       # Setup input source discovery
+       if not self.finder:
+           self.finder = udevdisco.InputFinder()
+           print(self.finder)
+
+           # Watch for DVD discovery events
+           self.finder_disc_found = self.finder.connect("disc-found",
+                                                        self.on_disc_found)
+           self.finder_disc_lost = self.finder.connect("disc-lost",
+                                                        self.on_disc_lost)
 
        if self.dvddevice:
 
@@ -1237,10 +1291,10 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            fileopen=theme.load_icon(Gtk.STOCK_OPEN, size, 0)
 
 
-           liststore = Gtk.ListStore(GdkPixbuf.Pixbuf, GObject.TYPE_STRING, GObject.TYPE_INT)
-           liststore.append([None, "", 0])
-           liststore.append([fileopen, "Choose File...", 1])
-           liststore.append([cdrom, self.dvdname, 2])
+           liststore = Gtk.ListStore(GdkPixbuf.Pixbuf, GObject.TYPE_STRING, GObject.TYPE_STRING, GObject.TYPE_INT)
+           liststore.append([None, "", "", 0])
+           liststore.append([fileopen, "Choose File...", "", 1])
+           liststore.append([cdrom, self.dvdname, self.dvddevice,  2])
 
            self.combo = Gtk.ComboBox(model=liststore)
 
@@ -1274,7 +1328,8 @@ class TransmageddonUI(Gtk.ApplicationWindow):
         
        iter = widget.get_active_iter()
        model = widget.get_model()
-       item = model.get_value(iter, 2)
+       item = model.get_value(iter, 3)
+       print("item is " + str(item))
 
        if item == 1:
 

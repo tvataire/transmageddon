@@ -143,12 +143,14 @@ class Transcoder(GObject.GObject):
        # including any extra elements between uridecodebin and encodebin
        x=0
        self.audioprofilenames=[]
+       # print(self.audiodata)
        while x < len(self.audiodata): 
-           if self.audiodata[x]['outputaudiocaps'] != False:
+           if self.audiodata[x]['outputaudiocaps'] != (False or "noaud"):
                if self.container==False:
                    self.encodebinprofile = GstPbutils.EncodingAudioProfile.new (self.audiodata[x]['outputaudiocaps'], audiopreset, Gst.Caps.new_any(), 0)
                else:
                    audiopreset=None
+                   # print(self.audiodata[x]['outputaudiocaps'])
                    self.audioprofile = GstPbutils.EncodingAudioProfile.new(self.audiodata[x]['outputaudiocaps'], audiopreset, Gst.Caps.new_any(), 0)
                    self.audioprofilenames.append("audioprofilename"+str(x))
                    self.audioprofile.set_name(self.audioprofilenames[x])
@@ -332,9 +334,11 @@ class Transcoder(GObject.GObject):
                    if self.probestreamid not in self.usedstreamids:
                        #FIXME - Need to clean usedstreamid list at some point
                        self.usedstreamids.append(self.probestreamid)
-                       # print(str(pad)+" - "+"streamid from parse_stream_start "+ str(self.probestreamid))
-                       self.sinkpad = self.encodebin.emit("request-profile-pad", self.audioprofilenames[x])
-                       pad.link(self.sinkpad)
+                       if x < len(self.audioprofilenames):
+                           #print(self.audioprofilenames)
+                           #print(x)
+                           self.sinkpad = self.encodebin.emit("request-profile-pad", self.audioprofilenames[x])
+                           pad.link(self.sinkpad)
                x=x+1
        return Gst.PadProbeReturn.OK
 
