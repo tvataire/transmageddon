@@ -319,6 +319,9 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            if target_type == TARGET_TYPE_URI_LIST:
                uri = selection.data.strip('\r\n\x00')
                # self.builder.get_object ("FileChooser").set_uri(uri)
+       self.combo=False    # this value will hold the filechooser combo box
+       self.path=False
+       self.source_hbox=False
 
        self.start_time = False
        self.setup_source()
@@ -783,7 +786,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                                else:
                                    self.audiodata[y]['canpassthrough']=True
                                y=y+1
-              
+
 
    # define the behaviour of the other buttons
    def on_filechooser_file_set(self, widget, filename):
@@ -1217,12 +1220,16 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        A video DVD has been found, update the source combo box!
        """
        print("dvd found")
-       model = self.combo.get_model()
-       for pos, item in enumerate(model):
-           print("model is " +str(model))
-           if item[2] and item[2][0].endswith(device.path):
-               model[pos] = (item[0], device.nice_label, (item[2][0], True))
-               break
+       if hasattr(self.combo, "get_model"):
+           print(self.combo)
+           model = self.combo.get_model()
+           for pos, item in enumerate(model):
+               print("model is " +str(model))
+               if item[2] and item[2][0].endswith(device.path):
+                   model[pos] = (item[0], device.nice_label, (item[2][0], True))
+                   break
+       else:
+           self.setup_source()
     
    def on_disc_lost(self, finder, device, label):
        """
@@ -1230,30 +1237,27 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        """
        print("dvd lost")
        model = self.combo.get_model()
-       for pos, item in enumerate(model):
-           print("pos is " +str(pos))
-           print("item0 is " +str(item[0]))
-           print("item1 is " +str(item[1]))
-           print("item2 is " +str(item[2]))
-           print("device path " +str(device.path))
-           if item[2] and item[2][0].endswith(device.path):
-               model[pos] = (item[0], device.nice_label, (item[2][0], False))
-               break
+       #for pos, item in enumerate(model):
+      #     print("pos is " +str(pos))
+      #     print("item0 is " +str(item[0]))
+      #     print("item1 is " +str(item[1]))
+      #     print("item2 is " +str(item[2]))
+      #     print("device path " +str(device.path))
+      #     if item[2] and item[2][0].endswith(device.path):
+      #         model[pos] = (item[0], device.nice_label, (item[2][0], False))
+      #         break
+       self.setup_source()
 
    def setup_source(self):
        """
            Setup the source widget. Creates a combo box or a file input button
            depending on the settings and available devices.
        """
-      
-       self.path=False
-       self.source_hbox=False
-       self.combo=[]        
+
        # Already exists? Remove it!
-       if self.combo:
+       if self.combo:	
            self.source_hbox.remove(self.combo)
            self.combo.destroy()
-        
 
        if self.finder:
             if self.finder_disc_found is not None:
@@ -1283,8 +1287,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            self.finder_disc_lost = self.finder.connect("disc-lost",
                                                         self.on_disc_lost)
 
-       if self.dvddevice:
-
+       if self.dvdname:
            theme = Gtk.IconTheme.get_default()
            size= Gtk.icon_size_lookup(Gtk.IconSize.MENU)[1]
            cdrom=theme.load_icon(Gtk.STOCK_CDROM, size, 0)
@@ -1308,7 +1311,6 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                 
            self.combo.set_active(0)
            self.combo.connect("changed", self.on_source_changed)
-
        else:
            self.combo = Gtk.FileChooserButton(_("(None)"))
           
@@ -1319,6 +1321,8 @@ class TransmageddonUI(Gtk.ApplicationWindow):
         
        # Attach and show the source
        self.source_hbox.show_all()
+
+      
 
    def on_source_changed(self, widget):
        """
