@@ -430,12 +430,9 @@ class Transcoder(GObject.GObject):
                    else:
                            src_pad.link(self.sinkpad)
    def dvdreadproperties(self, parent, element):
-        print("setting DVD properties")
-        print(self.streamdata['filename'])
-        print(self.streamdata['dvdtitle'])
-        #if self.streamdata['dvdtitle']:
-        element.set_property("device", self.streamdata['filename'])
-        element.set_property("title", self.streamdata['dvdtitle'])
+        if "GstDvdReadSrc" in str(element)	:
+            element.set_property("device", self.streamdata['filename'])
+            element.set_property("title", self.streamdata['dvdtitle'])
 
    def OnEncodebinElementAdd(self, encodebin, element):
        factory=element.get_factory()
