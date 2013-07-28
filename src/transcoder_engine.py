@@ -383,6 +383,7 @@ class Transcoder(GObject.GObject):
        if (self.container==False):
            a =  origin.to_string()
            if a.startswith("audio/"):
+               print("a is " + str(a))
                sinkpad = self.encodebin.get_static_pad("audio_0")
                src_pad.link(sinkpad)
        else:
