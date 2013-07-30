@@ -967,7 +967,10 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                self.ContainerFormatSuffix = codecfinder.audiosuffixmap[container]
            else:
                self.ContainerFormatSuffix = codecfinder.csuffixmap[container]
-       self.streamdata['outputfilename'] = str(self.nosuffix+self.streamdata['timestamp']+self.ContainerFormatSuffix)
+       if self.isdvd:
+           self.streamdata['outputfilename'] = str(self.dvdname)+"_"+str(self.streamdata['dvdtitle'])+str(self.streamdata['timestamp'])+str(self.ContainerFormatSuffix)
+       else:
+           self.streamdata['outputfilename'] = str(self.nosuffix+self.streamdata['timestamp']+self.ContainerFormatSuffix)
        if (self.havevideo and (self.videodata[0]['outputvideocaps'] != "novid")):
            self.streamdata['outputdirectory']=self.videodirectory
        else:
