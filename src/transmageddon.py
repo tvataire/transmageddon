@@ -31,7 +31,7 @@ os.environ["GST_DEBUG_DUMP_DOT_DIR"] = "/tmp"
 import which
 import time
 from gi.repository import Notify
-from gi.repository import GdkX11, Gio, Gtk, GLib, Gst, GstPbutils, GstTag
+from gi.repository import GdkX11, Gdk, Gio, Gtk, GLib, Gst, GstPbutils, GstTag
 from gi.repository import GUdev
 from gi.repository import GObject, GdkPixbuf
 GObject.threads_init()
@@ -273,6 +273,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        self.audioinformation = self.builder.get_object("audioinformation")
        self.videocodec = self.builder.get_object("videocodec")
        self.audiocodec = self.builder.get_object("audiocodec")
+       self.langbutton = self.builder.get_object("langbutton")
        self.audiobox = dynamic_comboboxes_audio(GObject.TYPE_PYOBJECT)
        self.videobox = dynamic_comboboxes_video(GObject.TYPE_PYOBJECT)
        self.CodecBox = self.builder.get_object("CodecBox")
@@ -353,6 +354,22 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                self.set_icon_from_file("transmageddon.png")
            except:
                print("failed to find appicon")
+
+       # populate language button and use CSS to tweak it - not perfect yet. FIXME -the Language item should look part of the metadata above it,
+       # currently it is slightly right aligned.
+       screen = Gdk.Screen.get_default()
+       css_provider = Gtk.CssProvider()
+       self.langbutton.set_name("LANGB")
+       test=css_provider.load_from_data(b"""#LANGB { border-top-style:none; border-left-style:none; border-right-style:none; border-bottom-style:none; padding: 0; border-radius: 0px;}""")
+       Gtk.StyleContext.add_provider_for_screen(
+       Gdk.Screen.get_default(), 
+       css_provider,     
+       Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+)      
+       self.languagelabel = Gtk.Label()
+       self.languagelabel.set_markup("<small>Language:</small>")
+       self.languagelabel.set_justify(Gtk.Justification.LEFT)
+       self.langbutton.add_child(self.builder, self.languagelabel, None)
 
        # default all but top box to insensitive by default
        # self.containerchoice.set_sensitive(False)
@@ -440,12 +457,10 @@ class TransmageddonUI(Gtk.ApplicationWindow):
 
        for (name, device) in (list(presets.get().items())):
            shortname.append(str(name))
-       # self.presetchoices = dict(zip(devicelist, shortname))
        self.presetchoices = shortname
        self.presetchoice.prepend_text(_("No Presets"))
 
        self.waiting_for_signal="False"
-
 
    # define the media structures here as the canonical location. This structure should include 
    # everything needed for the pipelines. 
@@ -663,20 +678,13 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                                languagecode = False
                                languagename = languagedata
                        else:
-                               languagecode = False
-                               languagename = False     
+                               languagecode = None # We use None here so that we in transcoder engine can differentiate between, 
+                                                   # unknown language and known language, but no language code.
+                               languagename = (_("Unknown"))     
 
                        self.haveaudio=True
                        self.audiodata.append(self.add_audiodata_row(i.get_channels(), i.get_sample_rate(), i.get_caps(), False, streamid, False, False, languagename, languagecode))
-                       if languagedata == None:
-                           # load language setting ui
-                           output=langchooser.languagechooser(self)
-                           output.languagewindow.run()
-                           self.audiodata[self.audiostreamcounter]['languagecode'] = output.langcode
-                           self.audiodata[self.audiostreamcounter]['language'] = GstTag.tag_get_language_name(output.langcode)
-                             
 
-                           # self.audiodata[self.audiostreamcounter]['language']=_("Unknown language")
                        if self.audiostreamcounter > 0:
                            combo = Gtk.ComboBoxText.new()
                            self.audiorows.append(combo)
@@ -721,11 +729,14 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            if self.haveaudio:
                self.markupaudioinfo=[]
                if self.audiostreamcounter==0:
-                   self.markupaudioinfo.append(''.join(('<small>','Audio channels: ', str(self.audiodata[self.audiostreamcounter]['audiochannels']), '</small>',"\n", '<small>','Audio codec: ',str(GstPbutils.pb_utils_get_codec_description(self.audiodata[self.audiostreamcounter]['inputaudiocaps'])), "\n", 'Language: ', str(self.audiodata[self.audiostreamcounter]['language']),'</small>')))
+                   self.markupaudioinfo.append(''.join(('<small>','Audio channels: ', str(self.audiodata[self.audiostreamcounter]['audiochannels']), '</small>',"\n", '<small>','Audio codec: ',str(GstPbutils.pb_utils_get_codec_description(self.audiodata[self.audiostreamcounter]['inputaudiocaps'])),'</small>')))
                    self.audioinformation.set_markup("".join(self.markupaudioinfo))
+                   self.languagelabel.set_markup(''.join(('<u><small>''Language: ', str(self.audiodata[self.audiostreamcounter]['language']),'</small></u>')))
+                   self.langbutton.set_visible(True)
                else:
                    if self.audiostreamcounter > 0:
                        x=0
+                       self.langbutton.set_visible(False)
                        while x <= self.audiostreamcounter:
                            self.markupaudioinfo.append(''.join(('<small>','<b>','Audiostream no: ',str(x+1),'</b>','</small>'," ",'<small>','Channels: ', str(self.audiodata[x]['audiochannels']), '</small>'," - ", '<small>',str(GstPbutils.pb_utils_get_codec_description(self.audiodata[x]['inputaudiocaps'])), " - ", self.audiodata[x]['language'],'</small>',"\n")))
                            self.audioinformation.set_markup("".join(self.markupaudioinfo))
@@ -818,6 +829,15 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                    self.bogus=1
                self.nocontaineroptiontoggle=False
            self.containerchoice.set_sensitive(True)
+
+
+   def on_langbutton_clicked(self, widget):
+       # load language setting ui
+       output=langchooser.languagechooser(self)
+       output.languagewindow.run()
+       self.audiodata[self.audiostreamcounter]['languagecode'] = output.langcode
+       self.audiodata[self.audiostreamcounter]['language'] = GstTag.tag_get_language_name(output.langcode)
+       self.languagelabel.set_markup(''.join(('<u><small>''Language: ', str(self.audiodata[self.audiostreamcounter]['language']),'</small></u>')))
 
    def _start_transcoding(self): 
        self._transcoder = transcoder_engine.Transcoder(self.streamdata,
@@ -1219,12 +1239,10 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        """
        A video DVD has been found, update the source combo box!
        """
-       print("dvd found")
+       # print("dvd found")
        if hasattr(self.combo, "get_model"):
-           print(self.combo)
            model = self.combo.get_model()
            for pos, item in enumerate(model):
-               print("model is " +str(model))
                if item[2] and item[2][0].endswith(device.path):
                    model[pos] = (item[0], device.nice_label, (item[2][0], True))
                    break
@@ -1235,17 +1253,8 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        """
             A video DVD has been removed, update the source combo box!
        """
-       print("dvd lost")
+       # print("dvd lost")
        model = self.combo.get_model()
-       #for pos, item in enumerate(model):
-      #     print("pos is " +str(pos))
-      #     print("item0 is " +str(item[0]))
-      #     print("item1 is " +str(item[1]))
-      #     print("item2 is " +str(item[2]))
-      #     print("device path " +str(device.path))
-      #     if item[2] and item[2][0].endswith(device.path):
-      #         model[pos] = (item[0], device.nice_label, (item[2][0], False))
-      #         break
        self.setup_source()
 
    def setup_source(self):
@@ -1279,7 +1288,6 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        # Setup input source discovery
        if not self.finder:
            self.finder = udevdisco.InputFinder()
-           print(self.finder)
 
            # Watch for DVD discovery events
            self.finder_disc_found = self.finder.connect("disc-found",
@@ -1333,7 +1341,6 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        iter = widget.get_active_iter()
        model = widget.get_model()
        item = model.get_value(iter, 3)
-       print("item is " + str(item))
 
        if item == 1:
 
