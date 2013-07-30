@@ -765,6 +765,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        self.discovered.discover_uri_async(uri)
    
    def check_for_passthrough(self, containerchoice):
+       #print("checking for passthrough " + str(containerchoice.to_string()))
        videointersect = Gst.Caps.new_empty()
        audiointersect = []
        for x in self.audiostreamids:
@@ -1190,11 +1191,16 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        self.audiodata[x]['dopassthrough']=False
        if (self.houseclean == False and self.usingpreset==False):
                no=self.audiorows[x].get_active()
-               self.audiodata[x]['outputaudiocaps'] = self.audiocodecs[x][no]
+               #print("self.audiocodecs " + self.audiocodecs[x][no])
+               if self.audiocodecs[x][no] == "pass":
+                   self.audiodata[x]['outputaudiocaps'] = self.audiodata[x]['inputaudiocaps']
+               else:
+                   self.audiodata[x]['outputaudiocaps'] = self.audiocodecs[x][no]
                if self.streamdata['container'] != False:
                    if self.audiorows[x].get_active() ==  self.audiopassmenuno:
                        self.audiodata[x]['dopassthrough']= True
                elif self.usingpreset==True:
+                   #print("preset audio codec " + self.presetaudiocodec)
                    self.audiodata[x]['outputaudiocaps'] = self.presetaudiocodec
 
    def on_videocodec_changed(self, widget):
@@ -1368,10 +1374,11 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            dvd=dvdtrackchooser.dvdtrackchooser(self)
            dvd.dvdwindow.run()
            self.isdvd=dvd.isdvd
-           self.streamdata['filename'] = self.dvddevice
-           self.streamdata['filechoice'] = "dvd://"+self.dvddevice
-           self.streamdata['dvdtitle']=dvd.dvdtitle
-           self.on_filechooser_file_set(self,self.dvddevice)
+           if self.isdvd != False:
+               self.streamdata['filename'] = self.dvddevice
+               self.streamdata['filechoice'] = "dvd://"+self.dvddevice
+               self.streamdata['dvdtitle']=dvd.dvdtitle
+               self.on_filechooser_file_set(self,self.dvddevice)
 
     
    def set_source_to_path(self, path):

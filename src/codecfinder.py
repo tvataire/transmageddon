@@ -140,8 +140,7 @@ def get_muxer_element(containercaps):
                    if x.direction == Gst.PadDirection.SRC]
            for caps in sinkcaps:
                intersect = caps.intersect(containercaps)
-               # intersect is EMPTY, not FALSE is this a bindings bug?
-               if intersect != "EMPTY":
+               if intersect.to_string() != "EMPTY":
                    if elementname == False:
                        elementname = element
                    else:

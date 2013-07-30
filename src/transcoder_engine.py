@@ -150,7 +150,7 @@ class Transcoder(GObject.GObject):
                    self.encodebinprofile = GstPbutils.EncodingAudioProfile.new (self.audiodata[x]['outputaudiocaps'], audiopreset, Gst.Caps.new_any(), 0)
                else:
                    audiopreset=None
-                   # print(self.audiodata[x]['outputaudiocaps'])
+                   # print(self.audiodata[x]['outputaudiocaps'].to_string())
                    self.audioprofile = GstPbutils.EncodingAudioProfile.new(self.audiodata[x]['outputaudiocaps'], audiopreset, Gst.Caps.new_any(), 0)
                    self.audioprofilenames.append("audioprofilename"+str(x))
                    self.audioprofile.set_name(self.audioprofilenames[x])
@@ -355,6 +355,7 @@ class Transcoder(GObject.GObject):
            #self.emit('got-error', err.message)
        elif mtype == Gst.MessageType.ELEMENT:
            if GstPbutils.is_missing_plugin_message(message):
+               print("missing something")
                if self.missingplugin==False: #don't think this is correct if more than one plugin installed
                    self.missingplugin=message
                    #output=GstPbutils.missing_plugin_message_get_description(message)
