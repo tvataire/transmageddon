@@ -1009,13 +1009,6 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            else:
                self.waiting_for_signal="True"
 
-   #def on_queuebutton_clicked(self, widget):
-   #    # load queue window
-   #    self.gather_streamdata()
-   #    output=batch.batchchooser(self,self.streamdata, self.audiodata, self.videodata)
-   #    output.batchwindow.run()
-   #    print("queue")
-
    def on_cancelbutton_clicked(self, widget):
        self.combo.set_sensitive(True)
        self.containerchoice.set_sensitive(True)
@@ -1040,17 +1033,18 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        # clean up stuff from previous run
        self.houseclean=True # set this to avoid triggering events when cleaning out menus
        x=0
+       if self.havevideo==True:
+               if self.streamdata['container'] != False:
+                   for c in self.videocodecs:
+                       self.videorows[x].remove(0)
+                   self.videocodecs=[]
+
        while x < len(self.audiocodecs): #self.audiostreamcounter:
            if self.audiocodecs:
                for c in self.audiocodecs[x]: # 
                    self.audiorows[x].remove(0)
                if x==self.audiostreamcounter:
                    self.audiocodecs=[]
-           if self.havevideo==True:
-               if self.streamdata['container'] != False:
-                   for c in self.videocodecs:
-                       self.videorows[x].remove(0)
-                   self.videocodecs=[]
            x=x+1
        self.houseclean=False
        # end of housecleaning
@@ -1101,6 +1095,16 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                x=x+1
        else:
            self.audiorows[x].set_sensitive(False)
+
+
+       # Only allow one audio stream when using presets or when using FLV container or for Audio only transcode
+       if (self.streamdata['container'].to_string() == "video/x-flv") or (self.usingpreset==True) or (self.streamdata['container']==False):
+           print("one audio stream!!")
+           #default to setting each entry except first one to 'no audio'
+           #listen to changes to any of the entries, if one change, the change others to 'no audio'
+           
+           #How to do this for presets? change logic for preset choices or add 'no audio' option when using presets?
+
 
        # fill in with video
        if self.havevideo==True:
