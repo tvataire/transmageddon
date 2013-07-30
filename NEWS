@@ -1,3 +1,8 @@
+0.26 - 
+  Added support for setting language of stream
+  Added support for handling multiple audio streams
+  Added support for DVD ripping
+
 0.25 - 05.10.2012
   Fixed critical bug for remuxing
 

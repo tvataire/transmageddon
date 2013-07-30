@@ -15,10 +15,6 @@ This list is completely unordered. Nothing about the ordering in this list shoul
   Port application to windows and get a py2exe binary going with everything. The video
   directory stuff is only known current non-portable.
 
-* DVD input support
-  Maybe it would be nice to allow DVDs to be the input. Could probably look at Thoggen 
-  for how to do that. Not sure we can do it without a lot of extra UI though.
-
 * Add an audio denoise filter
   Audio can be filtered with an audio filter to remove noise.
 
@@ -53,9 +49,6 @@ This list is completely unordered. Nothing about the ordering in this list shoul
 
 * AVC HD support.
   Variation of MPEG TS with H264 and AC3 audio
-
-* Support multiple audio tracks. Currently 'working', but we need fixes to uridecodebin to
-  make streams identifiable.
 
 * Batch transcoding - multiple files 'programmed up front'
 
