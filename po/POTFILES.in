@@ -6,4 +6,5 @@ src/presets.py
 [type: gettext/glade]src/transmageddon-language-chooser.ui
 src/transmageddon.py
 [type: gettext/glade]src/transmageddon.ui
+src/udevdisco.py
 src/utils.py
