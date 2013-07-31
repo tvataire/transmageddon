@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: transmageddon\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=transmageddon&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2013-04-06 09:14+0000\n"
-"PO-Revision-Date: 2013-04-08 07:44-0300\n"
+"POT-Creation-Date: 2013-07-30 14:16+0000\n"
+"PO-Revision-Date: 2013-07-30 13:41-0300\n"
 "Last-Translator: Rafael Ferreira <rafael.f.f1@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 1.5.5\n"
+"X-Generator: Poedit 1.5.7\n"
 
 #: ../transmageddon.desktop.in.in.h:1
 msgid "Transmageddon Video Transcoder"
@@ -166,149 +166,153 @@ msgid "Debug"
 msgstr "Depurar"
 
 #. set default values for various variables
-#: ../src/transmageddon.py:360 ../src/transmageddon.py:801
-#: ../src/transmageddon.py:1000 ../src/transmageddon.py:1109
+#: ../src/transmageddon.py:384 ../src/transmageddon.py:820
+#: ../src/transmageddon.py:1024 ../src/transmageddon.py:1144
 msgid "Transcoding Progress"
 msgstr "Progresso da conversão"
 
 #. add i18n "No container"option
-#: ../src/transmageddon.py:403
+#: ../src/transmageddon.py:427
 msgid "No container (Audio-only)"
 msgstr "Sem container (somente áudio)"
 
 #. Populate the rotatation box
 #. print("populating rotationbox")
-#: ../src/transmageddon.py:407
+#: ../src/transmageddon.py:431
 msgid "No rotation (default)"
 msgstr "Não girar (padrão)"
 
-#: ../src/transmageddon.py:408
+#: ../src/transmageddon.py:432
 msgid "Clockwise 90 degrees"
 msgstr "Sentido horário 90 graus"
 
-#: ../src/transmageddon.py:409
+#: ../src/transmageddon.py:433
 msgid "Rotate 180 degrees"
 msgstr "Girar 180 graus"
 
-#: ../src/transmageddon.py:410
+#: ../src/transmageddon.py:434
 msgid "Counterclockwise 90 degrees"
 msgstr "Sentido anti-horário 90 graus"
 
-#: ../src/transmageddon.py:411
+#: ../src/transmageddon.py:435
 msgid "Horizontal flip"
 msgstr "Inverter na horizontal"
 
-#: ../src/transmageddon.py:412
+#: ../src/transmageddon.py:436
 msgid "Vertical flip"
 msgstr "Inverter na vertical"
 
-#: ../src/transmageddon.py:413
+#: ../src/transmageddon.py:437
 msgid "Upper left diagonal flip"
 msgstr "Inverter na diagonal superior esquerda"
 
-#: ../src/transmageddon.py:414
+#: ../src/transmageddon.py:438
 msgid "Upper right diagnonal flip"
 msgstr "Inverter na diagonal superior direita"
 
-#: ../src/transmageddon.py:438
+#: ../src/transmageddon.py:461
 msgid "No Presets"
 msgstr "Sem predefinições"
 
-#: ../src/transmageddon.py:550
+#: ../src/transmageddon.py:572
 #, python-format
 msgid "%(min)d:%(sec)02d"
 msgstr "%(min)d:%(sec)02d"
 
-#: ../src/transmageddon.py:580
+#: ../src/transmageddon.py:602
 #, python-format
 msgid "File saved to %(dir)s"
 msgstr "Arquivo salvo em %(dir)s"
 
-#: ../src/transmageddon.py:583
+#: ../src/transmageddon.py:605
 #, python-format
 msgid "%(file)s saved to %(dir)s"
 msgstr "%(file)s salvo em %(dir)s"
 
-#: ../src/transmageddon.py:593
+#: ../src/transmageddon.py:615
 msgid "Done Transcoding"
 msgstr "Conversão concluída"
 
-#: ../src/transmageddon.py:611 ../src/transmageddon.py:962
+#: ../src/transmageddon.py:633 ../src/transmageddon.py:993
 #, python-format
 msgid "Writing %(filename)s"
 msgstr "Gravando %(filename)s"
 
-#: ../src/transmageddon.py:615
+#: ../src/transmageddon.py:637
 #, python-format
 msgid "Pass %(count)d Complete. "
 msgstr "Passo %(count)d completo. "
 
+#. We use None here so that we in transcoder engine can differentiate between,
+#. unknown language and known language, but no language code.
+#: ../src/transmageddon.py:683
+msgid "Unknown"
+msgstr "Desconhecido"
+
 #. if there is no audio streams
 #. add a 'No Audio option'
-#: ../src/transmageddon.py:728 ../src/transmageddon.py:1058
+#: ../src/transmageddon.py:746 ../src/transmageddon.py:1083
 msgid "No Audio"
 msgstr "Sem áudio"
 
 #. add a 'No Video option'
-#: ../src/transmageddon.py:737 ../src/transmageddon.py:1096
+#: ../src/transmageddon.py:755 ../src/transmageddon.py:1131
 msgid "No Video"
 msgstr "Sem vídeo"
 
-#: ../src/transmageddon.py:851
+#: ../src/transmageddon.py:879
 msgid ""
 "Got an invalid response from codec installer, can not install missing codec."
 msgstr ""
 "Obteve-se uma resposta inválida do instalador do codec. Não foi possível "
 "instalar o codec que faltava."
 
-#: ../src/transmageddon.py:855
+#: ../src/transmageddon.py:883
 msgid "No Codec installer helper application available."
 msgstr "Não está disponível nenhum aplicativo de ajuda de instalação do codec."
 
-#: ../src/transmageddon.py:859
+#: ../src/transmageddon.py:887
 msgid "Plugins not found, choose different codecs."
 msgstr "Plugins não encontrados, escolha codecs diferentes."
 
-#: ../src/transmageddon.py:869
+#: ../src/transmageddon.py:897
 msgid "Codec installation aborted."
 msgstr "Instalação do codec cancelada."
 
-#: ../src/transmageddon.py:877
+#: ../src/transmageddon.py:905
 msgid "Missing plugin installation failed."
 msgstr "A instalação do plugin que faltava falhou."
 
-#: ../src/transmageddon.py:965
+#: ../src/transmageddon.py:996
 #, python-format
 msgid "Pass %(count)d Progress"
 msgstr "Progresso de passos %(count)d"
 
-#: ../src/transmageddon.py:1064
+#: ../src/transmageddon.py:1089
 msgid "Audio passthrough"
 msgstr "Passagem de áudio"
 
-#: ../src/transmageddon.py:1102
+#: ../src/transmageddon.py:1137
 msgid "Video passthrough"
 msgstr "Passagem de vídeo"
 
-#: ../src/transmageddon.py:1259
+#: ../src/transmageddon.py:1336
 msgid "(None)"
 msgstr "(Nenhum)"
 
-#: ../src/transmageddon.py:1281
+#: ../src/transmageddon.py:1360
 msgid "Choose Source File..."
 msgstr "Escolher um arquivo fonte..."
 
 #: ../src/transmageddon.ui.h:1
 msgid ""
 "<small>Audio Channels:</small>\n"
-"<small>Audio Codec:</small>\n"
-"<small>Language:</small>"
+"<small>Audio Codec:</small>"
 msgstr ""
 "<small>Canais de áudio:</small>\n"
-"<small>Codec de áudio:</small>\n"
-"<small>Idioma:</small>"
+"<small>Codec de áudio:</small>"
 
-#: ../src/transmageddon.ui.h:4
+#: ../src/transmageddon.ui.h:3
 msgid ""
 "<small>Video height&#47;width:</small>\n"
 "<small>Video Codec:</small>"
@@ -316,31 +320,31 @@ msgstr ""
 "<small>Altura do video&#47;largura:</small>\n"
 "<small>Codec de vídeo:</small>"
 
-#: ../src/transmageddon.ui.h:6
+#: ../src/transmageddon.ui.h:5
 msgid "<b>Presets:</b>"
 msgstr "<b>Predefinição:</b>"
 
-#: ../src/transmageddon.ui.h:7
+#: ../src/transmageddon.ui.h:6
 msgid "<b>Choose Input File:</b>"
 msgstr "<b>Escolha o arquivo de entrada:</b>"
 
-#: ../src/transmageddon.ui.h:8
+#: ../src/transmageddon.ui.h:7
 msgid "<b>Output Format:</b>"
 msgstr "<b>Formato de saída:</b>"
 
-#: ../src/transmageddon.ui.h:9
+#: ../src/transmageddon.ui.h:8
 msgid "<b>Choose Audio Codec</b>:"
 msgstr "<b>Escolha o codec de áudio</b>:"
 
-#: ../src/transmageddon.ui.h:10
+#: ../src/transmageddon.ui.h:9
 msgid "<b>Choose Video Codec</b>:"
 msgstr "<b>Escolha o codec de vídeo</b>:"
 
-#: ../src/transmageddon.ui.h:11
+#: ../src/transmageddon.ui.h:10
 msgid "<small>Rotate the video image if needed</small>"
 msgstr "<small>Girar a imagem de vídeo se necessário</small>"
 
-#: ../src/transmageddon.ui.h:12
+#: ../src/transmageddon.ui.h:11
 msgid "_Transcode"
 msgstr "_Converter"
 
@@ -348,30 +352,3 @@ msgstr "_Converter"
 #, python-format
 msgid "Can't find %(path)s in any known prefix!"
 msgstr "Não foi possível encontrar %(path)s em qualquer prefixo conhecido!"
-
-#~ msgid "Choose File..."
-#~ msgstr "Escolher um arquivo..."
-
-#~ msgid "Unknown language"
-#~ msgstr "Idioma desconhecido"
-
-#~ msgid "<small>Audio codec:</small>"
-#~ msgstr "<small>Codec de áudio:</small>"
-
-#~ msgid "<small>Video codec:</small>"
-#~ msgstr "<small>Codec de vídeo:</small>"
-
-#~ msgid "_Help"
-#~ msgstr "_Ajuda"
-
-#~ msgid "Start next pass"
-#~ msgstr "Iniciar próximo passo"
-
-#~ msgid "No audio parser, passthrough not available"
-#~ msgstr "Nenhum analisador de áudio, passagem não disponível"
-
-#~ msgid "No video parser, passthrough not available"
-#~ msgstr "Nenhum analisador de vídeo, passagem não disponível"
-
-#~ msgid "Uknown error"
-#~ msgstr "Erro desconhecido"
