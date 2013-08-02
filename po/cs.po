@@ -1,7 +1,6 @@
 # Czech translation for transmageddon.
 # Copyright (C) 2009 transmageddon's COPYRIGHT HOLDER
 # This file is distributed under the same license as the transmageddon package.
-#
 # Marek Černocký <marek@manet.cz>, 2009, 2010, 2011, 2012, 2013.
 #
 msgid ""
@@ -9,8 +8,8 @@ msgstr ""
 "Project-Id-Version: transmageddon master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=transmageddon&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2013-06-25 09:57+0000\n"
-"PO-Revision-Date: 2013-06-26 10:13+0200\n"
+"POT-Creation-Date: 2013-07-31 17:33+0000\n"
+"PO-Revision-Date: 2013-08-02 23:54+0200\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -64,21 +63,6 @@ msgstr "Délka:"
 #: ../src/dvdtrackchooser.py:56
 msgid "Minutes"
 msgstr "minut"
-
-#: ../src/dvdtrackchooser.py:57
-#| msgid "Title:"
-msgid "Title: "
-msgstr "Název: "
-
-#: ../src/dvdtrackchooser.py:57
-#| msgid "Languages:"
-msgid "Languages: "
-msgstr "Jazyky: "
-
-#: ../src/dvdtrackchooser.py:57
-#| msgid "Length:"
-msgid " Length: "
-msgstr " Délka: "
 
 #: ../src/presets.py:78
 #, python-format
@@ -175,149 +159,157 @@ msgid "Debug"
 msgstr "Ladit"
 
 #. set default values for various variables
-#: ../src/transmageddon.py:364 ../src/transmageddon.py:805
-#: ../src/transmageddon.py:1004 ../src/transmageddon.py:1113
+#: ../src/transmageddon.py:384 ../src/transmageddon.py:820
+#: ../src/transmageddon.py:1024 ../src/transmageddon.py:1144
 msgid "Transcoding Progress"
 msgstr "Průběh překódování"
 
 #. add i18n "No container"option
-#: ../src/transmageddon.py:407
+#: ../src/transmageddon.py:427
 msgid "No container (Audio-only)"
 msgstr "Bez kontejneru (pouze zvuk)"
 
 #. Populate the rotatation box
 #. print("populating rotationbox")
-#: ../src/transmageddon.py:411
+#: ../src/transmageddon.py:431
 msgid "No rotation (default)"
 msgstr "Bez otáčení (výchozí)"
 
-#: ../src/transmageddon.py:412
+#: ../src/transmageddon.py:432
 msgid "Clockwise 90 degrees"
 msgstr "Otočit o 90 stupňů ve směru hodin"
 
-#: ../src/transmageddon.py:413
+#: ../src/transmageddon.py:433
 msgid "Rotate 180 degrees"
 msgstr "Otočit o 180 stupňů"
 
-#: ../src/transmageddon.py:414
+#: ../src/transmageddon.py:434
 msgid "Counterclockwise 90 degrees"
 msgstr "Otočit o 90 stupňů proti směru hodin"
 
-#: ../src/transmageddon.py:415
+#: ../src/transmageddon.py:435
 msgid "Horizontal flip"
 msgstr "Překlopit vodorovně"
 
-#: ../src/transmageddon.py:416
+#: ../src/transmageddon.py:436
 msgid "Vertical flip"
 msgstr "Překlopit svisle"
 
-#: ../src/transmageddon.py:417
+#: ../src/transmageddon.py:437
 msgid "Upper left diagonal flip"
 msgstr "Překlopit diagonálně zleva nahoře"
 
-#: ../src/transmageddon.py:418
+#: ../src/transmageddon.py:438
 msgid "Upper right diagnonal flip"
 msgstr "Překlopit diagonálně zprava nahoře"
 
-#: ../src/transmageddon.py:442
+#: ../src/transmageddon.py:461
 msgid "No Presets"
 msgstr "Žádné přednastavení"
 
-#: ../src/transmageddon.py:554
+#: ../src/transmageddon.py:572
 #, python-format
 msgid "%(min)d:%(sec)02d"
 msgstr "%(min)d:%(sec)02d"
 
-#: ../src/transmageddon.py:584
+#: ../src/transmageddon.py:602
 #, python-format
 msgid "File saved to %(dir)s"
 msgstr "Soubor uložen do %(dir)s"
 
-#: ../src/transmageddon.py:587
+#: ../src/transmageddon.py:605
 #, python-format
 msgid "%(file)s saved to %(dir)s"
 msgstr "%(file)s uložen do %(dir)s"
 
-#: ../src/transmageddon.py:597
+#: ../src/transmageddon.py:615
 msgid "Done Transcoding"
 msgstr "Překódování dokončeno"
 
-#: ../src/transmageddon.py:615 ../src/transmageddon.py:966
+#: ../src/transmageddon.py:633 ../src/transmageddon.py:993
 #, python-format
 msgid "Writing %(filename)s"
 msgstr "Zapisuje se %(filename)s"
 
-#: ../src/transmageddon.py:619
+#: ../src/transmageddon.py:637
 #, python-format
 msgid "Pass %(count)d Complete. "
 msgstr "Průchod %(count)d dokončen. "
 
+#. We use None here so that we in transcoder engine can differentiate between,
+#. unknown language and known language, but no language code.
+#: ../src/transmageddon.py:683
+msgid "Unknown"
+msgstr "neznámý"
+
 #. if there is no audio streams
 #. add a 'No Audio option'
-#: ../src/transmageddon.py:732 ../src/transmageddon.py:1062
+#: ../src/transmageddon.py:746 ../src/transmageddon.py:1083
 msgid "No Audio"
 msgstr "Bez zvuku"
 
 #. add a 'No Video option'
-#: ../src/transmageddon.py:741 ../src/transmageddon.py:1100
+#: ../src/transmageddon.py:755 ../src/transmageddon.py:1131
 msgid "No Video"
 msgstr "Bez videa"
 
-#: ../src/transmageddon.py:855
+#: ../src/transmageddon.py:879
 msgid ""
 "Got an invalid response from codec installer, can not install missing codec."
 msgstr ""
 "Od instalátoru kodeku přišla neplatná odpověď, chybějící kodek nelze "
 "nainstalovat."
 
-#: ../src/transmageddon.py:859
+#: ../src/transmageddon.py:883
 msgid "No Codec installer helper application available."
 msgstr "Není k dispozici žádná aplikace, která by pomohla s instalací kodeku."
 
-#: ../src/transmageddon.py:863
+#: ../src/transmageddon.py:887
 msgid "Plugins not found, choose different codecs."
 msgstr "Zásuvné moduly nenalezeny, zvolte jiný kodek."
 
-#: ../src/transmageddon.py:873
+#: ../src/transmageddon.py:897
 msgid "Codec installation aborted."
 msgstr "Instalace kodeku zrušena."
 
-#: ../src/transmageddon.py:881
+#: ../src/transmageddon.py:905
 msgid "Missing plugin installation failed."
 msgstr "Nezdařila se instalace chybějícího zásuvného modulu."
 
-#: ../src/transmageddon.py:969
+#: ../src/transmageddon.py:996
 #, python-format
 msgid "Pass %(count)d Progress"
 msgstr "Průběh průchodu %(count)d"
 
-#: ../src/transmageddon.py:1068
+#: ../src/transmageddon.py:1089
 msgid "Audio passthrough"
 msgstr "Zvuk přenést beze změny"
 
-#: ../src/transmageddon.py:1106
+#: ../src/transmageddon.py:1137
 msgid "Video passthrough"
 msgstr "Video přenést beze změny"
 
-#: ../src/transmageddon.py:1313
+#: ../src/transmageddon.py:1336
 msgid "(None)"
 msgstr "(žádný)"
 
-#: ../src/transmageddon.py:1336
+#: ../src/transmageddon.py:1360
 msgid "Choose Source File..."
 msgstr "Výběr zdrojového souboru…"
 
 #: ../src/transmageddon.ui.h:1
+#| msgid ""
+#| "<small>Audio Channels:</small>\n"
+#| "<small>Audio Codec:</small>\n"
+#| "<small>Language:</small>"
 msgid ""
 "<small>Audio Channels:</small>\n"
-"<small>Audio Codec:</small>\n"
-"<small>Language:</small>"
+"<small>Audio Codec:</small>"
 msgstr ""
 "<small>Zvukové kanály:</small>\n"
-"<small>Zvukové kodeky:</small>\n"
-"<small>Jazyk:</small>"
+"<small>Zvukové kodeky:</small>"
 
-#: ../src/transmageddon.ui.h:4
+#: ../src/transmageddon.ui.h:3
 msgid ""
 "<small>Video height&#47;width:</small>\n"
 "<small>Video Codec:</small>"
@@ -325,33 +317,37 @@ msgstr ""
 "<small>Výška × šířka videa:</small>\n"
 "<small>Videokodek:</small>"
 
-#: ../src/transmageddon.ui.h:6
+#: ../src/transmageddon.ui.h:5
 msgid "<b>Presets:</b>"
 msgstr "<b>Přednastavené:</b>"
 
-#: ../src/transmageddon.ui.h:7
+#: ../src/transmageddon.ui.h:6
 msgid "<b>Choose Input File:</b>"
 msgstr "<b>Zvolte vstupní soubor:</b>"
 
-#: ../src/transmageddon.ui.h:8
+#: ../src/transmageddon.ui.h:7
 msgid "<b>Output Format:</b>"
 msgstr "<b>Výstupní formát:</b>"
 
-#: ../src/transmageddon.ui.h:9
+#: ../src/transmageddon.ui.h:8
 msgid "<b>Choose Audio Codec</b>:"
 msgstr "<b>Zvolte zvukový kodek</b>:"
 
-#: ../src/transmageddon.ui.h:10
+#: ../src/transmageddon.ui.h:9
 msgid "<b>Choose Video Codec</b>:"
 msgstr "<b>Zvolte obrazový kodek</b>:"
 
-#: ../src/transmageddon.ui.h:11
+#: ../src/transmageddon.ui.h:10
 msgid "<small>Rotate the video image if needed</small>"
 msgstr "<small>Otočit snímky videa, pokud je zapotřebí</small>"
 
-#: ../src/transmageddon.ui.h:12
+#: ../src/transmageddon.ui.h:11
 msgid "_Transcode"
 msgstr "_Překódovat"
+
+#: ../src/udevdisco.py:221
+msgid "Not mounted."
+msgstr "Nepřipojeno"
 
 #: ../src/utils.py:76
 #, python-format
