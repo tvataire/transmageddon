@@ -2,23 +2,32 @@
 # Copyright (C) 2009 transmageddon's COPYRIGHT HOLDER
 # This file is distributed under the same license as the transmageddon package.
 # Zhang Miao <mymzhang@gmail.com>, 2009
-#
+# tuhaihe <1132321739qq@gmail.com>, 2012
 msgid ""
 msgstr ""
 "Project-Id-Version: transmageddon master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=transmageddon&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2012-04-21 15:43+0000\n"
-"PO-Revision-Date: 2012-05-24 21:31+0800\n"
+"POT-Creation-Date: 2013-07-31 17:33+0000\n"
+"PO-Revision-Date: 2013-08-03 21:51+0800\n"
 "Last-Translator: tuhaihe <1132321739qq@gmail.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 1.5.4\n"
 
-#: ../src/about.py.in:46 ../src/about.py.in:47 ../src/transmageddon.ui.h:1
+#: ../transmageddon.desktop.in.in.h:1
+msgid "Transmageddon Video Transcoder"
+msgstr "Transmageddon 视频转码工具"
+
+#: ../transmageddon.desktop.in.in.h:2
+msgid "Video format conversion tool"
+msgstr "视频格式转换工具"
+
+#: ../src/about.py.in:46 ../src/about.py.in:47
 msgid "Transmageddon"
 msgstr "Transmageddon"
 
@@ -38,7 +47,25 @@ msgstr "Transmageddon 主页"
 msgid "translator-credits"
 msgstr ""
 "Zhang Miao <mymzhang@gmail.com>, 2009\n"
-"Jiero <lililjlj@gmail.com>, 2010"
+"Jiero <lililjlj@gmail.com>, 2010\n"
+"tuhaihe <1132321739qq@gmail.com>, 2012~2013"
+
+#. create a string to push into the listview
+#: ../src/dvdtrackchooser.py:56
+msgid "Title:"
+msgstr "标题："
+
+#: ../src/dvdtrackchooser.py:56
+msgid "Languages:"
+msgstr "语言："
+
+#: ../src/dvdtrackchooser.py:56
+msgid "Length:"
+msgstr "长度："
+
+#: ../src/dvdtrackchooser.py:56
+msgid "Minutes"
+msgstr "分钟"
 
 #: ../src/presets.py:78
 #, python-format
@@ -48,17 +75,17 @@ msgstr "不是有效的整数或分数：%(value)s！"
 #: ../src/presets.py:413
 #, python-format
 msgid "Loaded device %(device)s (%(presets)d presets)"
-msgstr "载入设备 %(device)s (%(presets)d 预置)"
+msgstr "已载入设备 %(device)s (%(presets)d 预设)"
 
 #: ../src/presets.py:480
 #, python-format
 msgid "Fetching %(location)s"
-msgstr "读取 %(location)s"
+msgstr "正在读取 %(location)s"
 
 #: ../src/presets.py:487
 #, python-format
 msgid "Writing to %(file)s"
-msgstr "写入 %(file)s"
+msgstr "正在写入 %(file)s"
 
 #: ../src/presets.py:492
 #, python-format
@@ -67,27 +94,27 @@ msgstr "读取与安装 %(location)s 时发生错误：%(error)s"
 
 #: ../src/presets.py:509
 msgid "Checking for device preset updates..."
-msgstr "检查设备预置更新..."
+msgstr "检查设备预设更新..."
 
 #: ../src/presets.py:529
 #, python-format
 msgid "Device preset %(name)s is up to date"
-msgstr "预置设备 %(name)s 已是最新"
+msgstr "设备预设 %(name)s 已是最新"
 
 #: ../src/presets.py:533
 #, python-format
 msgid "Found updated device preset %(name)s"
-msgstr "找到已经更新的预置设备 %(name)s"
+msgstr "已找到更新的设备预设 %(name)s"
 
 #: ../src/presets.py:539 ../src/presets.py:552
 #, python-format
 msgid "Error installing preset %(name)s from %(location)s: %(error)s"
-msgstr "从 %(location)s 时安装预置 %(name)s 时出错: %(error)s"
+msgstr "从 %(location)s 时安装预设 %(name)s 时出错：%(error)s"
 
 #: ../src/presets.py:546
 #, python-format
 msgid "Found new device preset %(name)s"
-msgstr "发现新的设备预置 %(name)s"
+msgstr "发现新的设备预设 %(name)s"
 
 #: ../src/presets.py:559
 #, python-format
@@ -101,183 +128,257 @@ msgstr "存取 %(location)spresets.txt 时发生错误！"
 
 #: ../src/presets.py:585
 msgid "All device presets are up to date!"
-msgstr "所有预置设备已是最新！"
+msgstr "所有设备预设已是最新！"
 
-#: ../src/transmageddon.ui.h:2
-msgid "_Help"
-msgstr "帮助(_H)"
+#: ../src/transmageddon-dvdtrack-chooser.ui.h:1
+msgid "Select a DVD title"
+msgstr "选择一个 DVD 标题"
 
-#: ../src/transmageddon.ui.h:3
-msgid "_Debug"
-msgstr "调试(_D)"
+#: ../src/transmageddon-dvdtrack-chooser.ui.h:2
+#: ../src/transmageddon-language-chooser.ui.h:2
+msgid "Cancel"
+msgstr "取消"
 
-#: ../src/transmageddon.ui.h:4
-msgid "<small>Audio Channels:</small>"
-msgstr "<small>音频通道：</small>"
+#: ../src/transmageddon-dvdtrack-chooser.ui.h:3
+#: ../src/transmageddon-language-chooser.ui.h:3
+msgid "Select"
+msgstr "选择"
 
-#: ../src/transmageddon.ui.h:5
-msgid "<small>Video height&#47;width:</small>"
-msgstr "<small>视频高度&#47;宽度：</small>"
+#: ../src/transmageddon-language-chooser.ui.h:1
+msgid "Select a language"
+msgstr "选择语言"
 
-#: ../src/transmageddon.ui.h:6
-msgid "<b>Presets:</b>"
-msgstr "<b>预置：</b>"
+#. append to the menu the options
+#: ../src/transmageddon.py:162
+msgid "About"
+msgstr "关于"
 
-#: ../src/transmageddon.ui.h:7
-msgid "<b>Choose Input File:</b>"
-msgstr "<b>选择输入文件：</b>"
+#: ../src/transmageddon.py:163
+msgid "Quit"
+msgstr "退出"
 
-#: ../src/transmageddon.ui.h:8
-msgid "<b>Output Format:</b>"
-msgstr "<b>输出格式：</b>"
+#: ../src/transmageddon.py:164
+msgid "Debug"
+msgstr "调试"
 
-#: ../src/transmageddon.ui.h:9
-msgid "<small>Video codec:</small>"
-msgstr "<small>视频编码器：</small>"
-
-#: ../src/transmageddon.ui.h:10
-msgid "<small>Audio codec:</small>"
-msgstr "<small>音频编码器：</small>"
-
-#: ../src/transmageddon.ui.h:11
-msgid "<b>Choose Audio Codec</b>:"
-msgstr "<b>选择音频编码器</b>:"
-
-#: ../src/transmageddon.ui.h:12
-msgid "<b>Choose Video Codec</b>:"
-msgstr "<b>选择视频编码器</b>:"
-
-#: ../src/transmageddon.ui.h:13
-msgid "<small>Rotate the video image if needed</small>"
-msgstr "<small>如果需要的话，旋转视频图像</small>"
-
-#: ../src/transmageddon.ui.h:14
-msgid "_Transcode"
-msgstr "转码(_T)"
-
-#: ../src/transmageddon.py:300 ../src/transmageddon.py:672
-#: ../src/transmageddon.py:823 ../src/transmageddon.py:854
-#: ../src/transmageddon.py:940
+#. set default values for various variables
+#: ../src/transmageddon.py:384 ../src/transmageddon.py:820
+#: ../src/transmageddon.py:1024 ../src/transmageddon.py:1144
 msgid "Transcoding Progress"
-msgstr "转码进展"
+msgstr "转码进度"
 
 #. add i18n "No container"option
-#: ../src/transmageddon.py:336
+#: ../src/transmageddon.py:427
 msgid "No container (Audio-only)"
 msgstr "无容器(仅音频)"
 
 #. Populate the rotatation box
-#. print "populating rotationbox"
-#: ../src/transmageddon.py:340
+#. print("populating rotationbox")
+#: ../src/transmageddon.py:431
 msgid "No rotation (default)"
 msgstr "无旋转(默认)"
 
-#: ../src/transmageddon.py:341
+#: ../src/transmageddon.py:432
 msgid "Clockwise 90 degrees"
 msgstr "顺时针 90 度"
 
-#: ../src/transmageddon.py:342
+#: ../src/transmageddon.py:433
 msgid "Rotate 180 degrees"
 msgstr "旋转 180 度"
 
-#: ../src/transmageddon.py:343
+#: ../src/transmageddon.py:434
 msgid "Counterclockwise 90 degrees"
 msgstr "逆时针 90 度"
 
-#: ../src/transmageddon.py:344
+#: ../src/transmageddon.py:435
 msgid "Horizontal flip"
 msgstr "水平翻转"
 
-#: ../src/transmageddon.py:345
+#: ../src/transmageddon.py:436
 msgid "Vertical flip"
 msgstr "垂直翻转"
 
-#: ../src/transmageddon.py:346
+#: ../src/transmageddon.py:437
 msgid "Upper left diagonal flip"
 msgstr "左上对角翻转"
 
-#: ../src/transmageddon.py:347
+#: ../src/transmageddon.py:438
 msgid "Upper right diagnonal flip"
 msgstr "右上对角翻转"
 
-#: ../src/transmageddon.py:370
+#: ../src/transmageddon.py:461
 msgid "No Presets"
-msgstr "未预置"
+msgstr "无预设"
 
-#: ../src/transmageddon.py:468
+#: ../src/transmageddon.py:572
 #, python-format
 msgid "%(min)d:%(sec)02d"
 msgstr "%(min)d:%(sec)02d"
 
-#: ../src/transmageddon.py:499
+#: ../src/transmageddon.py:602
 #, python-format
 msgid "File saved to %(dir)s"
-msgstr "文件保存到 %(dir)s"
+msgstr "文件已保存到 %(dir)s"
 
-#: ../src/transmageddon.py:509
+#: ../src/transmageddon.py:605
+#, python-format
+msgid "%(file)s saved to %(dir)s"
+msgstr "%(file)s 已保存到 %(dir)s"
+
+#: ../src/transmageddon.py:615
 msgid "Done Transcoding"
 msgstr "转码完成"
 
-#: ../src/transmageddon.py:520
-#, python-format
-msgid "Pass %(count)d Complete"
-msgstr "完成 %(count)d"
-
-#: ../src/transmageddon.py:523
-msgid "Start next pass"
-msgstr "开始下一个转换"
-
-#: ../src/transmageddon.py:568
-msgid "No Audio"
-msgstr "无音频"
-
-#. add a 'No Video option'
-#: ../src/transmageddon.py:589 ../src/transmageddon.py:922
-msgid "No Video"
-msgstr "无视频"
-
-#: ../src/transmageddon.py:750
-msgid "Plugins not found, choose different codecs."
-msgstr "插件未找到，选择不同编码器。"
-
-#: ../src/transmageddon.py:758
-msgid "Codec installation aborted."
-msgstr "编码器安装中止。"
-
-#: ../src/transmageddon.py:766
-msgid "Missing plugin installation failed: "
-msgstr "缺少的插件安装失败："
-
-#: ../src/transmageddon.py:821
+#: ../src/transmageddon.py:633 ../src/transmageddon.py:993
 #, python-format
 msgid "Writing %(filename)s"
 msgstr "写入 %(filename)s"
 
-#: ../src/transmageddon.py:826
+#: ../src/transmageddon.py:637
+#, python-format
+msgid "Pass %(count)d Complete. "
+msgstr "传输 %(count)d 完成。"
+
+#. We use None here so that we in transcoder engine can differentiate between,
+#. unknown language and known language, but no language code.
+#: ../src/transmageddon.py:683
+#| msgid "Uknown error"
+msgid "Unknown"
+msgstr "未知"
+
+#. if there is no audio streams
+#. add a 'No Audio option'
+#: ../src/transmageddon.py:746 ../src/transmageddon.py:1083
+msgid "No Audio"
+msgstr "无音频"
+
+#. add a 'No Video option'
+#: ../src/transmageddon.py:755 ../src/transmageddon.py:1131
+msgid "No Video"
+msgstr "无视频"
+
+#: ../src/transmageddon.py:879
+msgid ""
+"Got an invalid response from codec installer, can not install missing codec."
+msgstr "编解码器安装程序返回无效响应，无法安装缺少的编解码器。"
+
+#: ../src/transmageddon.py:883
+msgid "No Codec installer helper application available."
+msgstr "无可用的编解码器安装程序辅助应用程序。"
+
+#: ../src/transmageddon.py:887
+msgid "Plugins not found, choose different codecs."
+msgstr "插件未找到，请选择不同的编解码器。"
+
+#: ../src/transmageddon.py:897
+msgid "Codec installation aborted."
+msgstr "编解码器安装中止。"
+
+#: ../src/transmageddon.py:905
+msgid "Missing plugin installation failed."
+msgstr "缺失插件安装失败。"
+
+#: ../src/transmageddon.py:996
 #, python-format
 msgid "Pass %(count)d Progress"
 msgstr "正在进行 %(count)d"
 
-#: ../src/transmageddon.py:928
+#: ../src/transmageddon.py:1089
+msgid "Audio passthrough"
+msgstr "音频通路"
+
+#: ../src/transmageddon.py:1137
 msgid "Video passthrough"
 msgstr "视频通路"
 
-#: ../src/transmageddon.py:933
-msgid "Audio passthrough"
-msgstr "音频通路"
+#: ../src/transmageddon.py:1336
+msgid "(None)"
+msgstr "(无)"
+
+#: ../src/transmageddon.py:1360
+msgid "Choose Source File..."
+msgstr "选择源文件..."
+
+#: ../src/transmageddon.ui.h:1
+#| msgid ""
+#| "<small>Audio Channels:</small>\n"
+#| "<small>Audio Codec:</small>\n"
+#| "<small>Language:</small>"
+msgid ""
+"<small>Audio Channels:</small>\n"
+"<small>Audio Codec:</small>"
+msgstr ""
+"<small>音频通道：</small>\n"
+"<small>音频编解码器：</small>"
+
+#: ../src/transmageddon.ui.h:3
+msgid ""
+"<small>Video height&#47;width:</small>\n"
+"<small>Video Codec:</small>"
+msgstr ""
+"<small>视频高度&#47;宽度：</small>\n"
+"<small>视频编解码器：</small>"
+
+#: ../src/transmageddon.ui.h:5
+msgid "<b>Presets:</b>"
+msgstr "<b>预设：</b>"
+
+#: ../src/transmageddon.ui.h:6
+msgid "<b>Choose Input File:</b>"
+msgstr "<b>选择输入文件：</b>"
+
+#: ../src/transmageddon.ui.h:7
+msgid "<b>Output Format:</b>"
+msgstr "<b>输出格式：</b>"
+
+#: ../src/transmageddon.ui.h:8
+msgid "<b>Choose Audio Codec</b>:"
+msgstr "<b>选择音频编解码器</b>："
+
+#: ../src/transmageddon.ui.h:9
+msgid "<b>Choose Video Codec</b>:"
+msgstr "<b>选择视频编解码器</b>："
+
+#: ../src/transmageddon.ui.h:10
+msgid "<small>Rotate the video image if needed</small>"
+msgstr "<small>如果需要的话，旋转视频图像</small>"
+
+#: ../src/transmageddon.ui.h:11
+msgid "_Transcode"
+msgstr "转码(_T)"
+
+#: ../src/udevdisco.py:221
+msgid "Not mounted."
+msgstr "未挂臷。"
 
 #: ../src/utils.py:76
 #, python-format
 msgid "Can't find %(path)s in any known prefix!"
 msgstr "无法在已知前缀中找到 %(path)s！"
 
-#: ../transmageddon.desktop.in.in.h:1
-msgid "Transmageddon Video Transcoder"
-msgstr "Transmageddon 视频转码工具"
+#~ msgid "Title: "
+#~ msgstr "标题："
 
-#: ../transmageddon.desktop.in.in.h:2
-msgid "Video format conversion tool"
-msgstr "视频格式转换工具"
+#~ msgid "Languages: "
+#~ msgstr "语言："
+
+#~ msgid " Length: "
+#~ msgstr " 长度："
+
+#~ msgid "Choose File..."
+#~ msgstr "选择文件..."
+
+#~ msgid "<small>Video codec:</small>"
+#~ msgstr "<small>视频编码器：</small>"
+
+#~ msgid "<small>Audio codec:</small>"
+#~ msgstr "<small>音频编码器：</small>"
+
+#~ msgid "_Help"
+#~ msgstr "帮助(_H)"
+
+#~ msgid "Start next pass"
+#~ msgstr "开始下一个转换"
 
 #~ msgid "AA_C"
 #~ msgstr "AA_C"
@@ -356,9 +457,6 @@ msgstr "视频格式转换工具"
 
 #~ msgid "No video parser, passthrough not available"
 #~ msgstr "无视频解析器，通路不可用"
-
-#~ msgid "Uknown error"
-#~ msgstr "未知错误"
 
 #~ msgid "Writing "
 #~ msgstr "写入"
