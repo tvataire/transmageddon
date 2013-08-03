@@ -40,7 +40,7 @@ import transcoder_engine
 from urllib.parse import urlparse
 import codecfinder
 import about
-import presets, udevdisco
+import presets,  	udevdisco
 import utils
 import datetime
 import langchooser, dvdtrackchooser
@@ -246,7 +246,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        Notify.init('Transmageddon')
 
        # These dynamic comboboxes allow us to support files with 
-       # multiple streams eventually
+       # multiple streams
        def dynamic_comboboxes_audio(extra = []):
            vbox = Gtk.VBox()
            combo = Gtk.ComboBoxText.new()
@@ -389,9 +389,12 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        self.haveaudio=False
        self.nocontaineroptiontoggle=False
 
-       # create variables to store passthrough options slot in the menu
-       self.audiopassmenuno=1
-       self.videopassmenuno=1
+       # create variables to store pass and no audio/video slots in the menu
+       self.audiopassmenuno=[]
+       self.videopassmenuno=[]
+       self.noaudiomenuno=[]
+       self.novideomenuno=[]
+
        self.videonovideomenuno=-2
        # create toggle so I can split codepath depending on if I using a preset
        # or not
@@ -743,7 +746,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                            x=x+1
 
            else: # if there is no audio streams
-               self.audioinformation.set_markup(''.join(('<small>', _("No Audio"), '</small>',"\n", '<small>', "",'</small>')))
+               self.audioinformation.set_markup(''.join(('<small>', _("  No Audio"), '</small>',"\n", '<small>', "",'</small>')))
                if not self.audiodata: # creates empty data set
                    self.audiodata.append(self.add_audiodata_row(None, None, None, False, None, False, False, None))
 
@@ -1032,8 +1035,10 @@ class TransmageddonUI(Gtk.ApplicationWindow):
 
        # clean up stuff from previous run
        self.houseclean=True # set this to avoid triggering events when cleaning out menus
+       self.audiopassmenuno=[] # reset this field
+       self.noaudiomenuno=[]
        x=0
-       if self.havevideo==True:
+       if self.havevideo==True: # clean up video first as we currently only support 1 stream
                if self.streamdata['container'] != False:
                    for c in self.videocodecs:
                        self.videorows[x].remove(0)
@@ -1082,13 +1087,15 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                #add a 'No Audio option'
                self.audiorows[x].append_text(_("No Audio"))
                self.audiocodecs[x].append("noaud")
-               self.noaudiomenuno=(len(self.audiocodecs[x]))-1
+               self.noaudiomenuno.append((len(self.audiocodecs[x]))-1)
+               #print(self.noaudiomenuno)
 
                # add a passthrough option
                if self.audiodata[x]['canpassthrough']==True:
                        self.audiorows[x].append_text(_("Audio passthrough"))
                        self.audiocodecs[x].append("pass")
-                       self.audiopassmenuno=(len(self.audiocodecs[x]))-1 #FIXME
+                       self.audiopassmenuno.append((len(self.audiocodecs[x]))-1)
+                       #print(self.audiopassmenuno)
 
                self.audiorows[x].set_sensitive(True)
                self.audiorows[x].set_active(0)
@@ -1101,6 +1108,9 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        if (self.streamdata['container'].to_string() == "video/x-flv") or (self.usingpreset==True) or (self.streamdata['container']==False):
            print("one audio stream!!")
            #default to setting each entry except first one to 'no audio'
+               #self.audiorows[x].
+               #x=0
+               #while x <= self.audiostreamcounter:
            #listen to changes to any of the entries, if one change, the change others to 'no audio'
            
            #How to do this for presets? change logic for preset choices or add 'no audio' option when using presets?
@@ -1204,7 +1214,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                else:
                    self.audiodata[x]['outputaudiocaps'] = self.audiocodecs[x][no]
                if self.streamdata['container'] != False:
-                   if self.audiorows[x].get_active() ==  self.audiopassmenuno:
+                   if self.audiorows[x].get_active() ==  self.audiopassmenuno[x]:
                        self.audiodata[x]['dopassthrough']= True
                elif self.usingpreset==True:
                    #print("preset audio codec " + self.presetaudiocodec)
