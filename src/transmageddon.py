@@ -646,10 +646,8 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        if self.isdvd:
            element.set_property("device", self.dvddevice)
            # print("Title " + str(self.dvdttitle))
-           element.set_property("title", 0) # FIXME
+           element.set_property("title", self.streamdata['dvdtitle'])
 
-
- 
    def succeed(self, discoverer, info, error):
 
        result=GstPbutils.DiscovererInfo.get_result(info)
@@ -1051,8 +1049,6 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                if x==self.audiostreamcounter:
                    self.audiocodecs=[]
            x=x+1
-       self.houseclean=False
-       # end of housecleaning
 
        # start filling audio
        if self.haveaudio==True:
@@ -1095,21 +1091,23 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                        self.audiorows[x].append_text(_("Audio passthrough"))
                        self.audiocodecs[x].append("pass")
                        self.audiopassmenuno.append((len(self.audiocodecs[x]))-1)
-                       #print(self.audiopassmenuno)
 
                self.audiorows[x].set_sensitive(True)
-               self.audiorows[x].set_active(0)
+               self.audiorows[	x].set_active(0)
                x=x+1
+           if x==self.audiostreamcounter:
+                   self.houseclean=False
        else:
            self.audiorows[x].set_sensitive(False)
 
 
        # Only allow one audio stream when using presets or when using FLV container or for Audio only transcode
        if (self.streamdata['container'].to_string() == "video/x-flv") or (self.usingpreset==True) or (self.streamdata['container']==False):
-           print("one audio stream!!")
            #default to setting each entry except first one to 'no audio'
-               #self.audiorows[x].
-               #x=0
+           sc=1
+           while sc <= self.audiostreamcounter:
+               self.audiorows[sc].set_active(self.noaudiomenuno[sc])
+               sc=sc+1
                #while x <= self.audiostreamcounter:
            #listen to changes to any of the entries, if one change, the change others to 'no audio'
            
@@ -1206,6 +1204,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
           x=name[8:]
           x=int(x)
        self.audiodata[x]['dopassthrough']=False
+
        if (self.houseclean == False and self.usingpreset==False):
                no=self.audiorows[x].get_active()
                #print("self.audiocodecs " + self.audiocodecs[x][no])
@@ -1216,6 +1215,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                if self.streamdata['container'] != False:
                    if self.audiorows[x].get_active() ==  self.audiopassmenuno[x]:
                        self.audiodata[x]['dopassthrough']= True
+                       # print("passthrough")
                elif self.usingpreset==True:
                    #print("preset audio codec " + self.presetaudiocodec)
                    self.audiodata[x]['outputaudiocaps'] = self.presetaudiocodec
