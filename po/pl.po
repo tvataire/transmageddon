@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: transmageddon\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-31 19:34+0200\n"
-"PO-Revision-Date: 2013-07-31 19:35+0200\n"
+"POT-Creation-Date: 2013-08-11 01:26+0200\n"
+"PO-Revision-Date: 2013-08-11 01:27+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -171,141 +171,145 @@ msgid "Debug"
 msgstr "Debugowanie"
 
 #. set default values for various variables
-#: ../src/transmageddon.py:384 ../src/transmageddon.py:820
-#: ../src/transmageddon.py:1024 ../src/transmageddon.py:1144
+#: ../src/transmageddon.py:384 ../src/transmageddon.py:823
+#: ../src/transmageddon.py:1027 ../src/transmageddon.py:1154
 msgid "Transcoding Progress"
 msgstr "Postęp przekodowywania"
 
 #. add i18n "No container"option
-#: ../src/transmageddon.py:427
+#: ../src/transmageddon.py:430
 msgid "No container (Audio-only)"
 msgstr "Brak kontenera (tylko dźwięk)"
 
 #. Populate the rotatation box
 #. print("populating rotationbox")
-#: ../src/transmageddon.py:431
+#: ../src/transmageddon.py:434
 msgid "No rotation (default)"
 msgstr "Bez obracania obrazu (domyślnie)"
 
-#: ../src/transmageddon.py:432
+#: ../src/transmageddon.py:435
 msgid "Clockwise 90 degrees"
 msgstr "Obrót o 90 stopni zgodnie z ruchem wskazówek zegara"
 
-#: ../src/transmageddon.py:433
+#: ../src/transmageddon.py:436
 msgid "Rotate 180 degrees"
 msgstr "Obrót o 180 stopni"
 
-#: ../src/transmageddon.py:434
+#: ../src/transmageddon.py:437
 msgid "Counterclockwise 90 degrees"
 msgstr "Obrót o 90 stopni przeciwnie do ruchu wskazówek zegara"
 
-#: ../src/transmageddon.py:435
+#: ../src/transmageddon.py:438
 msgid "Horizontal flip"
 msgstr "Odbicie poziome"
 
-#: ../src/transmageddon.py:436
+#: ../src/transmageddon.py:439
 msgid "Vertical flip"
 msgstr "Odbicie pionowe"
 
-#: ../src/transmageddon.py:437
+#: ../src/transmageddon.py:440
 msgid "Upper left diagonal flip"
 msgstr "Odbicie względem górnego lewego rogu"
 
-#: ../src/transmageddon.py:438
+#: ../src/transmageddon.py:441
 msgid "Upper right diagnonal flip"
 msgstr "Odbicie względem górnego prawego rogu"
 
-#: ../src/transmageddon.py:461
+#: ../src/transmageddon.py:464
 msgid "No Presets"
 msgstr "Brak ustawień"
 
-#: ../src/transmageddon.py:572
+#: ../src/transmageddon.py:575
 #, python-format
 msgid "%(min)d:%(sec)02d"
 msgstr "%(min)d:%(sec)02d"
 
-#: ../src/transmageddon.py:602
+#: ../src/transmageddon.py:605
 #, python-format
 msgid "File saved to %(dir)s"
 msgstr "Plik zapisany do %(dir)s"
 
-#: ../src/transmageddon.py:605
+#: ../src/transmageddon.py:608
 #, python-format
 msgid "%(file)s saved to %(dir)s"
 msgstr "Plik %(file)s zapisany do %(dir)s"
 
-#: ../src/transmageddon.py:615
+#: ../src/transmageddon.py:618
 msgid "Done Transcoding"
 msgstr "Ukończono przekodowywanie"
 
-#: ../src/transmageddon.py:633 ../src/transmageddon.py:993
+#: ../src/transmageddon.py:636 ../src/transmageddon.py:996
 #, python-format
 msgid "Writing %(filename)s"
 msgstr "Zapisywanie %(filename)s"
 
-#: ../src/transmageddon.py:637
+#: ../src/transmageddon.py:640
 #, python-format
 msgid "Pass %(count)d Complete. "
 msgstr "Ukończono przebieg %(count)d. "
 
 #. We use None here so that we in transcoder engine can differentiate between,
 #. unknown language and known language, but no language code.
-#: ../src/transmageddon.py:683
+#: ../src/transmageddon.py:686
 msgid "Unknown"
 msgstr "Nieznany"
 
 #. if there is no audio streams
-#. add a 'No Audio option'
-#: ../src/transmageddon.py:746 ../src/transmageddon.py:1083
-msgid "No Audio"
-msgstr "Brak dźwięku"
+#: ../src/transmageddon.py:749
+msgid "  No Audio"
+msgstr "  Brak dźwięku"
 
 #. add a 'No Video option'
-#: ../src/transmageddon.py:755 ../src/transmageddon.py:1131
+#: ../src/transmageddon.py:758 ../src/transmageddon.py:1141
 msgid "No Video"
 msgstr "Brak wideo"
 
-#: ../src/transmageddon.py:879
+#: ../src/transmageddon.py:882
 msgid ""
 "Got an invalid response from codec installer, can not install missing codec."
 msgstr ""
 "Otrzymano nieprawidłową odpowiedź od instalatora kodeków. Nie można "
 "zainstalować brakującego kodeka."
 
-#: ../src/transmageddon.py:883
+#: ../src/transmageddon.py:886
 msgid "No Codec installer helper application available."
 msgstr "Brak dostępnego programu pomocniczego instalatora kodeków."
 
-#: ../src/transmageddon.py:887
+#: ../src/transmageddon.py:890
 msgid "Plugins not found, choose different codecs."
 msgstr "Nie odnaleziono wtyczek. Proszę wybrać inne kodeki."
 
-#: ../src/transmageddon.py:897
+#: ../src/transmageddon.py:900
 msgid "Codec installation aborted."
 msgstr "Przerwano instalację kodeka."
 
-#: ../src/transmageddon.py:905
+#: ../src/transmageddon.py:908
 msgid "Missing plugin installation failed."
 msgstr "Instalacja brakującej wtyczki się nie powiodła."
 
-#: ../src/transmageddon.py:996
+#: ../src/transmageddon.py:999
 #, python-format
 msgid "Pass %(count)d Progress"
 msgstr "Postęp przebiegu %(count)d"
 
-#: ../src/transmageddon.py:1089
+#. add a 'No Audio option'
+#: ../src/transmageddon.py:1088
+msgid "No Audio"
+msgstr "Brak dźwięku"
+
+#: ../src/transmageddon.py:1095
 msgid "Audio passthrough"
 msgstr "Dźwięk bez zmian"
 
-#: ../src/transmageddon.py:1137
+#: ../src/transmageddon.py:1147
 msgid "Video passthrough"
 msgstr "Wideo bez zmian"
 
-#: ../src/transmageddon.py:1336
+#: ../src/transmageddon.py:1346
 msgid "(None)"
 msgstr "(Brak)"
 
-#: ../src/transmageddon.py:1360
+#: ../src/transmageddon.py:1370
 msgid "Choose Source File..."
 msgstr "Wybierz plik źródłowy..."
 
