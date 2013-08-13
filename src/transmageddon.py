@@ -1215,8 +1215,9 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                else:
                    self.audiodata[x]['outputaudiocaps'] = self.audiocodecs[x][no]
                if self.streamdata['container'] != False:
-                   if self.audiorows[x].get_active() ==  self.audiopassmenuno[x]:
-                       self.audiodata[x]['dopassthrough']= True
+                   if self.audiodata[x]['canpassthrough'] == True:
+                       if self.audiorows[x].get_active() ==  self.audiopassmenuno[x]:
+                           self.audiodata[x]['dopassthrough']= True
                elif self.usingpreset==True:
                    self.audiodata[x]['outputaudiocaps'] = self.presetaudiocodec
 
