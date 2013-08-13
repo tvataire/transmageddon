@@ -150,7 +150,6 @@ class Transcoder(GObject.GObject):
                    self.encodebinprofile = GstPbutils.EncodingAudioProfile.new (self.audiodata[x]['outputaudiocaps'], audiopreset, Gst.Caps.new_any(), 0)
                else:
                    audiopreset=None
-                   # print(self.audiodata[x]['outputaudiocaps'].to_string())
                    self.audioprofile = GstPbutils.EncodingAudioProfile.new(self.audiodata[x]['outputaudiocaps'], audiopreset, Gst.Caps.new_any(), 0)
                    self.audioprofilenames.append("audioprofilename"+str(x))
                    self.audioprofile.set_name(self.audioprofilenames[x])
@@ -384,7 +383,6 @@ class Transcoder(GObject.GObject):
        if (self.container==False):
            a =  origin.to_string()
            if a.startswith("audio/"):
-               print("a is " + str(a))
                sinkpad = self.encodebin.get_static_pad("audio_0")
                src_pad.link(sinkpad)
        else:
