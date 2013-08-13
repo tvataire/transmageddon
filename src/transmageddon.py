@@ -1042,7 +1042,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                        self.videorows[x].remove(0)
                    self.videocodecs=[]
 
-       while x < len(self.audiocodecs): #self.audiostreamcounter:
+       while x < len(self.audiocodecs): 
            if self.audiocodecs:
                for c in self.audiocodecs[x]: # 
                    self.audiorows[x].remove(0)
@@ -1093,30 +1093,29 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                        self.audiopassmenuno.append((len(self.audiocodecs[x]))-1)
 
                self.audiorows[x].set_sensitive(True)
-               # self.audiorows[x].set_active(0)
                x=x+1
+  
+
            self.houseclean=False
-           x=0
-           while x <= self.audiostreamcounter:
-               self.audiorows[x].set_active(0)
-               x=x+1
 
-       else:
+           # Only allow one audio stream when using presets or when using FLV container or for Audio only transcode
+           # set all entries except first one to 'no audio'
+           if (self.streamdata['container'].to_string() == "video/x-flv") or (self.usingpreset==True) or (self.streamdata['container']==False):
+               self.audiorows[0].set_active(0)
+               if self.audiostreamcounter !=0:
+                   sc=1 #skipping 0 line
+                   while sc <= self.audiostreamcounter:
+                       self.audiorows[sc].set_active(self.noaudiomenuno[sc])
+                       sc=sc+1
+           else: # otherwise set all menu options to first entry 
+               x=0
+               while x <= self.audiostreamcounter:
+                   self.audiorows[x].set_active(0)
+                   x=x+1
+            
+
+       else: # No audio track(s) found
            self.audiorows[x].set_sensitive(False)
-
-
-       # Only allow one audio stream when using presets or when using FLV container or for Audio only transcode
-       if (self.streamdata['container'].to_string() == "video/x-flv") or (self.usingpreset==True) or (self.streamdata['container']==False):
-           #default to setting each entry except first one to 'no audio'
-           sc=1
-           while sc <= self.audiostreamcounter:
-               self.audiorows[sc].set_active(self.noaudiomenuno[sc])
-               sc=sc+1
-               #while x <= self.audiostreamcounter:
-           #listen to changes to any of the entries, if one change, the change others to 'no audio'
-           
-           #How to do this for presets? change logic for preset choices or add 'no audio' option when using presets?
-
 
        # fill in with video
        if self.havevideo==True:
@@ -1149,6 +1148,20 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                        self.videorows[0].append_text(_("Video passthrough"))
                        self.videocodecs.append("pass")
                        self.videopassmenuno=(len(self.videocodecs))-1
+
+   def only_one_audio_stream_allowed(self, streamno):
+       # Only allow one audio stream when using presets or when using FLV container or for Audio only transcode
+       #listen to changes to any of the entries, if one change, the change others to 'no audio'
+       x=0
+       while x <= self.audiostreamcounter:
+          if x != streamno:
+               self.houseclean=True
+               self.audiorows[x].set_active(self.noaudiomenuno[x])
+               self.houseclean=False
+          x=x+1
+           
+         #How to do this for presets? change logic for preset choices or add 'no audio' option when using presets?
+
 
    def on_containerchoice_changed(self, widget):
        self.CodecBox.set_sensitive(True)
@@ -1209,17 +1222,19 @@ class TransmageddonUI(Gtk.ApplicationWindow):
           x=int(x)
        self.audiodata[x]['dopassthrough']=False
        if (self.houseclean == False and self.usingpreset==False):
-               no=self.audiorows[x].get_active()
-               if self.audiocodecs[x][no] == "pass":
-                   self.audiodata[x]['outputaudiocaps'] = self.audiodata[x]['inputaudiocaps']
-               else:
-                   self.audiodata[x]['outputaudiocaps'] = self.audiocodecs[x][no]
-               if self.streamdata['container'] != False:
-                   if self.audiodata[x]['canpassthrough'] == True:
-                       if self.audiorows[x].get_active() ==  self.audiopassmenuno[x]:
-                           self.audiodata[x]['dopassthrough']= True
-               elif self.usingpreset==True:
-                   self.audiodata[x]['outputaudiocaps'] = self.presetaudiocodec
+           no=self.audiorows[x].get_active()
+           if self.audiocodecs[x][no] == "pass":
+               self.audiodata[x]['outputaudiocaps'] = self.audiodata[x]['inputaudiocaps']
+           else:
+               self.audiodata[x]['outputaudiocaps'] = self.audiocodecs[x][no]
+           if self.streamdata['container'] != False:
+               if self.audiodata[x]['canpassthrough'] == True:
+                   if self.audiorows[x].get_active() ==  self.audiopassmenuno[x]:
+                       self.audiodata[x]['dopassthrough']= True
+           elif self.usingpreset==True:
+               self.audiodata[x]['outputaudiocaps'] = self.presetaudiocodec
+           if (self.streamdata['container'].to_string() == "video/x-flv") or (self.usingpreset==True) or (self.streamdata['container']==False):
+               self.only_one_audio_stream_allowed(x)  
 
    def on_videocodec_changed(self, widget):
        self.videodata[0]['dopassthrough']=False
