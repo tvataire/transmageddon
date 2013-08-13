@@ -1093,10 +1093,14 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                        self.audiopassmenuno.append((len(self.audiocodecs[x]))-1)
 
                self.audiorows[x].set_sensitive(True)
-               self.audiorows[	x].set_active(0)
+               # self.audiorows[x].set_active(0)
                x=x+1
-           if x==self.audiostreamcounter:
-                   self.houseclean=False
+           self.houseclean=False
+           x=0
+           while x <= self.audiostreamcounter:
+               self.audiorows[x].set_active(0)
+               x=x+1
+
        else:
            self.audiorows[x].set_sensitive(False)
 
@@ -1204,10 +1208,8 @@ class TransmageddonUI(Gtk.ApplicationWindow):
           x=name[8:]
           x=int(x)
        self.audiodata[x]['dopassthrough']=False
-
        if (self.houseclean == False and self.usingpreset==False):
                no=self.audiorows[x].get_active()
-               #print("self.audiocodecs " + self.audiocodecs[x][no])
                if self.audiocodecs[x][no] == "pass":
                    self.audiodata[x]['outputaudiocaps'] = self.audiodata[x]['inputaudiocaps']
                else:
@@ -1215,9 +1217,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                if self.streamdata['container'] != False:
                    if self.audiorows[x].get_active() ==  self.audiopassmenuno[x]:
                        self.audiodata[x]['dopassthrough']= True
-                       # print("passthrough")
                elif self.usingpreset==True:
-                   #print("preset audio codec " + self.presetaudiocodec)
                    self.audiodata[x]['outputaudiocaps'] = self.presetaudiocodec
 
    def on_videocodec_changed(self, widget):
