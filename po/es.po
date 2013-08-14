@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: transmageddon master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=transmageddon&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2013-06-25 09:57+0000\n"
-"PO-Revision-Date: 2013-06-25 14:21+0200\n"
+"POT-Creation-Date: 2013-08-03 14:42+0000\n"
+"PO-Revision-Date: 2013-08-14 14:03+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -68,21 +68,6 @@ msgstr "Duración:"
 #: ../src/dvdtrackchooser.py:56
 msgid "Minutes"
 msgstr "Minutos"
-
-#: ../src/dvdtrackchooser.py:57
-#| msgid "Title:"
-msgid "Title: "
-msgstr "Título: "
-
-#: ../src/dvdtrackchooser.py:57
-#| msgid "Languages:"
-msgid "Languages: "
-msgstr "Idiomas: "
-
-#: ../src/dvdtrackchooser.py:57
-#| msgid "Length:"
-msgid " Length: "
-msgstr " Duración: "
 
 #: ../src/presets.py:78
 #, python-format
@@ -180,149 +165,163 @@ msgid "Debug"
 msgstr "Depurar"
 
 #. set default values for various variables
-#: ../src/transmageddon.py:364 ../src/transmageddon.py:805
-#: ../src/transmageddon.py:1004 ../src/transmageddon.py:1113
+#: ../src/transmageddon.py:384 ../src/transmageddon.py:823
+#: ../src/transmageddon.py:1027 ../src/transmageddon.py:1154
 msgid "Transcoding Progress"
 msgstr "Progreso de la transcodificación"
 
 #. add i18n "No container"option
-#: ../src/transmageddon.py:407
+#: ../src/transmageddon.py:430
 msgid "No container (Audio-only)"
 msgstr "Sin contenedor (solo sonido)"
 
 #. Populate the rotatation box
 #. print("populating rotationbox")
-#: ../src/transmageddon.py:411
+#: ../src/transmageddon.py:434
 msgid "No rotation (default)"
 msgstr "Sin rotación (predeterminado)"
 
-#: ../src/transmageddon.py:412
+#: ../src/transmageddon.py:435
 msgid "Clockwise 90 degrees"
 msgstr "90° en sentido horario"
 
-#: ../src/transmageddon.py:413
+#: ../src/transmageddon.py:436
 msgid "Rotate 180 degrees"
 msgstr "Rotar 180 grados"
 
-#: ../src/transmageddon.py:414
+#: ../src/transmageddon.py:437
 msgid "Counterclockwise 90 degrees"
 msgstr "90° en sentido antihorario"
 
-#: ../src/transmageddon.py:415
+#: ../src/transmageddon.py:438
 msgid "Horizontal flip"
 msgstr "Giro horizontal"
 
-#: ../src/transmageddon.py:416
+#: ../src/transmageddon.py:439
 msgid "Vertical flip"
 msgstr "Giro vertical"
 
-#: ../src/transmageddon.py:417
+#: ../src/transmageddon.py:440
 msgid "Upper left diagonal flip"
 msgstr "Volteo diagonal desde la parte superior izquierda"
 
-#: ../src/transmageddon.py:418
+#: ../src/transmageddon.py:441
 msgid "Upper right diagnonal flip"
 msgstr "Volteo diagonal desde la parte superior derecha"
 
-#: ../src/transmageddon.py:442
+#: ../src/transmageddon.py:464
 msgid "No Presets"
 msgstr "Sin valores predefinidos"
 
-#: ../src/transmageddon.py:554
+#: ../src/transmageddon.py:575
 #, python-format
 msgid "%(min)d:%(sec)02d"
 msgstr "%(min)d:%(sec)02d"
 
-#: ../src/transmageddon.py:584
+#: ../src/transmageddon.py:605
 #, python-format
 msgid "File saved to %(dir)s"
 msgstr "Archivo guardado en %(dir)s"
 
-#: ../src/transmageddon.py:587
+#: ../src/transmageddon.py:608
 #, python-format
 msgid "%(file)s saved to %(dir)s"
 msgstr "%(file)s guardado en %(dir)s"
 
-#: ../src/transmageddon.py:597
+#: ../src/transmageddon.py:618
 msgid "Done Transcoding"
 msgstr "Transcodificación finalizada"
 
-#: ../src/transmageddon.py:615 ../src/transmageddon.py:966
+#: ../src/transmageddon.py:636 ../src/transmageddon.py:996
 #, python-format
 msgid "Writing %(filename)s"
 msgstr "Escribiendo %(filename)s"
 
-#: ../src/transmageddon.py:619
+#: ../src/transmageddon.py:640
 #, python-format
 msgid "Pass %(count)d Complete. "
 msgstr "Pasada %(count)d completada. "
 
+#. We use None here so that we in transcoder engine can differentiate between,
+#. unknown language and known language, but no language code.
+#: ../src/transmageddon.py:686
+#| msgid "Uknown error"
+msgid "Unknown"
+msgstr "Desconocido"
+
 #. if there is no audio streams
-#. add a 'No Audio option'
-#: ../src/transmageddon.py:732 ../src/transmageddon.py:1062
-msgid "No Audio"
-msgstr "Sin sonido"
+#: ../src/transmageddon.py:749
+#| msgid "No Audio"
+msgid "  No Audio"
+msgstr "  Sin sonido"
 
 #. add a 'No Video option'
-#: ../src/transmageddon.py:741 ../src/transmageddon.py:1100
+#: ../src/transmageddon.py:758 ../src/transmageddon.py:1141
 msgid "No Video"
 msgstr "No hay vídeo"
 
-#: ../src/transmageddon.py:855
+#: ../src/transmageddon.py:882
 msgid ""
 "Got an invalid response from codec installer, can not install missing codec."
 msgstr ""
 "Se obtuvo una respuesta no válida del instalador de códecs, no se pueden "
 "instalar los códecs que faltan."
 
-#: ../src/transmageddon.py:859
+#: ../src/transmageddon.py:886
 msgid "No Codec installer helper application available."
 msgstr "No hay disponible ninguna aplicación auxiliar para instalar códecs."
 
-#: ../src/transmageddon.py:863
+#: ../src/transmageddon.py:890
 msgid "Plugins not found, choose different codecs."
 msgstr "No se encontraron los complementos, elija otros códecs."
 
-#: ../src/transmageddon.py:873
+#: ../src/transmageddon.py:900
 msgid "Codec installation aborted."
 msgstr "Se abortó la instalación del códec."
 
-#: ../src/transmageddon.py:881
+#: ../src/transmageddon.py:908
 msgid "Missing plugin installation failed."
 msgstr "Falló la instalación del complemento que falta."
 
-#: ../src/transmageddon.py:969
+#: ../src/transmageddon.py:999
 #, python-format
 msgid "Pass %(count)d Progress"
 msgstr "Progreso de la pasada %(count)d"
 
-#: ../src/transmageddon.py:1068
+#. add a 'No Audio option'
+#: ../src/transmageddon.py:1088
+msgid "No Audio"
+msgstr "Sin sonido"
+
+#: ../src/transmageddon.py:1095
 msgid "Audio passthrough"
 msgstr "Pasada de sonido"
 
-#: ../src/transmageddon.py:1106
+#: ../src/transmageddon.py:1147
 msgid "Video passthrough"
 msgstr "Pasada de vídeo"
 
-#: ../src/transmageddon.py:1313
+#: ../src/transmageddon.py:1346
 msgid "(None)"
 msgstr "(Ninguno)"
 
-#: ../src/transmageddon.py:1336
+#: ../src/transmageddon.py:1370
 msgid "Choose Source File..."
 msgstr "Elegir un archivo de fuentes…"
 
 #: ../src/transmageddon.ui.h:1
+#| msgid ""
+#| "<small>Audio Channels:</small>\n"
+#| "<small>Audio Codec:</small>\n"
+#| "<small>Language:</small>"
 msgid ""
 "<small>Audio Channels:</small>\n"
-"<small>Audio Codec:</small>\n"
-"<small>Language:</small>"
+"<small>Audio Codec:</small>"
 msgstr ""
 "<small>Canales de sonido:</small>\n"
-"<small>Códec de sonido:</small>\n"
-"<small>Idioma:</small>"
+"<small>Códec de sonido:</small>"
 
-#: ../src/transmageddon.ui.h:4
+#: ../src/transmageddon.ui.h:3
 msgid ""
 "<small>Video height&#47;width:</small>\n"
 "<small>Video Codec:</small>"
@@ -330,38 +329,54 @@ msgstr ""
 "<small>Altura &#47; anchura del vídeo:</small>\n"
 "<small>Códec de vídeo:</small>"
 
-#: ../src/transmageddon.ui.h:6
+#: ../src/transmageddon.ui.h:5
 msgid "<b>Presets:</b>"
 msgstr "<b>Preconfiguraciones:</b>"
 
-#: ../src/transmageddon.ui.h:7
+#: ../src/transmageddon.ui.h:6
 msgid "<b>Choose Input File:</b>"
 msgstr "<b>Elegir archivo de entrada:</b>"
 
-#: ../src/transmageddon.ui.h:8
+#: ../src/transmageddon.ui.h:7
 msgid "<b>Output Format:</b>"
 msgstr "<b>Formato de salida:</b>"
 
-#: ../src/transmageddon.ui.h:9
+#: ../src/transmageddon.ui.h:8
 msgid "<b>Choose Audio Codec</b>:"
 msgstr "<b>Elegir archivo de sonido:</b>"
 
-#: ../src/transmageddon.ui.h:10
+#: ../src/transmageddon.ui.h:9
 msgid "<b>Choose Video Codec</b>:"
 msgstr "<b>Elegir códec de vídeo:</b>"
 
-#: ../src/transmageddon.ui.h:11
+#: ../src/transmageddon.ui.h:10
 msgid "<small>Rotate the video image if needed</small>"
 msgstr "<small>Rotar la imagen del vídeo si es necesario</small>"
 
-#: ../src/transmageddon.ui.h:12
+#: ../src/transmageddon.ui.h:11
 msgid "_Transcode"
 msgstr "_Transcodificar"
+
+#: ../src/udevdisco.py:221
+msgid "Not mounted."
+msgstr "No montado."
 
 #: ../src/utils.py:76
 #, python-format
 msgid "Can't find %(path)s in any known prefix!"
 msgstr "No se puede encontrar %(path)s en ningún prefijo conocido."
+
+#~| msgid "Title:"
+#~ msgid "Title: "
+#~ msgstr "Título: "
+
+#~| msgid "Languages:"
+#~ msgid "Languages: "
+#~ msgstr "Idiomas: "
+
+#~| msgid "Length:"
+#~ msgid " Length: "
+#~ msgstr " Duración: "
 
 #~ msgid "Choose File..."
 #~ msgstr "Elegir un archivo…"
@@ -389,9 +404,6 @@ msgstr "No se puede encontrar %(path)s en ningún prefijo conocido."
 
 #~ msgid "No video parser, passthrough not available"
 #~ msgstr "No existe el analizador de vídeo, la pasada no está disponible"
-
-#~ msgid "Uknown error"
-#~ msgstr "Error desconocido"
 
 #~ msgid "Estimated time remaining: %(time)s"
 #~ msgstr "Tiempo restante estimado: %(time)s"
