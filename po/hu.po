@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: transmageddon master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=transmageddon&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2013-04-03 07:48+0000\n"
-"PO-Revision-Date: 2013-04-03 09:56+0200\n"
+"POT-Creation-Date: 2013-08-03 14:42+0000\n"
+"PO-Revision-Date: 2013-08-25 09:05+0200\n"
 "Last-Translator: Balázs Úr <urbalazs at gmail dot com>\n"
 "Language-Team: Hungarian <gnome at fsf dot hu>\n"
 "Language: \n"
@@ -44,7 +44,6 @@ msgstr ""
 "amelyet Christian Fredrik Kalager Schaller készített."
 
 #: ../src/about.py.in:50
-#| msgid "Transmageddon"
 msgid "Transmageddon homepage"
 msgstr "Transmageddon honlap"
 
@@ -164,161 +163,167 @@ msgid "Quit"
 msgstr "Kilépés"
 
 #: ../src/transmageddon.py:164
-#| msgid "_Debug"
 msgid "Debug"
 msgstr "Hibakeresés"
 
 #. set default values for various variables
-#: ../src/transmageddon.py:360 ../src/transmageddon.py:801
-#: ../src/transmageddon.py:1000 ../src/transmageddon.py:1109
+#: ../src/transmageddon.py:384 ../src/transmageddon.py:823
+#: ../src/transmageddon.py:1027 ../src/transmageddon.py:1154
 msgid "Transcoding Progress"
 msgstr "Átkódolás előrehaladása"
 
 #. add i18n "No container"option
-#: ../src/transmageddon.py:403
+#: ../src/transmageddon.py:430
 msgid "No container (Audio-only)"
 msgstr "Nincs konténer (csak hang)"
 
 #. Populate the rotatation box
 #. print("populating rotationbox")
-#: ../src/transmageddon.py:407
+#: ../src/transmageddon.py:434
 msgid "No rotation (default)"
 msgstr "Nincs forgatás (alapértelmezett)"
 
-#: ../src/transmageddon.py:408
+#: ../src/transmageddon.py:435
 msgid "Clockwise 90 degrees"
 msgstr "90 fokos forgatás órajárással egyezően"
 
-#: ../src/transmageddon.py:409
+#: ../src/transmageddon.py:436
 msgid "Rotate 180 degrees"
 msgstr "180 fokos forgatás"
 
-#: ../src/transmageddon.py:410
+#: ../src/transmageddon.py:437
 msgid "Counterclockwise 90 degrees"
 msgstr "90 fokos forgatás órajárással ellentétesen"
 
-#: ../src/transmageddon.py:411
+#: ../src/transmageddon.py:438
 msgid "Horizontal flip"
 msgstr "Vízszintes tükrözés"
 
-#: ../src/transmageddon.py:412
+#: ../src/transmageddon.py:439
 msgid "Vertical flip"
 msgstr "Függőleges tükrözés"
 
-#: ../src/transmageddon.py:413
+#: ../src/transmageddon.py:440
 msgid "Upper left diagonal flip"
 msgstr "Bal felső átlós tükrözés"
 
-#: ../src/transmageddon.py:414
+#: ../src/transmageddon.py:441
 msgid "Upper right diagnonal flip"
 msgstr "Jobb felső átlós tükrözés"
 
-#: ../src/transmageddon.py:438
+#: ../src/transmageddon.py:464
 msgid "No Presets"
 msgstr "Nincsenek előbeállítások"
 
-#: ../src/transmageddon.py:550
+#: ../src/transmageddon.py:575
 #, python-format
 msgid "%(min)d:%(sec)02d"
 msgstr "%(min)d.%(sec)02d"
 
-#: ../src/transmageddon.py:580
+#: ../src/transmageddon.py:605
 #, python-format
 msgid "File saved to %(dir)s"
 msgstr "Fájl mentve a következőbe: %(dir)s"
 
-#: ../src/transmageddon.py:583
+#: ../src/transmageddon.py:608
 #, python-format
-#| msgid "File saved to %(dir)s"
 msgid "%(file)s saved to %(dir)s"
 msgstr "%(file)s mentve a következőbe: %(dir)s"
 
-#: ../src/transmageddon.py:593
+#: ../src/transmageddon.py:618
 msgid "Done Transcoding"
 msgstr "Átkódolás kész"
 
-#: ../src/transmageddon.py:611 ../src/transmageddon.py:962
+#: ../src/transmageddon.py:636 ../src/transmageddon.py:996
 #, python-format
 msgid "Writing %(filename)s"
 msgstr "%(filename)s írása"
 
-#: ../src/transmageddon.py:615
+#: ../src/transmageddon.py:640
 #, python-format
-#| msgid "Pass %(count)d Complete"
 msgid "Pass %(count)d Complete. "
 msgstr "%(count)d. átadás kész. "
 
+#. We use None here so that we in transcoder engine can differentiate between,
+#. unknown language and known language, but no language code.
+#: ../src/transmageddon.py:686
+#| msgid "Uknown error"
+msgid "Unknown"
+msgstr "Ismeretlen"
+
 #. if there is no audio streams
-#. add a 'No Audio option'
-#: ../src/transmageddon.py:728 ../src/transmageddon.py:1058
-msgid "No Audio"
-msgstr "Nincs hang"
+#: ../src/transmageddon.py:749
+#| msgid "No Audio"
+msgid "  No Audio"
+msgstr "  Nincs hang"
 
 #. add a 'No Video option'
-#: ../src/transmageddon.py:737 ../src/transmageddon.py:1096
+#: ../src/transmageddon.py:758 ../src/transmageddon.py:1141
 msgid "No Video"
 msgstr "Nincs videó"
 
-#: ../src/transmageddon.py:851
+#: ../src/transmageddon.py:882
 msgid ""
 "Got an invalid response from codec installer, can not install missing codec."
 msgstr ""
 "Érvénytelen válasz érkezett a kodek-telepítőtől, nem telepíthető a hiányzó "
 "kodek."
 
-#: ../src/transmageddon.py:855
-#| msgid "Codec installation aborted."
+#: ../src/transmageddon.py:886
 msgid "No Codec installer helper application available."
 msgstr "Nem érhető el kodek-telepítő segédalkalmazás."
 
-#: ../src/transmageddon.py:859
+#: ../src/transmageddon.py:890
 msgid "Plugins not found, choose different codecs."
 msgstr "Nem találhatók bővítmények, válasszon másik kodeket."
 
-#: ../src/transmageddon.py:869
+#: ../src/transmageddon.py:900
 msgid "Codec installation aborted."
 msgstr "A kodek telepítése megszakítva."
 
-#: ../src/transmageddon.py:877
-#| msgid "Missing plugin installation failed: "
+#: ../src/transmageddon.py:908
 msgid "Missing plugin installation failed."
 msgstr "A hiányzó bővítmény telepítése meghiúsult."
 
-#: ../src/transmageddon.py:965
+#: ../src/transmageddon.py:999
 #, python-format
 msgid "Pass %(count)d Progress"
 msgstr "%(count)d. lépés előrehaladása"
 
-#: ../src/transmageddon.py:1064
-#| msgid "_Audio passthrough"
+#. add a 'No Audio option'
+#: ../src/transmageddon.py:1088
+msgid "No Audio"
+msgstr "Nincs hang"
+
+#: ../src/transmageddon.py:1095
 msgid "Audio passthrough"
 msgstr "Hangáthaladás"
 
-#: ../src/transmageddon.py:1102
-#| msgid "_Video passthrough"
+#: ../src/transmageddon.py:1147
 msgid "Video passthrough"
 msgstr "Videoáthaladás"
 
-#: ../src/transmageddon.py:1259
+#: ../src/transmageddon.py:1346
 msgid "(None)"
 msgstr "(Nincs)"
 
-#: ../src/transmageddon.py:1281
+#: ../src/transmageddon.py:1370
 msgid "Choose Source File..."
 msgstr "Forrásfájl kiválasztása…"
 
 #: ../src/transmageddon.ui.h:1
+#| msgid ""
+#| "<small>Audio Channels:</small>\n"
+#| "<small>Audio Codec:</small>\n"
+#| "<small>Language:</small>"
 msgid ""
 "<small>Audio Channels:</small>\n"
-"<small>Audio Codec:</small>\n"
-"<small>Language:</small>"
+"<small>Audio Codec:</small>"
 msgstr ""
 "<small>Hangcsatornák:</small>\n"
-"<small>Hang kodek:</small>\n"
-"<small>Nyelv:</small>"
+"<small>Hang kodek:</small>"
 
-#: ../src/transmageddon.ui.h:4
-#| msgid "<small>Video height&#47;width:</small>"
+#: ../src/transmageddon.ui.h:3
 msgid ""
 "<small>Video height&#47;width:</small>\n"
 "<small>Video Codec:</small>"
@@ -326,33 +331,37 @@ msgstr ""
 "<small>Videó magassága és szélessége:</small>\n"
 "<small>Videó kodek:</small>"
 
-#: ../src/transmageddon.ui.h:6
+#: ../src/transmageddon.ui.h:5
 msgid "<b>Presets:</b>"
 msgstr "<b>Előbeállítások:</b>"
 
-#: ../src/transmageddon.ui.h:7
+#: ../src/transmageddon.ui.h:6
 msgid "<b>Choose Input File:</b>"
 msgstr "<b>Válasszon bemeneti fájlt:</b>"
 
-#: ../src/transmageddon.ui.h:8
+#: ../src/transmageddon.ui.h:7
 msgid "<b>Output Format:</b>"
 msgstr "<b>Kimeneti formátum:</b>"
 
-#: ../src/transmageddon.ui.h:9
+#: ../src/transmageddon.ui.h:8
 msgid "<b>Choose Audio Codec</b>:"
 msgstr "<b>Válasszon hangkodeket:</b>"
 
-#: ../src/transmageddon.ui.h:10
+#: ../src/transmageddon.ui.h:9
 msgid "<b>Choose Video Codec</b>:"
 msgstr "<b>Válasszon videokodeket:</b>"
 
-#: ../src/transmageddon.ui.h:11
+#: ../src/transmageddon.ui.h:10
 msgid "<small>Rotate the video image if needed</small>"
 msgstr "<small>Kép elforgatása, ha szükséges</small>"
 
-#: ../src/transmageddon.ui.h:12
+#: ../src/transmageddon.ui.h:11
 msgid "_Transcode"
 msgstr "Á_tkódolás"
+
+#: ../src/udevdisco.py:221
+msgid "Not mounted."
+msgstr "Nincs csatolva."
 
 #: ../src/utils.py:76
 #, python-format
@@ -379,9 +388,6 @@ msgstr "%(path)s nem található egyik ismert útvonalon sem!"
 
 #~ msgid "No video parser, passthrough not available"
 #~ msgstr "Nincs videófeldolgozó, az áthaladás nem érhető el"
-
-#~ msgid "Uknown error"
-#~ msgstr "Ismeretlen hiba"
 
 #~ msgid "AA_C"
 #~ msgstr "AA_C"
