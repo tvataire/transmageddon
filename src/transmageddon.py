@@ -150,6 +150,7 @@ class Transmageddon(Gtk.Application):
    
    def do_activate(self):
        self.win = TransmageddonUI(self)
+       self.win.set_title("Transmageddon")
        self.win.show_all()
 
    def do_startup (self):
@@ -250,13 +251,6 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        # multiple streams
        self.audiovbox = Gtk.VBox()
        self.audiorows=[]
-      # def dynamic_comboboxes_audio(extra = []):
-      #     #if self.audiovbox:
-           #    self.audiovbox.destroy()
-      #     combo = Gtk.ComboBoxText.new() # 3
-      #     self.audiorows.append(combo)
-      #     self.audiovbox.add(self.audiorows[0])
-      #     return self.audiovbox
 
        def dynamic_comboboxes_video(streams,extra = []):
            vbox = Gtk.VBox()
@@ -272,13 +266,11 @@ class TransmageddonUI(Gtk.ApplicationWindow):
 
        #Define functionality of our button and main window
        self.box = self.builder.get_object("window")
-       #self.FileChooser = self.builder.get_object("FileChooser")
        self.videoinformation = self.builder.get_object("videoinformation")
        self.audioinformation = self.builder.get_object("audioinformation")
        self.videocodec = self.builder.get_object("videocodec")
        self.audiocodec = self.builder.get_object("audiocodec")
        self.langbutton = self.builder.get_object("langbutton")
-       #self.audiobox = dynamic_comboboxes_audio(GObject.TYPE_PYOBJECT)
        self.videobox = dynamic_comboboxes_video(GObject.TYPE_PYOBJECT)
        self.CodecBox = self.builder.get_object("CodecBox")
        self.presetchoice = self.builder.get_object("presetchoice")
@@ -289,18 +281,13 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        self.cancelbutton = self.builder.get_object("cancelbutton")
        self.StatusBar = self.builder.get_object("StatusBar")
        self.table1 = self.builder.get_object("table1")
-       # self.CodecBox.attach(self.audiobox, 0, 1, 1, 2) #, yoptions = Gtk.AttachOptions.FILL)
        self.CodecBox.attach(self.videobox, 2, 3, 1, 2, yoptions = Gtk.AttachOptions.SHRINK)
        self.CodecBox.show_all()
        self.containerchoice.connect("changed", self.on_containerchoice_changed)
        self.presetchoice.connect("changed", self.on_presetchoice_changed)
-       #self.audiorows[0].connect("changed", self.on_audiocodec_changed)
-       #self.audiorows[0].set_name("audiorow0")
        self.videorows[0].connect("changed", self.on_videocodec_changed)
        self.rotationchoice.connect("changed", self.on_rotationchoice_changed)
 
-
-       self.window=self.builder.get_object("window")
        self.builder.connect_signals(self) # Initialize User Interface
        self.add(self.box)
 
@@ -331,7 +318,6 @@ class TransmageddonUI(Gtk.ApplicationWindow):
 
        self.start_time = False
        self.setup_source()
-       print("initial run")
        self.setup_audiovbox(0)
        # Set the Videos XDG UserDir as the default directory for the filechooser
        # also make sure directory exists
@@ -1114,7 +1100,8 @@ class TransmageddonUI(Gtk.ApplicationWindow):
             
 
        else: # No audio track(s) found
-           self.audiorows[x].set_sensitive(False)
+           if self.houseclean==False:
+               self.audiorows[x].set_sensitive(False)
 
        # fill in with video
        if self.havevideo==True:
@@ -1219,8 +1206,8 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        if name.startswith("audiorow"): # this if statement is probably uneeded
           x=name[8:]
           x=int(x)
-       self.audiodata[x]['dopassthrough']=False
        if (self.houseclean == False and self.usingpreset==False):
+           self.audiodata[x]['dopassthrough']=False
            no=self.audiorows[x].get_active()
            if self.audiocodecs[x][no] == "pass":
                self.audiodata[x]['outputaudiocaps'] = self.audiodata[x]['inputaudiocaps']
@@ -1372,6 +1359,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        """
            Setup the audiobox widget.
        """
+       self.houseclean=True
        if streamcounter == 0: # only do this on the first run with a given file
            if self.audiobox:
                output=self.audiobox.destroy()
@@ -1385,6 +1373,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        self.audiorows[streamcounter].set_name("audiorow"+str(streamcounter))
        self.audiorows[streamcounter].show()
        self.CodecBox.show_all()
+       self.houseclean=False
 
    def on_source_changed(self, widget):
        """
@@ -1397,7 +1386,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        item = model.get_value(iter, 3)
 
        if item == 1:
-
+           self.isdvd=False
            dialog = Gtk.FileChooserDialog(title=_("Choose Source File..."),
                         buttons=(Gtk.STOCK_CANCEL, Gtk.ResponseType.REJECT,
                                  Gtk.STOCK_OPEN, Gtk.ResponseType.ACCEPT))
