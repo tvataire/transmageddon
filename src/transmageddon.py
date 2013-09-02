@@ -226,7 +226,6 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        self.discovered.connect('discovered', self.succeed)
        self.discovered.start()
 
-       self.audiorows=[] # set up the lists for holding the codec combobuttons
        self.videorows=[]
        self.audiocodecs=[]
        self.videocodecs=[]
@@ -236,27 +235,32 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        self.finder_video_found = None
        self.finder_video_lost = None
        self.isdvd = False
+       self.audiostreamcounter= 1
        
        self.fileiter = None
 
        # set flag so we remove bogus value from menu only once
        self.bogus=0
+       self.audiovbox=False
        
        # init the notification area
        Notify.init('Transmageddon')
 
        # These dynamic comboboxes allow us to support files with 
        # multiple streams
-       def dynamic_comboboxes_audio(extra = []):
-           vbox = Gtk.VBox()
-           combo = Gtk.ComboBoxText.new()
-           self.audiorows.append(combo)
-           vbox.add(self.audiorows[0])
-           return vbox
+       self.audiovbox = Gtk.VBox()
+       self.audiorows=[]
+      # def dynamic_comboboxes_audio(extra = []):
+      #     #if self.audiovbox:
+           #    self.audiovbox.destroy()
+      #     combo = Gtk.ComboBoxText.new() # 3
+      #     self.audiorows.append(combo)
+      #     self.audiovbox.add(self.audiorows[0])
+      #     return self.audiovbox
 
        def dynamic_comboboxes_video(streams,extra = []):
            vbox = Gtk.VBox()
-           combo = Gtk.ComboBoxText.new()
+           combo = Gtk.ComboBoxText.new() # 2
            self.videorows.append(combo)
            vbox.add(self.videorows[0])
            return vbox
@@ -274,7 +278,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        self.videocodec = self.builder.get_object("videocodec")
        self.audiocodec = self.builder.get_object("audiocodec")
        self.langbutton = self.builder.get_object("langbutton")
-       self.audiobox = dynamic_comboboxes_audio(GObject.TYPE_PYOBJECT)
+       #self.audiobox = dynamic_comboboxes_audio(GObject.TYPE_PYOBJECT)
        self.videobox = dynamic_comboboxes_video(GObject.TYPE_PYOBJECT)
        self.CodecBox = self.builder.get_object("CodecBox")
        self.presetchoice = self.builder.get_object("presetchoice")
@@ -285,13 +289,13 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        self.cancelbutton = self.builder.get_object("cancelbutton")
        self.StatusBar = self.builder.get_object("StatusBar")
        self.table1 = self.builder.get_object("table1")
-       self.CodecBox.attach(self.audiobox, 0, 1, 1, 2) #, yoptions = Gtk.AttachOptions.FILL)
+       # self.CodecBox.attach(self.audiobox, 0, 1, 1, 2) #, yoptions = Gtk.AttachOptions.FILL)
        self.CodecBox.attach(self.videobox, 2, 3, 1, 2, yoptions = Gtk.AttachOptions.SHRINK)
        self.CodecBox.show_all()
        self.containerchoice.connect("changed", self.on_containerchoice_changed)
        self.presetchoice.connect("changed", self.on_presetchoice_changed)
-       self.audiorows[0].connect("changed", self.on_audiocodec_changed)
-       self.audiorows[0].set_name("audiorow0")
+       #self.audiorows[0].connect("changed", self.on_audiocodec_changed)
+       #self.audiorows[0].set_name("audiorow0")
        self.videorows[0].connect("changed", self.on_videocodec_changed)
        self.rotationchoice.connect("changed", self.on_rotationchoice_changed)
 
@@ -321,11 +325,14 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                uri = selection.data.strip('\r\n\x00')
                # self.builder.get_object ("FileChooser").set_uri(uri)
        self.combo=False    # this value will hold the filechooser combo box
+       self.audiobox=False
        self.path=False
        self.source_hbox=False
 
        self.start_time = False
        self.setup_source()
+       print("initial run")
+       self.setup_audiovbox(0)
        # Set the Videos XDG UserDir as the default directory for the filechooser
        # also make sure directory exists
        #if 'get_user_special_dir' in GLib.__dict__:
@@ -645,11 +652,9 @@ class TransmageddonUI(Gtk.ApplicationWindow):
    def dvdreadproperties(self, parent, element):
        if self.isdvd:
            element.set_property("device", self.dvddevice)
-           # print("Title " + str(self.dvdttitle))
            element.set_property("title", self.streamdata['dvdtitle'])
 
    def succeed(self, discoverer, info, error):
-
        result=GstPbutils.DiscovererInfo.get_result(info)
        if result != GstPbutils.DiscovererResult.ERROR:
            streaminfo=info.get_stream_info()
@@ -686,16 +691,10 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                        self.haveaudio=True
                        self.audiodata.append(self.add_audiodata_row(i.get_channels(), i.get_sample_rate(), i.get_caps(), False, streamid, False, False, languagename, languagecode))
 
-                       if self.audiostreamcounter > 0:
-                           combo = Gtk.ComboBoxText.new()
-                           self.audiorows.append(combo)
-                           self.audiobox.add(self.audiorows[self.audiostreamcounter])
-                           self.audiorows[self.audiostreamcounter].connect("changed", self.on_audiocodec_changed)
-                           self.audiorows[self.audiostreamcounter].set_name("audiorow"+str(self.audiostreamcounter))
-                           self.audiorows[self.audiostreamcounter].show()
+                       self.setup_audiovbox(self.audiostreamcounter)
 
                        self.containerchoice.set_active(-1) # set this here to ensure it happens even with quick audio-only
-                       self.containerchoice.set_active(0)
+                       self.containerchoice.set_active(0)   
 
                if isinstance(i, GstPbutils.DiscovererVideoInfo):
                    streamid=i.get_stream_id()
@@ -1160,7 +1159,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                self.houseclean=False
           x=x+1
            
-         #How to do this for presets? change logic for preset choices or add 'no audio' option when using presets?
+           #How to do this for presets? change logic for preset choices or add 'no audio' option when using presets?
 
 
    def on_containerchoice_changed(self, widget):
@@ -1369,7 +1368,23 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        # Attach and show the source
        self.source_hbox.show_all()
 
-      
+   def setup_audiovbox(self, streamcounter): # creates the list of audiostreams ui
+       """
+           Setup the audiobox widget.
+       """
+       if streamcounter == 0: # only do this on the first run with a given file
+           if self.audiobox:
+               output=self.audiobox.destroy()
+           self.audiorows=[] # set up the lists for holding the codec combobuttons
+           self.audiobox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+           self.CodecBox.attach(self.audiobox, 0, 1, 1, 2)
+       combo = Gtk.ComboBoxText()
+       self.audiorows.append(combo)
+       self.audiobox.add(self.audiorows[streamcounter])
+       self.audiorows[streamcounter].connect("changed", self.on_audiocodec_changed)
+       self.audiorows[streamcounter].set_name("audiorow"+str(streamcounter))
+       self.audiorows[streamcounter].show()
+       self.CodecBox.show_all()
 
    def on_source_changed(self, widget):
        """
