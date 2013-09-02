@@ -151,6 +151,7 @@ class Transmageddon(Gtk.Application):
    def do_activate(self):
        self.win = TransmageddonUI(self)
        self.win.set_title("Transmageddon")
+         
        self.win.show_all()
 
    def do_startup (self):
@@ -607,6 +608,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            self.cancelbutton.set_sensitive(False)
            self.transcodebutton.set_sensitive(True)
            self.rotationchoice.set_sensitive(True)
+           self.combo.set_sensitive(True)
            self.start_time = False
            self.ProgressBar.set_text(_("Done Transcoding"))
            self.ProgressBar.set_fraction(1.0)
@@ -737,7 +739,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                self.videoinformation.set_markup(''.join(('<small>', 'Video width&#47;height: ', str(self.videodata[0]['videowidth']), "x", str(self.videodata[0]['videoheight']), '</small>',"\n", '<small>', 'Video codec: ',  str(GstPbutils.pb_utils_get_codec_description   (self.videodata[0]['inputvideocaps'])), '</small>' )))
            else: # in case of media being audio-only
                if not self.videodata: # need to create this for non-video files too
-                   self.videodata.append(self.add_videodata_row(None, None, None, False, None, None, None, False, False, None)) 
+                   self.videodata.append(self.add_videodata_row(None, None, None, False, None, None, None, False, False, None, 0)) 
                self.videoinformation.set_markup(''.join(('<small>', _("No Video"), '</small>', "\n", '<small>', "", '</small>')))
                self.presetchoice.set_sensitive(False)
                self.videorows[0].set_sensitive(False)
@@ -822,8 +824,9 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        # load language setting ui
        output=langchooser.languagechooser(self)
        output.languagewindow.run()
-       self.audiodata[self.audiostreamcounter]['languagecode'] = output.langcode
-       self.audiodata[self.audiostreamcounter]['language'] = GstTag.tag_get_language_name(output.langcode)
+       if output.langcode != None:
+           self.audiodata[self.audiostreamcounter]['languagecode'] = output.langcode
+           self.audiodata[self.audiostreamcounter]['language'] = GstTag.tag_get_language_name(output.langcode)
        self.languagelabel.set_markup(''.join(('<u><small>''Language: ', str(self.audiodata[self.audiostreamcounter]['language']),'</small></u>')))
 
    def _start_transcoding(self): 
@@ -947,7 +950,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        # pick output suffix
        container = self.builder.get_object("containerchoice").get_active_text()
        if self.streamdata['container']==False: # deal with container less formats
-           self.ContainerFormatSuffix = codecfinder.nocontainersuffixmap[Gst.Caps.to_string(self.audiodata['outputaudiocaps'])]
+           self.ContainerFormatSuffix = codecfinder.nocontainersuffixmap[Gst.Caps.to_string(self.audiodata[0]['outputaudiocaps'])]
        else:
            if self.havevideo == False:
                self.ContainerFormatSuffix = codecfinder.audiosuffixmap[container]
@@ -1085,18 +1088,18 @@ class TransmageddonUI(Gtk.ApplicationWindow):
 
            # Only allow one audio stream when using presets or when using FLV container or for Audio only transcode
            # set all entries except first one to 'no audio'
-           if (self.streamdata['container'].to_string() == "video/x-flv") or (self.usingpreset==True) or (self.streamdata['container']==False):
-               self.audiorows[0].set_active(0)
-               if self.audiostreamcounter !=0:
-                   sc=1 #skipping 0 line
-                   while sc <= self.audiostreamcounter:
-                       self.audiorows[sc].set_active(self.noaudiomenuno[sc])
-                       sc=sc+1
+           if (self.streamdata['container']==False) or (self.streamdata['container'].to_string() == "video/x-flv") or (self.usingpreset==True):
+                   self.audiorows[0].set_active(0)
+                   if self.audiostreamcounter !=0:
+                       sc=1 #skipping 0 line
+                       while sc <= self.audiostreamcounter:
+                           self.audiorows[sc].set_active(self.noaudiomenuno[sc])
+                           sc=sc+1
            else: # otherwise set all menu options to first entry 
-               x=0
-               while x <= self.audiostreamcounter:
-                   self.audiorows[x].set_active(0)
-                   x=x+1
+                   x=0
+                   while x <= self.audiostreamcounter:
+                       self.audiorows[x].set_active(0)
+                       x=x+1
             
 
        else: # No audio track(s) found
@@ -1219,7 +1222,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                        self.audiodata[x]['dopassthrough']= True
            elif self.usingpreset==True:
                self.audiodata[x]['outputaudiocaps'] = self.presetaudiocodec
-           if (self.streamdata['container'].to_string() == "video/x-flv") or (self.usingpreset==True) or (self.streamdata['container']==False):
+           if (self.streamdata['container']==False) or (self.streamdata['container'].to_string() == "video/x-flv") or (self.usingpreset==True):
                self.only_one_audio_stream_allowed(x)  
 
    def on_videocodec_changed(self, widget):
