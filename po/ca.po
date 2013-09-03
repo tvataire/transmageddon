@@ -45,7 +45,7 @@ msgstr "S'està obtenint %(location)s"
 #: ../src/presets.py:484
 #, python-format
 msgid "Writing to %(file)s"
-msgstr "S'esta escrivint a %(file)s"
+msgstr "S'està escrivint a %(file)s"
 
 #: ../src/presets.py:489
 #, python-format
