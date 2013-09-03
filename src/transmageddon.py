@@ -951,7 +951,6 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        # pick output suffix
        container = self.builder.get_object("containerchoice").get_active_text()
        if self.streamdata['container']==False: # deal with container less formats
-           print(self.audiodata)
            #FIXME - need to find stream that is being transcoded and choose suffix based on the outputcaps of that
            self.ContainerFormatSuffix = codecfinder.nocontainersuffixmap[Gst.Caps.to_string(self.audiodata[0]['outputaudiocaps'])]
        else:

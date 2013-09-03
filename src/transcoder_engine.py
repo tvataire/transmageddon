@@ -43,14 +43,10 @@ class Transcoder(GObject.GObject):
        self.audiodata = AUDIODATA
        self.videodata = VIDEODATA
        self.streamdata = STREAMDATA
-       self.container = self.streamdata['container']
-       if self.container != False: 
-           self.containercaps = self.container #FIXME This double variable is a leftover from old code
-       # special case mp3 which is a no-container format with a container (id3mux)
-       else:
-           if self.audiocaps.intersect(Gst.caps_from_string("audio/mpeg, mpegversion=1, layer=3")):
-               self.containercaps=Gst.caps_from_string("application/x-id3")
-               self.container=Gst.caps_from_string("application/x-id3")
+       if self.streamdata['container'] == False:
+          # FIXME - needs to be multistream enabled
+          if self.audiodata[0]['outputaudiocaps'].intersect(Gst.caps_from_string("audio/mpeg, mpegversion=1, layer=3")):
+               self.streamdata['container']=Gst.caps_from_string("application/x-id3")
 
        # set preset directory
        Gst.preset_set_app_dir("/usr/share/transmageddon/presets/")
@@ -105,13 +101,13 @@ class Transcoder(GObject.GObject):
            videopreset=None
 
        # first check if we are using a container format
-       if self.container==False:
+       if self.streamdata['container']==False:
            if self.audiocaps.intersect(Gst.caps_from_string("audio/mpeg, mpegversion=4")):
                self.audiocaps=Gst.caps_from_string("audio/mpeg, mpegversion=4, stream-format=adts")
            elif self.audiocaps.intersect(Gst.caps_from_string("audio/x-flac")):
                self.audiocaps=Gst.caps_from_string("audio/x-flac")
        else:
-           self.encodebinprofile = GstPbutils.EncodingContainerProfile.new("containerformat", None , self.containercaps, None)
+           self.encodebinprofile = GstPbutils.EncodingContainerProfile.new("containerformat", None , self.streamdata['container'], None)
  
            # What to do if we are not doing video passthrough (we only support video inside a 
            # container format
@@ -143,10 +139,9 @@ class Transcoder(GObject.GObject):
        # including any extra elements between uridecodebin and encodebin
        x=0
        self.audioprofilenames=[]
-       # print(self.audiodata)
        while x < len(self.audiodata): 
            if self.audiodata[x]['outputaudiocaps'] != (False or "noaud"):
-               if self.container==False:
+               if self.streamdata['container']==False:
                    self.encodebinprofile = GstPbutils.EncodingAudioProfile.new (self.audiodata[x]['outputaudiocaps'], audiopreset, Gst.Caps.new_any(), 0)
                else:
                    audiopreset=None
@@ -381,7 +376,7 @@ class Transcoder(GObject.GObject):
 
    def OnDynamicPad(self, uridecodebin, src_pad):
        origin = src_pad.query_caps(None)
-       if (self.container==False):
+       if (self.streamdata['container']==False):
            a =  origin.to_string()
            if a.startswith("audio/"):
                sinkpad = self.encodebin.get_static_pad("audio_0")
