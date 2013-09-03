@@ -951,6 +951,8 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        # pick output suffix
        container = self.builder.get_object("containerchoice").get_active_text()
        if self.streamdata['container']==False: # deal with container less formats
+           print(self.audiodata)
+           #FIXME - need to find stream that is being transcoded and choose suffix based on the outputcaps of that
            self.ContainerFormatSuffix = codecfinder.nocontainersuffixmap[Gst.Caps.to_string(self.audiodata[0]['outputaudiocaps'])]
        else:
            if self.havevideo == False:
@@ -1048,15 +1050,18 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                    testforempty = self.presetaudiocodec.to_string()
                    if testforempty != "EMPTY":
                        self.audiorows[x].append_text(str(GstPbutils.pb_utils_get_codec_description(self.presetaudiocodec)))
+                       self.houseclean=False
                        self.audiorows[x].set_active(0)
                        self.audiocodecs[x].append(self.presetaudiocodec)
                elif self.streamdata['container']==False: # special setup for container less case, looks ugly, but good enough for now
+                       
                        self.audiorows[x].append_text(str(GstPbutils.pb_utils_get_codec_description(Gst.caps_from_string("audio/mpeg, mpegversion=(int)1, layer=(int)3"))))
                        self.audiorows[x].append_text(str(GstPbutils.pb_utils_get_codec_description(Gst.caps_from_string("audio/mpeg, mpegversion=4, stream-format=adts"))))
                        self.audiorows[x].append_text(str(GstPbutils.pb_utils_get_codec_description(Gst.caps_from_string("audio/x-flac"))))
                        self.audiocodecs[x].append(Gst.caps_from_string("audio/mpeg, mpegversion=(int)1, layer=(int)3"))
                        self.audiocodecs[x].append(Gst.caps_from_string("audio/mpeg, mpegversion=4, stream-format=adts"))
                        self.audiocodecs[x].append(Gst.caps_from_string("audio/x-flac"))
+                       self.houseclean=False 
                        self.audiorows[x].set_active(0)
                        self.audiorows[x].set_sensitive(True)
                else:
@@ -1083,9 +1088,10 @@ class TransmageddonUI(Gtk.ApplicationWindow):
 
                self.audiorows[x].set_sensitive(True)
                x=x+1
+               self.houseclean=False 
   
 
-           self.houseclean=False
+           
 
            # Only allow one audio stream when using presets or when using FLV container or for Audio only transcode
            # set all entries except first one to 'no audio'
@@ -1101,7 +1107,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                    while x <= self.audiostreamcounter:
                        self.audiorows[x].set_active(0)
                        x=x+1
-            
+           self.houseclean=False 
 
        else: # No audio track(s) found
            if self.houseclean==False:
@@ -1363,7 +1369,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        """
            Setup the audiobox widget.
        """
-       self.houseclean=True
+       #self.houseclean=True
        if streamcounter == 0: # only do this on the first run with a given file
            if self.audiobox:
                output=self.audiobox.destroy()
@@ -1377,7 +1383,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        self.audiorows[streamcounter].set_name("audiorow"+str(streamcounter))
        self.audiorows[streamcounter].show()
        self.CodecBox.show_all()
-       self.houseclean=False
+       #self.houseclean=False
 
    def on_source_changed(self, widget):
        """

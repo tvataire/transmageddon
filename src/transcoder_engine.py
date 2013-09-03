@@ -180,7 +180,9 @@ class Transcoder(GObject.GObject):
            self.encodebin.set_state(Gst.State.PAUSED)
        
        # put together remuxing caps to set on uridecodebin if doing 
-       # passthrough on audio or video # FIXME needs to be made multistream ready
+       # passthrough on audio or video 
+
+       # !! FIXME needs to be made multistream ready
 
        if self.audiodata[0]['dopassthrough'] or self.videodata[0]['dopassthrough']:
            self.remuxcaps = Gst.Caps.new_empty()
@@ -194,8 +196,7 @@ class Transcoder(GObject.GObject):
        if self.videodata[0]['dopassthrough'] and not self.audiodata[0]['dopassthrough']:
           audiostruct=Gst.Structure.from_string("audio/x-raw")
           self.remuxcaps.append_structure(audiostruct[0])
-       if self.videodata[0]['outputvideocaps']!="novid":
-          if self.videodata[0]['inputvideocaps'] != None:
+       if self.videodata[0]['dopassthrough'] and not self.audiodata[0]['dopassthrough']:
               self.remuxcaps.append(self.videodata[0]['inputvideocaps'])
               audiostruct=Gst.Structure.from_string("audio/x-raw")
               self.remuxcaps.append_structure(audiostruct[0])
