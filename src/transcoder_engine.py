@@ -194,7 +194,7 @@ class Transcoder(GObject.GObject):
        if self.videodata[0]['dopassthrough'] and not self.audiodata[0]['dopassthrough']:
           audiostruct=Gst.Structure.from_string("audio/x-raw")
           self.remuxcaps.append_structure(audiostruct[0])
-       if self.videodata[0]['outputvideocaps']=="novid":
+       if self.videodata[0]['outputvideocaps']!="novid":
           if self.videodata[0]['inputvideocaps'] != None:
               self.remuxcaps.append(self.videodata[0]['inputvideocaps'])
               audiostruct=Gst.Structure.from_string("audio/x-raw")
@@ -205,7 +205,7 @@ class Transcoder(GObject.GObject):
        self.uridecoder.connect("pad-added", self.OnDynamicPad)
        self.uridecoder.connect('source-setup', self.dvdreadproperties)
 
-       if (self.audiodata[0]['dopassthrough']) or (self.videodata[0]['dopassthrough']) or (self.videodata[0]['outputvideocaps']=="novid"):
+       if (self.audiodata[0]['dopassthrough']) or (self.videodata[0]['dopassthrough']): # or (self.videodata[0]['outputvideocaps']=="novid"):
            self.uridecoder.set_property("caps", self.remuxcaps) 
        self.uridecoder.set_state(Gst.State.PAUSED)
        self.pipeline.add(self.uridecoder)
