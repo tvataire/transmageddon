@@ -151,6 +151,7 @@ class Transmageddon(Gtk.Application):
    def do_activate(self):
        self.win = TransmageddonUI(self)
        self.win.set_title("Transmageddon")
+       self.win.set_resizable(False)
          
        self.win.show_all()
 
