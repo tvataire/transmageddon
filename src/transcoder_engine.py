@@ -67,6 +67,7 @@ class Transcoder(GObject.GObject):
        self.probestreamid = False
        self.sinkpad = False
        self.usedstreamids = []
+       self.remuxreturnvalue = True
 
        # switching width and height around for rotationchoices where it makes sense
        if self.rotationvalue == 1 or self.rotationvalue == 3:
@@ -175,34 +176,35 @@ class Transcoder(GObject.GObject):
            self.encodebin.set_state(Gst.State.PAUSED)
        
        # put together remuxing caps to set on uridecodebin if doing 
-       # passthrough on audio or video 
+       # passthrough on audio or video - Made redundant by 'remuxpadprobe' function
 
        # !! FIXME needs to be made multistream ready
 
-       if self.audiodata[0]['dopassthrough'] or self.videodata[0]['dopassthrough']:
-           self.remuxcaps = Gst.Caps.new_empty()
-       if self.audiodata[0]['dopassthrough']:
-          self.remuxcaps.append(self.audiodata[0]['inputaudiocaps'])
-       if self.videodata[0]['dopassthrough']:
-          self.remuxcaps.append(self.videodata[0]['inputvideocaps'])
-       if self.audiodata[0]['dopassthrough'] and not self.videodata[0]['dopassthrough']:
-          videostruct=Gst.Structure.from_string("video/x-raw")
-          self.remuxcaps.append_structure(videostruct[0])
-       if self.videodata[0]['dopassthrough'] and not self.audiodata[0]['dopassthrough']:
-          audiostruct=Gst.Structure.from_string("audio/x-raw")
-          self.remuxcaps.append_structure(audiostruct[0])
-       if self.videodata[0]['dopassthrough'] and not self.audiodata[0]['dopassthrough']:
-              self.remuxcaps.append(self.videodata[0]['inputvideocaps'])
-              audiostruct=Gst.Structure.from_string("audio/x-raw")
-              self.remuxcaps.append_structure(audiostruct[0])
+       #if self.audiodata[0]['dopassthrough'] or self.videodata[0]['dopassthrough']:
+       #    self.remuxcaps = Gst.Caps.new_empty()
+       #if self.audiodata[0]['dopassthrough']:
+       #   self.remuxcaps.append(self.audiodata[0]['inputaudiocaps'])
+       #if self.videodata[0]['dopassthrough']:
+       #   self.remuxcaps.append(self.videodata[0]['inputvideocaps'])
+       #if self.audiodata[0]['dopassthrough'] and not self.videodata[0]['dopassthrough']:
+       #   videostruct=Gst.Structure.from_string("video/x-raw")
+       #   self.remuxcaps.append_structure(videostruct[0])
+       #if self.videodata[0]['dopassthrough'] and not self.audiodata[0]['dopassthrough']:
+       #   audiostruct=Gst.Structure.from_string("audio/x-raw")
+       #   self.remuxcaps.append_structure(audiostruct[0])
+       #if self.videodata[0]['dopassthrough'] and not self.audiodata[0]['dopassthrough']:
+       #       self.remuxcaps.append(self.videodata[0]['inputvideocaps'])
+       #       audiostruct=Gst.Structure.from_string("audio/x-raw")
+       #       self.remuxcaps.append_structure(audiostruct[0])
 
        self.uridecoder = Gst.ElementFactory.make("uridecodebin", "uridecoder")
        self.uridecoder.set_property("uri", self.streamdata['filechoice'])
+       self.uridecoder.connect('autoplug-continue', self.on_autoplug_continue)
        self.uridecoder.connect("pad-added", self.OnDynamicPad)
        self.uridecoder.connect('source-setup', self.dvdreadproperties)
 
-       if (self.audiodata[0]['dopassthrough']) or (self.videodata[0]['dopassthrough']): # or (self.videodata[0]['outputvideocaps']=="novid"):
-           self.uridecoder.set_property("caps", self.remuxcaps) 
+       #if (self.audiodata[0]['dopassthrough']) or (self.videodata[0]['dopassthrough']): # or (self.videodata[0]['outputvideocaps']=="novid"):
+       #    self.uridecoder.set_property("caps", self.remuxcaps) 
        self.uridecoder.set_state(Gst.State.PAUSED)
        self.pipeline.add(self.uridecoder)
        
@@ -317,7 +319,7 @@ class Transcoder(GObject.GObject):
      bus.add_signal_watch()
      bus.connect('message', self.on_message)
 
-   # this function probes for the stream id, then based on which 
+   # this function probes for the stream id and correct pads based on it
    def padprobe(self, pad, probeinfo, userdata):
        event = probeinfo.get_event()
        eventtype=event.type
@@ -330,8 +332,6 @@ class Transcoder(GObject.GObject):
                        #FIXME - Need to clean usedstreamid list at some point
                        self.usedstreamids.append(self.probestreamid)
                        if x < len(self.audioprofilenames):
-                           #print(self.audioprofilenames)
-                           #print(x)
                            self.sinkpad = self.encodebin.emit("request-profile-pad", self.audioprofilenames[x])
                            pad.link(self.sinkpad)
                x=x+1
@@ -403,15 +403,6 @@ class Transcoder(GObject.GObject):
                if c.startswith("audio/"):
                    # print(c)
                    if self.passcounter == int(0):
-                       #stick=src_pad.get_sticky_event(Gst.EventType.STREAM_START, 0)
-                       #print("stick is " +str(stick))
-                       #x=0
-                       #while x < len(self.audiodata):
-                       #    if stick==self.audiodata[x]['streamid']:
-                       #        print(str(pad)+" - "+"streamid from parse_stream_start "+ str(self.probestreamid))
-                       #        sinkpad = self.encodebin.emit("request-profile-pad", self.audioprofilenames[x])
-                       #        src_pad.link(sinkpad)
-                       #x=x+1
                        src_pad.add_probe(Gst.PadProbeType.EVENT_DOWNSTREAM, self.padprobe, None)
                elif ((c.startswith("video/") or c.startswith("image/")) and (self.videodata[0]['outputvideocaps'] != False)):
                    if self.videodata[0]['dopassthrough']==False:
@@ -425,6 +416,31 @@ class Transcoder(GObject.GObject):
                            self.videoflipper.get_static_pad("src").link(self.sinkpad)   
                    else:
                            src_pad.link(self.sinkpad)
+
+
+   def remuxpadprobe(self, pad, probeinfo, userdata):
+       # this probe takes any stream found by uridecodebin and stops decoding if its set for remuxing
+       event = probeinfo.get_event()
+       eventtype=event.type
+       if eventtype==Gst.EventType.STREAM_START:
+           streamid = event.parse_stream_start()
+           x=0
+           while x < len(self.audiodata):
+               if streamid==self.audiodata[x]['streamid']:
+                   if self.audiodata[x]['dopassthrough'] == True:
+                       self.remuxreturnvalue=False
+                   else:
+                       self.remuxreturnvalue=True
+               x=x+1
+       return Gst.PadProbeReturn.OK
+ 
+   def on_autoplug_continue(self, element, pad, caps):
+        pad.add_probe(Gst.PadProbeType.EVENT_DOWNSTREAM, self.remuxpadprobe, None)
+        if self.remuxreturnvalue == True:
+            return True
+        else:
+            return False
+
    def dvdreadproperties(self, parent, element):
         if "GstDvdReadSrc" in str(element)	:
             element.set_property("device", self.streamdata['filename'])
