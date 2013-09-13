@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: transmageddon master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-06 11:11+0200\n"
-"PO-Revision-Date: 2013-03-28 23:50+0100\n"
+"POT-Creation-Date: 2013-09-13 22:14+0200\n"
+"PO-Revision-Date: 2013-09-11 23:50+0100\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -54,19 +54,19 @@ msgstr ""
 #. create a string to push into the listview
 #: ../src/dvdtrackchooser.py:56
 msgid "Title:"
-msgstr ""
+msgstr "Titel:"
 
 #: ../src/dvdtrackchooser.py:56
 msgid "Languages:"
-msgstr ""
+msgstr "Sprog:"
 
 #: ../src/dvdtrackchooser.py:56
 msgid "Length:"
-msgstr ""
+msgstr "Længde:"
 
 #: ../src/dvdtrackchooser.py:56
 msgid "Minutes"
-msgstr ""
+msgstr "Minutter"
 
 #: ../src/presets.py:78
 #, python-format
@@ -136,9 +136,8 @@ msgid "All device presets are up to date!"
 msgstr "Alle enhedsforudindstillinger er opdateret!"
 
 #: ../src/transmageddon-dvdtrack-chooser.ui.h:1
-#, fuzzy
 msgid "Select a DVD title"
-msgstr "Vælg et dvd-spor"
+msgstr "Vælg en dvd-titel"
 
 #: ../src/transmageddon-dvdtrack-chooser.ui.h:2
 #: ../src/transmageddon-language-chooser.ui.h:2
@@ -152,201 +151,212 @@ msgstr "Vælg"
 
 #: ../src/transmageddon-language-chooser.ui.h:1
 msgid "Select a language"
-msgstr ""
+msgstr "Vælg et sprog"
 
 #. append to the menu the options
-#: ../src/transmageddon.py:162
+#: ../src/transmageddon.py:165
 msgid "About"
 msgstr "Om"
 
-#: ../src/transmageddon.py:163
+#: ../src/transmageddon.py:166
 msgid "Quit"
 msgstr "Afslut"
 
-#: ../src/transmageddon.py:164
+#: ../src/transmageddon.py:167
 msgid "Debug"
 msgstr "Fejlsøg"
 
 #. set default values for various variables
-#: ../src/transmageddon.py:360 ../src/transmageddon.py:801
-#: ../src/transmageddon.py:1000 ../src/transmageddon.py:1109
+#: ../src/transmageddon.py:379 ../src/transmageddon.py:809
+#: ../src/transmageddon.py:1015 ../src/transmageddon.py:1164
 msgid "Transcoding Progress"
 msgstr "Transkodning i gang"
 
 #. add i18n "No container"option
-#: ../src/transmageddon.py:403
+#: ../src/transmageddon.py:425
 msgid "No container (Audio-only)"
 msgstr "Ingen beholder (kun lyd)"
 
 #. Populate the rotatation box
 #. print("populating rotationbox")
-#: ../src/transmageddon.py:407
+#: ../src/transmageddon.py:429
 msgid "No rotation (default)"
 msgstr "Ingen rotation (standard)"
 
-#: ../src/transmageddon.py:408
+#: ../src/transmageddon.py:430
 msgid "Clockwise 90 degrees"
 msgstr "Med uret 90 grader"
 
-#: ../src/transmageddon.py:409
+#: ../src/transmageddon.py:431
 msgid "Rotate 180 degrees"
 msgstr "Roter 180 grader"
 
-#: ../src/transmageddon.py:410
+#: ../src/transmageddon.py:432
 msgid "Counterclockwise 90 degrees"
 msgstr "Mod uret 90 grader"
 
-#: ../src/transmageddon.py:411
+#: ../src/transmageddon.py:433
 msgid "Horizontal flip"
 msgstr "Horisontal vending"
 
-#: ../src/transmageddon.py:412
+#: ../src/transmageddon.py:434
 msgid "Vertical flip"
 msgstr "Vertikal vending"
 
-#: ../src/transmageddon.py:413
+#: ../src/transmageddon.py:435
 msgid "Upper left diagonal flip"
 msgstr "Vending via øverste venstre diagonal"
 
-#: ../src/transmageddon.py:414
+#: ../src/transmageddon.py:436
 msgid "Upper right diagnonal flip"
 msgstr "Vending via øverste højre diagonal"
 
-#: ../src/transmageddon.py:438
+#: ../src/transmageddon.py:459
 msgid "No Presets"
 msgstr "Ingen forhåndsindstillinger"
 
-#: ../src/transmageddon.py:550
+#: ../src/transmageddon.py:570
 #, python-format
 msgid "%(min)d:%(sec)02d"
 msgstr "%(min)d:%(sec)02d"
 
-#: ../src/transmageddon.py:580
+#: ../src/transmageddon.py:600
 #, python-format
 msgid "File saved to %(dir)s"
 msgstr "Fil gemt til %(dir)s"
 
-#: ../src/transmageddon.py:583
+#: ../src/transmageddon.py:603
 #, python-format
 msgid "%(file)s saved to %(dir)s"
 msgstr "%(file)s gemt til %(dir)s"
 
-#: ../src/transmageddon.py:593
+#: ../src/transmageddon.py:614
 msgid "Done Transcoding"
 msgstr "Transkodning færdig"
 
-#: ../src/transmageddon.py:611 ../src/transmageddon.py:962
+#: ../src/transmageddon.py:632 ../src/transmageddon.py:984
 #, python-format
 msgid "Writing %(filename)s"
 msgstr "Skriver %(filename)s"
 
-#: ../src/transmageddon.py:615
+#: ../src/transmageddon.py:636
 #, python-format
 msgid "Pass %(count)d Complete. "
 msgstr "Gennemløb %(count)d færdig. "
 
+#. We use None here so that we in transcoder engine can differentiate between,
+#. unknown language and known language, but no language code.
+#: ../src/transmageddon.py:678
+msgid "Unknown"
+msgstr "Ukendt"
+
 #. if there is no audio streams
-#. add a 'No Audio option'
-#: ../src/transmageddon.py:728 ../src/transmageddon.py:1058
-msgid "No Audio"
-msgstr "Ingen lyd"
+#: ../src/transmageddon.py:735
+msgid "  No Audio"
+msgstr "  Ingen lyd"
 
 #. add a 'No Video option'
-#: ../src/transmageddon.py:737 ../src/transmageddon.py:1096
+#: ../src/transmageddon.py:744 ../src/transmageddon.py:1137
 msgid "No Video"
 msgstr "Ingen video"
 
-#: ../src/transmageddon.py:851
+#: ../src/transmageddon.py:869
 msgid ""
 "Got an invalid response from codec installer, can not install missing codec."
 msgstr ""
 "Modtog et ugyldigt svar fra codecinstallation, kan ikke installere manglende "
 "codec."
 
-#: ../src/transmageddon.py:855
+#: ../src/transmageddon.py:873
 msgid "No Codec installer helper application available."
 msgstr "Intet hjælpeprogram tilgængelig for Codecinstallation."
 
-#: ../src/transmageddon.py:859
+#: ../src/transmageddon.py:877
 msgid "Plugins not found, choose different codecs."
 msgstr "Udvidelsesmoduler blev ikke fundet, vælg andre codec."
 
-#: ../src/transmageddon.py:869
+#: ../src/transmageddon.py:887
 msgid "Codec installation aborted."
 msgstr "Codecinstallation afbrudt."
 
-#: ../src/transmageddon.py:877
+#: ../src/transmageddon.py:895
 msgid "Missing plugin installation failed."
 msgstr "Manglende udvidelsesmodul - installation mislykkedes."
 
-#: ../src/transmageddon.py:965
+#: ../src/transmageddon.py:987
 #, python-format
 msgid "Pass %(count)d Progress"
 msgstr "Gennemløb %(count)d fremgang"
 
-#: ../src/transmageddon.py:1064
+#. add a 'No Audio option'
+#: ../src/transmageddon.py:1077
+msgid "No Audio"
+msgstr "Ingen lyd"
+
+#: ../src/transmageddon.py:1084
 msgid "Audio passthrough"
 msgstr "Lydgennemløb"
 
-#: ../src/transmageddon.py:1102
+#: ../src/transmageddon.py:1143
 msgid "Video passthrough"
 msgstr "Videogennemløb"
 
-#: ../src/transmageddon.py:1259
+#: ../src/transmageddon.py:1357
 msgid "(None)"
 msgstr "(Ingen)"
 
-#: ../src/transmageddon.py:1281
+#: ../src/transmageddon.py:1399
 msgid "Choose Source File..."
 msgstr "Vælg kildefil ..."
 
 #: ../src/transmageddon.ui.h:1
-#, fuzzy
 msgid ""
 "<small>Audio Channels:</small>\n"
-"<small>Audio Codec:</small>\n"
-"<small>Language:</small>"
-msgstr "<small>Lydkanaler:</small><small>Lydcodec:</small>"
+"<small>Audio Codec:</small>"
+msgstr ""
+"<small>Lydkanaler:</small>\n"
+"<small>Lydcodec:</small>"
 
 # lidt i tvivl her, skal det være ;-bredde  (- for video).
-#: ../src/transmageddon.ui.h:4
+#: ../src/transmageddon.ui.h:3
 msgid ""
 "<small>Video height&#47;width:</small>\n"
 "<small>Video Codec:</small>"
 msgstr "<small>Videohøjde&#47;-bredde:</small><small>Videocodec:</small>"
 
-#: ../src/transmageddon.ui.h:6
+#: ../src/transmageddon.ui.h:5
 msgid "<b>Presets:</b>"
 msgstr "<b>Forudindstillinger:</b>"
 
-#: ../src/transmageddon.ui.h:7
+#: ../src/transmageddon.ui.h:6
 msgid "<b>Choose Input File:</b>"
 msgstr "<b>Vælg inddatafil:</b>"
 
-#: ../src/transmageddon.ui.h:8
+#: ../src/transmageddon.ui.h:7
 msgid "<b>Output Format:</b>"
 msgstr "<b>Uddataformat:</b>"
 
-#: ../src/transmageddon.ui.h:9
+#: ../src/transmageddon.ui.h:8
 msgid "<b>Choose Audio Codec</b>:"
 msgstr "<b>Vælg lydcodec</b>:"
 
-#: ../src/transmageddon.ui.h:10
+#: ../src/transmageddon.ui.h:9
 msgid "<b>Choose Video Codec</b>:"
 msgstr "<b>Vælg videocodec</b>:"
 
-#: ../src/transmageddon.ui.h:11
+#: ../src/transmageddon.ui.h:10
 msgid "<small>Rotate the video image if needed</small>"
 msgstr "<small>Rotér videobilledet hvis nødvendigt</small>"
 
-#: ../src/transmageddon.ui.h:12
+#: ../src/transmageddon.ui.h:11
 msgid "_Transcode"
 msgstr "_Transkod"
+
+#: ../src/udevdisco.py:221
+msgid "Not mounted."
+msgstr "Ikke monteret."
 
 #: ../src/utils.py:76
 #, python-format
 msgid "Can't find %(path)s in any known prefix!"
 msgstr "Kan ikke finde %(path)s i nogen kendte præfiks!"
-
-#~ msgid "Choose File..."
-#~ msgstr "Vælg fil ..."
