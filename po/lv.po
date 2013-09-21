@@ -3,22 +3,31 @@
 #
 #
 # Rūdofls Mazurs <rudolfs.mazurs@gmail.com>, 2011.
-# Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>, 2012.
+# Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>, 2012, 2013.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-12 23:29+0300\n"
-"PO-Revision-Date: 2012-10-12 23:33+0300\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=transmageddon&keywords=I18N+L10N&component=General\n"
+"POT-Creation-Date: 2013-08-03 14:42+0000\n"
+"PO-Revision-Date: 2013-09-21 23:36+0300\n"
 "Last-Translator: Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>\n"
 "Language-Team: Latvian <lata-l10n@googlegroups.com>\n"
 "Language: lv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.4\n"
+"X-Generator: Lokalize 1.5\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
 "2);\n"
+
+#: ../transmageddon.desktop.in.in.h:1
+msgid "Transmageddon Video Transcoder"
+msgstr "Transmageddon video pārkodētājs"
+
+#: ../transmageddon.desktop.in.in.h:2
+msgid "Video format conversion tool"
+msgstr "Video formātu pārveidošanas rīks"
 
 #: ../src/about.py.in:46 ../src/about.py.in:47
 msgid "Transmageddon"
@@ -39,6 +48,23 @@ msgstr "Transmageddon mājas lapa"
 #: ../src/about.py.in:52
 msgid "translator-credits"
 msgstr "Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>"
+
+#. create a string to push into the listview
+#: ../src/dvdtrackchooser.py:56
+msgid "Title:"
+msgstr "Nosaukums:"
+
+#: ../src/dvdtrackchooser.py:56
+msgid "Languages:"
+msgstr "Valodas:"
+
+#: ../src/dvdtrackchooser.py:56
+msgid "Length:"
+msgstr "Garums:"
+
+#: ../src/dvdtrackchooser.py:56
+msgid "Minutes"
+msgstr "Minūtes"
 
 #: ../src/presets.py:78
 #, python-format
@@ -103,33 +129,211 @@ msgstr "Gadījās problēma, piekļūstot %(location)spresets.txt!"
 msgid "All device presets are up to date!"
 msgstr "Visu ierīču iestatījumi ir aktuāli!"
 
-#: ../src/transmageddon.ui.h:1
-msgid "<small>Audio Channels:</small>"
-msgstr "<small>Audio kanāli:</small>"
+#: ../src/transmageddon-dvdtrack-chooser.ui.h:1
+msgid "Select a DVD title"
+msgstr "Izvēlēties DVD virsrakstu"
 
-#: ../src/transmageddon.ui.h:2
-msgid "<small>Video height&#47;width:</small>"
-msgstr "<small>Video augstums&#47;platums:</small>"
+#: ../src/transmageddon-dvdtrack-chooser.ui.h:2
+#: ../src/transmageddon-language-chooser.ui.h:2
+msgid "Cancel"
+msgstr "Atcelt"
+
+#: ../src/transmageddon-dvdtrack-chooser.ui.h:3
+#: ../src/transmageddon-language-chooser.ui.h:3
+msgid "Select"
+msgstr "Izvēlēties"
+
+#: ../src/transmageddon-language-chooser.ui.h:1
+msgid "Select a language"
+msgstr "Izvēlieties valodu"
+
+#. append to the menu the options
+#: ../src/transmageddon.py:162
+msgid "About"
+msgstr "Par"
+
+#: ../src/transmageddon.py:163
+msgid "Quit"
+msgstr "Iziet"
+
+#: ../src/transmageddon.py:164
+msgid "Debug"
+msgstr "Atkļūdot"
+
+#. set default values for various variables
+#: ../src/transmageddon.py:384 ../src/transmageddon.py:823
+#: ../src/transmageddon.py:1027 ../src/transmageddon.py:1154
+msgid "Transcoding Progress"
+msgstr "Pārkodēšanas progress"
+
+#. add i18n "No container"option
+#: ../src/transmageddon.py:430
+msgid "No container (Audio-only)"
+msgstr "Nav konteinera (tikai audio)"
+
+#. Populate the rotatation box
+#. print("populating rotationbox")
+#: ../src/transmageddon.py:434
+msgid "No rotation (default)"
+msgstr "Nav rotācijas (noklusētais)"
+
+#: ../src/transmageddon.py:435
+msgid "Clockwise 90 degrees"
+msgstr "Pulksteņrādītāja virzienā 90 grādi"
+
+#: ../src/transmageddon.py:436
+msgid "Rotate 180 degrees"
+msgstr "Pagriezt par 180 grādiem"
+
+#: ../src/transmageddon.py:437
+msgid "Counterclockwise 90 degrees"
+msgstr "Pretēji pulksteņrādītāja virzienam 90 grādi"
+
+#: ../src/transmageddon.py:438
+msgid "Horizontal flip"
+msgstr "Horizontāli apmest"
+
+#: ../src/transmageddon.py:439
+msgid "Vertical flip"
+msgstr "Vertikāli apmest"
+
+#: ../src/transmageddon.py:440
+msgid "Upper left diagonal flip"
+msgstr "Apmest pa augšējo kreiso diagonāli"
+
+#: ../src/transmageddon.py:441
+msgid "Upper right diagnonal flip"
+msgstr "Apmest pa augšējo labo diagonāli"
+
+#: ../src/transmageddon.py:464
+msgid "No Presets"
+msgstr "Nav iestatījumu"
+
+#: ../src/transmageddon.py:575
+#, python-format
+msgid "%(min)d:%(sec)02d"
+msgstr "%(min)d:%(sec)02d"
+
+#: ../src/transmageddon.py:605
+#, python-format
+msgid "File saved to %(dir)s"
+msgstr "Datne saglabāts mapē %(dir)s"
+
+#: ../src/transmageddon.py:608
+#, python-format
+msgid "%(file)s saved to %(dir)s"
+msgstr "%(file)s saglabāta %(dir)s"
+
+#: ../src/transmageddon.py:618
+msgid "Done Transcoding"
+msgstr "Pārkodēšana pabeigta"
+
+#: ../src/transmageddon.py:636 ../src/transmageddon.py:996
+#, python-format
+msgid "Writing %(filename)s"
+msgstr "Raksta %(filename)s"
+
+#: ../src/transmageddon.py:640
+#, python-format
+msgid "Pass %(count)d Complete. "
+msgstr "Caurskate %(count)d pabeigta. "
+
+#. We use None here so that we in transcoder engine can differentiate between,
+#. unknown language and known language, but no language code.
+#: ../src/transmageddon.py:686
+#| msgid "Uknown error"
+msgid "Unknown"
+msgstr "Nezināms"
+
+#. if there is no audio streams
+#: ../src/transmageddon.py:749
+#| msgid "No Audio"
+msgid "  No Audio"
+msgstr "  Nav audio"
+
+#. add a 'No Video option'
+#: ../src/transmageddon.py:758 ../src/transmageddon.py:1141
+msgid "No Video"
+msgstr "Nav video"
+
+#: ../src/transmageddon.py:882
+msgid ""
+"Got an invalid response from codec installer, can not install missing codec."
+msgstr ""
+"Saņēma nederīgu atbildi no kodeku instalatora, nevar instalēt trūkstošo "
+"kodeku."
+
+#: ../src/transmageddon.py:886
+msgid "No Codec installer helper application available."
+msgstr "Nav pieejama kodeku instalatora palīga lietotne."
+
+#: ../src/transmageddon.py:890
+msgid "Plugins not found, choose different codecs."
+msgstr "Spraudņi nav atrasti, izvelieties citus kodekus."
+
+#: ../src/transmageddon.py:900
+msgid "Codec installation aborted."
+msgstr "Kodeku instalēšana apturēta."
+
+#: ../src/transmageddon.py:908
+msgid "Missing plugin installation failed."
+msgstr "Trūkstošo spraudņu instalēšana neizdevās."
+
+#: ../src/transmageddon.py:999
+#, python-format
+msgid "Pass %(count)d Progress"
+msgstr "Notiek apstrāde %(count)d"
+
+#. add a 'No Audio option'
+#: ../src/transmageddon.py:1088
+msgid "No Audio"
+msgstr "Nav audio"
+
+#: ../src/transmageddon.py:1095
+msgid "Audio passthrough"
+msgstr "Audio tranzīts"
+
+#: ../src/transmageddon.py:1147
+msgid "Video passthrough"
+msgstr "Video tranzīts"
+
+#: ../src/transmageddon.py:1346
+msgid "(None)"
+msgstr "(Nekas)"
+
+#: ../src/transmageddon.py:1370
+msgid "Choose Source File..."
+msgstr "Izvēlēties avota datni..."
+
+#: ../src/transmageddon.ui.h:1
+#| msgid "<small>Audio Channels:</small>"
+msgid ""
+"<small>Audio Channels:</small>\n"
+"<small>Audio Codec:</small>"
+msgstr ""
+"<small>Audio kanāli:</small>\n"
+"<small>Audio kodeks:</small>"
 
 #: ../src/transmageddon.ui.h:3
+#| msgid "<small>Video height&#47;width:</small>"
+msgid ""
+"<small>Video height&#47;width:</small>\n"
+"<small>Video Codec:</small>"
+msgstr ""
+"<small>Video augstums&#47;platums:</small>\n"
+"<small>Vide kodeks:</small>"
+
+#: ../src/transmageddon.ui.h:5
 msgid "<b>Presets:</b>"
 msgstr "<b>Iestatījumi:</b>"
 
-#: ../src/transmageddon.ui.h:4
+#: ../src/transmageddon.ui.h:6
 msgid "<b>Choose Input File:</b>"
 msgstr "<b>Izvēlieties ievades datni:</b>"
 
-#: ../src/transmageddon.ui.h:5
+#: ../src/transmageddon.ui.h:7
 msgid "<b>Output Format:</b>"
 msgstr "<b>Izvades formāts:</b>"
-
-#: ../src/transmageddon.ui.h:6
-msgid "<small>Video codec:</small>"
-msgstr "<small>Video kodeks:</small>"
-
-#: ../src/transmageddon.ui.h:7
-msgid "<small>Audio codec:</small>"
-msgstr "<small>Audio kodeks:</small>"
 
 #: ../src/transmageddon.ui.h:8
 msgid "<b>Choose Audio Codec</b>:"
@@ -147,153 +351,20 @@ msgstr "<small>Pagriezt video attēlu, ja nepieciešams</small>"
 msgid "_Transcode"
 msgstr "Pārkodē_t"
 
-#. append to the menu the options
-#: ../src/transmageddon.py:157
-msgid "About"
-msgstr "Par"
-
-#: ../src/transmageddon.py:158
-msgid "Quit"
-msgstr "Iziet"
-
-#: ../src/transmageddon.py:159
-msgid "Debug"
-msgstr "Atkļūdot"
-
-#: ../src/transmageddon.py:375 ../src/transmageddon.py:750
-#: ../src/transmageddon.py:971 ../src/transmageddon.py:1061
-msgid "Transcoding Progress"
-msgstr "Pārkodēšanas progress"
-
-#. add i18n "No container"option
-#: ../src/transmageddon.py:411
-msgid "No container (Audio-only)"
-msgstr "Nav konteinera (tikai audio)"
-
-#. Populate the rotatation box
-#. print("populating rotationbox")
-#: ../src/transmageddon.py:415
-msgid "No rotation (default)"
-msgstr "Nav rotācijas (noklusētais)"
-
-#: ../src/transmageddon.py:416
-msgid "Clockwise 90 degrees"
-msgstr "Pulksteņrādītāja virzienā 90 grādi"
-
-#: ../src/transmageddon.py:417
-msgid "Rotate 180 degrees"
-msgstr "Pagriezt par 180 grādiem"
-
-#: ../src/transmageddon.py:418
-msgid "Counterclockwise 90 degrees"
-msgstr "Pretēji pulksteņrādītāja virzienam 90 grādi"
-
-#: ../src/transmageddon.py:419
-msgid "Horizontal flip"
-msgstr "Horizontāli apmest"
-
-#: ../src/transmageddon.py:420
-msgid "Vertical flip"
-msgstr "Vertikāli apmest"
-
-#: ../src/transmageddon.py:421
-msgid "Upper left diagonal flip"
-msgstr "Apmest pa augšējo kreiso diagonāli"
-
-#: ../src/transmageddon.py:422
-msgid "Upper right diagnonal flip"
-msgstr "Apmest pa augšējo labo diagonāli"
-
-#: ../src/transmageddon.py:445
-msgid "No Presets"
-msgstr "Nav iestatījumu"
-
-#: ../src/transmageddon.py:537
-#, python-format
-msgid "%(min)d:%(sec)02d"
-msgstr "%(min)d:%(sec)02d"
-
-#: ../src/transmageddon.py:567
-#, python-format
-msgid "File saved to %(dir)s"
-msgstr "Datne saglabāts mapē %(dir)s"
-
-#: ../src/transmageddon.py:570
-#, python-format
-msgid "%(file)s saved to %(dir)s"
-msgstr "%(file)s saglabāta %(dir)s"
-
-#: ../src/transmageddon.py:580
-msgid "Done Transcoding"
-msgstr "Pārkodēšana pabeigta"
-
-#: ../src/transmageddon.py:593 ../src/transmageddon.py:940
-#, python-format
-msgid "Writing %(filename)s"
-msgstr "Raksta %(filename)s"
-
-#: ../src/transmageddon.py:597
-#, python-format
-msgid "Pass %(count)d Complete. "
-msgstr "Caurskate %(count)d pabeigta. "
-
-#: ../src/transmageddon.py:642
-msgid "No Audio"
-msgstr "Nav audio"
-
-#. add a 'No Video option'
-#: ../src/transmageddon.py:664 ../src/transmageddon.py:1043
-msgid "No Video"
-msgstr "Nav video"
-
-#: ../src/transmageddon.py:836
-msgid ""
-"Got an invalid response from codec installer, can not install missing codec."
-msgstr ""
-"Saņēma nederīgu atbildi no kodeku instalatora, nevar instalēt trūkstošo "
-"kodeku."
-
-#: ../src/transmageddon.py:840
-msgid "No Codec installer helper application available."
-msgstr "Nav pieejama kodeku instalatora palīga lietotne."
-
-#: ../src/transmageddon.py:844
-msgid "Plugins not found, choose different codecs."
-msgstr "Spraudņi nav atrasti, izvelieties citus kodekus."
-
-#: ../src/transmageddon.py:854
-msgid "Codec installation aborted."
-msgstr "Kodeku instalēšana apturēta."
-
-#: ../src/transmageddon.py:862
-msgid "Missing plugin installation failed."
-msgstr "Trūkstošo spraudņu instalēšana neizdevās."
-
-#: ../src/transmageddon.py:943
-#, python-format
-msgid "Pass %(count)d Progress"
-msgstr "Notiek apstrāde %(count)d"
-
-#: ../src/transmageddon.py:1049
-msgid "Video passthrough"
-msgstr "Video tranzīts"
-
-#: ../src/transmageddon.py:1054
-msgid "Audio passthrough"
-msgstr "Audio tranzīts"
+#: ../src/udevdisco.py:221
+msgid "Not mounted."
+msgstr "Nav montēts."
 
 #: ../src/utils.py:76
 #, python-format
 msgid "Can't find %(path)s in any known prefix!"
 msgstr "Nevar atrast %(path)s nevienā no zināmajiem prefiksiem!"
 
-#: ../transmageddon.desktop.in.in.h:1
-msgid "Transmageddon Video Transcoder"
-msgstr "Transmageddon video pārkodētājs"
+#~ msgid "<small>Video codec:</small>"
+#~ msgstr "<small>Video kodeks:</small>"
 
-#: ../transmageddon.desktop.in.in.h:2
-msgid "Video format conversion tool"
-msgstr "Video formātu pārveidošanas rīks"
+#~ msgid "<small>Audio codec:</small>"
+#~ msgstr "<small>Audio kodeks:</small>"
 
 #~ msgid "_Help"
 #~ msgstr "_Palīdzība"
@@ -306,6 +377,3 @@ msgstr "Video formātu pārveidošanas rīks"
 
 #~ msgid "No video parser, passthrough not available"
 #~ msgstr "Nav video parsētāja, tranzīts nav pieejams"
-
-#~ msgid "Uknown error"
-#~ msgstr "Nezināma kļūda"
