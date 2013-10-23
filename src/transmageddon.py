@@ -1354,7 +1354,32 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            self.combo.set_active(0)
            self.combo.connect("changed", self.on_source_changed)
        else:
-           self.combo = Gtk.FileChooserButton(_("(None)"))
+           theme = Gtk.IconTheme.get_default()
+           size= Gtk.icon_size_lookup(Gtk.IconSize.MENU)[1]
+           cdrom=theme.load_icon(Gtk.STOCK_CDROM, size, 0)
+           fileopen=theme.load_icon(Gtk.STOCK_OPEN, size, 0)
+
+
+           liststore = Gtk.ListStore(GdkPixbuf.Pixbuf, GObject.TYPE_STRING, GObject.TYPE_STRING, GObject.TYPE_INT)
+           liststore.append([None, "", "", 0])
+           liststore.append([fileopen, "Choose File...", "", 1])
+           # liststore.append([cdrom, self.dvdname, self.dvddevice,  2])
+
+           self.combo = Gtk.ComboBox(model=liststore)
+
+           renderer_text = Gtk.CellRendererText()
+           renderer_pixbuf = Gtk.CellRendererPixbuf()
+
+           self.combo.pack_start(renderer_pixbuf, False)
+           self.combo.pack_start(renderer_text, True)
+           self.combo.add_attribute(renderer_pixbuf, 'pixbuf', 0)
+           self.combo.add_attribute(renderer_text, 'text', 1)
+                
+           self.combo.set_active(0)
+           self.combo.connect("changed", self.on_source_changed)
+
+           #self.combo = Gtk.FileChooserButton(_("(None)"))
+
           
        #if not self.source_hbox:
        self.source_hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
