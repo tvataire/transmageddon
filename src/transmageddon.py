@@ -415,7 +415,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        self.audiodata =[]
        self.videodata =[]
        # all other data will go into streamdata
-       self.streamdata = {'filechoice' : False, 'filename' : False, 'outputdirectory' : False, 'container' : False, 'devicename' : "nopreset", 'multipass': 0, 'passcounter': 0, 'outputfilename' : False, 'timestamp': False, 'dvdtitle': False}
+       self.streamdata = {'filechoice' : False, 'filename' : False, 'outputdirectory' : False, 'container' : False, 'devicename' : "nopreset", 'multipass': 0, 'passcounter': 0, 'outputfilename' : False, 'timestamp': False, 'dvdtitle': False, 'incomingcontainer' : False}
 
        # Populate the Container format combobox
        # print("do we try to populate container choice")
@@ -648,7 +648,9 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        if result != GstPbutils.DiscovererResult.ERROR:
            streaminfo=info.get_stream_info()
            if streaminfo != None:
+               print(streaminfo.get_caps().to_string())
                self.streamdata['container'] = streaminfo.get_caps()
+               self.streamdata['incomingcontainer'] = streaminfo.get_caps()
            else:
                print("FIXME")
                #self.check_for_elements()
@@ -1329,7 +1331,8 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            self.finder_disc_lost = self.finder.connect("disc-lost",
                                                         self.on_disc_lost)
 
-       if self.dvdname:
+       lsdvdexist = which.which("lsdvd")
+       if self.dvdname and lsdvdexist: # only use this option is there is a DVD and ldvd is installed
            theme = Gtk.IconTheme.get_default()
            size= Gtk.icon_size_lookup(Gtk.IconSize.MENU)[1]
            cdrom=theme.load_icon(Gtk.STOCK_CDROM, size, 0)
