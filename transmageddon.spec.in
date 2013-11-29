@@ -43,6 +43,9 @@ make install DESTDIR=%{buildroot}
 desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}.desktop
 %find_lang %{name}
 
+%post
+gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
+
 %clean
 rm -rf %{buildroot}
 
@@ -51,13 +54,21 @@ rm -rf %{buildroot}
 %doc ChangeLog AUTHORS TODO COPYING NEWS
 %{_bindir}/transmageddon
 %{_datadir}/transmageddon/*.*
-%{_datadir}/pixmaps/transmageddon.svg
+%{_datadir}/icons/hicolor/16x16/apps/transmageddon.png
+%{_datadir}/icons/hicolor/22x22/apps/transmageddon.png
+%{_datadir}/icons/hicolor/24x24/apps/transmageddon.png
+%{_datadir}/icons/hicolor/256x256/apps/transmageddon.png
+%{_datadir}/icons/hicolor/32x32/apps/transmageddon.png
+%{_datadir}/icons/hicolor/48x48/apps/transmageddon.png
+%{_datadir}/transmageddon/appdata/transmageddon.xml
 %{_datadir}/applications/transmageddon.desktop
 %{_datadir}/transmageddon/presets/*
 %{_datadir}/transmageddon/profiles/*
 %{_mandir}/man1/transmageddon.1.gz
 
 %changelog
+* Fri Nov 28 2013 Christian Schaller <uraeus@gnome.org>
+* Include new icons and appdata files
 * Wed May 20 2009 Michal Schmidt <mschmidt@redhat.com>
 - Modified for Fedora packaging guidelines.
 * Mon Mar 30 2009 Christian Schaller <uraeus@gnome.org>

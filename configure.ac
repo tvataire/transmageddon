@@ -4,10 +4,10 @@ dnl initialize autoconf
 dnl when going to/from release please set the nano (fourth number) right !
 dnl releases only do Wall, cvs and prerelease does Werror too
 AC_INIT([transmageddon],
-        [0.25],
+        [1.0],
         [https://bugzilla.gnome.org/enter_bug.cgi?product=transmageddon],
         [transmageddon],
-        [http://www.linuxrising.org/transmageddon])
+        [http://www.linuxrising.org/])
 
 AC_CONFIG_SRCDIR([src/transmageddon.py])
 AC_CONFIG_MACRO_DIR([m4])

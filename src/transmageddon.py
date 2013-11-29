@@ -340,13 +340,13 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        # self.FileChooser.set_current_folder(self.videodirectory)
 
        # Setting AppIcon
-       FileExist = os.path.isfile("../../share/icons/hicolor/48x48/transmageddon.png")
+       FileExist = os.path.isfile("../icons/hicolor/48x48/transmageddon.png")
        if FileExist:
            self.set_icon_from_file( \
-                   "../../share/icons/hicolor/48x48/pixmaps/transmageddon.png")
+                   "../icons/hicolor/48x48/transmageddon.png")
        else:
            try:
-               self.set_icon_from_file("../icons/48x48/transmageddon.png")
+               self.set_default_icon_name("transmageddon")
            except:
                print("failed to find appicon")
 
