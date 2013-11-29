@@ -1,7 +1,9 @@
-0.26 - 
+1.0 - 
   Added support for setting language of stream
   Added support for handling multiple audio streams
   Added support for DVD ripping
+  Switched to new icon designed by Jakub Steiner
+  Added appdata for GNOME Software and similar
 
 0.25 - 05.10.2012
   Fixed critical bug for remuxing
