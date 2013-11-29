@@ -373,14 +373,10 @@ class Transcoder(GObject.GObject):
                # bother with the video pad.
                c = origin.to_string()
                if not c.startswith("text/"):
-                   print("not text")
                    if not (c.startswith("video/") and (self.videodata[0]['outputvideocaps'] == False)):
-                       print("output is not false")
                        if self.passcounter == int(0):
                            if not c.startswith("audio/"):
-                               print("not audio")
                                self.sinkpad = self.encodebin.emit("request-pad", origin)
-                               print("got sinkpad" + str(self.sinkpad))
                if c.startswith("audio/"):
                    if self.passcounter == int(0):
                        src_pad.add_probe(Gst.PadProbeType.EVENT_DOWNSTREAM, self.padprobe, None)
@@ -412,6 +408,9 @@ class Transcoder(GObject.GObject):
         if streamid ==self.videodata[0]['streamid']:
                if self.videodata[0]['dopassthrough'] == True:
                    self.remuxreturnvalue = False
+        capsvalue=caps.to_string()
+        if capsvalue.startswith("subtitle/"): # this is to avoid wasting resources on decoding subtitles
+            self.remuxreturnvalue =False
         if self.remuxreturnvalue == False:
             return False
         else:
