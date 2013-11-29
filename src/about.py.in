@@ -18,7 +18,9 @@ Authors = ["Christian Schaller <uraeus@gnome.org>",
            "Claude Paroz <claude@2xlibre.net>"
            ]
 
-Artists = ["Emily and Liam <liam@fightingcrane.com>"]
+Artists = ["Emily and Liam <liam@fightingcrane.com>",
+           "Jakub Steiner <jimmac@gnome.org"
+          ]
 LGPL = """
 Transmageddon
 Copyright (C) 2009 Transmageddon Authors
