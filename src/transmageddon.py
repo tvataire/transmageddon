@@ -415,7 +415,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        self.audiodata =[]
        self.videodata =[]
        # all other data will go into streamdata
-       self.streamdata = {'filechoice' : False, 'filename' : False, 'outputdirectory' : False, 'container' : False, 'devicename' : "nopreset", 'multipass': 0, 'passcounter': 0, 'outputfilename' : False, 'timestamp': False, 'dvdtitle': False, 'incomingcontainer' : False}
+       self.streamdata = {'filechoice' : False, 'filename' : False, 'outputdirectory' : False, 'container' : False, 'devicename' : "nopreset", 'multipass': 0, 'passcounter': 0, 'outputfilename' : False, 'timestamp': False, 'dvdtitle': False}
 
        # Populate the Container format combobox
        # print("do we try to populate container choice")
@@ -648,9 +648,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        if result != GstPbutils.DiscovererResult.ERROR:
            streaminfo=info.get_stream_info()
            if streaminfo != None:
-               print(streaminfo.get_caps().to_string())
                self.streamdata['container'] = streaminfo.get_caps()
-               self.streamdata['incomingcontainer'] = streaminfo.get_caps()
            else:
                print("FIXME")
                #self.check_for_elements()
@@ -1243,6 +1241,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                    self.videodata[0]['outputvideocaps'] = "novid"
                    self.rotationchoice.set_sensitive(False)
            if self.videorows[0].get_active() == self.videopassmenuno:
+               self.videodata[0]['outputvideocaps'] =  self.videodata[0]['inputvideocaps']
                self.videodata[0]['dopassthrough']=True
        elif self.usingpreset==True:
            self.videodata[0]['outputvideocaps'] = self.presetvideocodec

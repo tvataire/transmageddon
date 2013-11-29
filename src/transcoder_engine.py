@@ -60,17 +60,14 @@ class Transcoder(GObject.GObject):
        self.blackborderflag = False
        self.multipass = self.streamdata['multipass']
        self.passcounter = self.streamdata['passcounter']
-       self.outputfilename = self.streamdata['outputfilename']
-       self.timestamp = self.streamdata['timestamp']
-       self.rotationvalue = int(self.videodata[0]['rotationvalue'])
        self.missingplugin= False
        self.probestreamid = False
        self.sinkpad = False
        self.usedstreamids = []
-       self.remuxreturnvalue = True
+       # self.remuxreturnvalue = True
 
        # switching width and height around for rotationchoices where it makes sense
-       if self.rotationvalue == 1 or self.rotationvalue == 3:
+       if int(self.videodata[0]['rotationvalue']) == 1 or int(self.videodata[0]['rotationvalue']) == 3:
            nwidth = self.videodata[0]['videoheight']
            nheight = self.videodata[0]['videowidth']
            self.videodata[0]['videoheight'] = nheight
@@ -80,7 +77,7 @@ class Transcoder(GObject.GObject):
        # statistics file
        if self.multipass != 0:
            self.cachefile = (str (GLib.get_user_cache_dir()) + "/" + \
-                   "multipass-cache-file" + self.timestamp + ".log")
+                   "multipass-cache-file" + self.streamdata['timestamp'] + ".log")
 
        # gather preset data if relevant
        if self.preset != "nopreset":
@@ -115,7 +112,7 @@ class Transcoder(GObject.GObject):
            if self.videodata[0]['outputvideocaps'] !=False:
                if (self.videodata[0]['dopassthrough']==False and self.passcounter == int(0)):
                    self.videoflipper = Gst.ElementFactory.make('videoflip', None)
-                   self.videoflipper.set_property("method", self.rotationvalue)
+                   self.videoflipper.set_property("method", int(self.videodata[0]['rotationvalue']))
                    self.pipeline.add(self.videoflipper)
 
                    self.colorspaceconverter = Gst.ElementFactory.make("videoconvert", None)
@@ -134,6 +131,8 @@ class Transcoder(GObject.GObject):
                if (self.videodata[0]['outputvideocaps'] != False):
                    videopreset=None
                    self.videoprofile = GstPbutils.EncodingVideoProfile.new(self.videodata[0]['outputvideocaps'], videopreset, Gst.Caps.new_any(), 0)
+                   print(self.videoprofile)
+                   print(self.videodata[0]['outputvideocaps'].to_string())
                    self.encodebinprofile.add_profile(self.videoprofile)
 
        # We do not need to do anything special for passthrough for audio, since we are not
@@ -146,8 +145,6 @@ class Transcoder(GObject.GObject):
                    self.encodebinprofile = GstPbutils.EncodingAudioProfile.new (self.audiodata[x]['outputaudiocaps'], audiopreset, Gst.Caps.new_any(), 0)
                else:
                    audiopreset=None
-                   print("encodebin profile")
-                   print(self.audiodata[x]['outputaudiocaps'].to_string())
                    self.audioprofile = GstPbutils.EncodingAudioProfile.new(self.audiodata[x]['outputaudiocaps'], audiopreset, Gst.Caps.new_any(), 0)
                    self.audioprofilenames.append("audioprofilename"+str(x))
                    self.audioprofile.set_name(self.audioprofilenames[x])
@@ -177,28 +174,6 @@ class Transcoder(GObject.GObject):
            self.pipeline.add(self.encodebin)
            self.encodebin.set_state(Gst.State.PAUSED)
        
-       # put together remuxing caps to set on uridecodebin if doing 
-       # passthrough on audio or video - Made redundant by 'remuxpadprobe' function
-
-       # !! FIXME needs to be made multistream ready
-
-       #if self.audiodata[0]['dopassthrough'] or self.videodata[0]['dopassthrough']:
-       #    self.remuxcaps = Gst.Caps.new_empty()
-       #if self.audiodata[0]['dopassthrough']:
-       #   self.remuxcaps.append(self.audiodata[0]['inputaudiocaps'])
-       #if self.videodata[0]['dopassthrough']:
-       #   self.remuxcaps.append(self.videodata[0]['inputvideocaps'])
-       #if self.audiodata[0]['dopassthrough'] and not self.videodata[0]['dopassthrough']:
-       #   videostruct=Gst.Structure.from_string("video/x-raw")
-       #   self.remuxcaps.append_structure(videostruct[0])
-       #if self.videodata[0]['dopassthrough'] and not self.audiodata[0]['dopassthrough']:
-       #   audiostruct=Gst.Structure.from_string("audio/x-raw")
-       #   self.remuxcaps.append_structure(audiostruct[0])
-       #if self.videodata[0]['dopassthrough'] and not self.audiodata[0]['dopassthrough']:
-       #       self.remuxcaps.append(self.videodata[0]['inputvideocaps'])
-       #       audiostruct=Gst.Structure.from_string("audio/x-raw")
-       #       self.remuxcaps.append_structure(audiostruct[0])
-
        self.uridecoder = Gst.ElementFactory.make("uridecodebin", "uridecoder")
        self.uridecoder.set_property("uri", self.streamdata['filechoice'])
        self.uridecoder.connect('autoplug-continue', self.on_autoplug_continue)
@@ -216,7 +191,7 @@ class Transcoder(GObject.GObject):
            self.transcodefileoutput = Gst.ElementFactory.make("filesink", \
                "transcodefileoutput")
            self.transcodefileoutput.set_property("location", \
-               (self.streamdata['outputdirectory']+"/"+self.outputfilename))
+               (self.streamdata['outputdirectory']+"/"+self.streamdata['outputfilename']))
            self.pipeline.add(self.transcodefileoutput)
            self.encodebin.link(self.transcodefileoutput)
            self.transcodefileoutput.set_state(Gst.State.PAUSED)
@@ -398,10 +373,14 @@ class Transcoder(GObject.GObject):
                # bother with the video pad.
                c = origin.to_string()
                if not c.startswith("text/"):
+                   print("not text")
                    if not (c.startswith("video/") and (self.videodata[0]['outputvideocaps'] == False)):
+                       print("output is not false")
                        if self.passcounter == int(0):
                            if not c.startswith("audio/"):
+                               print("not audio")
                                self.sinkpad = self.encodebin.emit("request-pad", origin)
+                               print("got sinkpad" + str(self.sinkpad))
                if c.startswith("audio/"):
                    if self.passcounter == int(0):
                        src_pad.add_probe(Gst.PadProbeType.EVENT_DOWNSTREAM, self.padprobe, None)
@@ -415,46 +394,28 @@ class Transcoder(GObject.GObject):
                            src_pad.link(deinterlacerpad)
                            self.videoflipper.get_static_pad("src").link(self.sinkpad)   
                    else:
+                       print("origin is " + str(origin.to_string()))
+                       print("src_pad is " + str(src_pad))
+                       print("sinkpad is " + str(self.sinkpad))
                        src_pad.link(self.sinkpad)
-
-   def remuxpadprobe(self, pad, probeinfo, userdata):
-       # this probe takes any stream found by uridecodebin and stops decoding if its set for remuxing
-       event = probeinfo.get_event()
-       eventtype=event.type
-       if eventtype==Gst.EventType.STREAM_START:
-           streamid = event.parse_stream_start()
-           x=0
-           self.remuxreturnvalue=False
-           print(len(self.audiodata))
-           while x < len(self.audiodata):
-               if streamid==self.audiodata[x]['streamid']:
-                   if self.audiodata[x]['dopassthrough'] == True:
-                       #self.remuxreturnvalue=
-                       print("we should only hit this once")
-               x=x+1
-       return Gst.PadProbeReturn.OK
  
    def on_autoplug_continue(self, element, pad, caps):
-        #pad.add_probe(Gst.PadProbeType.EVENT_DOWNSTREAM, self.remuxpadprobe, None)
         event=pad.get_sticky_event(Gst.EventType.STREAM_START, 0)
         streamid = event.parse_stream_start()
-        print(streamid)
         x=0
+        self.remuxreturnvalue = True
         while x < len(self.audiodata):
            if streamid==self.audiodata[x]['streamid']:
                if self.audiodata[x]['dopassthrough'] == True:
-                   print(self.audiodata[x]['streamid'])
                    self.remuxreturnvalue = False
            x=x+1
+        if streamid ==self.videodata[0]['streamid']:
+               if self.videodata[0]['dopassthrough'] == True:
+                   self.remuxreturnvalue = False
         if self.remuxreturnvalue == False:
             return False
         else:
             return True
-        #if event != None:
-        #    streamid = event.parse_stream_start()
-        #    print(streamid)
-        #    print("self.remuxreturnvalue is " + str(self.remuxreturnvalue))
-
 
    def dvdreadproperties(self, parent, element):
         if "GstDvdReadSrc" in str(element)	:
