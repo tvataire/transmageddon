@@ -1,6 +1,6 @@
 ACLOCAL_AMFLAGS = -I common/m4 ${ACLOCAL_FLAGS}
 
-SUBDIRS	= bin src common po profiles presets
+SUBDIRS	= bin src common po profiles presets appdata icons
 
 @INTLTOOL_DESKTOP_RULE@
 
