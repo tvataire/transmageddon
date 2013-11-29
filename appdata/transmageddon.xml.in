@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2013 Christian F.K. Schaller <uraeus@linuxrising.org>  -->
+<application>
+ <id type="desktop">transmageddon.desktop</id>
+ <licence>CC-BY</licence>
+ <name>Transmageddon Media Transcoder</name>
+ <summary>Easy to use audio and video transcoding application</summary>
+ <description>
+  <p>
+Transmageddon is an application for converting audio and video files between different formats. It allows you to either manually choose the formats you want to convert between or alternatively you can choose a predefined target and the selections will be made for you. Transmageddon supports a very wide range for formats and can also optionally function as a DVD ripping tool.
+  </p>
+  <p>Feature list:</p>
+  <ul>
+   <li>Wide range of media codecs</li>
+   <li>Allows extracting audio or video streams separately</li>
+   <li>Alows ripping of DVD if needed software libraries are available</li>
+   <li>Supports named device presets</li>
+   <li>Lets you add language metadata if missing</li>
+   <li>Can change orientation of video if necesarry</li>
+   <li>Supports files with multiple audio streams</li>
+  </ul>
+  <p>
+You might want to install this application if your need to convert media files between different formats due to for example having hardware that only supports a limited range of formats.
+  </p>
+ </description>
+ <screenshots>
+  <screenshot type="default" width="800" height="575">http://www.linuxrising.org/screenshots/en_US/transmageddon-appdata.png</screenshot>
+ </screenshots>
+ <url type="homepage">http://www.linuxrising.org/</url>
+ <updatecontact>uraeus@linuxrising.org</updatecontact>
+ <project_group>GStreamer</project_group>
+</application>

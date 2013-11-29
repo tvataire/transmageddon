@@ -62,6 +62,7 @@ AC_CONFIG_FILES([bin/transmageddon], [chmod +x bin/transmageddon])
 dnl output stuff
 AC_CONFIG_FILES([
 Makefile
+appdata/transmageddon.xml
 bin/Makefile
 common/Makefile
 common/m4/Makefile
