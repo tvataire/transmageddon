@@ -131,8 +131,6 @@ class Transcoder(GObject.GObject):
                if (self.videodata[0]['outputvideocaps'] != False):
                    videopreset=None
                    self.videoprofile = GstPbutils.EncodingVideoProfile.new(self.videodata[0]['outputvideocaps'], videopreset, Gst.Caps.new_any(), 0)
-                   print(self.videoprofile)
-                   print(self.videodata[0]['outputvideocaps'].to_string())
                    self.encodebinprofile.add_profile(self.videoprofile)
 
        # We do not need to do anything special for passthrough for audio, since we are not
@@ -390,9 +388,6 @@ class Transcoder(GObject.GObject):
                            src_pad.link(deinterlacerpad)
                            self.videoflipper.get_static_pad("src").link(self.sinkpad)   
                    else:
-                       print("origin is " + str(origin.to_string()))
-                       print("src_pad is " + str(src_pad))
-                       print("sinkpad is " + str(self.sinkpad))
                        src_pad.link(self.sinkpad)
  
    def on_autoplug_continue(self, element, pad, caps):

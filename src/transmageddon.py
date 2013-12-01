@@ -754,7 +754,6 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        self.discovered.discover_uri_async(uri)
    
    def check_for_passthrough(self, containerchoice):
-       #print("checking for passthrough " + str(containerchoice.to_string()))
        videointersect = Gst.Caps.new_empty()
        audiointersect = []
        for x in self.audiostreamids:
@@ -787,6 +786,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                                else:
                                    self.audiodata[y]['canpassthrough']=True
                                y=y+1
+       self.populate_menu_choices()
 
 
    # define the behaviour of the other buttons
@@ -1138,7 +1138,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                    self.videocodecs.append("novid")
                    self.videonovideomenuno=(len(self.videocodecs))-1
                       
-                   # add the Passthrough option 
+                   # add the Passthrough option
                    if self.videodata[0]['canpassthrough']==True:
                        self.videorows[0].append_text(_("Video passthrough"))
                        self.videocodecs.append("pass")
