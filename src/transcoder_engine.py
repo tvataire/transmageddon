@@ -64,7 +64,6 @@ class Transcoder(GObject.GObject):
        self.probestreamid = False
        self.sinkpad = False
        self.usedstreamids = []
-       # self.remuxreturnvalue = True
 
        # switching width and height around for rotationchoices where it makes sense
        if int(self.videodata[0]['rotationvalue']) == 1 or int(self.videodata[0]['rotationvalue']) == 3:
@@ -118,7 +117,7 @@ class Transcoder(GObject.GObject):
                    self.colorspaceconverter = Gst.ElementFactory.make("videoconvert", None)
                    self.pipeline.add(self.colorspaceconverter)
 
-                   self.deinterlacer = Gst.ElementFactory.make('deinterlace', None)
+                   self.deinterlacer = Gst.ElementFactory.make('avdeinterlace', None)
                    self.pipeline.add(self.deinterlacer)
    
                    self.deinterlacer.link(self.colorspaceconverter)
@@ -178,8 +177,6 @@ class Transcoder(GObject.GObject):
        self.uridecoder.connect("pad-added", self.OnDynamicPad)
        self.uridecoder.connect('source-setup', self.dvdreadproperties)
 
-       #if (self.audiodata[0]['dopassthrough']) or (self.videodata[0]['dopassthrough']): # or (self.videodata[0]['outputvideocaps']=="novid"):
-       #    self.uridecoder.set_property("caps", self.remuxcaps) 
        self.uridecoder.set_state(Gst.State.PAUSED)
        self.pipeline.add(self.uridecoder)
        

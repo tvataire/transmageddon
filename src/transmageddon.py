@@ -110,7 +110,7 @@ supported_video_codecs = [
 supported_video_container_map = {
     'Ogg':        [ 'Theora', 'Dirac', 'On2 vp8' ],
     'MXF':        [ 'H264', 'MPEG2', 'MPEG4' ],
-    'Matroska':   [ 'Dirac', 'Theora', 'H264', 'On2 vp8',
+    'Matroska':   [ 'On2 vp8', 'Theora', 'H264', 'Dirac',
                     'MPEG4', 'MPEG2', 'H263+' ],
     'AVI':        [ 'H264', 'Dirac', 'MPEG2', 'MPEG4',
                     'Windows Media Video 2', 'On2 vp8' ],
