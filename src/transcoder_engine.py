@@ -73,8 +73,15 @@ class Transcoder(GObject.GObject):
        # if needed create a variable to store the filename of the multipass \
        # statistics file
        if self.multipass != 0:
-           self.cachefile = (str (GLib.get_user_cache_dir()) + "/" + \
+           videoencoderplugin = codecfinder.get_video_encoder_element(self.videodata[0]['outputvideocaps'])
+           videoencoder = Gst.ElementFactory.make(videoencoderplugin,"videoencoder")
+           properties=videoencoder.get_property_names()
+           if "multipass-cache-file" in properties:
+               self.cachefile = (str (GLib.get_user_cache_dir()) + "/" + \
                    "multipass-cache-file" + self.streamdata['timestamp'] + ".log")
+           else:
+               self.multipass=0
+
 
        # gather preset data if relevant
        if self.preset != "nopreset":
@@ -153,8 +160,12 @@ class Transcoder(GObject.GObject):
            self.pipeline.add(self.videoencoder)
            GstPresetType = GObject.type_from_name("GstPreset")
            if GstPresetType in GObject.type_interfaces(self.videoencoder):
-               bob = self.videoencoder.load_preset(passvalue)
-               self.videoencoder.set_property("multipass-cache-file", self.cachefile)
+               self.videoencoder.load_preset(passvalue)
+               properties=self.videoencoder.get_property_names()
+               if "multipass-cache-file" in properties:
+                   self.videoencoder.set_property("multipass-cache-file", self.cachefile)
+               else:
+                   self.multipass=0
            self.multipassfakesink = Gst.ElementFactory.make("fakesink", "multipassfakesink")
            self.pipeline.add(self.multipassfakesink)
            self.videoencoder.set_state(Gst.State.PAUSED)

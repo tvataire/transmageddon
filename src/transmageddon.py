@@ -59,6 +59,11 @@ dvdfactory=Gst.ElementFactory.find("dvdreadsrc")
 if dvdfactory:
     dvdfactory.set_rank(300)
 
+# Enable this to use vaapi hardware decoding. Seems broken atm.
+#vaapifactory=Gst.ElementFactory.find("vaapidecode")
+#if vaapifactory:
+#    vaapifactory.set_rank(300)
+
 TARGET_TYPE_URI_LIST = 80
 dnd_list = [ ( 'text/uri-list', 0, TARGET_TYPE_URI_LIST ) ]
 
@@ -981,8 +986,14 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        context_id = self.StatusBar.get_context_id("EOS")
        self.StatusBar.push(context_id, (_("Writing %(filename)s") % {'filename': self.streamdata['outputfilename']}))
        if self.streamdata['multipass'] != 0:
-           self.passcounter=int(1)
-           self.StatusBar.push(context_id, (_("Pass %(count)d Progress") % {'count': self.passcounter}))
+           videoencoderplugin = codecfinder.get_video_encoder_element(self.videodata[0]['outputvideocaps'])
+           videoencoder = Gst.ElementFactory.make(videoencoderplugin,"videoencoder")
+           properties=videoencoder.get_property_names()
+           if "multipass-cache-file" not in properties:
+              self.multipass=0
+           else:
+               self.passcounter=int(1)
+               self.StatusBar.push(context_id, (_("Pass %(count)d Progress") % {'count': self.passcounter}))
        if self.haveaudio:
            if "samplerate" in self.audiodata[0]:
                # self.check_for_elements()
