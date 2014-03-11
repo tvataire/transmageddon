@@ -32,7 +32,7 @@ from gi.repository import Notify
 from gi.repository import GdkX11, Gdk, Gio, Gtk, GLib, Gst, GstPbutils, GstTag
 from gi.repository import GUdev
 from gi.repository import GObject, GdkPixbuf
-GObject.threads_init()
+# GObject.threads_init()
 
 import transcoder_engine
 from urllib.parse import urlparse
@@ -497,6 +497,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        self.presetaudiocodec=Gst.caps_from_string(preset.acodec.name)
        self.audiodata[0]['outputaudiocaps']=Gst.caps_from_string(preset.acodec.name)
        self.presetvideocodec=Gst.caps_from_string(preset.vcodec.name)
+	
        self.videodata[0]['outputvideocaps']=Gst.caps_from_string(preset.vcodec.name)
        if preset.container == "application/ogg":
            self.containerchoice.set_active(0)
@@ -595,7 +596,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
    # for position so we can
    # use it for the progressbar
    def ProgressBarUpdate(self, source):
-       GObject.timeout_add(500, self.Increment_Progressbar)
+       GLib.timeout_add(50, self.Increment_Progressbar)
 
    def _on_eos(self, source):
        context_id = self.StatusBar.get_context_id("EOS")

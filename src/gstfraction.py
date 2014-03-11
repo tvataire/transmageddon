@@ -22,7 +22,7 @@
 
 import sys
 from gi.repository import GObject
-GObject.threads_init()
+# GObject.threads_init()
 from gi.repository import GLib
 
 class Fraction():

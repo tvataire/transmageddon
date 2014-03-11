@@ -19,7 +19,7 @@ import os
 import codecfinder
 import presets
 from gi.repository import GObject
-GObject.threads_init()
+# GObject.threads_init()
 from gi.repository import GLib
 from gi.repository import Gst
 Gst.init(None)
