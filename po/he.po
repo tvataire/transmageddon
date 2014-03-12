@@ -1,0 +1,353 @@
+# Hebrew translation for transmageddon.
+# Copyright (C) 2013 transmageddon's COPYRIGHT HOLDER
+# This file is distributed under the same license as the transmageddon package.
+# fr33domlover <fr33domlover@riseup.net>, 2013.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: transmageddon master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-03-13 01:19+0200\n"
+"PO-Revision-Date: 2013-09-24 11:43+0300\n"
+"Last-Translator: fr33domlover <fr33domlover@riseup.net>\n"
+"Language-Team: עברית <>\n"
+"Language: he\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Gtranslator 2.91.5\n"
+
+#: ../transmageddon.desktop.in.in.h:1
+msgid "Transmageddon Video Transcoder"
+msgstr "ממיר וידאו Transmageddon"
+
+#: ../transmageddon.desktop.in.in.h:2
+#, fuzzy
+msgid "Video format conversion tool"
+msgstr "כלי להמרת תסדירי (פורמטי) וידאו"
+
+#: ../src/about.py.in:46 ../src/about.py.in:47
+msgid "Transmageddon"
+msgstr "Transmageddon"
+
+#: ../src/about.py.in:49
+msgid ""
+"Transmageddon is a simple video and audio conversion tool for GNOME created "
+"by Christian Fredrik Kalager Schaller."
+msgstr ""
+"‫Transmageddon הוא כלי פשוט להמרת קבצי שמע וקבצי וידאו עבור GNOME שנוצר על "
+"ידי Christian Fredrik Kalager Schaller."
+
+#: ../src/about.py.in:50
+msgid "Transmageddon homepage"
+msgstr "דף הבית של Transmageddon"
+
+#: ../src/about.py.in:52
+msgid "translator-credits"
+msgstr "fr33domlover <fr33domlover@mailoo.org>"
+
+#. create a string to push into the listview
+#: ../src/dvdtrackchooser.py:56
+msgid "Title:"
+msgstr "כותרת:"
+
+#: ../src/dvdtrackchooser.py:56
+msgid "Languages:"
+msgstr "שפות:"
+
+#: ../src/dvdtrackchooser.py:56
+msgid "Length:"
+msgstr "אורך:"
+
+#: ../src/dvdtrackchooser.py:56
+msgid "Minutes"
+msgstr "דקות"
+
+#: ../src/presets.py:78
+#, python-format
+msgid "Not a valid integer or fraction: %(value)s!"
+msgstr "מספר שלם או שבר שאינו תקין: %(value)s"
+
+#: ../src/presets.py:413
+#, fuzzy, python-format
+msgid "Loaded device %(device)s (%(presets)d presets)"
+msgstr "ההתקן %(device)s נטען (%(presets)d הגדרות שמורות)"
+
+#: ../src/presets.py:480
+#, python-format
+msgid "Fetching %(location)s"
+msgstr "קורא מ־%(location)s"
+
+#: ../src/presets.py:487
+#, python-format
+msgid "Writing to %(file)s"
+msgstr "כותב ל־%(file)s"
+
+#: ../src/presets.py:492
+#, python-format
+msgid "There was an error fetching and installing %(location)s: %(error)s"
+msgstr "אירעה שגיאה בעת קריאה והתקנה של %(location)s:‫ %(error)s"
+
+#: ../src/presets.py:509
+msgid "Checking for device preset updates..."
+msgstr "בודק עדכוני הגדרות שמורות להתקן..."
+
+#: ../src/presets.py:529
+#, python-format
+msgid "Device preset %(name)s is up to date"
+msgstr "הגדרה שמורה %(name)s עדכנית"
+
+#: ../src/presets.py:533
+#, python-format
+msgid "Found updated device preset %(name)s"
+msgstr "נמצאה הגדרה שמורה מעודכנת %(name)s"
+
+#: ../src/presets.py:539 ../src/presets.py:552
+#, python-format
+msgid "Error installing preset %(name)s from %(location)s: %(error)s"
+msgstr "אירעה שגיאה בעת התקנת הגדרה שמורה %(name)s מ־%(location)s‏: %(error)s"
+
+#: ../src/presets.py:546
+#, python-format
+msgid "Found new device preset %(name)s"
+msgstr "נמצאה הגדרה שמורה חדשה %(name)s"
+
+#: ../src/presets.py:559
+#, python-format
+msgid "Malformed plugin version line %(line)s"
+msgstr "שורת גרסת תוסף לא תקינה %(line)s"
+
+#: ../src/presets.py:563
+#, python-format
+msgid "There was a problem accessing %(location)spresets.txt!"
+msgstr "אירעה שגיאה בעת גישה ל־%(location)spresets.txt!"
+
+#: ../src/presets.py:585
+msgid "All device presets are up to date!"
+msgstr "כל ההגדרות ההתקנים השמורות עדכניות!"
+
+#: ../src/transmageddon-dvdtrack-chooser.ui.h:1
+msgid "Select a DVD title"
+msgstr "בחירת כותרת DVD"
+
+#: ../src/transmageddon-dvdtrack-chooser.ui.h:2
+#: ../src/transmageddon-language-chooser.ui.h:2
+msgid "Cancel"
+msgstr "ביטול"
+
+#: ../src/transmageddon-dvdtrack-chooser.ui.h:3
+#: ../src/transmageddon-language-chooser.ui.h:3
+msgid "Select"
+msgstr "בחירה"
+
+#: ../src/transmageddon-language-chooser.ui.h:1
+msgid "Select a language"
+msgstr "בחירת שפה"
+
+#. append to the menu the options
+#: ../src/transmageddon.py:168
+msgid "About"
+msgstr "אודות"
+
+#: ../src/transmageddon.py:169
+msgid "Quit"
+msgstr "יציאה"
+
+#: ../src/transmageddon.py:170
+msgid "Debug"
+msgstr "ניפוי שגיאות"
+
+#. set default values for various variables
+#: ../src/transmageddon.py:382 ../src/transmageddon.py:813
+#: ../src/transmageddon.py:1025 ../src/transmageddon.py:1174
+msgid "Transcoding Progress"
+msgstr "מצב התקדמות ההמרה"
+
+#. add i18n "No container"option
+#: ../src/transmageddon.py:428
+msgid "No container (Audio-only)"
+msgstr "ללא מכל (שמע בלבד)"
+
+#. Populate the rotatation box
+#. print("populating rotationbox")
+#: ../src/transmageddon.py:432
+msgid "No rotation (default)"
+msgstr "ללא הטיה (ברירת המחדל)"
+
+#: ../src/transmageddon.py:433
+msgid "Clockwise 90 degrees"
+msgstr "הטיה ב־90 מעלות בכיוון השעון"
+
+#: ../src/transmageddon.py:434
+msgid "Rotate 180 degrees"
+msgstr "הטיה ב־180 מעלות"
+
+#: ../src/transmageddon.py:435
+msgid "Counterclockwise 90 degrees"
+msgstr "הטיה ב־90 מעלות נגד כיוון השעון"
+
+#: ../src/transmageddon.py:436
+msgid "Horizontal flip"
+msgstr "היפוך אופקי"
+
+#: ../src/transmageddon.py:437
+msgid "Vertical flip"
+msgstr "היפוך אנכי"
+
+#: ../src/transmageddon.py:438
+msgid "Upper left diagonal flip"
+msgstr "היפוך אלכסוני שמאל למעלה"
+
+#: ../src/transmageddon.py:439
+msgid "Upper right diagnonal flip"
+msgstr "היפוך אלכסוני ימין למעלה"
+
+#: ../src/transmageddon.py:462
+#, fuzzy
+msgid "No Presets"
+msgstr "ללא הגדרות שמורות"
+
+#: ../src/transmageddon.py:574
+#, python-format
+msgid "%(min)d:%(sec)02d"
+msgstr "%(min)d:%(sec)02d"
+
+#: ../src/transmageddon.py:604
+#, python-format
+msgid "File saved to %(dir)s"
+msgstr "הקובץ נשמר למיקום %(dir)s"
+
+#: ../src/transmageddon.py:607
+#, python-format
+msgid "%(file)s saved to %(dir)s"
+msgstr "‏%(file)s נשמר למיקום %(dir)s"
+
+#: ../src/transmageddon.py:618
+msgid "Done Transcoding"
+msgstr "ההמרה הסתיימה"
+
+#: ../src/transmageddon.py:636 ../src/transmageddon.py:988
+#, python-format
+msgid "Writing %(filename)s"
+msgstr "כותב לקובץ %(filename)s"
+
+#: ../src/transmageddon.py:640
+#, python-format
+msgid "Pass %(count)d Complete. "
+msgstr "מעבר %(count)d הושלם."
+
+#. We use None here so that we in transcoder engine can differentiate between,
+#. unknown language and known language, but no language code.
+#: ../src/transmageddon.py:682
+msgid "Unknown"
+msgstr "לא ידוע"
+
+#. if there is no audio streams
+#: ../src/transmageddon.py:739
+msgid "  No Audio"
+msgstr "  אין שמע"
+
+#. add a 'No Video option'
+#: ../src/transmageddon.py:748 ../src/transmageddon.py:1147
+msgid "No Video"
+msgstr "ללא וידאו"
+
+#: ../src/transmageddon.py:873
+msgid ""
+"Got an invalid response from codec installer, can not install missing codec."
+msgstr "התקבלה תגובה לא תקינה ממתקין הקודקים, לא ניתן להתקין את הקודק החסר."
+
+#: ../src/transmageddon.py:877
+msgid "No Codec installer helper application available."
+msgstr "לא נמצא יישום סיוע בהתקנת קודקים."
+
+#: ../src/transmageddon.py:881
+msgid "Plugins not found, choose different codecs."
+msgstr "התוספים לא נמצאו, נא לבחור קודקים אחרים."
+
+#: ../src/transmageddon.py:891
+msgid "Codec installation aborted."
+msgstr "התקנת הקודקים בוטלה."
+
+#: ../src/transmageddon.py:899
+msgid "Missing plugin installation failed."
+msgstr "התקנת תוסף חסר נכשלה."
+
+#: ../src/transmageddon.py:997
+#, python-format
+msgid "Pass %(count)d Progress"
+msgstr "מצב התקדמות של מעבר %(count)d"
+
+#. add a 'No Audio option'
+#: ../src/transmageddon.py:1087
+msgid "No Audio"
+msgstr "ללא שמע"
+
+#: ../src/transmageddon.py:1094
+msgid "Audio passthrough"
+msgstr "תמסורת שמע"
+
+#: ../src/transmageddon.py:1153
+msgid "Video passthrough"
+msgstr "תמסורת וידאו"
+
+#: ../src/transmageddon.py:1433
+msgid "Choose Source File..."
+msgstr "בחירת קובץ מקור..."
+
+#: ../src/transmageddon.ui.h:1
+msgid ""
+"<small>Audio Channels:</small>\n"
+"<small>Audio Codec:</small>"
+msgstr ""
+"‏<small>ערוצי שמע:</small>\n"
+"‏<small>קודק שמע:</small>"
+
+#: ../src/transmageddon.ui.h:3
+msgid ""
+"<small>Video height&#47;width:</small>\n"
+"<small>Video Codec:</small>"
+msgstr ""
+"‏<small>גובה&#47;רוחב וידאו:</small>\n"
+"‏<small>קודק וידאו:</small>"
+
+#: ../src/transmageddon.ui.h:5
+msgid "<b>Presets:</b>"
+msgstr "‏<b>הגדרות שמורות:</b>"
+
+#: ../src/transmageddon.ui.h:6
+msgid "<b>Choose Input File:</b>"
+msgstr "‏<b>בחירת קובץ קלט:</b>"
+
+#: ../src/transmageddon.ui.h:7
+msgid "<b>Output Format:</b>"
+msgstr "‏<b>תסדיר (פורמט) פלט:</b>"
+
+#: ../src/transmageddon.ui.h:8
+msgid "<b>Choose Audio Codec</b>:"
+msgstr "‏<b>בחירת קודק שמע:</b>"
+
+#: ../src/transmageddon.ui.h:9
+msgid "<b>Choose Video Codec</b>:"
+msgstr "‏<b>בחירת קודק וידאו:</b>"
+
+#: ../src/transmageddon.ui.h:10
+msgid "<small>Rotate the video image if needed</small>"
+msgstr "‏<small>יש להטות את תמונת הוידאו במידת הצורך</small>"
+
+#: ../src/transmageddon.ui.h:11
+msgid "_Transcode"
+msgstr "ה_מרה"
+
+#: ../src/udevdisco.py:221
+msgid "Not mounted."
+msgstr "לא מעוגן"
+
+#: ../src/utils.py:76
+#, python-format
+msgid "Can't find %(path)s in any known prefix!"
+msgstr "לא ניתן למצוא את %(path)s באף מיקום ידוע!"
+
+#~ msgid "(None)"
+#~ msgstr "(ללא)"
