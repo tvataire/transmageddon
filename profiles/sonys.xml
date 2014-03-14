@@ -15,8 +15,8 @@
    
     <profile>
         <name>Normal</name>
-        <container>video/x-matroska</container>
-        <extension>mkv</extension>
+        <container>video/quicktime,variant=iso</container>
+        <extension>mp4</extension>
         <audio>
             <name>audio/mpeg,mpegversion=4, base-profile=lc</name>
             <channels>1, 2</channels>

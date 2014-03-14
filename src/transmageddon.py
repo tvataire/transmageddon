@@ -235,6 +235,8 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        self.videorows=[]
        self.audiocodecs=[]
        self.videocodecs=[]
+       self.dvddevice=[]
+       self.dvdname=[]
 
        # The variables are used for the DVD discovery
        self.finder = None
@@ -271,21 +273,18 @@ class TransmageddonUI(Gtk.ApplicationWindow):
 
        #Define functionality of our button and main window
        self.box = self.builder.get_object("window")
-       self.videoinformation = self.builder.get_object("videoinformation")
-       self.audioinformation = self.builder.get_object("audioinformation")
-       self.videocodec = self.builder.get_object("videocodec")
-       self.audiocodec = self.builder.get_object("audiocodec")
-       self.langbutton = self.builder.get_object("langbutton")
+
+       ui_elements = [
+           "videoinformation", "audioinformation",
+           "videocodec",   "audiocodec",      "langbutton",     "CodecBox",
+           "presetchoice", "containerchoice", "rotationchoice", "transcodebutton",
+           "ProgressBar",  "cancelbutton",    "StatusBar",      "table1"]
+
+       for element in ui_elements:
+         setattr(self, element, self.builder.get_object(element))
+
        self.videobox = dynamic_comboboxes_video(GObject.TYPE_PYOBJECT)
-       self.CodecBox = self.builder.get_object("CodecBox")
-       self.presetchoice = self.builder.get_object("presetchoice")
-       self.containerchoice = self.builder.get_object("containerchoice")
-       self.rotationchoice = self.builder.get_object("rotationchoice")
-       self.transcodebutton = self.builder.get_object("transcodebutton")
-       self.ProgressBar = self.builder.get_object("ProgressBar")
-       self.cancelbutton = self.builder.get_object("cancelbutton")
-       self.StatusBar = self.builder.get_object("StatusBar")
-       self.table1 = self.builder.get_object("table1")
+       self.videobox = dynamic_comboboxes_video(GObject.TYPE_PYOBJECT)
        self.CodecBox.attach(self.videobox, 2, 3, 1, 2, yoptions = Gtk.AttachOptions.SHRINK)
        self.CodecBox.show_all()
        self.containerchoice.connect("changed", self.on_containerchoice_changed)
@@ -644,7 +643,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
 
    def dvdreadproperties(self, parent, element):
        if self.isdvd:
-           element.set_property("device", self.dvddevice)
+           element.set_property("device", self.dvddevice[0])
            element.set_property("title", self.streamdata['dvdtitle'])
 
    def succeed(self, discoverer, info, error):
@@ -1284,7 +1283,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        """
        A video DVD has been found, update the source combo box!
        """
-       # print("dvd found")
+       print("dvd found")
        if hasattr(self.combo, "get_model"):
            model = self.combo.get_model()
            for pos, item in enumerate(model):
@@ -1298,7 +1297,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        """
             A video DVD has been removed, update the source combo box!
        """
-       # print("dvd lost")
+       print("dvd lost")
        model = self.combo.get_model()
        self.setup_source()
 
@@ -1327,8 +1326,10 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        client = GUdev.Client(subsystems=['block'])
        for device in client.query_by_subsystem("block"):
            if device.has_property("ID_CDROM"):
-               self.dvddevice=device.get_device_file()
-               self.dvdname=device.get_property("ID_FS_LABEL")
+               print(device.get_property("ID_FS_LABEL"))
+               print(device)
+               self.dvddevice.append(device.get_device_file())
+               self.dvdname.append(device.get_property("ID_FS_LABEL"))
 
        # Setup input source discovery
        if not self.finder:
@@ -1341,7 +1342,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                                                         self.on_disc_lost)
 
        lsdvdexist = which.which("lsdvd")
-       if self.dvdname and lsdvdexist: # only use this option is there is a DVD and ldvd is installed
+       if self.dvdname[0] and lsdvdexist: # only use this option is there is a DVD and ldvd is installed
            theme = Gtk.IconTheme.get_default()
            size= Gtk.icon_size_lookup(Gtk.IconSize.MENU)[1]
            cdrom=theme.load_icon(Gtk.STOCK_CDROM, size, 0)
@@ -1351,8 +1352,10 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            liststore = Gtk.ListStore(GdkPixbuf.Pixbuf, GObject.TYPE_STRING, GObject.TYPE_STRING, GObject.TYPE_INT)
            liststore.append([None, "", "", 0])
            liststore.append([fileopen, "Choose File...", "", 1])
-           liststore.append([cdrom, self.dvdname, self.dvddevice,  2])
-
+           x=0
+           while x < len(self.dvdname):
+               liststore.append([cdrom, self.dvdname[x], self.dvddevice[x],  2])
+               x=x+1
            self.combo = Gtk.ComboBox(model=liststore)
 
            renderer_text = Gtk.CellRendererText()
@@ -1455,10 +1458,10 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            dvd.dvdwindow.run()
            self.isdvd=dvd.isdvd
            if self.isdvd != False:
-               self.streamdata['filename'] = self.dvddevice
-               self.streamdata['filechoice'] = "dvd://"+self.dvddevice
+               self.streamdata['filename'] = self.dvddevice[0]
+               self.streamdata['filechoice'] = "dvd://"+self.dvddevice[0]
                self.streamdata['dvdtitle']=dvd.dvdtitle
-               self.on_filechooser_file_set(self,self.dvddevice)
+               self.on_filechooser_file_set(self,self.dvddevice[0])
 
     
    def set_source_to_path(self, path):

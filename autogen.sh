@@ -6,7 +6,7 @@ srcfile=src/transmageddon.py
 
 if test ! -f common/Makefile.am;
 then
-  rm -R common/
+  #rm -R common/
   echo "+ Setting up common submodule"
   git submodule init
 fi
