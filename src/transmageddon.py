@@ -284,7 +284,6 @@ class TransmageddonUI(Gtk.ApplicationWindow):
          setattr(self, element, self.builder.get_object(element))
 
        self.videobox = dynamic_comboboxes_video(GObject.TYPE_PYOBJECT)
-       self.videobox = dynamic_comboboxes_video(GObject.TYPE_PYOBJECT)
        self.CodecBox.attach(self.videobox, 2, 3, 1, 2, yoptions = Gtk.AttachOptions.SHRINK)
        self.CodecBox.show_all()
        self.containerchoice.connect("changed", self.on_containerchoice_changed)
