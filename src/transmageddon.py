@@ -157,12 +157,11 @@ class Transmageddon(Gtk.Application):
        self.win.show_all ()
 
    def do_open(self, files, i, hint):
-       #TODO: Warning on multiple files
        if len(files) > 1:
-         pass
+         print("Multiple files not supported, using %s" % files[0].get_path())
 
        if not files[0].query_exists(None):
-         #TODO: Log an error
+         print("%s doesn't exist" % files[0].get_path())
          return
 
        self.source = files[0].get_path()
