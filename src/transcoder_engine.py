@@ -97,7 +97,14 @@ class Transcoder(GObject.GObject):
            # these values should not be hardcoded, but gotten from profile XML file
        #    audiopreset=None
        #    videopreset=None
-       
+
+       if self.streamdata['container'] == False:
+          x=0
+          while x < len(self.audiodata):
+               if self.audiodata[x]['outputaudiocaps'] != 'noaud':
+                   if not (self.audiodata[x]['outputaudiocaps'].intersect(Gst.caps_from_string("audio/mpeg, mpegversion=1, layer=3"))).is_empty():   
+                       self.streamdata['container']=Gst.caps_from_string("application/x-id3")
+               x=x+1
        if not self.streamdata['container']==False: 
            self.encodebinprofile = GstPbutils.EncodingContainerProfile.new("containerformat", None , self.streamdata['container'], None)
 
@@ -344,6 +351,7 @@ class Transcoder(GObject.GObject):
 
    def OnDynamicPad(self, uridecodebin, src_pad):
        origin = src_pad.query_caps(None)
+       print(self.streamdata['container'].to_string())
        if (self.streamdata['container']==False):
            a =  origin.to_string()
            if a.startswith("audio/"): # this is for audio only files
@@ -353,10 +361,9 @@ class Transcoder(GObject.GObject):
            if self.videodata[0]['outputvideocaps'] == False:
                c = origin.to_string()
                if c.startswith("audio/"):
-                   sinkpad = self.encodebin.emit("request-pad", origin)
-                   d = sinkpad.query_caps().to_string()
-                   if d.startswith("audio/"):
-                       src_pad.link(sinkpad)
+                   sinkpad = self.encodebin.get_static_pad("audio_0")
+                   print("sinkpad is " + str(sinkpad))
+                   src_pad.link(sinkpad)
            else:
                # Checking if its a subtitle pad which we can't deal with
                # currently.
