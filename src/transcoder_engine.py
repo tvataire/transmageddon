@@ -140,19 +140,16 @@ class Transcoder(GObject.GObject):
        # We do not need to do anything special for passthrough for audio, since we are not
        # including any extra elements between uridecodebin and encodebin
        x=0
-       self.audioprofilenames=[]
        while x < len(self.audiodata): 
-           print(self.audiodata)
+           # print(self.audiodata)
            if self.audiodata[x]['outputaudiocaps'] != (False or "noaud"):
                if self.streamdata['container']==False:
                    self.encodebinprofile = GstPbutils.EncodingAudioProfile.new (self.audiodata[x]['outputaudiocaps'], audiopreset, Gst.Caps.new_any(), 0)
                else:
                    audiopreset=None
-                   self.audioprofile = GstPbutils.EncodingAudioProfile.new(self.audiodata[x]['outputaudiocaps'], audiopreset, Gst.Caps.new_any(), 0)
-                   self.audioprofilenames.append("audioprofilename"+str(x))
-                   print(self.audioprofilenames)
-                   self.audioprofile.set_name(self.audioprofilenames[-1])
-                   self.encodebinprofile.add_profile(self.audioprofile)
+                   audioprofile = GstPbutils.EncodingAudioProfile.new(self.audiodata[x]['outputaudiocaps'], audiopreset, Gst.Caps.new_any(), 0)
+                   audioprofile.set_name("audioprofilename"+str(x))
+                   self.encodebinprofile.add_profile(audioprofile)
            x=x+1 
        
        if self.passcounter != int(0):
@@ -314,8 +311,8 @@ class Transcoder(GObject.GObject):
                    if self.probestreamid not in self.usedstreamids:
                        #FIXME - Need to clean usedstreamid list at some point
                        self.usedstreamids.append(self.probestreamid)
-                       if x < len(self.audioprofilenames):
-                           self.sinkpad = self.encodebin.emit("request-profile-pad", self.audioprofilenames[x])
+                       if self.audiodata[x]['outputaudiocaps'] != 'noaud':
+                           self.sinkpad = self.encodebin.emit("request-profile-pad", "audioprofilename"+str(x))
                            pad.link(self.sinkpad)
                x=x+1
        return Gst.PadProbeReturn.OK
@@ -361,7 +358,7 @@ class Transcoder(GObject.GObject):
        origin = src_pad.query_caps(None)
        if (self.streamdata['container']==False):
            a =  origin.to_string()
-           if a.startswith("audio/"):
+           if a.startswith("audio/"): # this is for audio only files
                sinkpad = self.encodebin.get_static_pad("audio_0")
                src_pad.link(sinkpad)
        else:
@@ -402,19 +399,21 @@ class Transcoder(GObject.GObject):
         event=pad.get_sticky_event(Gst.EventType.STREAM_START, 0)
         streamid = event.parse_stream_start()
         x=0
-        self.remuxreturnvalue = True
+        self.autoplugreturnvalue = True
         while x < len(self.audiodata):
            if streamid==self.audiodata[x]['streamid']:
                if self.audiodata[x]['dopassthrough'] == True:
-                   self.remuxreturnvalue = False
+                   self.autoplugreturnvalue = False
+               elif self.audiodata[x]['outputaudiocaps']== 'noaud':
+                   self.autoplugreturnvalue = False
            x=x+1
         if streamid ==self.videodata[0]['streamid']:
                if self.videodata[0]['dopassthrough'] == True:
-                   self.remuxreturnvalue = False
+                   self.autoplugreturnvalue = False
         capsvalue=caps.to_string()
         if capsvalue.startswith("subtitle/"): # this is to avoid wasting resources on decoding subtitles
-            self.remuxreturnvalue =False
-        if self.remuxreturnvalue == False:
+            self.autoplugreturnvalue =False
+        if self.autoplugreturnvalue == False:
             return False
         else:
             return True
