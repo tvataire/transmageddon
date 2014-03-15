@@ -97,12 +97,13 @@ class Transcoder(GObject.GObject):
            # these values should not be hardcoded, but gotten from profile XML file
        #    audiopreset=None
        #    videopreset=None
-
-       print(self.audiodata)
+       
+       if not self.streamdata['container']==False: 
+           self.encodebinprofile = GstPbutils.EncodingContainerProfile.new("containerformat", None , self.streamdata['container'], None)
 
        # What to do if we are not doing video passthrough (we only support video inside a 
        # container format
-       if self.videodata[0]['outputvideocaps'] !=False:
+           if self.videodata[0]['outputvideocaps'] !=False:
                if (self.videodata[0]['dopassthrough']==False and self.passcounter == int(0)):
                    self.videoflipper = Gst.ElementFactory.make('videoflip', None)
                    self.videoflipper.set_property("method", int(self.videodata[0]['rotationvalue']))
@@ -120,7 +121,7 @@ class Transcoder(GObject.GObject):
                    self.colorspaceconverter.set_state(Gst.State.PAUSED)
                    self.videoflipper.set_state(Gst.State.PAUSED)
            # this part of the pipeline is used for both passthrough and re-encoding
-       if (self.videodata[0]['outputvideocaps'] != False):
+           if (self.videodata[0]['outputvideocaps'] != False):
                    videopreset=None
                    self.videoprofile = GstPbutils.EncodingVideoProfile.new(self.videodata[0]['outputvideocaps'], videopreset, Gst.Caps.new_any(), 0)
                    self.encodebinprofile.add_profile(self.videoprofile)
@@ -129,7 +130,6 @@ class Transcoder(GObject.GObject):
        # including any extra elements between uridecodebin and encodebin
        x=0
        while x < len(self.audiodata): 
-           # print(self.audiodata)
            if self.audiodata[x]['outputaudiocaps'] != (False or "noaud"):
                if self.streamdata['container']==False:
                    self.encodebinprofile = GstPbutils.EncodingAudioProfile.new (self.audiodata[x]['outputaudiocaps'], audiopreset, Gst.Caps.new_any(), 0)
@@ -353,7 +353,6 @@ class Transcoder(GObject.GObject):
            if self.videodata[0]['outputvideocaps'] == False:
                c = origin.to_string()
                if c.startswith("audio/"):
-                   print("c is " + str(c))
                    sinkpad = self.encodebin.emit("request-pad", origin)
                    d = sinkpad.query_caps().to_string()
                    if d.startswith("audio/"):
