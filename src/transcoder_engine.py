@@ -41,10 +41,6 @@ class Transcoder(GObject.GObject):
        self.audiodata = AUDIODATA
        self.videodata = VIDEODATA
        self.streamdata = STREAMDATA
-       if self.streamdata['container'] == False:
-          # FIXME - needs to be multistream enabled
-          if self.audiodata[0]['outputaudiocaps'].intersect(Gst.caps_from_string("audio/mpeg, mpegversion=1, layer=3")):
-               self.streamdata['container']=Gst.caps_from_string("application/x-id3")
 
        # set preset directory
        Gst.preset_set_app_dir("/usr/share/transmageddon/presets/")
@@ -96,24 +92,17 @@ class Transcoder(GObject.GObject):
 
        audiopreset=None
        videopreset=None
-       if self.preset != "nopreset": 
+       #if self.preset != "nopreset": 
            # print "got preset and will use Quality Normal"
            # these values should not be hardcoded, but gotten from profile XML file
-           audiopreset=None
-           videopreset=None
+       #    audiopreset=None
+       #    videopreset=None
 
-       # first check if we are using a container format
-       if self.streamdata['container']==False:
-           if self.audiocaps.intersect(Gst.caps_from_string("audio/mpeg, mpegversion=4")):
-               self.audiocaps=Gst.caps_from_string("audio/mpeg, mpegversion=4, stream-format=adts")
-           elif self.audiocaps.intersect(Gst.caps_from_string("audio/x-flac")):
-               self.audiocaps=Gst.caps_from_string("audio/x-flac")
-       else:
-           self. 	encodebinprofile = GstPbutils.EncodingContainerProfile.new("containerformat", None , self.streamdata['container'], None)
- 
-           # What to do if we are not doing video passthrough (we only support video inside a 
-           # container format
-           if self.videodata[0]['outputvideocaps'] !=False:
+       print(self.audiodata)
+
+       # What to do if we are not doing video passthrough (we only support video inside a 
+       # container format
+       if self.videodata[0]['outputvideocaps'] !=False:
                if (self.videodata[0]['dopassthrough']==False and self.passcounter == int(0)):
                    self.videoflipper = Gst.ElementFactory.make('videoflip', None)
                    self.videoflipper.set_property("method", int(self.videodata[0]['rotationvalue']))
@@ -131,8 +120,7 @@ class Transcoder(GObject.GObject):
                    self.colorspaceconverter.set_state(Gst.State.PAUSED)
                    self.videoflipper.set_state(Gst.State.PAUSED)
            # this part of the pipeline is used for both passthrough and re-encoding
-           if self.videodata[0]['outputvideocaps'] != "novid":
-               if (self.videodata[0]['outputvideocaps'] != False):
+       if (self.videodata[0]['outputvideocaps'] != False):
                    videopreset=None
                    self.videoprofile = GstPbutils.EncodingVideoProfile.new(self.videodata[0]['outputvideocaps'], videopreset, Gst.Caps.new_any(), 0)
                    self.encodebinprofile.add_profile(self.videoprofile)
@@ -362,11 +350,12 @@ class Transcoder(GObject.GObject):
                sinkpad = self.encodebin.get_static_pad("audio_0")
                src_pad.link(sinkpad)
        else:
-           if self.videodata[0]['outputvideocaps'] == "novid":
+           if self.videodata[0]['outputvideocaps'] == False:
                c = origin.to_string()
                if c.startswith("audio/"):
+                   print("c is " + str(c))
                    sinkpad = self.encodebin.emit("request-pad", origin)
-                   d = sinkpad.query_caps(None).to_string()
+                   d = sinkpad.query_caps().to_string()
                    if d.startswith("audio/"):
                        src_pad.link(sinkpad)
            else:
