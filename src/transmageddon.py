@@ -607,7 +607,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
    # for position so we can
    # use it for the progressbar
    def ProgressBarUpdate(self, source):
-       GLib.timeout_add(50, self.Increment_Progressbar)
+       GLib.timeout_add(500, self.Increment_Progressbar)
 
    def _on_eos(self, source):
        context_id = self.StatusBar.get_context_id("EOS")
