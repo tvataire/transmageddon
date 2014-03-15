@@ -1341,8 +1341,12 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            self.finder_disc_lost = self.finder.connect("disc-lost",
                                                         self.on_disc_lost)
 
-       lsdvdexist = which.which("lsdvd")
-       if self.dvdname[0] and lsdvdexist: # only use this option is there is a DVD and ldvd is installed
+       try:
+         lsdvdexist = which.which("lsdvd")
+       except:
+         lsdvdexist = False
+
+       if len(self.dvdname) > 0 and lsdvdexist: # only use this option is there is a DVD and ldvd is installed
            theme = Gtk.IconTheme.get_default()
            size= Gtk.icon_size_lookup(Gtk.IconSize.MENU)[1]
            cdrom=theme.load_icon(Gtk.STOCK_CDROM, size, 0)
