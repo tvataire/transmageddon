@@ -3,7 +3,7 @@ from gi.repository import Gtk, GLib, Gst, GstTag
 from gi.repository import GUdev
 
 class dvdtrackchooser(Gtk.Dialog): 
-   def __init__(self, parent): 
+   def __init__(self, parent, DVDDEVICE): 
        self.dvdpickui = Gtk.Builder()
        self.dvdpickui.add_from_file("transmageddon-dvdtrack-chooser.ui")
        dvdscroll = self.dvdpickui.get_object("dvdscroll")
@@ -20,13 +20,15 @@ class dvdtrackchooser(Gtk.Dialog):
        self.dvdtrack=None # this will hold the selected DVD track value
        self.isdvd=False
        self.dvdtitle=False
+       self.dvdpath=DVDDEVICE
+       print(self.dvdpath)
 
        store = Gtk.ListStore(str, int)
        # udev code to find DVD drive on system - This code needs to go into Transmageddon proper
-       client = GUdev.Client(subsystems=['block'])
-       for device in client.query_by_subsystem("block"):
-           if device.has_property("ID_CDROM"):
-               self.dvdpath=device.get_device_file()
+       #client = GUdev.Client(subsystems=['block'])
+       #for device in client.query_by_subsystem("block"):
+       #    if device.has_property("ID_CDROM"):
+       #        self.dvdpath=device.get_device_file()
 
 
        # use lsdvd tool to get DVD track information

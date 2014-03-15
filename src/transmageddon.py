@@ -53,7 +53,6 @@ if (major == 2) and (minor < 18):
    print("You need version 2.18.0 or higher of pygobject for Transmageddon")
    sys.exit(1)
 
-# we need to increase the rank of the dvdreadsrc element to make sure it 
 # and not resindvd is used
 dvdfactory=Gst.ElementFactory.find("dvdreadsrc")
 if dvdfactory:
@@ -642,8 +641,9 @@ class TransmageddonUI(Gtk.ApplicationWindow):
 
    def dvdreadproperties(self, parent, element):
        if self.isdvd:
-           element.set_property("device", self.dvddevice[0])
+           element.set_property("device", self.streamdata['filename'])
            element.set_property("title", self.streamdata['dvdtitle'])
+           print(self.streamdata['dvdtitle'])
 
    def succeed(self, discoverer, info, error):
        result=GstPbutils.DiscovererInfo.get_result(info)
@@ -961,7 +961,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            else:
                self.ContainerFormatSuffix = codecfinder.csuffixmap[container]
        if self.isdvd:
-           self.streamdata['outputfilename'] = str(self.dvdname)+"_"+str(self.streamdata['dvdtitle'])+str(self.streamdata['timestamp'])+str(self.ContainerFormatSuffix)
+           self.streamdata['outputfilename'] = str(self.dvdtitlename)+"_"+str(self.streamdata['dvdtitle'])+str(self.streamdata['timestamp'])+str(self.ContainerFormatSuffix)
        else:
            self.streamdata['outputfilename'] = str(self.nosuffix+self.streamdata['timestamp']+self.ContainerFormatSuffix)
        if (self.havevideo and (self.videodata[0]['outputvideocaps'] != "novid")):
@@ -1282,7 +1282,6 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        """
        A video DVD has been found, update the source combo box!
        """
-       print("dvd found")
        if hasattr(self.combo, "get_model"):
            model = self.combo.get_model()
            for pos, item in enumerate(model):
@@ -1296,7 +1295,6 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        """
             A video DVD has been removed, update the source combo box!
        """
-       print("dvd lost")
        model = self.combo.get_model()
        self.setup_source()
 
@@ -1325,8 +1323,6 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        client = GUdev.Client(subsystems=['block'])
        for device in client.query_by_subsystem("block"):
            if device.has_property("ID_CDROM"):
-               print(device.get_property("ID_FS_LABEL"))
-               print(device)
                self.dvddevice.append(device.get_device_file())
                self.dvdname.append(device.get_property("ID_FS_LABEL"))
 
@@ -1357,7 +1353,9 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            liststore.append([fileopen, "Choose File...", "", 1])
            x=0
            while x < len(self.dvdname):
-               liststore.append([cdrom, self.dvdname[x], self.dvddevice[x],  2])
+               # The code below assume further item numbers are always DVD change,
+               # if that ever change be sure to change logic
+               liststore.append([cdrom, self.dvdname[x], self.dvddevice[x],  2+x])
                x=x+1
            self.combo = Gtk.ComboBox(model=liststore)
 
@@ -1456,15 +1454,17 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                    widget.set_active(pos - 1)
                else:
                    widget.set_active(0)
-       elif item == 2:
-           dvd=dvdtrackchooser.dvdtrackchooser(self)
+       elif item > 1:
+           # we are assuming here anything above 1 is a DVD
+           dvd=dvdtrackchooser.dvdtrackchooser(self, self.dvddevice[item-2] )
            dvd.dvdwindow.run()
            self.isdvd=dvd.isdvd
            if self.isdvd != False:
-               self.streamdata['filename'] = self.dvddevice[0]
-               self.streamdata['filechoice'] = "dvd://"+self.dvddevice[0]
-               self.streamdata['dvdtitle']=dvd.dvdtitle
-               self.on_filechooser_file_set(self,self.dvddevice[0])
+               self.streamdata['filename'] = self.dvddevice[item-2]
+               self.streamdata['filechoice'] = "dvd://"+self.dvddevice[item-2]
+               self.streamdata['dvdtitle']= dvd.dvdtitle
+               self.dvdtitlename = self.dvdname[item-2]
+               self.on_filechooser_file_set(self,self.dvddevice[item-2])
 
     
    def set_source_to_path(self, path):
