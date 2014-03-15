@@ -253,7 +253,6 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        self.finder_video_found = None
        self.finder_video_lost = None
        self.isdvd = False
-       self.audiostreamcounter= 1
        
        self.fileiter = None
 
@@ -1083,7 +1082,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                        self.audiocodecs[x].append(Gst.caps_from_string("audio/mpeg, mpegversion=4, stream-format=adts"))
                        self.audiocodecs[x].append(Gst.caps_from_string("audio/x-flac"))
                        self.houseclean=False 
-                       self.audiorows[x].set_active(0)
+                       self.audiorows[0].set_active(0)
                        self.audiorows[x].set_sensitive(True)
                else:
                        audiolist = []
@@ -1167,15 +1166,19 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                        self.videopassmenuno=(len(self.videocodecs))-1
 
    def only_one_audio_stream_allowed(self, streamno):
-       # Only allow one audio stream when using presets or when using FLV container or for Audio only transcode
-       #listen to changes to any of the entries, if one change, the change others to 'no audio'
+       # Only allow one audio stream when using presets or when using FLV container or for Audio 
+       # only transcode listen to changes to any of the entries, if one change, the change others 
+       # to 'no audio'
        x=0
-       while x <= self.audiostreamcounter:
-          if x != streamno:
-               self.houseclean=True
-               self.audiorows[x].set_active(self.noaudiomenuno[x])
-               self.houseclean=False
-          x=x+1
+       if ((len(self.noaudiomenuno)) == (len(self.audiorows))):
+               while x <= self.audiostreamcounter:
+                   if x != streamno:
+                       self.houseclean=True
+                       self.audiorows[x].set_active(self.noaudiomenuno[x])
+                       self.houseclean=False
+                   x=x+1
+       else:
+           self.audiorows[0].set_active(0)
            
            #How to do this for presets? change logic for preset choices or add 'no audio' option when using presets?
 
@@ -1251,7 +1254,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            elif self.usingpreset==True:
                self.audiodata[x]['outputaudiocaps'] = self.presetaudiocodec
            if (self.streamdata['container']==False) or (self.streamdata['container'].to_string() == "video/x-flv") or (self.usingpreset==True):
-               self.only_one_audio_stream_allowed(x)  
+               self.only_one_audio_stream_allowed(x)
 
    def on_videocodec_changed(self, widget):
        self.videodata[0]['dopassthrough']=False
