@@ -149,13 +149,24 @@ supported_audio_container_map = {
 class Transmageddon(Gtk.Application):
    def __init__(self):
        Gtk.Application.__init__(self)
-   
+       self.set_flags(Gio.ApplicationFlags.NON_UNIQUE | Gio.ApplicationFlags.HANDLES_OPEN)
+       self.source = None
+
    def do_activate(self):
-       self.win = TransmageddonUI(self)
-       self.win.set_title("Transmageddon")
-       self.win.set_resizable(False)
-         
-       self.win.show_all()
+       self.win = TransmageddonUI(self, source=self.source)
+       self.win.show_all ()
+
+   def do_open(self, files, i, hint):
+       #TODO: Warning on multiple files
+       if len(files) > 1:
+         pass
+
+       if not files[0].query_exists(None):
+         #TODO: Log an error
+         return
+
+       self.source = files[0].get_path()
+       self.do_activate ()
 
    def do_startup (self):
        # start the application
@@ -221,10 +232,11 @@ class TransmageddonUI(Gtk.ApplicationWindow):
    def on_window_destroy(self, widget, data=None):
        Gtk.main_quit()
 
-   def __init__(self, app):
+   def __init__(self, app, source=None):
        Gtk.Window.__init__(self, title="Transmageddon", application=app)
        """This class loads the GtkBuilder file of the UI"""
-       
+       self.set_resizable(False)
+
        # create discoverer object
        self.discovered = GstPbutils.Discoverer.new(50000000000)
        self.discovered.connect('source-setup', self.dvdreadproperties)
@@ -459,6 +471,9 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        self.presetchoice.prepend_text(_("No Presets"))
 
        self.waiting_for_signal="False"
+
+       if source:
+         self.set_source_to_path (source)
 
    # define the media structures here as the canonical location. This structure should include 
    # everything needed for the pipelines. 
