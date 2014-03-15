@@ -21,15 +21,8 @@ class dvdtrackchooser(Gtk.Dialog):
        self.isdvd=False
        self.dvdtitle=False
        self.dvdpath=DVDDEVICE
-       print(self.dvdpath)
 
        store = Gtk.ListStore(str, int)
-       # udev code to find DVD drive on system - This code needs to go into Transmageddon proper
-       #client = GUdev.Client(subsystems=['block'])
-       #for device in client.query_by_subsystem("block"):
-       #    if device.has_property("ID_CDROM"):
-       #        self.dvdpath=device.get_device_file()
-
 
        # use lsdvd tool to get DVD track information
        self.Title = False
