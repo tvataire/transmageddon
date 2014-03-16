@@ -1353,71 +1353,35 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            self.finder_disc_lost = self.finder.connect("disc-lost",
                                                         self.on_disc_lost)
 
+       theme = Gtk.IconTheme.get_default()
+       size= Gtk.icon_size_lookup(Gtk.IconSize.MENU)[1]
+       fileopen=theme.load_icon(Gtk.STOCK_OPEN, size, 0)
+       liststore = Gtk.ListStore(GdkPixbuf.Pixbuf,
+                                 GObject.TYPE_STRING,
+                                 GObject.TYPE_STRING,
+                                 GObject.TYPE_INT)
+       liststore.append([None, "", "", 0])
+       liststore.append([fileopen, "Choose File...", "", 1])
+
        try:
-         lsdvdexist = which.which("lsdvd")
+           lsdvdexist = which.which("lsdvd")
        except:
-         lsdvdexist = False
+           lsdvdexist = False
 
        if len(self.dvdname) > 0 and lsdvdexist: # only use this option is there is a DVD and ldvd is installed
-           theme = Gtk.IconTheme.get_default()
-           size= Gtk.icon_size_lookup(Gtk.IconSize.MENU)[1]
-           cdrom=theme.load_icon(Gtk.STOCK_CDROM, size, 0)
-           fileopen=theme.load_icon(Gtk.STOCK_OPEN, size, 0)
-
-
-           liststore = Gtk.ListStore(GdkPixbuf.Pixbuf, GObject.TYPE_STRING, GObject.TYPE_STRING, GObject.TYPE_INT)
-           liststore.append([None, "", "", 0])
-           liststore.append([fileopen, "Choose File...", "", 1])
-           x=0
+           x = 0
            while x < len(self.dvdname):
                # The code below assume further item numbers are always DVD change,
                # if that ever change be sure to change logic
                liststore.append([cdrom, self.dvdname[x], self.dvddevice[x],  2+x])
-               x=x+1
-           self.combo = Gtk.ComboBox(model=liststore)
+               x += 1
 
-           renderer_text = Gtk.CellRendererText()
-           renderer_pixbuf = Gtk.CellRendererPixbuf()
+       self.combo = self.builder.get_object ("combo")
+       self.combo.set_model (liststore)
+       self.combo.connect("changed", self.on_source_changed)
+       self.combo.show_all()
 
-           self.combo.pack_start(renderer_pixbuf, False)
-           self.combo.pack_start(renderer_text, True)
-           self.combo.add_attribute(renderer_pixbuf, 'pixbuf', 0)
-           self.combo.add_attribute(renderer_text, 'text', 1)
-                
-           self.combo.set_active(0)
-           self.combo.connect("changed", self.on_source_changed)
-       else:
-           theme = Gtk.IconTheme.get_default()
-           size= Gtk.icon_size_lookup(Gtk.IconSize.MENU)[1]
-           fileopen=theme.load_icon(Gtk.STOCK_OPEN, size, 0)
-
-
-           liststore = Gtk.ListStore(GdkPixbuf.Pixbuf, GObject.TYPE_STRING, GObject.TYPE_STRING, GObject.TYPE_INT)
-           liststore.append([None, "", "", 0])
-           liststore.append([fileopen, "Choose File...", "", 1])
-
-           self.combo = Gtk.ComboBox(model=liststore)
-
-           renderer_text = Gtk.CellRendererText()
-           renderer_pixbuf = Gtk.CellRendererPixbuf()
-
-           self.combo.pack_start(renderer_pixbuf, False)
-           self.combo.pack_start(renderer_text, True)
-           self.combo.add_attribute(renderer_pixbuf, 'pixbuf', 0)
-           self.combo.add_attribute(renderer_text, 'text', 1)
-                
-           self.combo.set_active(0)
-           self.combo.connect("changed", self.on_source_changed)
-
-
-          
-       #if not self.source_hbox:
-       self.source_hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
-       self.source_hbox.pack_start(self.combo, True, True, 0)
-       self.table1.attach(self.source_hbox, 2, 3, 0, 1) #, yoptions = GTK_FILL)
-        
-       # Attach and show the source
-       self.source_hbox.show_all()
+       self.table1.attach(self.combo, 2, 3, 0, 1)
 
    def setup_audiovbox(self, streamcounter): # creates the list of audiostreams ui
        """
