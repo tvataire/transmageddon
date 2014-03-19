@@ -90,14 +90,6 @@ class Transcoder(GObject.GObject):
        # first check if we have a container format, if not set up output 
        # for possible outputs should not be hardcoded
 
-       audiopreset=None
-       videopreset=None
-       #if self.preset != "nopreset": 
-           # print "got preset and will use Quality Normal"
-           # these values should not be hardcoded, but gotten from profile XML file
-       #    audiopreset=None
-       #    videopreset=None
-
        if self.streamdata['container'] == False:
           x=0
           while x < len(self.audiodata):
@@ -107,7 +99,7 @@ class Transcoder(GObject.GObject):
                x=x+1
        if not self.streamdata['container']==False: 
            self.encodebinprofile = GstPbutils.EncodingContainerProfile.new("containerformat", None , self.streamdata['container'], None)
-
+           print("container is " +str(self.streamdata['container'].to_string()))
        # What to do if we are not doing video passthrough (we only support video inside a 
        # container format
            if self.videodata[0]['outputvideocaps'] !=False:
@@ -132,7 +124,8 @@ class Transcoder(GObject.GObject):
                    videopreset=None
                    self.videoprofile = GstPbutils.EncodingVideoProfile.new(self.videodata[0]['outputvideocaps'], videopreset, Gst.Caps.new_any(), 0)
                    self.encodebinprofile.add_profile(self.videoprofile)
-
+                   print("videocaps is "+str(self.videodata[0]['outputvideocaps'].to_string()))
+                   print(self.videoprofile)
        # We do not need to do anything special for passthrough for audio, since we are not
        # including any extra elements between uridecodebin and encodebin
        x=0
@@ -146,9 +139,8 @@ class Transcoder(GObject.GObject):
                    audioprofile.set_name("audioprofilename"+str(x))
                    self.encodebinprofile.add_profile(audioprofile)
            x=x+1 
-       
+           print("audiocodec is " +str(self.audiodata[0]['outputaudiocaps'].to_string()))
        if self.passcounter != int(0):
-           passvalue = "Pass "+ str(self.passcounter)
            videoencoderplugin = codecfinder.get_video_encoder_element(self.videodata[0]['outputvideocaps'])
            self.videoencoder = Gst.ElementFactory.make(videoencoderplugin,"videoencoder")
            self.pipeline.add(self.videoencoder)
@@ -351,7 +343,6 @@ class Transcoder(GObject.GObject):
 
    def OnDynamicPad(self, uridecodebin, src_pad):
        origin = src_pad.query_caps(None)
-       print(self.streamdata['container'].to_string())
        if (self.streamdata['container']==False):
            a =  origin.to_string()
            if a.startswith("audio/"): # this is for audio only files
@@ -362,7 +353,6 @@ class Transcoder(GObject.GObject):
                c = origin.to_string()
                if c.startswith("audio/"):
                    sinkpad = self.encodebin.get_static_pad("audio_0")
-                   print("sinkpad is " + str(sinkpad))
                    src_pad.link(sinkpad)
            else:
                # Checking if its a subtitle pad which we can't deal with
@@ -370,24 +360,31 @@ class Transcoder(GObject.GObject):
                # Making sure that when we remove video from a file we don't
                # bother with the video pad.
                c = origin.to_string()
-               if not c.startswith("text/"):
+               if not (c.startswith("text/") or c.startswith("subpicture/")):
                    if not (c.startswith("video/") and (self.videodata[0]['outputvideocaps'] == False)):
                        if self.passcounter == int(0):
                            if not c.startswith("audio/"):
+                               print("creating sinkpad")
+                               print("origin is " + str(origin.to_string()))
+                               # self.sinkpad = self.encodebin.emit("request-profile-pad", "audioprofilename"+str(x))
                                self.sinkpad = self.encodebin.emit("request-pad", origin)
+                               #self.sinkpad = self.encodebin.get_static_pad("video_0")
+                               print("self sinkpad created "+ str(self.sinkpad))
                if c.startswith("audio/"):
                    if self.passcounter == int(0):
                        src_pad.add_probe(Gst.PadProbeType.EVENT_DOWNSTREAM, self.padprobe, None)
                elif ((c.startswith("video/") or c.startswith("image/")) and (self.videodata[0]['outputvideocaps'] != False)):
-                   if self.videodata[0]['dopassthrough']==False:
+                   if (self.videodata[0]['dopassthrough']==False) and (self.preset == 'nopreset'):
                        if (self.multipass != 0) and (self.passcounter != int(0)):
                            videoencoderpad = self.videoencoder.get_static_pad("sink")
                            src_pad.link(videoencoderpad)
                        else:
                            deinterlacerpad = self.deinterlacer.get_static_pad("sink")
                            src_pad.link(deinterlacerpad)
-                           self.videoflipper.get_static_pad("src").link(self.sinkpad)   
+                           self.videoflipper.get_static_pad("src").link(self.sinkpad)
                    else:
+                       print("sinkpad is "+ str(self.sinkpad))
+                       print("src_pad is " +str(src_pad))
                        src_pad.link(self.sinkpad)
  
    def on_autoplug_continue(self, element, pad, caps):
