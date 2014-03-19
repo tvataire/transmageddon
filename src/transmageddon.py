@@ -1120,10 +1120,11 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                    self.audiorows[x].set_sensitive(True)
                x=x+1
            x=0
+           self.houseclean=False
            while (x <= self.audiostreamcounter) and not self.usingpreset:
                self.audiorows[x].set_active(0)
                x=x+1
-           self.houseclean=False
+
 
        else: # No audio track(s) found
            if self.houseclean==False:
