@@ -1363,6 +1363,8 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            lsdvdexist = False
 
        if len(self.dvdname) > 0 and lsdvdexist: # only use this option is there is a DVD and ldvd is installed
+           cdrom=theme.load_icon(Gtk.STOCK_CDROM, size, 0)
+
            x = 0
            while x < len(self.dvdname):
                # The code below assume further item numbers are always DVD change,
