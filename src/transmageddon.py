@@ -425,7 +425,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        self.audiodata =[]
        self.videodata =[]
        # all other data will go into streamdata
-       self.streamdata = {'filechoice' : False, 'filename' : False, 'outputdirectory' : False, 'container' : False, 'devicename' : "nopreset", 'multipass': 0, 'passcounter': 0, 'outputfilename' : False, 'timestamp': False, 'dvdtitle': False}
+       self.streamdata = {'filechoice' : False, 'filename' : False, 'outputdirectory' : False, 'container' : False, 'devicename' : "nopreset", 'multipass': 0, 'passcounter': 0, 'outputfilename' : False, 'timestamp': False, 'dvdtitle': False, 'singlestreamno': False}
 
        # Populate the Container format combobox
        # print("do we try to populate container choice")
@@ -452,8 +452,8 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        if self.videodata:
            self.videodata[0]['rotationvalue'] = int(0)
       
-       # Populate Device Presets combobox
-       # print("starting preset population")
+       # Populate Device Profiles combobox
+       # print("starting profile population")
        devicelist = []
        shortname = []
        preset_list = sorted(list(presets.get().items()),
@@ -503,12 +503,9 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        device = devices[devicename]
        preset = device.presets["Normal"]
        self.usingpreset=True
+
        self.containerchoice.set_active(-1) # resetting to -1 to ensure population of menu triggers
-       self.presetaudiocodec=Gst.caps_from_string(preset.acodec.name)
-       self.audiodata[0]['outputaudiocaps']=Gst.caps_from_string(preset.acodec.name)
-       self.presetvideocodec=Gst.caps_from_string(preset.vcodec.name)
-	
-       self.videodata[0]['outputvideocaps']=Gst.caps_from_string(preset.vcodec.name)
+
        if preset.container == "application/ogg":
            self.containerchoice.set_active(0)
        elif preset.container == "video/x-matroska":
@@ -529,15 +526,23 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            self.containerchoice.set_active(8)
        elif preset.container == "video/quicktime,variant=3gpp":
            self.containerchoice.set_active(9)
-       elif preset.container == "application/mxf":
-           self.containerchoice.set_active(10)
+       #elif preset.container == "application/mxf":
+       #    self.containerchoice.set_active(10)
        elif preset.container == "video/x-ms-asf":
-           self.containerchoice.set_active(11)
+           self.containerchoice.set_active(10)
        elif preset.container == "video/webm":
-           self.containerchoice.set_active(12)
+           self.containerchoice.set_active(11)
        else:
             print("failed to set container format from preset data")
 
+       x=0
+       while x < len(self.audiodata):
+           self.audiodata[x]['outputaudiocaps']=Gst.caps_from_string(preset.acodec.name)
+           x=x+1
+       
+       self.videodata[0]['outputvideocaps']=Gst.caps_from_string(preset.vcodec.name)
+       self.presetvideocodec=Gst.caps_from_string(preset.vcodec.name)
+       self.presetaudiocodec=Gst.caps_from_string(preset.acodec.name)
 
        # Check for number of passes
        passes = preset.vcodec.passes
@@ -656,7 +661,6 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        if self.isdvd:
            element.set_property("device", self.streamdata['filename'])
            element.set_property("title", self.streamdata['dvdtitle'])
-           print(self.streamdata['dvdtitle'])
 
    def succeed(self, discoverer, info, error):
        result=GstPbutils.DiscovererInfo.get_result(info)
@@ -922,7 +926,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                containerstatus = codecfinder.get_muxer_element(codecfinder.containermap[containerchoice])
                if self.havevideo:
                    if self.videodata[0]['dopassthrough'] != True:
-                       if self.VideoCodec == "novid":
+                       if self.VideoCodec == False:
                            videostatus=True
                        else:
                            videostatus = codecfinder.get_video_encoder_element(self.VideoCodec)
@@ -977,7 +981,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            self.streamdata['outputfilename'] = str(self.dvdtitlename)+"_"+str(self.streamdata['dvdtitle'])+str(self.streamdata['timestamp'])+str(self.ContainerFormatSuffix)
        else:
            self.streamdata['outputfilename'] = str(self.nosuffix+self.streamdata['timestamp']+self.ContainerFormatSuffix)
-       if (self.havevideo and (self.videodata[0]['outputvideocaps'] != "novid")):
+       if (self.havevideo and (self.videodata[0]['outputvideocaps'] != False)):
            self.streamdata['outputdirectory']=self.videodirectory
        else:
            self.streamdata['outputdirectory']=self.audiodirectory
@@ -1052,10 +1056,9 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                    for c in self.videocodecs:
                        self.videorows[x].remove(0)
                    self.videocodecs=[]
-
        while x < len(self.audiocodecs): 
            if self.audiocodecs:
-               for c in self.audiocodecs[x]: # 
+               for c in self.audiocodecs[x]: #
                    self.audiorows[x].remove(0)
                if x==self.audiostreamcounter:
                    self.audiocodecs=[]
@@ -1067,11 +1070,10 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            while x <= self.audiostreamcounter:
                self.audiocodecs.append([])
                if self.usingpreset==True: # First fill menu based on presetvalue
-                   testforempty = self.presetaudiocodec.to_string()
-                   if testforempty != "EMPTY":
+                   if not self.presetaudiocodec.is_empty():
                        self.audiorows[x].append_text(str(GstPbutils.pb_utils_get_codec_description(self.presetaudiocodec)))
                        self.houseclean=False
-                       self.audiorows[x].set_active(0)
+
                        self.audiocodecs[x].append(self.presetaudiocodec)
                elif self.streamdata['container']==False: # special setup for container less case, looks ugly, but good enough for now
                        
@@ -1105,28 +1107,20 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                        self.audiorows[x].append_text(_("Audio passthrough"))
                        self.audiocodecs[x].append("pass")
                        self.audiopassmenuno.append((len(self.audiocodecs[x]))-1)
-
-               self.audiorows[x].set_sensitive(True)
+            
+               if self.usingpreset==True:
+                   self.audiorows[0].set_active(0)
+                   self.only_one_audio_stream_allowed(0)
+                   self.videorows[0].set_sensitive(False)
+               else:
+                   self.audiorows[x].set_sensitive(True)
                x=x+1
                self.houseclean=False 
-  
 
-           
-
-           # Only allow one audio stream when using presets or when using FLV container or for Audio only transcode
-           # set all entries except first one to 'no audio'
-           if (self.streamdata['container']==False) or (self.streamdata['container'].to_string() == "video/x-flv") or (self.usingpreset==True):
-                   self.audiorows[0].set_active(0)
-                   if self.audiostreamcounter !=0:
-                       sc=1 #skipping 0 line
-                       while sc <= self.audiostreamcounter:
-                           self.audiorows[sc].set_active(self.noaudiomenuno[sc])
-                           sc=sc+1
-           else: # otherwise set all menu options to first entry 
-                   x=0
-                   while x <= self.audiostreamcounter:
-                       self.audiorows[x].set_active(0)
-                       x=x+1
+           x=0
+           while x <= self.audiostreamcounter:
+               self.audiorows[x].set_active(0)
+               x=x+1
            self.houseclean=False 
 
        else: # No audio track(s) found
@@ -1149,14 +1143,14 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                    for c in video_codecs:
                        self.videocodecs.append(Gst.caps_from_string(codecfinder.codecmap[c]))
                    for c in self.videocodecs: # Use descriptions from GStreamer
-                       if c != "pass" and c != "novid":
+                       if c != "pass" and c != False:
                            self.videorows[0].append_text(GstPbutils.pb_utils_get_codec_description(c))
                    self.videorows[0].set_sensitive(True)
                    self.videorows[0].set_active(0)
 
                    #add a 'No Video option'
                    self.videorows[0].append_text(_("No Video"))
-                   self.videocodecs.append("novid")
+                   self.videocodecs.append(False)
                    self.videonovideomenuno=(len(self.videocodecs))-1
                       
                    # add the Passthrough option
@@ -1169,19 +1163,19 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        # Only allow one audio stream when using presets or when using FLV container or for Audio 
        # only transcode listen to changes to any of the entries, if one change, the change others 
        # to 'no audio'
-       x=0
+       # This code is only meant to set all other options than the one selected to  'noaudio'
+       #self.streamdata['singlestreamno']=streamno
+       #print(elf.streamdata['singlestreamno'])
+       #y=0
        if ((len(self.noaudiomenuno)) == (len(self.audiorows))):
-               while x <= self.audiostreamcounter:
-                   if x != streamno:
-                       self.houseclean=True
-                       self.audiorows[x].set_active(self.noaudiomenuno[x])
-                       self.houseclean=False
-                   x=x+1
-       else:
-           self.audiorows[0].set_active(0)
-           
-           #How to do this for presets? change logic for preset choices or add 'no audio' option when using presets?
-
+           y=0
+           self.houseclean=True
+           while y <= self.audiostreamcounter:
+               if y != streamno:
+                   self.audiorows[y].set_active(self.noaudiomenuno[y])
+                   self.audiodata[y]["outputaudiocaps"]="noaud"
+               y=y+1
+           self.houseclean=False
 
    def on_containerchoice_changed(self, widget):
        self.CodecBox.set_sensitive(True)
@@ -1225,7 +1219,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                self.streamdata['devicename']= self.presetchoices[presetchoice-1]
                self.provide_presets(self.streamdata['devicename'])
                self.containerchoice.set_sensitive(False)
-               self.CodecBox.set_sensitive(False)
+               self.CodecBox.set_sensitive(True) # Testing123
                self.rotationchoice.set_sensitive(False)
            else:
                if self.builder.get_object("containerchoice").get_active_text():
@@ -1251,10 +1245,10 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                if self.audiodata[x]['canpassthrough'] == True:
                    if self.audiorows[x].get_active() ==  self.audiopassmenuno[x]:
                        self.audiodata[x]['dopassthrough']= True
-           elif self.usingpreset==True:
-               self.audiodata[x]['outputaudiocaps'] = self.presetaudiocodec
-           if (self.streamdata['container']==False) or (self.streamdata['container'].to_string() == "video/x-flv") or (self.usingpreset==True):
+           if (self.streamdata['container']==False) or (self.streamdata['container'].to_string() == "video/x-flv"):
                self.only_one_audio_stream_allowed(x)
+       if (self.houseclean == False and self.usingpreset==True):
+           self.only_one_audio_stream_allowed(x)
 
    def on_videocodec_changed(self, widget):
        self.videodata[0]['dopassthrough']=False
@@ -1263,7 +1257,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                no=self.videorows[0].get_active()
                self.videodata[0]['outputvideocaps'] = self.videocodecs[no]
            else:
-                   self.videodata[0]['outputvideocaps'] = "novid"
+                   self.videodata[0]['outputvideocaps'] = False
                    self.rotationchoice.set_sensitive(False)
            if self.videorows[0].get_active() == self.videopassmenuno:
                self.videodata[0]['outputvideocaps'] =  self.videodata[0]['inputvideocaps']
