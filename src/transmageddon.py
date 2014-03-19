@@ -503,7 +503,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        device = devices[devicename]
        preset = device.presets["Normal"]
        self.usingpreset=True
-
+       self.houseclean=True
        self.containerchoice.set_active(-1) # resetting to -1 to ensure population of menu triggers
 
        if preset.container == "application/ogg":
@@ -526,18 +526,21 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            self.containerchoice.set_active(8)
        elif preset.container == "video/quicktime,variant=3gpp":
            self.containerchoice.set_active(9)
-       #elif preset.container == "application/mxf":
-       #    self.containerchoice.set_active(10)
-       elif preset.container == "video/x-ms-asf":
+       elif preset.container == "application/mxf":
            self.containerchoice.set_active(10)
-       elif preset.container == "video/webm":
+       elif preset.container == "video/x-ms-asf":
            self.containerchoice.set_active(11)
+       elif preset.container == "video/webm":
+           self.containerchoice.set_active(12)
        else:
             print("failed to set container format from preset data")
 
        x=0
        while x < len(self.audiodata):
-           self.audiodata[x]['outputaudiocaps']=Gst.caps_from_string(preset.acodec.name)
+           if x == 0:
+               self.audiodata[0]['outputaudiocaps']=Gst.caps_from_string(preset.acodec.name)
+           else:
+               self.audiodata[x]['outputaudiocaps']='noaud'
            x=x+1
        
        self.videodata[0]['outputvideocaps']=Gst.caps_from_string(preset.vcodec.name)
@@ -1072,8 +1075,6 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                if self.usingpreset==True: # First fill menu based on presetvalue
                    if not self.presetaudiocodec.is_empty():
                        self.audiorows[x].append_text(str(GstPbutils.pb_utils_get_codec_description(self.presetaudiocodec)))
-                       self.houseclean=False
-
                        self.audiocodecs[x].append(self.presetaudiocodec)
                elif self.streamdata['container']==False: # special setup for container less case, looks ugly, but good enough for now
                        
@@ -1083,7 +1084,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                        self.audiocodecs[x].append(Gst.caps_from_string("audio/mpeg, mpegversion=(int)1, layer=(int)3"))
                        self.audiocodecs[x].append(Gst.caps_from_string("audio/mpeg, mpegversion=4, stream-format=adts"))
                        self.audiocodecs[x].append(Gst.caps_from_string("audio/x-flac"))
-                       self.houseclean=False 
+                       self.houseclean=False
                        self.audiorows[0].set_active(0)
                        self.audiorows[x].set_sensitive(True)
                else:
@@ -1110,18 +1111,19 @@ class TransmageddonUI(Gtk.ApplicationWindow):
             
                if self.usingpreset==True:
                    self.audiorows[0].set_active(0)
-                   self.only_one_audio_stream_allowed(0)
+                   if x != 0:
+                       self.audiorows[x].set_active(self.noaudiomenuno[x])
+                       self.audiodata[x]['outputaudiocaps'] = 'noaud'
+                   # self.only_one_audio_stream_allowed(0)
                    self.videorows[0].set_sensitive(False)
                else:
                    self.audiorows[x].set_sensitive(True)
                x=x+1
-               self.houseclean=False 
-
            x=0
-           while x <= self.audiostreamcounter:
+           while (x <= self.audiostreamcounter) and not self.usingpreset:
                self.audiorows[x].set_active(0)
                x=x+1
-           self.houseclean=False 
+           self.houseclean=False
 
        else: # No audio track(s) found
            if self.houseclean==False:
@@ -1164,9 +1166,6 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        # only transcode listen to changes to any of the entries, if one change, the change others 
        # to 'no audio'
        # This code is only meant to set all other options than the one selected to  'noaudio'
-       #self.streamdata['singlestreamno']=streamno
-       #print(elf.streamdata['singlestreamno'])
-       #y=0
        if ((len(self.noaudiomenuno)) == (len(self.audiorows))):
            y=0
            self.houseclean=True
@@ -1174,6 +1173,9 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                if y != streamno:
                    self.audiorows[y].set_active(self.noaudiomenuno[y])
                    self.audiodata[y]["outputaudiocaps"]="noaud"
+               else: # make sure we always have 1 active choice 
+                   if self.audiorows[streamno].get_active() == self.noaudiomenuno[y]:
+                       self.audiorows[0].set_active(0)
                y=y+1
            self.houseclean=False
 
@@ -1383,7 +1385,6 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        """
            Setup the audiobox widget.
        """
-       #self.houseclean=True
        if streamcounter == 0: # only do this on the first run with a given file
            if self.audiobox:
                output=self.audiobox.destroy()
@@ -1397,7 +1398,6 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        self.audiorows[streamcounter].set_name("audiorow"+str(streamcounter))
        self.audiorows[streamcounter].show()
        self.CodecBox.show_all()
-       #self.houseclean=False
 
    def on_source_changed(self, widget):
        """
