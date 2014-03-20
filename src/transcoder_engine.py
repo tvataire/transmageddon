@@ -51,7 +51,6 @@ class Transcoder(GObject.GObject):
        self.doaudio= False
        self.preset = self.streamdata['devicename']
        self.blackborderflag = False
-       self.multipass = self.streamdata['multipass']
        self.missingplugin= False
        self.probestreamid = False
        self.sinkpad = False
@@ -66,7 +65,7 @@ class Transcoder(GObject.GObject):
 
        # if needed create a variable to store the filename of the multipass \
        # statistics file
-       if self.multipass != 0:
+       if self.streamdata['multipass'] != 0:
            videoencoderplugin = codecfinder.get_video_encoder_element(self.videodata[0]['outputvideocaps'])
            videoencoder = Gst.ElementFactory.make(videoencoderplugin,"videoencoder")
            properties=videoencoder.get_property_names()
@@ -74,7 +73,7 @@ class Transcoder(GObject.GObject):
                self.cachefile = (str (GLib.get_user_cache_dir()) + "/" + \
                    "multipass-cache-file" + self.streamdata['timestamp'] + ".log")
            else:
-               self.multipass=0
+               self.streamdata['multipass']=0
 
 
        # gather preset data if relevant
@@ -138,7 +137,7 @@ class Transcoder(GObject.GObject):
                    self.encodebinprofile.add_profile(audioprofile)
            x=x+1 
            # print("audiocodec is " +str(self.audiodata[0]['outputaudiocaps'].to_string()))
-       if (self.streamdata['passcounter'] != int(0) and self.multipass != int(0)):
+       if (self.streamdata['passcounter'] != int(0) and self.streamdata['multipass'] != int(0)):
            videoencoderplugin = codecfinder.get_video_encoder_element(self.videodata[0]['outputvideocaps'])
            self.videoencoder = Gst.ElementFactory.make(videoencoderplugin,"videoencoder")
            self.pipeline.add(self.videoencoder)
@@ -149,7 +148,7 @@ class Transcoder(GObject.GObject):
                if "multipass-cache-file" in properties:
                    self.videoencoder.set_property("multipass-cache-file", self.cachefile)
                else:
-                   self.multipass=0
+                   self.streamdata['multipass']=0
            self.multipassfakesink = Gst.ElementFactory.make("fakesink", "multipassfakesink")
            self.pipeline.add(self.multipassfakesink)
            self.videoencoder.set_state(Gst.State.PAUSED)
@@ -271,7 +270,6 @@ class Transcoder(GObject.GObject):
        if self.streamdata['passcounter'] == int(0):
            self.transcodefileoutput.set_state(Gst.State.PAUSED)
        GLib.idle_add(self.idlePlay)
-       # print "No More pads received"
 
    def idlePlay(self):
         self.Pipeline("playing")
@@ -324,12 +322,10 @@ class Transcoder(GObject.GObject):
        elif mtype == Gst.MessageType.ASYNC_DONE:
            self.emit('ready-for-querying')
        elif mtype == Gst.MessageType.EOS:
-           if (self.multipass != 0):
-               if (self.streamdata['passcounter'] == 0):
-                   self.usedstreamids=[]
-                   #removing multipass cache file when done
-                   if os.access(self.cachefile, os.F_OK):
-                       os.remove(self.cachefile)
+           self.usedstreamids=[]
+           #removing multipass cache file when done
+           if os.access(self.cachefile, os.F_OK):
+               os.remove(self.cachefile)
            self.emit('got-eos')
            self.pipeline.set_state(Gst.State.NULL)
        elif mtype == Gst.MessageType.APPLICATION:
@@ -366,7 +362,7 @@ class Transcoder(GObject.GObject):
                        src_pad.add_probe(Gst.PadProbeType.EVENT_DOWNSTREAM, self.padprobe, None)
                elif ((c.startswith("video/") or c.startswith("image/")) and (self.videodata[0]['outputvideocaps'] != False)):
                    if (self.videodata[0]['dopassthrough']==False) and (self.preset != 'nopreset'):
-                       if (self.multipass != 0) and (self.streamdata['passcounter'] != int(0)):
+                       if (self.streamdata['multipass'] != 0) and (self.streamdata['passcounter'] != int(0)):
                            videoencoderpad = self.videoencoder.get_static_pad("sink")
                            src_pad.link(videoencoderpad)
                        else:
@@ -374,8 +370,6 @@ class Transcoder(GObject.GObject):
                            src_pad.link(deinterlacerpad)
                            self.videoflipper.get_static_pad("src").link(self.sinkpad)
                    else:
-                       #print("sinkpad is "+ str(self.sinkpad))
-                       #print("src_pad is " +str(src_pad))
                        src_pad.link(self.sinkpad)
  
    def on_autoplug_continue(self, element, pad, caps):
@@ -397,8 +391,8 @@ class Transcoder(GObject.GObject):
            capsvalue=caps.to_string()
            if capsvalue.startswith("subtitle/"): # this is to avoid wasting resources on decoding subtitles
                self.autoplugreturnvalue =False
-           if (capsvalue.startswith("audio/") and self.multipass != int(0)):
-               self.autoplugreturnvalue =False
+           if (capsvalue.startswith("audio/") and (self.streamdata['multipass'] == int(0)) and (self.streamdata['multipass'] != int(self.streamdata['passcounter']))):
+               self.autoplugreturnvalue=False
            if self.autoplugreturnvalue == False:
                return False
            else:
@@ -413,7 +407,7 @@ class Transcoder(GObject.GObject):
        factory=element.get_factory()
        if factory != None:
            # set multipass cache file on video encoder element
-           if (self.multipass != 0) and (self.streamdata['passcounter'] == int(0)):
+           if (self.streamdata['multipass'] != 0) and (self.streamdata['passcounter'] == int(0)):
                if Gst.ElementFactory.list_is_type(factory, 2814749767106562): # this is the factory code for Video encoders
                    element.set_property("multipass-cache-file", self.cachefile)
            
