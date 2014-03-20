@@ -41,7 +41,6 @@ class Transcoder(GObject.GObject):
        self.audiodata = AUDIODATA
        self.videodata = VIDEODATA
        self.streamdata = STREAMDATA
-
        # set preset directory
        Gst.preset_set_app_dir("/usr/share/transmageddon/presets/")
 
@@ -53,7 +52,6 @@ class Transcoder(GObject.GObject):
        self.preset = self.streamdata['devicename']
        self.blackborderflag = False
        self.multipass = self.streamdata['multipass']
-       self.passcounter = self.streamdata['passcounter']
        self.missingplugin= False
        self.probestreamid = False
        self.sinkpad = False
@@ -99,11 +97,11 @@ class Transcoder(GObject.GObject):
                x=x+1
        if not self.streamdata['container']==False: 
            self.encodebinprofile = GstPbutils.EncodingContainerProfile.new("containerformat", None , self.streamdata['container'], None)
-           print("container is " +str(self.streamdata['container'].to_string()))
+           # print("container is " +str(self.streamdata['container'].to_string()))
        # What to do if we are not doing video passthrough (we only support video inside a 
        # container format
            if self.videodata[0]['outputvideocaps'] !=False:
-               if (self.videodata[0]['dopassthrough']==False and self.passcounter == int(0)):
+               if (self.videodata[0]['dopassthrough']==False and self.streamdata['passcounter'] == int(0)):
                    self.videoflipper = Gst.ElementFactory.make('videoflip', None)
                    self.videoflipper.set_property("method", int(self.videodata[0]['rotationvalue']))
                    self.pipeline.add(self.videoflipper)
@@ -124,8 +122,8 @@ class Transcoder(GObject.GObject):
                    videopreset=None
                    self.videoprofile = GstPbutils.EncodingVideoProfile.new(self.videodata[0]['outputvideocaps'], videopreset, Gst.Caps.new_any(), 0)
                    self.encodebinprofile.add_profile(self.videoprofile)
-                   print("videocaps is "+str(self.videodata[0]['outputvideocaps'].to_string()))
-                   print(self.videoprofile)
+                   #print("videocaps is "+str(self.videodata[0]['outputvideocaps'].to_string()))
+                   #print(self.videoprofile)
        # We do not need to do anything special for passthrough for audio, since we are not
        # including any extra elements between uridecodebin and encodebin
        x=0
@@ -139,14 +137,14 @@ class Transcoder(GObject.GObject):
                    audioprofile.set_name("audioprofilename"+str(x))
                    self.encodebinprofile.add_profile(audioprofile)
            x=x+1 
-           print("audiocodec is " +str(self.audiodata[0]['outputaudiocaps'].to_string()))
-       if self.passcounter != int(0):
+           # print("audiocodec is " +str(self.audiodata[0]['outputaudiocaps'].to_string()))
+       if (self.streamdata['passcounter'] != int(0) and self.multipass != int(0)):
            videoencoderplugin = codecfinder.get_video_encoder_element(self.videodata[0]['outputvideocaps'])
            self.videoencoder = Gst.ElementFactory.make(videoencoderplugin,"videoencoder")
            self.pipeline.add(self.videoencoder)
            GstPresetType = GObject.type_from_name("GstPreset")
            if GstPresetType in GObject.type_interfaces(self.videoencoder):
-               self.videoencoder.load_preset(passvalue)
+               self.videoencoder.load_preset("Pass "+str(self.streamdata['passcounter']))
                properties=self.videoencoder.get_property_names()
                if "multipass-cache-file" in properties:
                    self.videoencoder.set_property("multipass-cache-file", self.cachefile)
@@ -175,7 +173,7 @@ class Transcoder(GObject.GObject):
        self.uridecoder.set_state(Gst.State.PAUSED)
        self.pipeline.add(self.uridecoder)
        
-       if self.passcounter != int(0):
+       if self.streamdata['passcounter'] != int(0):
            self.videoencoder.link(self.multipassfakesink)
        else:
            self.transcodefileoutput = Gst.ElementFactory.make("filesink", \
@@ -186,12 +184,11 @@ class Transcoder(GObject.GObject):
            self.encodebin.link(self.transcodefileoutput)
            self.transcodefileoutput.set_state(Gst.State.PAUSED)
        self.uridecoder.set_state(Gst.State.PAUSED)
-
        self.BusMessages = self.BusWatcher()
-
+       Gst.debug_bin_to_dot_file (self.pipeline, Gst.DebugGraphDetails.ALL, 'transmageddon-debug-graph')
        # we need to wait on this one before going further
        self.uridecoder.connect("no-more-pads", self.noMorePads)
-       # print "connecting to no-more-pads"
+
 
    # Get all preset values
    def reverse_lookup(self,v):
@@ -271,14 +268,13 @@ class Transcoder(GObject.GObject):
        self.videodata[0]['outputvideocaps']=Gst.caps_from_string(preset.vcodec.name+","+"height="+str(self.videodata[0]['videoheight'])+","+"width="+str(self.videodata[0]['videowidth'])+","+"framerate="+str(num)+"/"+str(denom))
 
    def noMorePads(self, dbin):
-       if self.passcounter == int(0):
+       if self.streamdata['passcounter'] == int(0):
            self.transcodefileoutput.set_state(Gst.State.PAUSED)
        GLib.idle_add(self.idlePlay)
        # print "No More pads received"
 
    def idlePlay(self):
         self.Pipeline("playing")
-        # print "gone to playing"
         return False
 
    def BusWatcher(self):
@@ -329,7 +325,7 @@ class Transcoder(GObject.GObject):
            self.emit('ready-for-querying')
        elif mtype == Gst.MessageType.EOS:
            if (self.multipass != 0):
-               if (self.passcounter == 0):
+               if (self.streamdata['passcounter'] == 0):
                    self.usedstreamids=[]
                    #removing multipass cache file when done
                    if os.access(self.cachefile, os.F_OK):
@@ -362,20 +358,15 @@ class Transcoder(GObject.GObject):
                c = origin.to_string()
                if not (c.startswith("text/") or c.startswith("subpicture/")):
                    if not (c.startswith("video/") and (self.videodata[0]['outputvideocaps'] == False)):
-                       if self.passcounter == int(0):
+                       if self.streamdata['passcounter'] == int(0):
                            if not c.startswith("audio/"):
-                               print("creating sinkpad")
-                               print("origin is " + str(origin.to_string()))
-                               # self.sinkpad = self.encodebin.emit("request-profile-pad", "audioprofilename"+str(x))
                                self.sinkpad = self.encodebin.emit("request-pad", origin)
-                               #self.sinkpad = self.encodebin.get_static_pad("video_0")
-                               print("self sinkpad created "+ str(self.sinkpad))
                if c.startswith("audio/"):
-                   if self.passcounter == int(0):
+                   if self.streamdata['passcounter'] == int(0):
                        src_pad.add_probe(Gst.PadProbeType.EVENT_DOWNSTREAM, self.padprobe, None)
                elif ((c.startswith("video/") or c.startswith("image/")) and (self.videodata[0]['outputvideocaps'] != False)):
-                   if (self.videodata[0]['dopassthrough']==False) and (self.preset == 'nopreset'):
-                       if (self.multipass != 0) and (self.passcounter != int(0)):
+                   if (self.videodata[0]['dopassthrough']==False) and (self.preset != 'nopreset'):
+                       if (self.multipass != 0) and (self.streamdata['passcounter'] != int(0)):
                            videoencoderpad = self.videoencoder.get_static_pad("sink")
                            src_pad.link(videoencoderpad)
                        else:
@@ -383,32 +374,35 @@ class Transcoder(GObject.GObject):
                            src_pad.link(deinterlacerpad)
                            self.videoflipper.get_static_pad("src").link(self.sinkpad)
                    else:
-                       print("sinkpad is "+ str(self.sinkpad))
-                       print("src_pad is " +str(src_pad))
+                       #print("sinkpad is "+ str(self.sinkpad))
+                       #print("src_pad is " +str(src_pad))
                        src_pad.link(self.sinkpad)
  
    def on_autoplug_continue(self, element, pad, caps):
-        event=pad.get_sticky_event(Gst.EventType.STREAM_START, 0)
-        streamid = event.parse_stream_start()
-        x=0
-        self.autoplugreturnvalue = True
-        while x < len(self.audiodata):
-           if streamid==self.audiodata[x]['streamid']:
-               if self.audiodata[x]['dopassthrough'] == True:
-                   self.autoplugreturnvalue = False
-               elif self.audiodata[x]['outputaudiocaps']== 'noaud':
-                   self.autoplugreturnvalue = False
-           x=x+1
-        if streamid ==self.videodata[0]['streamid']:
+       event=pad.get_sticky_event(Gst.EventType.STREAM_START, 0)
+       if event != None:
+           streamid = event.parse_stream_start()
+           x=0
+           self.autoplugreturnvalue = True
+           while x < len(self.audiodata):
+               if streamid==self.audiodata[x]['streamid']:
+                   if self.audiodata[x]['dopassthrough'] == True:
+                       self.autoplugreturnvalue = False
+                   elif self.audiodata[x]['outputaudiocaps']== 'noaud':
+                       self.autoplugreturnvalue = False
+               x=x+1
+           if streamid ==self.videodata[0]['streamid']:
                if self.videodata[0]['dopassthrough'] == True:
                    self.autoplugreturnvalue = False
-        capsvalue=caps.to_string()
-        if capsvalue.startswith("subtitle/"): # this is to avoid wasting resources on decoding subtitles
-            self.autoplugreturnvalue =False
-        if self.autoplugreturnvalue == False:
-            return False
-        else:
-            return True
+           capsvalue=caps.to_string()
+           if capsvalue.startswith("subtitle/"): # this is to avoid wasting resources on decoding subtitles
+               self.autoplugreturnvalue =False
+           if (capsvalue.startswith("audio/") and self.multipass != int(0)):
+               self.autoplugreturnvalue =False
+           if self.autoplugreturnvalue == False:
+               return False
+           else:
+                return True
 
    def dvdreadproperties(self, parent, element):
         if "GstDvdReadSrc" in str(element)	:
@@ -419,7 +413,7 @@ class Transcoder(GObject.GObject):
        factory=element.get_factory()
        if factory != None:
            # set multipass cache file on video encoder element
-           if (self.multipass != 0) and (self.passcounter == int(0)):
+           if (self.multipass != 0) and (self.streamdata['passcounter'] == int(0)):
                if Gst.ElementFactory.list_is_type(factory, 2814749767106562): # this is the factory code for Video encoders
                    element.set_property("multipass-cache-file", self.cachefile)
            
