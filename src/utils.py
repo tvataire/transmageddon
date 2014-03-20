@@ -39,12 +39,12 @@ def get_search_paths():
         @rtype: list
         @return: A list of paths to search in the order they will be searched
     """
-    userconfig=GLib.get_user_config_dir()
+    userconfig=str(GLib.get_user_config_dir())+"/transmageddon"
+    print(userconfig)
     return [
         userconfig,
         os.getcwd(),
         os.path.join(os.getcwd(), ".."),
-        os.path.expanduser(os.path.join(userconfig, "transmageddon")),
         os.path.join(sys.prefix, "share", "transmageddon"),
         os.path.join(sys.prefix, "local", "share", "transmageddon"),
     ]

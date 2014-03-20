@@ -38,7 +38,7 @@ import transcoder_engine
 from urllib.parse import urlparse
 import codecfinder
 import about
-import presets,  	udevdisco
+import presets, udevdisco
 import utils
 import datetime
 import langchooser, dvdtrackchooser
@@ -553,7 +553,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            self.streamdata['multipass'] = 0
        else:
            self.streamdata['multipass'] = int(passes)
-           self.streamdata['passcounter'] = int(0)
+           self.streamdata['passcounter'] = int(1)
 
    # Create query on uridecoder to get values to populate progressbar 
    # Notes:
@@ -1011,8 +1011,8 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            if "multipass-cache-file" not in properties:
               self.multipass=0
            else:
-               self.passcounter=int(1)
-               self.StatusBar.push(context_id, (_("Pass %(count)d Progress") % {'count': self.passcounter}))
+               self.streamdata['passcounter']=int(1)
+               self.StatusBar.push(context_id, (_("Pass %(count)d Progress") % {'count': self.streamdata['passcounter']}))
        if self.haveaudio:
            if "samplerate" in self.audiodata[0]:
                # self.check_for_elements()
@@ -1209,7 +1209,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            self.containerchoice.set_active(0)
            self.start_time = False
            self.streamdata['multipass'] = 0
-           self.passcounter = 0
+           self.streamdata['passcounter'] = 0
            self.rotationchoice.set_sensitive(True)
            if self.builder.get_object("containerchoice").get_active():
                self.populate_menu_choices()
