@@ -82,30 +82,6 @@ supported_containers = [
         "WebM"		#12
 ]
 
-supported_audio_codecs = [
-       "vorbis",
-       "flac",
-       "mp3",
-       "aac",
-       "ac3",
-       "speex",
-       "celt",
-       "amrnb",
-       "wma2",
-       "Opus"
-]
-
-supported_video_codecs = [
-       "theora",
-       "dirac",
-       "h264",
-       "mpeg2",
-       "mpeg4",
-       "h263p",
-       "wmv2",
-       "vp8"
-]
-
 # Maps containers to the codecs they support.  The first two elements are
 # "special" in that they are the default audio/video selections for that
 # container.
@@ -124,7 +100,7 @@ supported_video_container_map = {
     'MPEG TS':    [ 'MPEG2', 'MPEG1', 'H264', 'MPEG4', 'Dirac' ],
     'AVCHD/BD':   [ 'H264' ],
     'ASF':        [ 'Windows Media Video 2' ],
-    'WebM':       [ 'On2 vp8']
+    'WebM':       [ 'On2 vp8','On2 vp9']
 }
 
 supported_audio_container_map = {

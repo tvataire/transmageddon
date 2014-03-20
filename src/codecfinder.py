@@ -102,6 +102,7 @@ codecmap = { 'Vorbis' : "audio/x-vorbis", \
         'AMR-NB' : "audio/AMR", \
         'H263+' : "video/x-h263,variant=itu,h263version=h263p", \
         'On2 vp8' : "video/x-vp8", \
+        'On2 vp9' : "video/x-vp9", \
         'mp2' : "audio/mpeg,mpegversion=(int)1, layer=(int)2", \
         'MPEG1' : "video/mpeg,mpegversion=(int)1,systemstream=false", \
         'Opus'  :  "audio/x-opus" }
