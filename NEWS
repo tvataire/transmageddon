@@ -4,6 +4,7 @@
   Added support for DVD ripping
   Switched to new icon designed by Jakub Steiner
   Added appdata for GNOME Software and similar
+  Add VP9 support
 
 0.25 - 05.10.2012
   Fixed critical bug for remuxing

@@ -55,3 +55,5 @@ This list is completely unordered. Nothing about the ordering in this list shoul
 * Error handling - handle case where discoverer fail
 
 * Check if videoflip element actually is installed (in case only base and core is installed)
+
+* Add support for turning a video into images and a directory of images into video
