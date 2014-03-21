@@ -70,8 +70,8 @@ class Transcoder(GObject.GObject):
            videoencoder = Gst.ElementFactory.make(videoencoderplugin,"videoencoder")
            properties=videoencoder.get_property_names()
            if "multipass-cache-file" in properties:
-               self.cachefile = (str (GLib.get_user_cache_dir()) + "/" + \
-                   "multipass-cache-file" + self.streamdata['timestamp'] + ".log")
+               self.cachefile = (str (GLib.get_user_cache_dir()) + "/transmageddon/" + \
+                   "multipass-cache-file" + ".log")
            else:
                self.streamdata['multipass']=0
 
@@ -324,8 +324,10 @@ class Transcoder(GObject.GObject):
        elif mtype == Gst.MessageType.EOS:
            self.usedstreamids=[]
            #removing multipass cache file when done
-           if os.access(self.cachefile, os.F_OK):
-               os.remove(self.cachefile)
+           if (self.streamdata['multipass'] != 0) and (self.streamdata['passcounter'] != self.streamdata['multipass']):
+               if os.access(self.cachefile, os.F_OK):
+                   os.remove(self.cachefile)
+                   os.remove(self.cachefile+'.mbtree')
            self.emit('got-eos')
            self.pipeline.set_state(Gst.State.NULL)
        elif mtype == Gst.MessageType.APPLICATION:
