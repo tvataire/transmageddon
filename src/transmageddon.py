@@ -271,11 +271,11 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        self.videobox = dynamic_comboboxes_video(GObject.TYPE_PYOBJECT)
        self.CodecBox.attach(self.videobox, 2, 3, 1, 2, yoptions = Gtk.AttachOptions.SHRINK)
        self.CodecBox.show_all()
+       self.transcodebutton.get_style_context().add_class('suggested-action')
        self.containerchoice.connect("changed", self.on_containerchoice_changed)
        self.presetchoice.connect("changed", self.on_presetchoice_changed)
        self.videorows[0].connect("changed", self.on_videocodec_changed)
        self.rotationchoice.connect("changed", self.on_rotationchoice_changed)
-
        self.builder.connect_signals(self) # Initialize User Interface
        self.add(self.box)
 
@@ -600,11 +600,10 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            uri = "file://" + os.path.abspath(os.path.curdir) + "/transmageddon.png"
            notification = Notify.Notification.new("Transmageddon", (_("%(file)s saved to %(dir)s") % {'dir': self.streamdata['outputdirectory'], 'file': self.streamdata['outputfilename']}), uri)
            notification.show()
-           # self.FileChooser.set_sensitive(True)
            self.containerchoice.set_sensitive(True)
            self.CodecBox.set_sensitive(True)
+           self.videorows[0].set_sensitive(True)
            self.presetchoice.set_sensitive(True)
-           self.presetchoice.set_active(-1)
            self.cancelbutton.set_sensitive(False)
            self.transcodebutton.set_sensitive(True)
            self.rotationchoice.set_sensitive(True)
