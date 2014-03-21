@@ -604,6 +604,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            self.containerchoice.set_sensitive(True)
            self.CodecBox.set_sensitive(True)
            self.presetchoice.set_sensitive(True)
+           self.presetchoice.set_active(-1)
            self.cancelbutton.set_sensitive(False)
            self.transcodebutton.set_sensitive(True)
            self.rotationchoice.set_sensitive(True)
@@ -810,11 +811,6 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            else:
                self.presetchoice.set_sensitive(True)
                self.presetchoice.set_active(0)
-
-               # removing bogus text from supported_containers
-               if self.bogus==0:
-                   self.containerchoice.remove(12)
-                   self.bogus=1
                self.nocontaineroptiontoggle=False
            self.containerchoice.set_sensitive(True)
 
@@ -1391,6 +1387,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            dialog = Gtk.FileChooserDialog(title=_("Choose Source File..."),
                         buttons=(Gtk.STOCK_CANCEL, Gtk.ResponseType.REJECT,
                                  Gtk.STOCK_OPEN, Gtk.ResponseType.ACCEPT))
+           dialog.set_default_response(Gtk.ResponseType.ACCEPT)
            dialog.set_property("local-only", False)
            dialog.set_current_folder(self.videodirectory)
            response = dialog.run()
