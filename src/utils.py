@@ -40,7 +40,6 @@ def get_search_paths():
         @return: A list of paths to search in the order they will be searched
     """
     userconfig=str(GLib.get_user_config_dir())+"/transmageddon"
-    print(userconfig)
     return [
         userconfig,
         os.getcwd(),
