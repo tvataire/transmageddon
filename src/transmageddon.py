@@ -1268,20 +1268,20 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        """
        A video DVD has been found, update the source combo box!
        """
-       if hasattr(self.combo, "get_model"):
-           model = self.combo.get_model()
-           for pos, item in enumerate(model):
-               if item[2] and item[2][0].endswith(device.path):
-                   model[pos] = (item[0], device.nice_label, (item[2][0], True))
-                   break
-       else:
-           self.setup_source()
+       #if hasattr(self.combo, "get_model"):
+       #    model = self.combo.get_model()
+       #    for pos, item in enumerate(model):
+       #        if item[2] and item[2][0].endswith(device.path):
+       #            model[pos] = (item[0], device.nice_label, (item[2][0], True))
+       #            break
+       #else:
+       self.setup_source()
     
    def on_disc_lost(self, finder, device, label):
        """
             A video DVD has been removed, update the source combo box!
        """
-       model = self.combo.get_model()
+       # model = self.combo.get_model()
        self.setup_source()
 
    def setup_source(self):
@@ -1292,17 +1292,31 @@ class TransmageddonUI(Gtk.ApplicationWindow):
 
        # Already exists? Remove it!
        if self.combo:	
-           self.source_hbox.remove(self.combo)
-           self.combo.destroy()
+           #self.table1.remove(self.combo)
+           # self.combo.disconnect(self.handler_id)
+           self.dvdname=[]
+           self.dvddevice=[]
+           #self.combo.remove()
+           #self.combo = None
+       else:
+           if not self.finder:
+               #print("self.finder is "+str(self.finder))
+               self.finder = udevdisco.InputFinder()
 
-       if self.finder:
-            if self.finder_disc_found is not None:
-                self.finder.disconnect(self.finder_disc_found)
-                self.finder_disc_found = None
-            
-            if self.finder_disc_lost is not None:
-                self.finder.disconnect(self.finder_disc_lost)
-                self.finder_disc_lost = None
+               # Watch for DVD discovery events
+               self.finder_disc_found = self.finder.connect("disc-found",
+                                                        self.on_disc_found)
+               self.finder_disc_lost = self.finder.connect("disc-lost",
+                                                        self.on_disc_lost) 
+
+       #if self.finder:
+       #     if self.finder_disc_found is not None:
+       #         self.finder.disconnect(self.finder_disc_found)
+       #         self.finder_disc_found = None
+       #     
+       #     if self.finder_disc_lost is not None:
+       #         self.finder.disconnect(self.finder_disc_lost)
+       #         self.finder_disc_lost = None
 
        # udev code to find DVD drive on system
 
@@ -1313,14 +1327,6 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                self.dvdname.append(device.get_property("ID_FS_LABEL"))
 
        # Setup input source discovery
-       if not self.finder:
-           self.finder = udevdisco.InputFinder()
-
-           # Watch for DVD discovery events
-           self.finder_disc_found = self.finder.connect("disc-found",
-                                                        self.on_disc_found)
-           self.finder_disc_lost = self.finder.connect("disc-lost",
-                                                        self.on_disc_lost)
 
        theme = Gtk.IconTheme.get_default()
        size= Gtk.icon_size_lookup(Gtk.IconSize.MENU)[1]
@@ -1336,23 +1342,23 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            lsdvdexist = which.which("lsdvd")
        except:
            lsdvdexist = False
-
        if len(self.dvdname) > 0 and lsdvdexist: # only use this option is there is a DVD and ldvd is installed
            cdrom=theme.load_icon(Gtk.STOCK_CDROM, size, 0)
-
            x = 0
            while x < len(self.dvdname):
                # The code below assume further item numbers are always DVD change,
                # if that ever change be sure to change logic
-               liststore.append([cdrom, self.dvdname[x], self.dvddevice[x],  2+x])
+               if self.dvdname[x] != None:
+                   liststore.append([cdrom, self.dvdname[x], self.dvddevice[x],  2+x])
                x += 1
-
-       self.combo = self.builder.get_object ("combo")
-       self.combo.set_model (liststore)
-       self.combo.connect("changed", self.on_source_changed)
-       self.combo.show_all()
-
-       self.table1.attach(self.combo, 2, 3, 0, 1)
+       if self.combo:
+           self.combo.set_model (liststore)
+       else:
+           self.combo = self.builder.get_object ("combo")
+           self.combo.set_model (liststore)
+           self.combo.connect("changed", self.on_source_changed)
+           self.combo.show_all()
+           self.table1.attach(self.combo, 2, 3, 0, 1)
 
    def setup_audiovbox(self, streamcounter): # creates the list of audiostreams ui
        """

@@ -178,7 +178,6 @@ class InputFinder(GObject.GObject):
         """
             Called when a device has been added to the system.
         """
-        print(device, subsystem)
         if subsystem == "video4linux":
             block = device.get_device_file()
             self.capture_devices[block] = V4LDevice(device)
