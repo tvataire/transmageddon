@@ -191,6 +191,8 @@ class InputFinder(GObject.GObject):
         """
         if subsystem == "block" and device.has_property("ID_CDROM"):
             block = device.get_device_file()
+            if block not in self.drives:
+                self.drives[block] = DVDDevice(device)
             dvd_device = self.drives[block]
             media_changed = dvd_device.media != device.has_property("ID_FS_TYPE")
             dvd_device.device = device
