@@ -422,10 +422,13 @@ class Transcoder(GObject.GObject):
                if Gst.ElementFactory.list_is_type(factory, 1125899906842626): # Audio Encoders factory code
                    taglist=Gst.TagList.new_empty()
                    if self.audiodata[0]['languagecode'] != None:
-                       taglist.add_value(Gst.TagMergeMode.APPEND, Gst.TAG_LANGUAGE_CODE, self.audiodata[0]['language'])  # FIXME: Currently only doing 1 stream
+                       taglist.add_value(Gst.TagMergeMode.APPEND, Gst.TAG_LANGUAGE_CODE, self.audiodata[0]['languagecode'])  # FIXME: Currently only doing 1 stream
+                       taglist.add_value(Gst.TagMergeMode.APPEND, Gst.TAG_LANGUAGE_NAME, self.audiodata[0]['language'])
                    longname=factory.get_metadata('long-name')
-                   taglist.add_value(Gst.TagMergeMode.APPEND, Gst.TAG_ENCODER, longname)
-                   element.merge_tags(taglist, Gst.TagMergeMode.REPLACE)
+                   print(longname)
+                   #taglist.add_value(Gst.TagMergeMode.APPEND, Gst.TAG_ENCODER, longname)
+                   output=element.merge_tags(taglist, Gst.TagMergeMode.REPLACE_ALL)
+                   print(output)
 
    def Pipeline (self, state):
        if state == ("playing"):
