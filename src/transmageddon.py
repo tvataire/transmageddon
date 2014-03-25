@@ -1086,7 +1086,8 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                    if x != 0:
                        self.audiorows[x].set_active(self.noaudiomenuno[x])
                        self.audiodata[x]['outputaudiocaps'] = 'noaud'
-                   # self.only_one_audio_stream_allowed(0)
+                   else:
+                       self.audiorows[0].set_sensitive(False)
                    self.videorows[0].set_sensitive(False)
                else:
                    self.audiorows[x].set_sensitive(True)
@@ -1150,7 +1151,6 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                    if self.audiorows[streamno].get_active() == self.noaudiomenuno[y]:
                        self.audiorows[0].set_active(0)
                y=y+1
-           self.houseclean=False
 
    def on_containerchoice_changed(self, widget):
        self.CodecBox.set_sensitive(True)
