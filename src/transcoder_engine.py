@@ -100,7 +100,7 @@ class Transcoder(GObject.GObject):
        # What to do if we are not doing video passthrough (we only support video inside a 
        # container format
            if self.videodata[0]['outputvideocaps'] !=False:
-               if (self.videodata[0]['dopassthrough']==False and self.streamdata['passcounter'] == int(0)):
+               if (self.videodata[0]['dopassthrough']==False) and (self.streamdata['passcounter'] == int(0)):
                    self.videoflipper = Gst.ElementFactory.make('videoflip', None)
                    self.videoflipper.set_property("method", int(self.videodata[0]['rotationvalue']))
                    self.pipeline.add(self.videoflipper)
@@ -363,8 +363,8 @@ class Transcoder(GObject.GObject):
                    if self.streamdata['passcounter'] == int(0):
                        src_pad.add_probe(Gst.PadProbeType.EVENT_DOWNSTREAM, self.padprobe, None)
                elif ((c.startswith("video/") or c.startswith("image/")) and (self.videodata[0]['outputvideocaps'] != False)):
-                   if (self.videodata[0]['dopassthrough']==False) and (self.preset != 'nopreset'):
-                       if (self.streamdata['multipass'] != 0) and (self.streamdata['passcounter'] != int(0)):
+                   if (self.videodata[0]['dopassthrough']==False):
+                       if (self.streamdata['passcounter'] != int(0) and self.streamdata['multipass'] != int(0)):
                            videoencoderpad = self.videoencoder.get_static_pad("sink")
                            src_pad.link(videoencoderpad)
                        else:
