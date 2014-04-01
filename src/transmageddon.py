@@ -603,6 +603,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            self.containerchoice.set_sensitive(True)
            self.CodecBox.set_sensitive(True)
            self.videorows[0].set_sensitive(True)
+           self.audiorows[0].set_sensitive(True)
            self.presetchoice.set_sensitive(True)
            self.presetchoice.set_active(0)
            self.cancelbutton.set_sensitive(False)
