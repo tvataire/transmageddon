@@ -314,9 +314,9 @@ class Transcoder(GObject.GObject):
                print("missing something")
                if self.missingplugin==False: #don't think this is correct if more than one plugin installed
                    self.missingplugin=message
-                   #output=GstPbutils.missing_plugin_message_get_description(message)
-                   #print(output)
-                   # GstPbutils.missing_plugin_message_get_installer_detail(message)
+                   GstPbutils.missing_plugin_message_get_description(message)
+                   GstPbutils.missing_plugin_message_get_installer_detail(message)
+                   self.uridecoder.set_state(Gst.State.NULL)
                    self.emit('missing-plugin')
            
        elif mtype == Gst.MessageType.ASYNC_DONE:
@@ -336,6 +336,7 @@ class Transcoder(GObject.GObject):
        return True
 
    def OnDynamicPad(self, uridecodebin, src_pad):
+       print("hitting the pads")
        origin = src_pad.query_caps(None)
        if (self.streamdata['container']==False):
            a =  origin.to_string()

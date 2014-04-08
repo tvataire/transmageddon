@@ -843,7 +843,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        self.context.set_xid(self.get_window().get_xid())
        GstPbutils.install_plugins_async (missing, self.context, \
                        self.donemessage, "NULL")
-       self.on_cancelbutton_clicked("click")
+       # self.on_cancelbutton_clicked("clicked")
 
    def donemessage(self, donemessage, null):
        if donemessage == GstPbutils.InstallPluginsReturn.SUCCESS:
