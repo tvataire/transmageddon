@@ -1,4 +1,4 @@
-#! /usr/bin/env python3
+#!/usr/bin/env python3
 # -.- coding: utf-8 -.-
 
 # Transmageddon
@@ -940,7 +940,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
    def gather_streamdata(self):
        # create a variable with a timestamp code
        timeget = datetime.datetime.now()
-       self.streamdata['timestamp'] = str(timeget.strftime("-%H%M%S-%d%m%Y"))
+       self.streamdata['timestamp'] = str(timeget.strftime("-%Y%m%d-%H%M%S%z"))
        # Remove suffix from inbound filename so we can reuse it together with suffix to create outbound filename
        self.nosuffix = os.path.splitext(os.path.basename(self.streamdata['filename']))[0]
        # pick output suffix

@@ -336,7 +336,6 @@ class Transcoder(GObject.GObject):
        return True
 
    def OnDynamicPad(self, uridecodebin, src_pad):
-       print("hitting the pads")
        origin = src_pad.query_caps(None)
        if (self.streamdata['container']==False):
            a =  origin.to_string()
