@@ -1,3 +1,7 @@
+1.1 -
+  Fixed bug in missing plugin code
+  Changed timestamp format for better sorting
+  Fixed bug causing MPEG4 Part 2 to be listed as just MPEG Video in UI
 1.0 - 
   Added support for setting language of stream
   Added support for handling multiple audio streams
