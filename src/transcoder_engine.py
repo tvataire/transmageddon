@@ -424,8 +424,9 @@ class Transcoder(GObject.GObject):
                #if Gst.ElementFactory.list_is_type(factory, 1125899906842626): # Audio Encoders factory code        
                #print("is audio encoder")
                    #taglist=Gst.TagList.new_empty()
-               if self.audiodata[0]['languagecode'] != None:
+               if self.audiodata[0]['languagecode'] != False:
                        taglistbob.add_value(Gst.TagMergeMode.APPEND, Gst.TAG_LANGUAGE_CODE, self.audiodata[0]['languagecode'])  # FIXME: Currently only doing 1 stream
+               if self.audiodata[0]['language'] != False:
                        taglistbob.add_value(Gst.TagMergeMode.APPEND, Gst.TAG_LANGUAGE_NAME, self.audiodata[0]['language'])
                    #longname=factory.get_metadata('long-name')
                    #taglist.add_value(Gst.TagMergeMode.APPEND, Gst.TAG_ENCODER, longname)
