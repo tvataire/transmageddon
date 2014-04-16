@@ -19,7 +19,7 @@ Authors = ["Christian Schaller <uraeus@gnome.org>",
            ]
 
 Artists = ["Emily and Liam <liam@fightingcrane.com>",
-           "Jakub Steiner <jimmac@gnome.org"
+           "Jakub Steiner <jimmac@gnome.org>"
           ]
 LGPL = """
 Transmageddon
