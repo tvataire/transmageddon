@@ -128,10 +128,10 @@ class Transcoder(GObject.GObject):
        x=0
        while x < len(self.audiodata): 
            if self.audiodata[x]['outputaudiocaps'] != (False or "noaud"):
+               audiopreset=None
                if self.streamdata['container']==False:
                    self.encodebinprofile = GstPbutils.EncodingAudioProfile.new (self.audiodata[x]['outputaudiocaps'], audiopreset, Gst.Caps.new_any(), 0)
                else:
-                   audiopreset=None
                    audioprofile = GstPbutils.EncodingAudioProfile.new(self.audiodata[x]['outputaudiocaps'], audiopreset, Gst.Caps.new_any(), 0)
                    audioprofile.set_name("audioprofilename"+str(x))
                    self.encodebinprofile.add_profile(audioprofile)
@@ -425,6 +425,7 @@ class Transcoder(GObject.GObject):
                #print("is audio encoder")
                    #taglist=Gst.TagList.new_empty()
                if self.audiodata[0]['languagecode'] != False:
+                   if self.audiodata[0]['languagecode'] != None:
                        taglistbob.add_value(Gst.TagMergeMode.APPEND, Gst.TAG_LANGUAGE_CODE, self.audiodata[0]['languagecode'])  # FIXME: Currently only doing 1 stream
                if self.audiodata[0]['language'] != False:
                        taglistbob.add_value(Gst.TagMergeMode.APPEND, Gst.TAG_LANGUAGE_NAME, self.audiodata[0]['language'])
