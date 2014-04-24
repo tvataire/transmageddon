@@ -8,21 +8,30 @@ msgstr ""
 "Project-Id-Version: transmageddon master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=transmageddon&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2012-06-23 14:57+0000\n"
-"PO-Revision-Date: 2012-07-11 20:56+0200\n"
+"POT-Creation-Date: 2013-12-19 16:48+0000\n"
+"PO-Revision-Date: 2014-04-24 16:06+0200\n"
 "Last-Translator: Tom Tryfonidis <tomtryf@gmail.com>\n"
 "Language-Team: Greek <team@gnome.gr>\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.6.4\n"
 
-#: ../src/about.py.in:46 ../src/about.py.in:47 ../src/transmageddon.ui.h:1
+#: ../transmageddon.desktop.in.in.h:1
+msgid "Transmageddon Video Transcoder"
+msgstr "Μετατροπέας κωδικοποίησης βίντεο Transmageddon"
+
+#: ../transmageddon.desktop.in.in.h:2
+msgid "Video format conversion tool"
+msgstr "Εργαλείο μετατροπής μορφών βίντεο"
+
+#: ../src/about.py.in:48 ../src/about.py.in:49
 msgid "Transmageddon"
 msgstr "Transmageddon"
 
-#: ../src/about.py.in:49
+#: ../src/about.py.in:51
 msgid ""
 "Transmageddon is a simple video and audio conversion tool for GNOME created "
 "by Christian Fredrik Kalager Schaller."
@@ -30,16 +39,33 @@ msgstr ""
 "Το Transmageddon είναι ένα απλό εργαλείο μετατροπής βίντεο και ήχου για το "
 "GNOME δημιουργημένο από τον Christian Fredrik Kalager Schaller."
 
-#: ../src/about.py.in:50
+#: ../src/about.py.in:52
 msgid "Transmageddon homepage"
 msgstr "Αρχική ιστοσελίδα του Transmageddon"
 
-#: ../src/about.py.in:52
+#: ../src/about.py.in:54
 msgid "translator-credits"
 msgstr ""
 " Marios Zindilis <m.zindilis@dmajor.org>\n"
 "\n"
 "Για περισσότερα δείτε: http://gnome.gr"
+
+#. create a string to push into the listview
+#: ../src/dvdtrackchooser.py:56
+msgid "Title:"
+msgstr "Τίτλος:"
+
+#: ../src/dvdtrackchooser.py:56
+msgid "Languages:"
+msgstr "Γλώσσες:"
+
+#: ../src/dvdtrackchooser.py:56
+msgid "Length:"
+msgstr "Διάρκεια:"
+
+#: ../src/dvdtrackchooser.py:56
+msgid "Minutes"
+msgstr "Λεπτά"
 
 #: ../src/presets.py:78
 #, python-format
@@ -105,182 +131,250 @@ msgstr "Σφάλμα πρόσβασης στο %(location)spresets.txt!"
 msgid "All device presets are up to date!"
 msgstr "Όλες οι προρυθμίσεις συσκευών είναι ενημερωμένες!"
 
-#: ../src/transmageddon.ui.h:2
-msgid "_Help"
-msgstr "_Βοήθεια"
+#: ../src/transmageddon-dvdtrack-chooser.ui.h:1
+msgid "Select a DVD title"
+msgstr "Επιλέξτε έναν τίτλο DVD"
 
-#: ../src/transmageddon.ui.h:3
-msgid "_Debug"
-msgstr "_Αποσφαλμάτωση"
+#: ../src/transmageddon-dvdtrack-chooser.ui.h:2
+#: ../src/transmageddon-language-chooser.ui.h:2
+msgid "Cancel"
+msgstr "Άκυρο"
 
-#: ../src/transmageddon.ui.h:4
-msgid "<small>Audio Channels:</small>"
-msgstr "<small>Κανάλια ήχου:</small>"
+#: ../src/transmageddon-dvdtrack-chooser.ui.h:3
+#: ../src/transmageddon-language-chooser.ui.h:3
+msgid "Select"
+msgstr "Επιλογή"
 
-#: ../src/transmageddon.ui.h:5
-msgid "<small>Video height&#47;width:</small>"
-msgstr "<small>Ύψος&#47;πλάτος βίντεο:</small>"
+#: ../src/transmageddon-language-chooser.ui.h:1
+msgid "Select a language"
+msgstr "Επιλέξτε μια γλώσσα"
 
-#: ../src/transmageddon.ui.h:6
-msgid "<b>Presets:</b>"
-msgstr "<b>Προρυθμίσεις:</b>"
+#. append to the menu the options
+#: ../src/transmageddon.py:165
+msgid "About"
+msgstr "Περί"
 
-#: ../src/transmageddon.ui.h:7
-msgid "<b>Choose Input File:</b>"
-msgstr "<b>Επιλογή αρχείου εισόδου</b>:"
+#: ../src/transmageddon.py:166
+msgid "Quit"
+msgstr "Έξοδος"
 
-#: ../src/transmageddon.ui.h:8
-msgid "<b>Output Format:</b>"
-msgstr "<b>Μορφή εξόδου:</b>"
+#: ../src/transmageddon.py:167
+#| msgid "_Debug"
+msgid "Debug"
+msgstr "Αποσφαλμάτωση"
 
-#: ../src/transmageddon.ui.h:9
-msgid "<small>Video codec:</small>"
-msgstr "<small>Κωδικοποίηση βίντεο:</small>"
-
-#: ../src/transmageddon.ui.h:10
-msgid "<small>Audio codec:</small>"
-msgstr "<small>Κωδικοποίηση ήχου:</small>"
-
-#: ../src/transmageddon.ui.h:11
-msgid "<b>Choose Audio Codec</b>:"
-msgstr "<b>Επιλογή κωδικοποίησης ήχου</b>:"
-
-#: ../src/transmageddon.ui.h:12
-msgid "<b>Choose Video Codec</b>:"
-msgstr "<b>Επιλογή κωδικοποίησης βίντεο</b>:"
-
-#: ../src/transmageddon.ui.h:13
-msgid "<small>Rotate the video image if needed</small>"
-msgstr "<small>Περιστροφή της εικόνας του βίντεο αν χρειάζεται</small>"
-
-#: ../src/transmageddon.ui.h:14
-msgid "_Transcode"
-msgstr "_Μετατροπή κωδικοποίησης"
-
-#: ../src/transmageddon.py:300 ../src/transmageddon.py:672
-#: ../src/transmageddon.py:823 ../src/transmageddon.py:854
-#: ../src/transmageddon.py:940
+#. set default values for various variables
+#: ../src/transmageddon.py:379 ../src/transmageddon.py:809
+#: ../src/transmageddon.py:1015 ../src/transmageddon.py:1164
 msgid "Transcoding Progress"
 msgstr "Πρόοδος μετατροπής"
 
 #. add i18n "No container"option
-#: ../src/transmageddon.py:336
+#: ../src/transmageddon.py:425
 msgid "No container (Audio-only)"
 msgstr "Χωρίς πολυπλέκτη (Μόνο ήχος)"
 
 #. Populate the rotatation box
-#. print "populating rotationbox"
-#: ../src/transmageddon.py:340
+#. print("populating rotationbox")
+#: ../src/transmageddon.py:429
 msgid "No rotation (default)"
 msgstr "Χωρίς περιστροφή (προεπιλογή)"
 
-#: ../src/transmageddon.py:341
+#: ../src/transmageddon.py:430
 msgid "Clockwise 90 degrees"
 msgstr "90 μοίρες δεξιόστροφα"
 
-#: ../src/transmageddon.py:342
+#: ../src/transmageddon.py:431
 msgid "Rotate 180 degrees"
 msgstr "180 μοίρες"
 
-#: ../src/transmageddon.py:343
+#: ../src/transmageddon.py:432
 msgid "Counterclockwise 90 degrees"
 msgstr "90 μοίρες αριστερόστροφα"
 
-#: ../src/transmageddon.py:344
+#: ../src/transmageddon.py:433
 msgid "Horizontal flip"
 msgstr "Οριζόντια αναστροφή"
 
-#: ../src/transmageddon.py:345
+#: ../src/transmageddon.py:434
 msgid "Vertical flip"
 msgstr "Κάθετη αναστροφή"
 
-#: ../src/transmageddon.py:346
+#: ../src/transmageddon.py:435
 msgid "Upper left diagonal flip"
 msgstr "Διαγώνια αναστροφή άνω αριστερά"
 
-#: ../src/transmageddon.py:347
+#: ../src/transmageddon.py:436
 msgid "Upper right diagnonal flip"
 msgstr "Διαγώνια αναστροφή άνω δεξιά"
 
-#: ../src/transmageddon.py:370
+#: ../src/transmageddon.py:459
 msgid "No Presets"
 msgstr "Χωρίς προρυθμίσεις"
 
-#: ../src/transmageddon.py:468
+#: ../src/transmageddon.py:570
 #, python-format
 msgid "%(min)d:%(sec)02d"
 msgstr "%(min)d:%(sec)02d"
 
-#: ../src/transmageddon.py:499
+#: ../src/transmageddon.py:600
 #, python-format
 msgid "File saved to %(dir)s"
 msgstr "Το αρχείο αποθηκεύτηκε στο %(dir)s"
 
-#: ../src/transmageddon.py:509
+#: ../src/transmageddon.py:603
+#, python-format
+#| msgid "File saved to %(dir)s"
+msgid "%(file)s saved to %(dir)s"
+msgstr "Το %(file)s αποθηκεύτηκε στο %(dir)s"
+
+#: ../src/transmageddon.py:614
 msgid "Done Transcoding"
 msgstr "Ολοκλήρωση μετατροπής"
 
-#: ../src/transmageddon.py:520
-#, python-format
-msgid "Pass %(count)d Complete"
-msgstr "Πέρασμα %(count)d ολοκληρώθηκε"
-
-#: ../src/transmageddon.py:523
-msgid "Start next pass"
-msgstr "Εκκίνηση επόμενου περάσματος"
-
-#: ../src/transmageddon.py:568
-msgid "No Audio"
-msgstr "Χωρίς ήχο"
-
-#. add a 'No Video option'
-#: ../src/transmageddon.py:589 ../src/transmageddon.py:922
-msgid "No Video"
-msgstr "Χωρίς βίντεο"
-
-#: ../src/transmageddon.py:750
-msgid "Plugins not found, choose different codecs."
-msgstr ""
-"Δε βρέθηκαν πρόσθετες λειτουργίες, επιλέξτε διαφορετικούς κωδικοποιητές."
-
-#: ../src/transmageddon.py:758
-msgid "Codec installation aborted."
-msgstr "Εγκατάσταση κωδικοποιητών ματαιώθηκε."
-
-#: ../src/transmageddon.py:766
-msgid "Missing plugin installation failed: "
-msgstr "Αποτυχία εγκατάστασης πρόσθετων που λείπουν:"
-
-#: ../src/transmageddon.py:821
+#: ../src/transmageddon.py:632 ../src/transmageddon.py:984
 #, python-format
 msgid "Writing %(filename)s"
 msgstr "Εγγραφή %(filename)s"
 
-#: ../src/transmageddon.py:826
+#: ../src/transmageddon.py:636
+#, python-format
+#| msgid "Pass %(count)d Complete"
+msgid "Pass %(count)d Complete. "
+msgstr "Πρόοδος περάσματος %(count)d"
+
+#. We use None here so that we in transcoder engine can differentiate between,
+#. unknown language and known language, but no language code.
+#: ../src/transmageddon.py:678
+#| msgid "Uknown error"
+msgid "Unknown"
+msgstr "Άγνωστο"
+
+#. if there is no audio streams
+#: ../src/transmageddon.py:735
+#| msgid "No Audio"
+msgid "  No Audio"
+msgstr " Χωρίς ήχο"
+
+#. add a 'No Video option'
+#: ../src/transmageddon.py:744 ../src/transmageddon.py:1137
+msgid "No Video"
+msgstr "Χωρίς βίντεο"
+
+#: ../src/transmageddon.py:869
+msgid ""
+"Got an invalid response from codec installer, can not install missing codec."
+msgstr ""
+"Λήφθηκε μη έγκυρη απόκριση από τον εγκαταστάτη κωδικοποιητών, απέτυχε η "
+"εγκατάσταση του πρόσθετου."
+
+#: ../src/transmageddon.py:873
+#| msgid "Codec installation aborted."
+msgid "No Codec installer helper application available."
+msgstr "Δεν είναι διαθέσιμος ο βοηθός εγκατάστασης κωδικοποιητών."
+
+#: ../src/transmageddon.py:877
+msgid "Plugins not found, choose different codecs."
+msgstr ""
+"Δε βρέθηκαν πρόσθετες λειτουργίες, επιλέξτε διαφορετικούς κωδικοποιητές."
+
+#: ../src/transmageddon.py:887
+msgid "Codec installation aborted."
+msgstr "Εγκατάσταση κωδικοποιητών ματαιώθηκε."
+
+#: ../src/transmageddon.py:895
+#| msgid "Missing plugin installation failed: "
+msgid "Missing plugin installation failed."
+msgstr "Απέτυχε η εγκατάσταση του πρόσθετου."
+
+#: ../src/transmageddon.py:987
 #, python-format
 msgid "Pass %(count)d Progress"
 msgstr "Πρόοδος περάσματος %(count)d"
 
-#: ../src/transmageddon.py:928
+#. add a 'No Audio option'
+#: ../src/transmageddon.py:1077
+msgid "No Audio"
+msgstr "Χωρίς ήχο"
+
+#: ../src/transmageddon.py:1084
+msgid "Audio passthrough"
+msgstr "Διεύλεση ήχου"
+
+#: ../src/transmageddon.py:1143
 msgid "Video passthrough"
 msgstr "Διεύλεση βίντεο"
 
-#: ../src/transmageddon.py:933
-msgid "Audio passthrough"
-msgstr "Διεύλεση ήχου"
+#: ../src/transmageddon.py:1423
+msgid "Choose Source File..."
+msgstr "Επιλογή πηγαίων αρχείων..."
+
+#: ../src/transmageddon.ui.h:1
+#| msgid "<small>Audio Channels:</small>"
+msgid ""
+"<small>Audio Channels:</small>\n"
+"<small>Audio Codec:</small>"
+msgstr ""
+"<small>Κανάλια ήχου:</small>\n"
+"<small>Κωδικοποιητής ήχου:</small>"
+
+#: ../src/transmageddon.ui.h:3
+#| msgid "<small>Video height&#47;width:</small>"
+msgid ""
+"<small>Video height&#47;width:</small>\n"
+"<small>Video Codec:</small>"
+msgstr ""
+"<small>Ύψος βίντεο&#47;πλάτος:</small>\n"
+"<small>Κωδικοποιητής βίντεο:</small>"
+
+#: ../src/transmageddon.ui.h:5
+msgid "<b>Presets:</b>"
+msgstr "<b>Προρυθμίσεις:</b>"
+
+#: ../src/transmageddon.ui.h:6
+msgid "<b>Choose Input File:</b>"
+msgstr "<b>Επιλογή αρχείου εισόδου</b>:"
+
+#: ../src/transmageddon.ui.h:7
+msgid "<b>Output Format:</b>"
+msgstr "<b>Μορφή εξόδου:</b>"
+
+#: ../src/transmageddon.ui.h:8
+msgid "<b>Choose Audio Codec</b>:"
+msgstr "<b>Επιλογή κωδικοποίησης ήχου</b>:"
+
+#: ../src/transmageddon.ui.h:9
+msgid "<b>Choose Video Codec</b>:"
+msgstr "<b>Επιλογή κωδικοποίησης βίντεο</b>:"
+
+#: ../src/transmageddon.ui.h:10
+msgid "<small>Rotate the video image if needed</small>"
+msgstr "<small>Περιστροφή της εικόνας του βίντεο αν χρειάζεται</small>"
+
+#: ../src/transmageddon.ui.h:11
+msgid "_Transcode"
+msgstr "_Μετατροπή κωδικοποίησης"
+
+#: ../src/udevdisco.py:221
+msgid "Not mounted."
+msgstr "Μη προσαρτημένο"
 
 #: ../src/utils.py:76
 #, python-format
 msgid "Can't find %(path)s in any known prefix!"
 msgstr "Αδυναμία εύρεσης %(path)s σε κανένα γνωστό πρόθεμα!"
 
-#: ../transmageddon.desktop.in.in.h:1
-msgid "Transmageddon Video Transcoder"
-msgstr "Μετατροπέας κωδικοποίησης βίντεο Transmageddon"
+#~ msgid "_Help"
+#~ msgstr "_Βοήθεια"
 
-#: ../transmageddon.desktop.in.in.h:2
-msgid "Video format conversion tool"
-msgstr "Εργαλείο μετατροπής μορφών βίντεο"
+#~ msgid "<small>Video codec:</small>"
+#~ msgstr "<small>Κωδικοποίηση βίντεο:</small>"
+
+#~ msgid "<small>Audio codec:</small>"
+#~ msgstr "<small>Κωδικοποίηση ήχου:</small>"
+
+#~ msgid "Start next pass"
+#~ msgstr "Εκκίνηση επόμενου περάσματος"
 
 #~ msgid "AA_C"
 #~ msgstr "AA_C"
@@ -359,6 +453,3 @@ msgstr "Εργαλείο μετατροπής μορφών βίντεο"
 
 #~ msgid "No video parser, passthrough not available"
 #~ msgstr "Χωρίς αναλυτή βίντεο, πέρασμα μη διαθέσιμο"
-
-#~ msgid "Uknown error"
-#~ msgstr "Άγνωστο σφάλμα"
