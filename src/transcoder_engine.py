@@ -329,6 +329,7 @@ class Transcoder(GObject.GObject):
                    os.remove(self.cachefile)
                    os.remove(self.cachefile+'.mbtree')
            self.emit('got-eos')
+           self.streamdata['passcounter'] = 0
            self.pipeline.set_state(Gst.State.NULL)
        elif mtype == Gst.MessageType.APPLICATION:
            self.pipeline.set_state(Gst.State.NULL)
