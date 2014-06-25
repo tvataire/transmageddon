@@ -58,10 +58,15 @@ dvdfactory=Gst.ElementFactory.find("dvdreadsrc")
 if dvdfactory:
     dvdfactory.set_rank(300)
 
-# Enable this to use vaapi hardware decoding. Seems broken atm.
-#vaapifactory=Gst.ElementFactory.find("vaapidecode")
-#if vaapifactory:
-#    vaapifactory.set_rank(300)
+# Disable vaapi decoding as it gives issues
+vaapidecfactory=Gst.ElementFactory.find("vaapidecode")
+if vaapidecfactory:
+    vaapidecfactory.set_rank(200)
+
+# if Vaapi encoder exists, use it
+vaapiencfactory=Gst.ElementFactory.find("vaapiencode")
+if vaapiencfactory:
+    vaapiencfactory.set_rank(300)
 
 TARGET_TYPE_URI_LIST = 80
 dnd_list = [ ( 'text/uri-list', 0, TARGET_TYPE_URI_LIST ) ]
@@ -614,7 +619,6 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            self.ProgressBar.set_text(_("Done Transcoding"))
            self.ProgressBar.set_fraction(1.0)
            self.start_time = False
-           print("this is only on EOS")
            self.streamdata['multipass'] = 0
            self.streamdata['passcounter'] = 0
            x=0
@@ -827,7 +831,6 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        self.languagelabel.set_markup(''.join(('<u><small>''Language: ', str(self.audiodata[self.audiostreamcounter]['language']),'</small></u>')))
 
    def _start_transcoding(self):
-       print(self.streamdata['passcounter']) # = 0 # make sure this is reset before a new transcode starts
        self._transcoder = transcoder_engine.Transcoder(self.streamdata,
                         self.audiodata, self.videodata)
        self._transcoder.connect("ready-for-querying", self.ProgressBarUpdate)
