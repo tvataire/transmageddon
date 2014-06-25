@@ -94,11 +94,11 @@ class Transcoder(GObject.GObject):
                    if not (self.audiodata[x]['outputaudiocaps'].intersect(Gst.caps_from_string("audio/mpeg, mpegversion=1, layer=3"))).is_empty():   
                        self.streamdata['container']=Gst.caps_from_string("application/x-id3")
                x=x+1
-       if not self.streamdata['container']==False: 
+       else: 
            self.encodebinprofile = GstPbutils.EncodingContainerProfile.new("containerformat", None , self.streamdata['container'], None)
-           # print("container is " +str(self.streamdata['container'].to_string()))
-       # What to do if we are not doing video passthrough (we only support video inside a 
-       # container format
+
+           # What to do if we are not doing video passthrough (we only support video inside a 
+           # container format
            if self.videodata[0]['outputvideocaps'] !=False:
                if (self.videodata[0]['dopassthrough']==False) and (self.streamdata['passcounter'] == int(0)):
                    self.videoflipper = Gst.ElementFactory.make('videoflip', None)
@@ -121,8 +121,7 @@ class Transcoder(GObject.GObject):
                    videopreset=None
                    self.videoprofile = GstPbutils.EncodingVideoProfile.new(self.videodata[0]['outputvideocaps'], videopreset, Gst.Caps.new_any(), 0)
                    self.encodebinprofile.add_profile(self.videoprofile)
-                   #print("videocaps is "+str(self.videodata[0]['outputvideocaps'].to_string()))
-                   #print(self.videoprofile)
+        
        # We do not need to do anything special for passthrough for audio, since we are not
        # including any extra elements between uridecodebin and encodebin
        x=0
@@ -136,7 +135,8 @@ class Transcoder(GObject.GObject):
                    audioprofile.set_name("audioprofilename"+str(x))
                    self.encodebinprofile.add_profile(audioprofile)
            x=x+1 
-           # print("audiocodec is " +str(self.audiodata[0]['outputaudiocaps'].to_string()))
+
+       # Dealing with Video multipass encoding
        if (self.streamdata['passcounter'] != int(0) and self.streamdata['multipass'] != int(0)):
            videoencoderplugin = codecfinder.get_video_encoder_element(self.videodata[0]['outputvideocaps'])
            self.videoencoder = Gst.ElementFactory.make(videoencoderplugin,"videoencoder")
@@ -173,6 +173,7 @@ class Transcoder(GObject.GObject):
        self.pipeline.add(self.uridecoder)
        
        if self.streamdata['passcounter'] != int(0):
+           print(self.streamdata['passcounter'])
            self.videoencoder.link(self.multipassfakesink)
        else:
            self.transcodefileoutput = Gst.ElementFactory.make("filesink", \
@@ -328,8 +329,8 @@ class Transcoder(GObject.GObject):
                if os.access(self.cachefile, os.F_OK):
                    os.remove(self.cachefile)
                    os.remove(self.cachefile+'.mbtree')
+           # print(self.streamdata['passcounter'])
            self.emit('got-eos')
-           self.streamdata['passcounter'] = 0
            self.pipeline.set_state(Gst.State.NULL)
        elif mtype == Gst.MessageType.APPLICATION:
            self.pipeline.set_state(Gst.State.NULL)

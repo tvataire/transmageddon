@@ -88,10 +88,10 @@ supported_containers = [
 supported_video_container_map = {
     'Ogg':        [ 'Theora', 'Dirac', 'On2 vp8' ],
     'MXF':        [ 'H264', 'MPEG2', 'MPEG4' ],
-    'Matroska':   [ 'On2 vp8', 'Theora', 'H264', 'Dirac',
+    'Matroska':   [ 'On2 vp8', 'Theora', 'H264', 'Dirac', 'divx5',
                     'MPEG4', 'MPEG2', 'H263+' ],
     'AVI':        [ 'H264', 'Dirac', 'MPEG2', 'MPEG4',
-                    'Windows Media Video 2', 'On2 vp8' ],
+                    'Windows Media Video 2', 'On2 vp8', 'xvid', 'divx5' ],
     'Quicktime':  [ 'H264', 'Dirac', 'MPEG2', 'MPEG4', 'On2 vp8' ],
     'MPEG4':      [ 'H264', 'MPEG2', 'MPEG4' ],
     'FLV':        [ 'H264'],
@@ -106,8 +106,8 @@ supported_video_container_map = {
 supported_audio_container_map = {
     'Ogg':   [ 'Vorbis', 'FLAC', 'Speex', 'Celt Ultra', 'Opus' ],
     'MXF':         [ 'mp3', 'AAC', 'AC3' ],
-    'Matroska':    [ 'FLAC', 'AAC', 'AC3', 'Vorbis' ],
-    'AVI':         [ 'mp3', 'AC3', 'Windows Media Audio 2' ],
+    'Matroska':    [ 'FLAC', 'AAC', 'AC3', 'Vorbis'],
+    'AVI':         [ 'mp3', 'AC3', 'Windows Media Audio 2'],
     'Quicktime':   [ 'AAC', 'AC3', 'mp3' ],
     'MPEG4':       [ 'AAC', 'mp3' ],
     '3GPP':        [ 'AAC', 'mp3', 'AMR-NB' ],
@@ -614,6 +614,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            self.ProgressBar.set_text(_("Done Transcoding"))
            self.ProgressBar.set_fraction(1.0)
            self.start_time = False
+           print("this is only on EOS")
            self.streamdata['multipass'] = 0
            self.streamdata['passcounter'] = 0
            x=0
@@ -635,7 +636,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            else:
                self.StatusBar.push(context_id, (_("Pass %(count)d Complete. ") % \
                    {'count': self.streamdata['passcounter']}))
-               self.streamdtata['passcounter'] = self.streamdata['passcounter']+1
+               self.streamdata['passcounter'] = self.streamdata['passcounter']+1
                self._start_transcoding()
 
    def dvdreadproperties(self, parent, element):
@@ -825,11 +826,10 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            self.audiodata[self.audiostreamcounter]['language'] = GstTag.tag_get_language_name(output.langcode)
        self.languagelabel.set_markup(''.join(('<u><small>''Language: ', str(self.audiodata[self.audiostreamcounter]['language']),'</small></u>')))
 
-   def _start_transcoding(self): 
+   def _start_transcoding(self):
+       print(self.streamdata['passcounter']) # = 0 # make sure this is reset before a new transcode starts
        self._transcoder = transcoder_engine.Transcoder(self.streamdata,
                         self.audiodata, self.videodata)
-        
-
        self._transcoder.connect("ready-for-querying", self.ProgressBarUpdate)
        self._transcoder.connect("got-eos", self._on_eos)
        self._transcoder.connect("missing-plugin", self.install_plugin)
@@ -982,7 +982,8 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            videoencoder = Gst.ElementFactory.make(videoencoderplugin,"videoencoder")
            properties=videoencoder.get_property_names()
            if "multipass-cache-file" not in properties:
-              self.multipass=0
+              self.streamdata['multipass']=0
+              self.streamdata['passcounter']=0
            else:
                self.streamdata['passcounter']=int(1)
                self.StatusBar.push(context_id, (_("Pass %(count)d Progress") % {'count': self.streamdata['passcounter']}))
