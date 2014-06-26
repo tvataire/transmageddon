@@ -284,6 +284,9 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        self.builder.connect_signals(self) # Initialize User Interface
        self.add(self.box)
 
+       actionbuttonssizegroup= Gtk.SizeGroup(Gtk.SizeGroupMode.HORIZONTAL)
+       actionbuttonssizegroup.add_widget(self.cancelbutton)
+       actionbuttonssizegroup.add_widget(self.transcodebutton)
        
        def get_file_path_from_dnd_dropped_uri(self, uri):
            # get the path to file
