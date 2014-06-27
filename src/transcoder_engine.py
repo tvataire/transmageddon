@@ -419,19 +419,11 @@ class Transcoder(GObject.GObject):
            if tagyes ==True:
                taglistbob=Gst.TagList.new_empty()
                taglistbob.add_value(Gst.TagMergeMode.APPEND, Gst.TAG_APPLICATION_NAME, "Transmageddon transcoder")
-               #element.merge_tags(taglist, Gst.TagMergeMode.REPLACE)
-               #print("testing for audio encoder")
-               #print(factory.get_element_type())
-               #if Gst.ElementFactory.list_is_type(factory, 1125899906842626): # Audio Encoders factory code        
-               #print("is audio encoder")
-                   #taglist=Gst.TagList.new_empty()
                if self.audiodata[0]['languagecode'] != False:
                    if self.audiodata[0]['languagecode'] != None:
                        taglistbob.add_value(Gst.TagMergeMode.APPEND, Gst.TAG_LANGUAGE_CODE, self.audiodata[0]['languagecode'])  # FIXME: Currently only doing 1 stream
                if self.audiodata[0]['language'] != False:
                        taglistbob.add_value(Gst.TagMergeMode.APPEND, Gst.TAG_LANGUAGE_NAME, self.audiodata[0]['language'])
-                   #longname=factory.get_metadata('long-name')
-                   #taglist.add_value(Gst.TagMergeMode.APPEND, Gst.TAG_ENCODER, longname)
                Gst.TagSetter.merge_tags (element, taglistbob, Gst.TagMergeMode.REPLACE)
 
    def Pipeline (self, state):
