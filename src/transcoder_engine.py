@@ -53,7 +53,7 @@ class Transcoder(GObject.GObject):
        self.blackborderflag = False
        self.missingplugin= False
        self.probestreamid = False
-       self.sinkpad = False
+       self.sinkpad = None
        self.usedstreamids = []
 
        # switching width and height around for rotationchoices where it makes sense
@@ -290,8 +290,6 @@ class Transcoder(GObject.GObject):
            while x < len(self.audiodata):
                if self.probestreamid==self.audiodata[x]['streamid']:
                    if self.probestreamid not in self.usedstreamids:
-                       print(self.usedstreamids)
-                       #FIXME - Need to clean usedstreamid list at some point
                        self.usedstreamids.append(self.probestreamid)
                        if self.audiodata[x]['outputaudiocaps'] != 'noaud':
                            self.sinkpad = self.encodebin.emit("request-profile-pad", "audioprofilename"+str(x))
@@ -339,18 +337,23 @@ class Transcoder(GObject.GObject):
 
    def OnDynamicPad(self, uridecodebin, src_pad):
        origin = src_pad.query_caps(None)
+       print("origin is " + str(origin))
        if (self.streamdata['container']==False):
            a =  origin.to_string()
            if a.startswith("audio/"): # this is for audio only files
                src_pad.add_probe(Gst.PadProbeType.EVENT_DOWNSTREAM, self.padprobe, None)
-
        else:
            c = origin.to_string()
-           if not (c.startswith("text/") or c.startswith("subpicture/")):
+           print("c is " +str(c))
+           if not (c.startswith("text/") or c.startswith("subpicture/") or c.startswith("audio/")):
                if not (c.startswith("video/") and (self.videodata[0]['outputvideocaps'] == False)):
                    if self.streamdata['passcounter'] == int(0):
-                       if not c.startswith("audio/"):
-                           self.sinkpad = self.encodebin.emit("request-pad", origin)
+                       # if not c.startswith("audio/"):
+                           if c.startswith("video/x-raw"):
+                               print("origin is now " +str(origin))
+                               print("try to emit")
+                               self.sinkpad = self.encodebin.emit("request-pad", origin)
+                               print(self.sinkpad)
            if c.startswith("audio/"):
                if self.streamdata['passcounter'] == int(0):
                    src_pad.add_probe(Gst.PadProbeType.EVENT_DOWNSTREAM, self.padprobe, None)
@@ -360,10 +363,12 @@ class Transcoder(GObject.GObject):
                        videoencoderpad = self.videoencoder.get_static_pad("sink")
                        src_pad.link(videoencoderpad)
                    else:
-                       deinterlacerpad = self.deinterlacer.get_static_pad("sink")
-                       src_pad.link(deinterlacerpad)
-                       print("self.sinkpad is " + str(self.sinkpad))
-                       self.videoflipper.get_static_pad("src").link(self.sinkpad)
+                       if c.startswith("video/x-raw"):
+                           deinterlacerpad = self.deinterlacer.get_static_pad("sink")
+                           src_pad.link(deinterlacerpad)
+                           print("self.sinkpad is " + str(self.sinkpad))
+                           if self.sinkpad != None:
+                               self.videoflipper.get_static_pad("src").link(self.sinkpad)
                else:
                    src_pad.link(self.sinkpad)
  
@@ -376,12 +381,15 @@ class Transcoder(GObject.GObject):
            while x < len(self.audiodata):
                if streamid==self.audiodata[x]['streamid']:
                    if self.audiodata[x]['dopassthrough'] == True:
+                       print("trigger 1?")
                        self.autoplugreturnvalue = False
                    elif self.audiodata[x]['outputaudiocaps']== 'noaud':
+                       print("trigger 2?")
                        self.autoplugreturnvalue = False
                x=x+1
            if streamid ==self.videodata[0]['streamid']:
                if self.videodata[0]['dopassthrough'] == True:
+                   print("autoplug  discontinue")
                    self.autoplugreturnvalue = False
            capsvalue=caps.to_string()
            if capsvalue.startswith("subtitle/"): # this is to avoid wasting resources on decoding subtitles
