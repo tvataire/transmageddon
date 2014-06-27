@@ -849,7 +849,6 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        self.context.set_xid(self.get_window().get_xid())
        GstPbutils.install_plugins_async (missing, self.context, \
                        self.donemessage, "NULL")
-       # self.on_cancelbutton_clicked("clicked")
 
    def donemessage(self, donemessage, null):
        if donemessage == GstPbutils.InstallPluginsReturn.SUCCESS:
@@ -993,6 +992,10 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            else:
                self.streamdata['passcounter']=int(1)
                self.StatusBar.push(context_id, (_("Pass %(count)d Progress") % {'count': self.streamdata['passcounter']}))
+       print("on transcode")
+       print(self.audiodata)
+       print(self.videodata)
+       print(self.streamdata)
        if self.haveaudio:
            if "samplerate" in self.audiodata[0]:
                # self.check_for_elements()
@@ -1014,7 +1017,11 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        self.CodecBox.set_sensitive(True)
        self.presetchoice.set_sensitive(True)
        self.rotationchoice.set_sensitive(True)
-       self.presetchoice.set_active(0)
+       # self.presetchoice.set_active(0)
+       print("on cancel")
+       print(self.audiodata)
+       print(self.videodata)
+       print(self.streamdata)
        self.cancelbutton.set_sensitive(False)
        self.transcodebutton.set_sensitive(True)
        self._cancel_encoding = \

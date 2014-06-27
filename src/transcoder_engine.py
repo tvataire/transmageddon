@@ -173,7 +173,6 @@ class Transcoder(GObject.GObject):
        self.pipeline.add(self.uridecoder)
        
        if self.streamdata['passcounter'] != int(0):
-           print(self.streamdata['passcounter'])
            self.videoencoder.link(self.multipassfakesink)
        else:
            self.transcodefileoutput = Gst.ElementFactory.make("filesink", \
@@ -291,6 +290,7 @@ class Transcoder(GObject.GObject):
            while x < len(self.audiodata):
                if self.probestreamid==self.audiodata[x]['streamid']:
                    if self.probestreamid not in self.usedstreamids:
+                       print(self.usedstreamids)
                        #FIXME - Need to clean usedstreamid list at some point
                        self.usedstreamids.append(self.probestreamid)
                        if self.audiodata[x]['outputaudiocaps'] != 'noaud':
@@ -342,39 +342,30 @@ class Transcoder(GObject.GObject):
        if (self.streamdata['container']==False):
            a =  origin.to_string()
            if a.startswith("audio/"): # this is for audio only files
-               sinkpad = self.encodebin.get_static_pad("audio_0")
-               src_pad.link(sinkpad)
+               src_pad.add_probe(Gst.PadProbeType.EVENT_DOWNSTREAM, self.padprobe, None)
+
        else:
-           if self.videodata[0]['outputvideocaps'] == False:
-               c = origin.to_string()
-               if c.startswith("audio/"):
-                   sinkpad = self.encodebin.get_static_pad("audio_0")
-                   src_pad.link(sinkpad)
-           else:
-               # Checking if its a subtitle pad which we can't deal with
-               # currently.
-               # Making sure that when we remove video from a file we don't
-               # bother with the video pad.
-               c = origin.to_string()
-               if not (c.startswith("text/") or c.startswith("subpicture/")):
-                   if not (c.startswith("video/") and (self.videodata[0]['outputvideocaps'] == False)):
-                       if self.streamdata['passcounter'] == int(0):
-                           if not c.startswith("audio/"):
-                               self.sinkpad = self.encodebin.emit("request-pad", origin)
-               if c.startswith("audio/"):
+           c = origin.to_string()
+           if not (c.startswith("text/") or c.startswith("subpicture/")):
+               if not (c.startswith("video/") and (self.videodata[0]['outputvideocaps'] == False)):
                    if self.streamdata['passcounter'] == int(0):
-                       src_pad.add_probe(Gst.PadProbeType.EVENT_DOWNSTREAM, self.padprobe, None)
-               elif ((c.startswith("video/") or c.startswith("image/")) and (self.videodata[0]['outputvideocaps'] != False)):
-                   if (self.videodata[0]['dopassthrough']==False):
-                       if (self.streamdata['passcounter'] != int(0) and self.streamdata['multipass'] != int(0)):
-                           videoencoderpad = self.videoencoder.get_static_pad("sink")
-                           src_pad.link(videoencoderpad)
-                       else:
-                           deinterlacerpad = self.deinterlacer.get_static_pad("sink")
-                           src_pad.link(deinterlacerpad)
-                           self.videoflipper.get_static_pad("src").link(self.sinkpad)
+                       if not c.startswith("audio/"):
+                           self.sinkpad = self.encodebin.emit("request-pad", origin)
+           if c.startswith("audio/"):
+               if self.streamdata['passcounter'] == int(0):
+                   src_pad.add_probe(Gst.PadProbeType.EVENT_DOWNSTREAM, self.padprobe, None)
+           elif ((c.startswith("video/") or c.startswith("image/")) and (self.videodata[0]['outputvideocaps'] != False)):
+               if (self.videodata[0]['dopassthrough']==False):
+                   if (self.streamdata['passcounter'] != int(0) and self.streamdata['multipass'] != int(0)):
+                       videoencoderpad = self.videoencoder.get_static_pad("sink")
+                       src_pad.link(videoencoderpad)
                    else:
-                       src_pad.link(self.sinkpad)
+                       deinterlacerpad = self.deinterlacer.get_static_pad("sink")
+                       src_pad.link(deinterlacerpad)
+                       print("self.sinkpad is " + str(self.sinkpad))
+                       self.videoflipper.get_static_pad("src").link(self.sinkpad)
+               else:
+                   src_pad.link(self.sinkpad)
  
    def on_autoplug_continue(self, element, pad, caps):
        event=pad.get_sticky_event(Gst.EventType.STREAM_START, 0)
