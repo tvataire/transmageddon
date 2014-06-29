@@ -377,15 +377,13 @@ class Transcoder(GObject.GObject):
        if event != None:
            streamid = event.parse_stream_start()
            x=0
-           self.autoplugreturnvalue = True
+           autoplugreturnvalue = True
            while x < len(self.audiodata):
                if streamid==self.audiodata[x]['streamid']:
                    if self.audiodata[x]['dopassthrough'] == True:
-                       print("trigger 1?")
-                       self.autoplugreturnvalue = False
+                       autoplugreturnvalue = False
                    elif self.audiodata[x]['outputaudiocaps']== 'noaud':
-                       print("trigger 2?")
-                       self.autoplugreturnvalue = False
+                       autoplugreturnvalue = False
                x=x+1
            if streamid ==self.videodata[0]['streamid']:
                if self.videodata[0]['dopassthrough'] == True:
@@ -395,8 +393,8 @@ class Transcoder(GObject.GObject):
            if capsvalue.startswith("subtitle/"): # this is to avoid wasting resources on decoding subtitles
                self.autoplugreturnvalue =False
            if (capsvalue.startswith("audio/") and (self.streamdata['multipass'] == int(0)) and (self.streamdata['multipass'] != int(self.streamdata['passcounter']))):
-               self.autoplugreturnvalue=False
-           if self.autoplugreturnvalue == False:
+               autoplugreturnvalue=False
+           if autoplugreturnvalue == False:
                return False
            else:
                 return True
