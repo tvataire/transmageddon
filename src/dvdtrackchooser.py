@@ -48,7 +48,10 @@ class dvdtrackchooser(Gtk.Dialog):
            languages.append(language)
            
            # create a string to push into the listview
-           self.listoftracks.append(_("Title:") + " " + str(scounter) + ", " + _("Languages:") + " " + languages[scounter] + " " + _("Length:") + " " + str(round((self.Tracks[scounter]['length']/60), 2)) + " " + _("Minutes"))
+           minutes=round((self.Tracks[scounter]['length']/60), 2)
+           self.listoftracks.append(_("Title:") + " " + str(scounter) + ", " + 
+                                    _("Languages:") + " " + languages[scounter] + " " + 
+                                    _("Length:") + " " + str(minutes) + " " + ngettext("Minute", "Minutes", minutes))
            scounter=scounter+1
 
        x=1
