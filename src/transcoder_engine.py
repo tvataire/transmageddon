@@ -41,6 +41,7 @@ class Transcoder(GObject.GObject):
        self.audiodata = AUDIODATA
        self.videodata = VIDEODATA
        self.streamdata = STREAMDATA
+
        # set preset directory
        Gst.preset_set_app_dir("/usr/share/transmageddon/presets/")
 
@@ -292,8 +293,8 @@ class Transcoder(GObject.GObject):
                    if self.probestreamid not in self.usedstreamids:
                        self.usedstreamids.append(self.probestreamid)
                        if self.audiodata[x]['outputaudiocaps'] != 'noaud':
-                           self.sinkpad = self.encodebin.emit("request-profile-pad", "audioprofilename"+str(x))
-                           pad.link(self.sinkpad)
+                           sinkpad = self.encodebin.emit("request-profile-pad", "audioprofilename"+str(x))
+                           pad.link(sinkpad)
                x=x+1
        return Gst.PadProbeReturn.OK
 
@@ -337,23 +338,23 @@ class Transcoder(GObject.GObject):
 
    def OnDynamicPad(self, uridecodebin, src_pad):
        origin = src_pad.query_caps(None)
-       print("origin is " + str(origin))
+       #print("origin is " + str(origin))
        if (self.streamdata['container']==False):
            a =  origin.to_string()
            if a.startswith("audio/"): # this is for audio only files
                src_pad.add_probe(Gst.PadProbeType.EVENT_DOWNSTREAM, self.padprobe, None)
        else:
            c = origin.to_string()
-           print("c is " +str(c))
+           #print("c is " +str(c))
            if not (c.startswith("text/") or c.startswith("subpicture/") or c.startswith("audio/")):
                if not (c.startswith("video/") and (self.videodata[0]['outputvideocaps'] == False)):
                    if self.streamdata['passcounter'] == int(0):
                        # if not c.startswith("audio/"):
                            if c.startswith("video/x-raw"):
-                               print("origin is now " +str(origin))
-                               print("try to emit")
+                               #print("origin is now " +str(origin))
+                               #print("try to emit")
                                self.sinkpad = self.encodebin.emit("request-pad", origin)
-                               print(self.sinkpad)
+                               #print(self.sinkpad)
            if c.startswith("audio/"):
                if self.streamdata['passcounter'] == int(0):
                    src_pad.add_probe(Gst.PadProbeType.EVENT_DOWNSTREAM, self.padprobe, None)
@@ -366,7 +367,6 @@ class Transcoder(GObject.GObject):
                        if c.startswith("video/x-raw"):
                            deinterlacerpad = self.deinterlacer.get_static_pad("sink")
                            src_pad.link(deinterlacerpad)
-                           print("self.sinkpad is " + str(self.sinkpad))
                            if self.sinkpad != None:
                                self.videoflipper.get_static_pad("src").link(self.sinkpad)
                else:
@@ -387,7 +387,6 @@ class Transcoder(GObject.GObject):
                x=x+1
            if streamid ==self.videodata[0]['streamid']:
                if self.videodata[0]['dopassthrough'] == True:
-                   print("autoplug  discontinue")
                    self.autoplugreturnvalue = False
            capsvalue=caps.to_string()
            if capsvalue.startswith("subtitle/"): # this is to avoid wasting resources on decoding subtitles

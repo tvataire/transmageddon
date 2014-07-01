@@ -992,10 +992,6 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            else:
                self.streamdata['passcounter']=int(1)
                self.StatusBar.push(context_id, (_("Pass %(count)d Progress") % {'count': self.streamdata['passcounter']}))
-       print("on transcode")
-       print(self.audiodata)
-       print(self.videodata)
-       print(self.streamdata)
        if self.haveaudio:
            if "samplerate" in self.audiodata[0]:
                # self.check_for_elements()
@@ -1017,11 +1013,6 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        self.CodecBox.set_sensitive(True)
        self.presetchoice.set_sensitive(True)
        self.rotationchoice.set_sensitive(True)
-       # self.presetchoice.set_active(0)
-       print("on cancel")
-       print(self.audiodata)
-       print(self.videodata)
-       print(self.streamdata)
        self.cancelbutton.set_sensitive(False)
        self.transcodebutton.set_sensitive(True)
        self._cancel_encoding = \
@@ -1037,7 +1028,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        # audio_codecs, video_codecs - temporary lists
 
        # clean up stuff from previous run
-       self.houseclean=True # set this to avoid triggering events when cleaning out menus
+       self.houseclean=True  # set this to avoid triggering events when cleaning out menus
        self.audiopassmenuno=[] # reset this field
        self.noaudiomenuno=[]
        x=0
@@ -1166,6 +1157,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                    if self.audiorows[streamno].get_active() == self.noaudiomenuno[y]:
                        self.audiorows[0].set_active(0)
                y=y+1
+           self.houseclean=False
 
    def on_containerchoice_changed(self, widget):
        self.CodecBox.set_sensitive(True)
@@ -1323,17 +1315,6 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                                                         self.on_disc_found)
                self.finder_disc_lost = self.finder.connect("disc-lost",
                                                         self.on_disc_lost) 
-
-       #if self.finder:
-       #     if self.finder_disc_found is not None:
-       #         self.finder.disconnect(self.finder_disc_found)
-       #         self.finder_disc_found = None
-       #     
-       #     if self.finder_disc_lost is not None:
-       #         self.finder.disconnect(self.finder_disc_lost)
-       #         self.finder_disc_lost = None
-
-       # udev code to find DVD drive on system
 
        client = GUdev.Client(subsystems=['block'])
        for device in client.query_by_subsystem("block"):
