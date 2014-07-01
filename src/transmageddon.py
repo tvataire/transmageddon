@@ -96,7 +96,7 @@ supported_video_container_map = {
     'Matroska':   [ 'On2 vp8', 'Theora', 'H264', 'Dirac', 'divx5',
                     'MPEG4', 'MPEG2', 'H263+' ],
     'AVI':        [ 'H264', 'Dirac', 'MPEG2', 'MPEG4',
-                    'Windows Media Video 2', 'On2 vp8', 'xvid', 'divx5' ],
+                    'Windows Media Video 2', 'On2 vp8', 'divx5' ],
     'Quicktime':  [ 'H264', 'Dirac', 'MPEG2', 'MPEG4', 'On2 vp8' ],
     'MPEG4':      [ 'H264', 'MPEG2', 'MPEG4' ],
     'FLV':        [ 'H264'],
