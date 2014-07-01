@@ -1,6 +1,7 @@
 1.2 -
   Fix bug with use of H264 encoder without multipass support, like the VAAPI one
   Make VAAPI usage reliable
+  Fix a gazillion little bugs, including various threading issues
 
 1.1 -
   Fixed bug in missing plugin code
