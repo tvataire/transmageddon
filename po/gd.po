@@ -1,0 +1,356 @@
+# Scottish Gaelic translation for transmageddon.
+# Copyright (C) 2014 transmageddon's COPYRIGHT HOLDER
+# This file is distributed under the same license as the transmageddon package.
+# GunChleoc <fios@foramnagaidhlig.net>, 2014.
+msgid ""
+msgstr ""
+"Project-Id-Version: transmageddon master\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=transm"
+"ageddon&keywords=I18N+L10N&component=General\n"
+"POT-Creation-Date: 2014-07-01 13:45+0000\n"
+"PO-Revision-Date: 2014-07-01 17:29+0100\n"
+"Last-Translator: GunChleoc <fios@foramnagaidhlig.net>\n"
+"Language-Team: Fòram na Gàidhlig http://www.foramnagaidhlig.net\n"
+"Language: gd\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n==1 || n==11) ? 0 : (n==2 || n==12) ? 1 : "
+"(n > 2 && n < 20) ? 2 : 3;\n"
+"X-Generator: Virtaal 0.7.1\n"
+"X-Project-Style: gnome\n"
+
+#: ../transmageddon.desktop.in.in.h:1
+msgid "Transmageddon Video Transcoder"
+msgstr "Inneal tar-chòdachaidh video Transmageddon"
+
+#: ../transmageddon.desktop.in.in.h:2
+msgid "Video format conversion tool"
+msgstr "Inneal airson fòrmatan video iompachadh"
+
+#: ../src/about.py.in:44 ../src/about.py.in:45
+msgid "Transmageddon"
+msgstr "Transmageddon"
+
+#: ../src/about.py.in:47
+msgid ""
+"Transmageddon is a simple video and audio conversion tool for GNOME created "
+"by Christian Fredrik Kalager Schaller."
+msgstr ""
+"'S e inneal simplidh airson fòrmatan video 's fuaime iompachadh airson GNOME "
+"a tha sa Transmageddon 's a chaidh a chruthachadh le Christian Fredrik "
+"Kalager Schaller."
+
+#: ../src/about.py.in:48
+msgid "Transmageddon homepage"
+msgstr "Duilleag dachaigh Transmageddon"
+
+#: ../src/about.py.in:50
+msgid "translator-credits"
+msgstr "GunChleoc http://www.foramnagaidhlig.net"
+
+#: ../src/dvdtrackchooser.py:52
+msgid "Title:"
+msgstr "Tiotal:"
+
+#: ../src/dvdtrackchooser.py:53
+msgid "Languages:"
+msgstr "Cànanan:"
+
+#: ../src/dvdtrackchooser.py:54
+msgid "Length:"
+msgstr "Faid:"
+
+#: ../src/dvdtrackchooser.py:54
+msgid "Minute"
+msgid_plural "Minutes"
+msgstr[0] "Mionaid"
+msgstr[1] "Mionaidean"
+msgstr[2] "Mionaidean"
+msgstr[3] "Mionaidean"
+
+#: ../src/presets.py:78
+#, python-format
+msgid "Not a valid integer or fraction: %(value)s!"
+msgstr "Chan e seo 'na àireamh shlàn no bloigh dhligheach: %(value)s!"
+
+#: ../src/presets.py:413
+#, python-format
+msgid "Loaded device %(device)s (%(presets)d presets)"
+msgstr "Uidheam %(device)s air a luchdadh (%(presets)d ro-shocrachadh)"
+
+#: ../src/presets.py:480
+#, python-format
+msgid "Fetching %(location)s"
+msgstr "A' faighinn %(location)s"
+
+#: ../src/presets.py:487
+#, python-format
+msgid "Writing to %(file)s"
+msgstr "A' sgrìobhadh gu %(file)s"
+
+#: ../src/presets.py:492
+#, python-format
+msgid "There was an error fetching and installing %(location)s: %(error)s"
+msgstr "Thachair mearachd a' faighinn 's a' stàladh %(location)s: %(error)s"
+
+#: ../src/presets.py:509
+msgid "Checking for device preset updates..."
+msgstr "A' toirt sùil airson ùrachaidhean air ro-shocrachaidhean an uidheim..."
+
+#: ../src/presets.py:529
+#, python-format
+msgid "Device preset %(name)s is up to date"
+msgstr "Tha ro-shocrachadh an uidheim %(name)s cho ùr 's a ghabhas"
+
+#: ../src/presets.py:533
+#, python-format
+msgid "Found updated device preset %(name)s"
+msgstr "Chaidh ùrachadh air ro-shocrachadh an uidheim %(name)s a lorg"
+
+#: ../src/presets.py:539 ../src/presets.py:552
+#, python-format
+msgid "Error installing preset %(name)s from %(location)s: %(error)s"
+msgstr "Mearachd a' stàladh ro-shocrachadh %(name)s o %(location)s: %(error)s"
+
+#: ../src/presets.py:546
+#, python-format
+msgid "Found new device preset %(name)s"
+msgstr "Chaidh ro-shocrachadh ùr an uidheim %(name)s a lorg"
+
+#: ../src/presets.py:559
+#, python-format
+msgid "Malformed plugin version line %(line)s"
+msgstr "Droch chruth air loidhne %(line)s aig tionndadh dhen phlugan"
+
+#: ../src/presets.py:563
+#, python-format
+msgid "There was a problem accessing %(location)spresets.txt!"
+msgstr "Thachair duilgheadas ag inntrigeadh %(location)spresets.txt!"
+
+#: ../src/presets.py:585
+msgid "All device presets are up to date!"
+msgstr "Cha gach ro-shocrachadh uidheim cho ùr 's a ghabhas!"
+
+#: ../src/transmageddon-dvdtrack-chooser.ui.h:1
+msgid "Select a DVD title"
+msgstr "Tagh tiotal an DVD"
+
+#: ../src/transmageddon-dvdtrack-chooser.ui.h:2
+#: ../src/transmageddon-language-chooser.ui.h:2
+msgid "Cancel"
+msgstr "Sguir dheth"
+
+#: ../src/transmageddon-dvdtrack-chooser.ui.h:3
+#: ../src/transmageddon-language-chooser.ui.h:3
+msgid "Select"
+msgstr "Tagh"
+
+#: ../src/transmageddon-language-chooser.ui.h:1
+msgid "Select a language"
+msgstr "Tagh cànan"
+
+#. append to the menu the options
+#: ../src/transmageddon.py:158
+msgid "About"
+msgstr "Mu dhèidhinn"
+
+#: ../src/transmageddon.py:159
+msgid "Quit"
+msgstr "Fàg an-seo"
+
+#: ../src/transmageddon.py:160
+msgid "Debug"
+msgstr "Dì-bhugaich"
+
+#. set default values for various variables
+#: ../src/transmageddon.py:373 ../src/transmageddon.py:817
+#: ../src/transmageddon.py:1021 ../src/transmageddon.py:1165
+msgid "Transcoding Progress"
+msgstr "Adhartas an tar-chòdachaidh"
+
+#. add i18n "No container"option
+#: ../src/transmageddon.py:419
+msgid "No container (Audio-only)"
+msgstr "Gun shoitheach (fuaim a-mhàin)"
+
+#. Populate the rotatation box
+#. print("populating rotationbox")
+#: ../src/transmageddon.py:423
+msgid "No rotation (default)"
+msgstr "Gun chuairteachadh (bun-roghainn)"
+
+#: ../src/transmageddon.py:424
+msgid "Clockwise 90 degrees"
+msgstr "Tuathal le 90 ceum"
+
+#: ../src/transmageddon.py:425
+msgid "Rotate 180 degrees"
+msgstr "Cuairtich le 180 ceum"
+
+#: ../src/transmageddon.py:426
+msgid "Counterclockwise 90 degrees"
+msgstr "Deiseil le 90 ceum"
+
+#: ../src/transmageddon.py:427
+msgid "Horizontal flip"
+msgstr "Flip air a' chòmhnard"
+
+#: ../src/transmageddon.py:428
+msgid "Vertical flip"
+msgstr "Flip gu h-inghearach"
+
+#: ../src/transmageddon.py:429
+msgid "Upper left diagonal flip"
+msgstr "Flip trastanach on oisean chlì aig a' bharr"
+
+#: ../src/transmageddon.py:430
+msgid "Upper right diagnonal flip"
+msgstr "Flip trastanach on oisean dheas aig a' bharr"
+
+#: ../src/transmageddon.py:453
+msgid "No Presets"
+msgstr "Gun ro-shocrachadh"
+
+#: ../src/transmageddon.py:576
+#, python-format
+msgid "%(min)d:%(sec)02d"
+msgstr "%(min)d:%(sec)02d"
+
+#: ../src/transmageddon.py:606
+#, python-format
+msgid "File saved to %(dir)s"
+msgstr "Chaidh am faidhle a shàbhaladh gu %(dir)s"
+
+#: ../src/transmageddon.py:609
+#, python-format
+msgid "%(file)s saved to %(dir)s"
+msgstr "%(file)s air a shàbhaladh gu %(dir)s"
+
+#: ../src/transmageddon.py:622
+msgid "Done Transcoding"
+msgstr "Tha an tar-chòdachadh coileanta"
+
+#: ../src/transmageddon.py:640 ../src/transmageddon.py:984
+#, python-format
+msgid "Writing %(filename)s"
+msgstr "A' sgrìobhadh %(filename)s"
+
+#: ../src/transmageddon.py:644
+#, python-format
+msgid "Pass %(count)d Complete. "
+msgstr "Dol troimhe %(count)d coileanta. "
+
+#. We use None here so that we in transcoder engine can differentiate between,
+#. unknown language and known language, but no language code.
+#: ../src/transmageddon.py:686
+msgid "Unknown"
+msgstr "Chan eil fhios"
+
+#. if there is no audio streams
+#: ../src/transmageddon.py:743
+msgid "  No Audio"
+msgstr "  Gun fhuaim"
+
+#. add a 'No Video option'
+#: ../src/transmageddon.py:752 ../src/transmageddon.py:1134
+msgid "No Video"
+msgstr "Gun video"
+
+#: ../src/transmageddon.py:869
+msgid ""
+"Got an invalid response from codec installer, can not install missing codec."
+msgstr ""
+"Fhuair sinn freagairt mì-dhligheach o stàlaichear a' codec 's cha ghabh an "
+"codec a tha a dhìth a stàladh."
+
+#: ../src/transmageddon.py:873
+msgid "No Codec installer helper application available."
+msgstr "Chan eil prògram taice gus codec a stàladh ri làimh."
+
+#: ../src/transmageddon.py:877
+msgid "Plugins not found, choose different codecs."
+msgstr "Cha deach plugan a lorg, tagh codec eile."
+
+#: ../src/transmageddon.py:887
+msgid "Codec installation aborted."
+msgstr "Chaidh sgur dhe stàladh a' codec."
+
+#: ../src/transmageddon.py:895
+msgid "Missing plugin installation failed."
+msgstr "Dh'fhàillig le stàladh a' phlugain a tha a dhìth."
+
+#: ../src/transmageddon.py:994
+#, python-format
+msgid "Pass %(count)d Progress"
+msgstr "Adhartas an dol troimhe %(count)d"
+
+#. add a 'No Audio option'
+#: ../src/transmageddon.py:1079
+msgid "No Audio"
+msgstr "Gun fhuaim"
+
+#: ../src/transmageddon.py:1086
+msgid "Audio passthrough"
+msgstr "Dol thairis air an fuaim"
+
+#: ../src/transmageddon.py:1140
+msgid "Video passthrough"
+msgstr "Dol thairis air a' video"
+
+#: ../src/transmageddon.py:1389
+msgid "Choose Source File..."
+msgstr "Tagh faidhle an tùis..."
+
+#: ../src/transmageddon.ui.h:1
+msgid ""
+"<small>Audio Channels:</small>\n"
+"<small>Audio Codec:</small>"
+msgstr ""
+"<small>Seanailean fuaime:</small>\n"
+"<small>Codec fuaime:</small>"
+
+#: ../src/transmageddon.ui.h:3
+msgid ""
+"<small>Video height&#47;width:</small>\n"
+"<small>Video Codec:</small>"
+msgstr ""
+"<small>Àirde&#47;leud video:</small>\n"
+"<small>Codec video:</small>"
+
+#: ../src/transmageddon.ui.h:5
+msgid "<b>Presets:</b>"
+msgstr "<b>Ro-shocrachaidhean:</b>"
+
+#: ../src/transmageddon.ui.h:6
+msgid "<b>Choose Input File:</b>"
+msgstr "<b>Tagh faidhle an ion-chuir:</b>"
+
+#: ../src/transmageddon.ui.h:7
+msgid "<b>Output Format:</b>"
+msgstr "<b>Fòrmat an às-chuir:</b>"
+
+#: ../src/transmageddon.ui.h:8
+msgid "<b>Choose Audio Codec</b>:"
+msgstr "<b>Tagh codec na fuaime</b>:"
+
+#: ../src/transmageddon.ui.h:9
+msgid "<b>Choose Video Codec</b>:"
+msgstr "<b>Tagh codec a' video</b>:"
+
+#: ../src/transmageddon.ui.h:10
+msgid "<small>Rotate the video image if needed</small>"
+msgstr "<small>Cuairtich comhair a' video ma tha seo a dhìth</small>"
+
+#: ../src/transmageddon.ui.h:11
+msgid "_Transcode"
+msgstr "_Tar-chòdaich"
+
+#: ../src/udevdisco.py:222
+msgid "Not mounted."
+msgstr "Cha deach a mhunntachadh."
+
+#: ../src/utils.py:75
+#, python-format
+msgid "Can't find %(path)s in any known prefix!"
+msgstr "Cha deach %(path)s a lorg le ro-leasachan sam bith!"
