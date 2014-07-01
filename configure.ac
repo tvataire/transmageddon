@@ -29,7 +29,7 @@ dnl
 dnl For a more exhaustive list of checks, you can have a look at
 dnl the runtime checks in pitivi/check.py
 
-AC_SUBST(GST_REQ, 1.0.0)
+AC_SUBST(GST_REQ, 1.2.0)
 
 AS_AC_EXPAND(LIBDIR, $libdir)
 AC_MSG_NOTICE(Storing library files in $LIBDIR)
