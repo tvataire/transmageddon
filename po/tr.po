@@ -2,44 +2,64 @@
 # Copyright (C) 2012 transmageddon's COPYRIGHT HOLDER
 # This file is distributed under the same license as the transmageddon package.
 #
-# Muhammet Kara <muhammetk@acikkaynak.name.tr>, 2012.
+# Muhammet Kara <muhammetk@gmail.com>, 2012, 2014.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: transmageddon master\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=transmageddon&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2012-04-03 14:23+0000\n"
-"PO-Revision-Date: 2012-08-09 13:31+0000\n"
-"Last-Translator: Muhammet Kara <muhammetk@acikkaynak.name.tr>\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=transmageddon&keywords=I18N+L10N&component=General\n"
+"POT-Creation-Date: 2014-07-02 09:23+0000\n"
+"PO-Revision-Date: 2014-07-02 14:33+0000\n"
+"Last-Translator: Muhammet Kara <muhammetk@gmail.com>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
+"Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"Language: tr\n"
-"X-Generator: Lokalize 1.4\n"
 
-#: ../src/about.py.in:46 ../src/about.py.in:47 ../src/transmageddon.ui.h:1
+#: ../transmageddon.desktop.in.in.h:1
+msgid "Transmageddon Video Transcoder"
+msgstr "Transmageddon Video Kodlama Dönüştürücüsü"
+
+#: ../transmageddon.desktop.in.in.h:2
+msgid "Video format conversion tool"
+msgstr "Video biçim dönüştürme aracı"
+
+#: ../src/about.py.in:44 ../src/about.py.in:45
 msgid "Transmageddon"
 msgstr "Transmageddon"
 
-#: ../src/about.py.in:49
+#: ../src/about.py.in:47
 msgid ""
 "Transmageddon is a simple video and audio conversion tool for GNOME created "
 "by Christian Fredrik Kalager Schaller."
-msgstr ""
-"Transmageddon, GNOME için Christian Fredrik Kalager Schaller tarafından "
-"oluşturulmuş "
-"basit bir video ve ses dönüştürme aracıdır."
+msgstr "Transmageddon, GNOME için Christian Fredrik Kalager Schaller tarafından oluşturulmuş basit bir video ve ses dönüştürme aracıdır."
 
-#: ../src/about.py.in:50
-#| msgid "Transmageddon"
+#: ../src/about.py.in:48
 msgid "Transmageddon homepage"
 msgstr "Transmageddon ana sayfası"
 
-#: ../src/about.py.in:52
+#: ../src/about.py.in:50
 msgid "translator-credits"
-msgstr "Muhammet Kara <muhammet.k@gmail.com>"
+msgstr "Muhammet Kara <muhammetk@gmail.com>"
+
+#: ../src/dvdtrackchooser.py:52
+msgid "Title:"
+msgstr "Başlık:"
+
+#: ../src/dvdtrackchooser.py:53
+msgid "Languages:"
+msgstr "Diller:"
+
+#: ../src/dvdtrackchooser.py:54
+msgid "Length:"
+msgstr "Uzunluk:"
+
+#: ../src/dvdtrackchooser.py:54
+msgid "Minute"
+msgid_plural "Minutes"
+msgstr[0] "Dakika"
 
 #: ../src/presets.py:78
 #, python-format
@@ -104,181 +124,219 @@ msgstr "%(location)spresets.txt dosyasına erişilirken bir sorun oluştu!"
 msgid "All device presets are up to date!"
 msgstr "Tüm aygıt önayarları güncel!"
 
-#: ../src/transmageddon.ui.h:2
-msgid "_Help"
-msgstr "_Yardım"
+#: ../src/transmageddon-dvdtrack-chooser.ui.h:1
+msgid "Select a DVD title"
+msgstr "DVD başlığını seçin"
 
-#: ../src/transmageddon.ui.h:3
-msgid "_Debug"
-msgstr "_Hata Ayıkla"
+#: ../src/transmageddon-dvdtrack-chooser.ui.h:2
+#: ../src/transmageddon-language-chooser.ui.h:2
+msgid "Cancel"
+msgstr "İptal"
 
-#: ../src/transmageddon.ui.h:4
-msgid "<small>Audio Channels:</small>"
-msgstr "<small>Ses Kanalları:</small>"
+#: ../src/transmageddon-dvdtrack-chooser.ui.h:3
+#: ../src/transmageddon-language-chooser.ui.h:3
+msgid "Select"
+msgstr "Seç"
 
-#: ../src/transmageddon.ui.h:5
-msgid "<small>Video height&#47;width:</small>"
-msgstr "<small>Video yükseklik&#47;genişlik:</small>"
+#: ../src/transmageddon-language-chooser.ui.h:1
+msgid "Select a language"
+msgstr "Bir dil seçin"
 
-#: ../src/transmageddon.ui.h:6
-msgid "<b>Presets:</b>"
-msgstr "<b>Önayarlar:</b>"
+#. append to the menu the options
+#: ../src/transmageddon.py:158
+msgid "About"
+msgstr "Hakkında"
 
-#: ../src/transmageddon.ui.h:7
-msgid "<b>Choose Input File:</b>"
-msgstr "<b>Girdi Dosyası Seç:</b>"
+#: ../src/transmageddon.py:159
+msgid "Quit"
+msgstr "Çıkış"
 
-#: ../src/transmageddon.ui.h:8
-msgid "<b>Output Format:</b>"
-msgstr "<b>Çıktı Biçimi:</b>"
+#: ../src/transmageddon.py:160
+msgid "Debug"
+msgstr "Hata Ayıklama"
 
-#: ../src/transmageddon.ui.h:9
-msgid "<small>Video codec:</small>"
-msgstr "<small>Video kod çözücüsü:</small>"
-
-#: ../src/transmageddon.ui.h:10
-msgid "<small>Audio codec:</small>"
-msgstr "<small>Ses kod çözücüsü:</small>"
-
-#: ../src/transmageddon.ui.h:11
-msgid "<b>Choose Audio Codec</b>:"
-msgstr "<b>Ses Kod Çözücüsünü Seç</b>:"
-
-#: ../src/transmageddon.ui.h:12
-msgid "<b>Choose Video Codec</b>:"
-msgstr "<b>Video Kod Çözücüsünü Seç</b>:"
-
-#: ../src/transmageddon.ui.h:13
-msgid "<small>Rotate the video image if needed</small>"
-msgstr "<small>Eğer gerekiyorsa video görüntüsünü döndür</small>"
-
-#: ../src/transmageddon.ui.h:14
-msgid "_Transcode"
-msgstr "_Kodlama Dönüştür"
-
-#: ../src/transmageddon.py:300 ../src/transmageddon.py:672
-#: ../src/transmageddon.py:823 ../src/transmageddon.py:854
-#: ../src/transmageddon.py:940
+#. set default values for various variables
+#: ../src/transmageddon.py:373 ../src/transmageddon.py:817
+#: ../src/transmageddon.py:1021 ../src/transmageddon.py:1165
 msgid "Transcoding Progress"
 msgstr "Kodlama Dönüştürme Süreci"
 
 #. add i18n "No container"option
-#: ../src/transmageddon.py:336
+#: ../src/transmageddon.py:419
 msgid "No container (Audio-only)"
 msgstr "Taşıyıcı yok (Sadece ses)"
 
 #. Populate the rotatation box
-#. print "populating rotationbox"
-#: ../src/transmageddon.py:340
+#. print("populating rotationbox")
+#: ../src/transmageddon.py:423
 msgid "No rotation (default)"
 msgstr "Döndürme yok (öntanımlı)"
 
-#: ../src/transmageddon.py:341
+#: ../src/transmageddon.py:424
 msgid "Clockwise 90 degrees"
 msgstr "Saat yönünde 90 derece"
 
-#: ../src/transmageddon.py:342
+#: ../src/transmageddon.py:425
 msgid "Rotate 180 degrees"
 msgstr "180 derece döndür"
 
-#: ../src/transmageddon.py:343
+#: ../src/transmageddon.py:426
 msgid "Counterclockwise 90 degrees"
 msgstr "Saat yönünün tersine 90 derece"
 
-#: ../src/transmageddon.py:344
+#: ../src/transmageddon.py:427
 msgid "Horizontal flip"
 msgstr "Yatay çevir"
 
-#: ../src/transmageddon.py:345
+#: ../src/transmageddon.py:428
 msgid "Vertical flip"
 msgstr "Dikey çevir"
 
-#: ../src/transmageddon.py:346
+#: ../src/transmageddon.py:429
 msgid "Upper left diagonal flip"
 msgstr "Sol üst köşegen çevir"
 
-#: ../src/transmageddon.py:347
+#: ../src/transmageddon.py:430
 msgid "Upper right diagnonal flip"
 msgstr "Sağ üst köşegen çevir"
 
-#: ../src/transmageddon.py:370
+#: ../src/transmageddon.py:453
 msgid "No Presets"
 msgstr "Önayar Yok"
 
-#: ../src/transmageddon.py:468
+#: ../src/transmageddon.py:576
 #, python-format
 msgid "%(min)d:%(sec)02d"
 msgstr "%(min)d:%(sec)02d"
 
-#: ../src/transmageddon.py:499
+#: ../src/transmageddon.py:606
 #, python-format
 msgid "File saved to %(dir)s"
 msgstr "Dosya %(dir)s'a kaydedildi"
 
-#: ../src/transmageddon.py:509
+#: ../src/transmageddon.py:609
+#, python-format
+msgid "%(file)s saved to %(dir)s"
+msgstr "%(file)s dosyası %(dir)s dizinine kaydedildi"
+
+#: ../src/transmageddon.py:622
 msgid "Done Transcoding"
 msgstr "Kodlama Dönüşümü Yapıldı"
 
-#: ../src/transmageddon.py:520
-#, python-format
-msgid "Pass %(count)d Complete"
-msgstr "Geçiş %(count)d Tamamlandı"
-
-#: ../src/transmageddon.py:523
-msgid "Start next pass"
-msgstr "Sonraki geçişe başla"
-
-#: ../src/transmageddon.py:568
-msgid "No Audio"
-msgstr "Ses Yok"
-
-#. add a 'No Video option'
-#: ../src/transmageddon.py:589 ../src/transmageddon.py:922
-msgid "No Video"
-msgstr "Görüntü Yok"
-
-#: ../src/transmageddon.py:750
-msgid "Plugins not found, choose different codecs."
-msgstr "Eklentiler bulunamadı, farklı kod paketleri seçin."
-
-#: ../src/transmageddon.py:758
-msgid "Codec installation aborted."
-msgstr "Kod paketi kurulumu iptal edildi."
-
-#: ../src/transmageddon.py:766
-msgid "Missing plugin installation failed: "
-msgstr "Eksik eklentilerin kurulumu başarısız oldu: "
-
-#: ../src/transmageddon.py:821
+#: ../src/transmageddon.py:640 ../src/transmageddon.py:984
 #, python-format
 msgid "Writing %(filename)s"
 msgstr "%(filename)s yazılıyor"
 
-#: ../src/transmageddon.py:826
+#: ../src/transmageddon.py:644
+#, python-format
+msgid "Pass %(count)d Complete. "
+msgstr "Geçiş %(count)d Tamamlandı. "
+
+#. We use None here so that we in transcoder engine can differentiate between,
+#. unknown language and known language, but no language code.
+#: ../src/transmageddon.py:686
+msgid "Unknown"
+msgstr "Bilinmiyor"
+
+#. if there is no audio streams
+#: ../src/transmageddon.py:743
+msgid "  No Audio"
+msgstr "  Ses Yok"
+
+#. add a 'No Video option'
+#: ../src/transmageddon.py:752 ../src/transmageddon.py:1134
+msgid "No Video"
+msgstr "Görüntü Yok"
+
+#: ../src/transmageddon.py:869
+msgid ""
+"Got an invalid response from codec installer, can not install missing codec."
+msgstr "Kod çözücü (kodek) kurucu geçersiz bir yanıt verdi, eksik kod çözücü kurulamıyor."
+
+#: ../src/transmageddon.py:873
+msgid "No Codec installer helper application available."
+msgstr "Kod Çözücü kurulumu için kullanılabilir yardımcı uygulama yok."
+
+#: ../src/transmageddon.py:877
+msgid "Plugins not found, choose different codecs."
+msgstr "Eklentiler bulunamadı, farklı kod paketleri seçin."
+
+#: ../src/transmageddon.py:887
+msgid "Codec installation aborted."
+msgstr "Kod paketi kurulumu iptal edildi."
+
+#: ../src/transmageddon.py:895
+msgid "Missing plugin installation failed."
+msgstr "Eksik eklentilerin kurulumu başarısız oldu."
+
+#: ../src/transmageddon.py:994
 #, python-format
 msgid "Pass %(count)d Progress"
 msgstr "Geçiş %(count)d Sürüyor"
 
-#: ../src/transmageddon.py:928
-msgid "Video passthrough"
-msgstr "Video geçidi"
+#. add a 'No Audio option'
+#: ../src/transmageddon.py:1079
+msgid "No Audio"
+msgstr "Ses Yok"
 
-#: ../src/transmageddon.py:933
+#: ../src/transmageddon.py:1086
 msgid "Audio passthrough"
 msgstr "Ses geçidi"
 
-#: ../src/utils.py:76
+#: ../src/transmageddon.py:1140
+msgid "Video passthrough"
+msgstr "Video geçidi"
+
+#: ../src/transmageddon.py:1389
+msgid "Choose Source File..."
+msgstr "Kaynak Dosyayı Seçin..."
+
+#: ../src/transmageddon.ui.h:1
+msgid ""
+"<small>Audio Channels:</small>\n"
+"<small>Audio Codec:</small>"
+msgstr "<small>Ses Kanalları:</small>\n<small>Ses Kod Çözücü:</small>"
+
+#: ../src/transmageddon.ui.h:3
+msgid ""
+"<small>Video height&#47;width:</small>\n"
+"<small>Video Codec:</small>"
+msgstr "<small>Video yüksekliği&#47;genişliği:</small>\n<small>Video Kod Çözücü:</small>"
+
+#: ../src/transmageddon.ui.h:5
+msgid "<b>Presets:</b>"
+msgstr "<b>Önayarlar:</b>"
+
+#: ../src/transmageddon.ui.h:6
+msgid "<b>Choose Input File:</b>"
+msgstr "<b>Girdi Dosyası Seç:</b>"
+
+#: ../src/transmageddon.ui.h:7
+msgid "<b>Output Format:</b>"
+msgstr "<b>Çıktı Biçimi:</b>"
+
+#: ../src/transmageddon.ui.h:8
+msgid "<b>Choose Audio Codec</b>:"
+msgstr "<b>Ses Kod Çözücüsünü Seç</b>:"
+
+#: ../src/transmageddon.ui.h:9
+msgid "<b>Choose Video Codec</b>:"
+msgstr "<b>Video Kod Çözücüsünü Seç</b>:"
+
+#: ../src/transmageddon.ui.h:10
+msgid "<small>Rotate the video image if needed</small>"
+msgstr "<small>Eğer gerekiyorsa video görüntüsünü döndür</small>"
+
+#: ../src/transmageddon.ui.h:11
+msgid "_Transcode"
+msgstr "_Kodlama Dönüştür"
+
+#: ../src/udevdisco.py:222
+msgid "Not mounted."
+msgstr "Bağlanmamış."
+
+#: ../src/utils.py:75
 #, python-format
 msgid "Can't find %(path)s in any known prefix!"
 msgstr "%(path)s bilinen herhangi bir önekte bulunamıyor!"
-
-#: ../transmageddon.desktop.in.in.h:1
-msgid "Transmageddon Video Transcoder"
-msgstr "Transmageddon Video Kodlama Dönüştürücüsü"
-
-#: ../transmageddon.desktop.in.in.h:2
-msgid "Video format conversion tool"
-msgstr "Video biçim dönüştürme aracı"
-
-#~ msgid "Uknown error"
-#~ msgstr "Bilinmeyen hata"
