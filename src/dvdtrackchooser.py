@@ -1,4 +1,4 @@
-import os,datetime, sys
+import os,datetime,sys, gettext
 from gi.repository import Gtk, GLib, Gst, GstTag
 from gi.repository import GUdev
 
@@ -51,7 +51,7 @@ class dvdtrackchooser(Gtk.Dialog):
            minutes=round((self.Tracks[scounter]['length']/60), 2)
            self.listoftracks.append(_("Title:") + " " + str(scounter) + ", " + 
                                     _("Languages:") + " " + languages[scounter] + " " + 
-                                    _("Length:") + " " + str(minutes) + " " + ngettext("Minute", "Minutes", minutes))
+                                    _("Length:") + " " + str(minutes) + " " + gettext.ngettext("Minute", "Minutes", minutes))
            scounter=scounter+1
 
        x=1
