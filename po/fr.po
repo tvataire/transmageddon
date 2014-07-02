@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: transmageddon master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=transmageddon&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2014-07-01 08:54+0000\n"
-"PO-Revision-Date: 2014-04-06 19:33+0200\n"
+"POT-Creation-Date: 2014-07-02 13:32+0000\n"
+"PO-Revision-Date: 2014-07-02 16:20+0200\n"
 "Last-Translator: Michael Scherer <misc@zarb.org>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "Language: FR\n"
@@ -29,6 +29,56 @@ msgstr "Transcodeur vidéo Transmageddon"
 #: ../transmageddon.desktop.in.in.h:2
 msgid "Video format conversion tool"
 msgstr "Outil de conversion de formats vidéo"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:1
+msgid ""
+"Transmageddon is an application for converting audio and video files between "
+"different formats. It allows you to either manually choose the formats you "
+"want to convert between or alternatively you can choose a predefined target "
+"and the selections will be made for you. Transmageddon supports a very wide "
+"range for formats and can also optionally function as a DVD ripping tool."
+msgstr ""
+"Transmageddon est une application pour convertir les fichiers audio et vidéo entre différents formats. Elle permet de choisir manuellement les formats entre lesquels vous voulez faire la conversion, ou de choisir une cible prédéfinie et les réglages seront faits pour vous. Transmageddon prend en charge une grande gamme de formats et peut optionnellement fonctionner comme outil d'extraction de DVD."
+
+#: ../appdata/transmageddon.appdata.xml.in.h:2
+msgid "Feature list:"
+msgstr "Liste des fonctionnalités :"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:3
+msgid "Wide range of media codecs"
+msgstr "Dispose d'une grande gamme de codecs"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:4
+msgid "Allows extracting audio or video streams separately"
+msgstr "Permet d'extraire séparément les flux audio et vidéo"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:5
+msgid "Alows ripping of DVD if needed software libraries are available"
+msgstr "Permet d'extraire les DVD si les bibliothèques nécessaires sont installées"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:6
+msgid "Supports named device presets"
+msgstr "Prend en charge des pré-réglages de périphériques nommés"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:7
+msgid "Lets you add language metadata if missing"
+msgstr "Permet d'ajouter des méta-informations de langue si elles sont manquantes"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:8
+msgid "Can change orientation of video if necesarry"
+msgstr "Peut changer l'orientation de la vidéo si nécessaire"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:9
+msgid "Supports files with multiple audio streams"
+msgstr "Prend en charge les fichiers avec plusieurs flux audio"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:10
+msgid ""
+"You might want to install this application if your need to convert media "
+"files between different formats due to for example having hardware that only "
+"supports a limited range of formats."
+msgstr ""
+"Cette application peut vous être utile si vous avez besoin de convertir des fichiers média entre différents formats, par exemple si vous disposez de matériel qui ne prend en charge qu'un nombre limité de formats."
 
 #: ../src/about.py.in:44 ../src/about.py.in:45
 msgid "Transmageddon"
