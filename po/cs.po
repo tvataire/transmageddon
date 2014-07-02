@@ -1,16 +1,15 @@
 # Czech translation for transmageddon.
 # Copyright (C) 2009 transmageddon's COPYRIGHT HOLDER
 # This file is distributed under the same license as the transmageddon package.
-#
-# Marek Černocký <marek@manet.cz>, 2009, 2010, 2011, 2012, 2013.
+# Marek Černocký <marek@manet.cz>, 2009, 2010, 2011, 2012, 2013, 2014.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: transmageddon master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=transmageddon&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2014-07-01 08:54+0000\n"
-"PO-Revision-Date: 2014-07-01 10:59+0100\n"
+"POT-Creation-Date: 2014-07-02 13:32+0000\n"
+"PO-Revision-Date: 2014-07-02 18:54+0200\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -27,6 +26,62 @@ msgstr "Převodník videa Transmageddon"
 #: ../transmageddon.desktop.in.in.h:2
 msgid "Video format conversion tool"
 msgstr "Nástroj na převod formátů videa"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:1
+msgid ""
+"Transmageddon is an application for converting audio and video files between "
+"different formats. It allows you to either manually choose the formats you "
+"want to convert between or alternatively you can choose a predefined target "
+"and the selections will be made for you. Transmageddon supports a very wide "
+"range for formats and can also optionally function as a DVD ripping tool."
+msgstr ""
+"Transmageddon je aplikace sloužící k převodu zvukových souborů a "
+"videosouborů mezi různými formáty. Můžete si buď ručně vybrat formát, do "
+"kterého chcete převést, nebo případně jen zvolit cílové zařízení a vyběr "
+"bude proveden za vás. Transmageddon podporuje širokou škálu formátů a "
+"volitelně umí provádět i extrahování z DVD."
+
+#: ../appdata/transmageddon.appdata.xml.in.h:2
+msgid "Feature list:"
+msgstr "Seznam funkcí a vlastností:"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:3
+msgid "Wide range of media codecs"
+msgstr "Široká nabídka multimediálních kodeků"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:4
+msgid "Allows extracting audio or video streams separately"
+msgstr "Umožňuje extrahovat odděleně zvuk a video"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:5
+msgid "Alows ripping of DVD if needed software libraries are available"
+msgstr "Umožňuje extrahovat DVD (předpokládá přítomnost potřebných knihoven)"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:6
+msgid "Supports named device presets"
+msgstr "Podporuje předdefinovaná zařízení podle názvu"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:7
+msgid "Lets you add language metadata if missing"
+msgstr "Umožňuje přidat jazyková metadata (v případě, že schází)"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:8
+msgid "Can change orientation of video if necesarry"
+msgstr "Můžete měnit otočení videa, když je potřeba"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:9
+msgid "Supports files with multiple audio streams"
+msgstr "Podporuje soubory s více zvukovými stopami"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:10
+msgid ""
+"You might want to install this application if your need to convert media "
+"files between different formats due to for example having hardware that only "
+"supports a limited range of formats."
+msgstr ""
+"Aplikace se vám bude hodit, když budete potřebovat převést multimediální "
+"soubory mezi různými formáty v situaci, kdy některý hardware podporuje jen "
+"omezených pár formátů."
 
 #: ../src/about.py.in:44 ../src/about.py.in:45
 msgid "Transmageddon"
