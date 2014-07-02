@@ -49,6 +49,9 @@ EXTRA_DIST +=                    \
         intltool-update.in	\
 	TODO
 
+DISTCHECK_CONFIGURE_FLAGS = \
+       --enable-appdata-check
+
 locale-uninstalled:
 	if test -d po; then \
 	    $(MAKE) -C po datadir=../$(top_builddir) install; \

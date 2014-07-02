@@ -1,4 +1,5 @@
 transmageddon.desktop.in.in
+appdata/transmageddon.appdata.xml.in
 src/about.py.in
 src/dvdtrackchooser.py
 src/presets.py

@@ -52,7 +52,8 @@ GETTEXT_PACKAGE="transmageddon"
 AC_SUBST([GETTEXT_PACKAGE])
 AC_DEFINE_UNQUOTED([GETTEXT_PACKAGE], "$GETTEXT_PACKAGE", [Gettext package])
 AM_GLIB_GNU_GETTEXT
-IT_PROG_INTLTOOL([0.35.0])
+IT_PROG_INTLTOOL([0.40.0])
+APPDATA_XML
 
 CONFIGURED_PYTHONPATH=$PYTHONPATH
 AC_SUBST(CONFIGURED_PYTHONPATH)
@@ -62,7 +63,7 @@ AC_CONFIG_FILES([bin/transmageddon], [chmod +x bin/transmageddon])
 dnl output stuff
 AC_CONFIG_FILES([
 Makefile
-appdata/transmageddon.xml
+appdata/transmageddon.appdata.xml
 appdata/Makefile
 bin/Makefile
 common/Makefile

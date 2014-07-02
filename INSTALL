@@ -13,3 +13,6 @@ pygobject: 2.18.0 or higher
 pycairo
 pygtk
 gst-python
+
+appdata-tools (https://github.com/hughsie/appdata-tools))
+intltool
