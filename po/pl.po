@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: transmageddon\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-01 12:10+0200\n"
-"PO-Revision-Date: 2014-07-01 12:11+0200\n"
+"POT-Creation-Date: 2014-07-02 15:50+0200\n"
+"PO-Revision-Date: 2014-07-02 15:55+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -31,6 +31,62 @@ msgstr "Przekodowywanie nagrań wideo Transmageddon"
 #: ../transmageddon.desktop.in.in.h:2
 msgid "Video format conversion tool"
 msgstr "Narzędzie do przekodowywania nagrań wideo"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:1
+msgid ""
+"Transmageddon is an application for converting audio and video files between "
+"different formats. It allows you to either manually choose the formats you "
+"want to convert between or alternatively you can choose a predefined target "
+"and the selections will be made for you. Transmageddon supports a very wide "
+"range for formats and can also optionally function as a DVD ripping tool."
+msgstr ""
+"Transmageddon jest programem do konwertowania plików dźwiękowych i wideo "
+"między różnymi formatami. Umożliwia ręczne wybranie formatów, między którymi "
+"konwertować, albo wybranie wcześniej określonych ustawień. Program "
+"Transmageddon obsługuje szeroki zakres formatów, oraz może służyć za "
+"narzędzie do zgrywania płyt DVD."
+
+#: ../appdata/transmageddon.appdata.xml.in.h:2
+msgid "Feature list:"
+msgstr "Lista funkcji:"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:3
+msgid "Wide range of media codecs"
+msgstr "Szeroki zakres kodeków multimedialnych"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:4
+msgid "Allows extracting audio or video streams separately"
+msgstr "Umożliwia oddzielne zgrywanie strumieni dźwięku i obrazu"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:5
+msgid "Alows ripping of DVD if needed software libraries are available"
+msgstr "Umożliwia zgrywanie płyt DVD, jeśli wymagane biblioteki są dostępne"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:6
+msgid "Supports named device presets"
+msgstr "Obsługuje nazwane ustawienia urządzeń"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:7
+msgid "Lets you add language metadata if missing"
+msgstr "Umożliwia dodawanie metadanych języka, jeśli ich brakuje"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:8
+msgid "Can change orientation of video if necesarry"
+msgstr "Można zmieniać orientację obrazu, jeśli to potrzebne"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:9
+msgid "Supports files with multiple audio streams"
+msgstr "Obsługuje pliki z wieloma strumieniami dźwięku"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:10
+msgid ""
+"You might want to install this application if your need to convert media "
+"files between different formats due to for example having hardware that only "
+"supports a limited range of formats."
+msgstr ""
+"Warto zainstalować ten program, jeśli potrzebna konwertować pliki "
+"multimedialne między różnymi formatami dla urządzeń, które obsługują "
+"ograniczoną liczbę formatów."
 
 #: ../src/about.py.in:44 ../src/about.py.in:45
 msgid "Transmageddon"
