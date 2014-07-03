@@ -49,7 +49,7 @@ from gi.repository import Gst
 
 import utils
 
-_ = gettext.gettext
+# _ = gettext.gettext
 _presets = {}
 _log = logging.getLogger("transmageddon.presets")
 
@@ -75,7 +75,7 @@ class Fraction(gstfraction.Fraction):
         elif len(parts) == 2:
             gstfraction.Fraction.__init__(self, int(parts[0]))
         else:
-            raise ValueError(_("Not a valid integer or fraction: %(value)s!") % {
+            raise ValueError(("Not a valid integer or fraction: %(value)s!") % {
                 "value": value,
             })
 
@@ -410,7 +410,7 @@ def load(filename):
         elif child.tag == "default":
             device.default = child.text.strip()
     
-    _log.debug(_("Loaded device %(device)s (%(presets)d presets)") % {
+    _log.debug(("Loaded device %(device)s (%(presets)d presets)") % {
         "device": device.name,
         "presets": len(device.presets)
     })
