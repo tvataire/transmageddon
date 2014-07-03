@@ -2,7 +2,6 @@ transmageddon.desktop.in.in
 appdata/transmageddon.appdata.xml.in
 src/about.py.in
 src/dvdtrackchooser.py
-src/presets.py
 [type: gettext/glade]src/transmageddon-dvdtrack-chooser.ui
 [type: gettext/glade]src/transmageddon-language-chooser.ui
 src/transmageddon.py
