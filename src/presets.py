@@ -477,19 +477,19 @@ def install_preset(location, name):
     
     for ext in ["xml", "svg"]:
         path = ".".join([location + name, ext])
-        _log.debug(_("Fetching %(location)s") % {
+        _log.debug(("Fetching %(location)s") % {
             "location": path,
         })
         
         try:
             f = urllib.request.urlopen(path)
             local_file = os.path.join(local_path, ".".join([name, ext]))
-            _log.debug(_("Writing to %(file)s") % {
+            _log.debug(("Writing to %(file)s") % {
                 "file": local_file,
             })
             open(local_file, "w").write(f.read())
         except Exception as e:
-            _log.error(_("There was an error fetching and installing " \
+            _log.error(("There was an error fetching and installing " \
                          "%(location)s: %(error)s") % {
                 "location": path,
                 "error": str(e),
@@ -526,41 +526,41 @@ def check_for_updates(location = UPDATE_LOCATION):
                 name, version = parts
                 if name in _presets:
                     if _presets[name].version >= version:
-                        _log.debug(_("Device preset %(name)s is up to date") % {
+                        _log.debug(("Device preset %(name)s is up to date") % {
                             "name": name,
                         })
                     else:
-                        _log.debug(_("Found updated device preset %(name)s") % {
+                        _log.debug(("Found updated device preset %(name)s") % {
                             "name": name,
                         })
                         try:
                             updates.append((location, name))
                         except Exception as e:
-                            _log.error(_("Error installing preset %(name)s " \
+                            _log.error(("Error installing preset %(name)s " \
                                          "from %(location)s: %(error)s") % {
                                 "name": name,
                                 "location": location,
                                 "error": str(e),
                             })
                 else:
-                    _log.debug(_("Found new device preset %(name)s") % {
+                    _log.debug(("Found new device preset %(name)s") % {
                         "name": name,
                     })
                     try:
                         updates.append((location, name))
                     except Exception as e:
-                        _log.error(_("Error installing preset %(name)s " \
+                        _log.error(("Error installing preset %(name)s " \
                                      "from %(location)s: %(error)s") % {
                             "name": name,
                             "location": location,
                             "error": str(e),
                         })
             else:
-                _log.warning(_("Malformed plugin version line %(line)s") % {
+                _log.warning(("Malformed plugin version line %(line)s") % {
                     "line": line,
                 })
     except:
-        _log.warning(_("There was a problem accessing %(location)spresets.txt!") % {
+        _log.warning(("There was a problem accessing %(location)spresets.txt!") % {
             "location": location,
         })
     
