@@ -37,7 +37,7 @@
     <http://www.gnu.org/licenses/>.
 """
 
-import gettext
+# import gettext
 import logging
 import os
 import sys
