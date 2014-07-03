@@ -383,6 +383,8 @@ class Transcoder(GObject.GObject):
            if streamid ==self.videodata[0]['streamid']:
                if self.videodata[0]['dopassthrough'] == True:
                    autoplugreturnvalue = False
+               if self.videodata[0]['outputvideocaps'] == False:
+                   autoplugreturnvalue = False
            capsvalue=caps.to_string()
            if capsvalue.startswith("subtitle/"): # this is to avoid wasting resources on decoding subtitles
                self.autoplugreturnvalue =False
