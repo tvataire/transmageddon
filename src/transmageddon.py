@@ -56,21 +56,21 @@ if (major == 2) and (minor < 18):
 # and not resindvd is used
 dvdfactory=Gst.ElementFactory.find("dvdreadsrc")
 if dvdfactory:
-    dvdfactory.set_rank(300)
+   dvdfactory.set_rank(300)
 
-       # Disable vaapi decoding as it gives issues
+# Disable vaapi decoding as it gives issues
 vaapidecfactory=Gst.ElementFactory.find("vaapidecode")
 if vaapidecfactory:
-           vaapidecfactory.set_rank(0)
+    vaapidecfactory.set_rank(0)
 
-       # if Vaapi encoder exists, use it
+# if Vaapi encoder exists, use it
 vaapiencfactory=Gst.ElementFactory.find("vaapiencode_h264")
 if vaapiencfactory:
-           vaapiencfactory.set_rank(0)
-       # if Vaapi encoder exists, use it
+   vaapiencfactory.set_rank(0)
+
 vaapiencfactory=Gst.ElementFactory.find("vaapiencode_mpeg2")
 if vaapiencfactory:
-           vaapiencfactory.set_rank(0)
+   vaapiencfactory.set_rank(0)
 
 TARGET_TYPE_URI_LIST = 80
 dnd_list = [ ( 'text/uri-list', 0, TARGET_TYPE_URI_LIST ) ]
