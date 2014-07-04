@@ -1130,6 +1130,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                        self.videocodecs.append(Gst.caps_from_string(codecfinder.codecmap[c]))
                    for c in self.videocodecs: # Use descriptions from GStreamer
                        if c != "pass" and c != False:
+                           # we need to special case this until pbutils provide                            # profile information in its human readable strings
                            if c.to_string() == "video/mpeg, mpegversion=(int)4, systemstream=(boolean)false, profile=(string)advanced-simple":
                                self.videorows[0].append_text("xvid")
                            else:
