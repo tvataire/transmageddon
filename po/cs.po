@@ -33,7 +33,7 @@ msgid ""
 "different formats. It allows you to either manually choose the formats you "
 "want to convert between or alternatively you can choose a predefined target "
 "and the selections will be made for you. Transmageddon supports a very wide "
-"range for formats and can also optionally function as a DVD ripping tool."
+"range of formats and can also optionally function as a DVD ripping tool."
 msgstr ""
 "Transmageddon je aplikace sloužící k převodu zvukových souborů a "
 "videosouborů mezi různými formáty. Můžete si buď ručně vybrat formát, do "
@@ -66,7 +66,7 @@ msgid "Lets you add language metadata if missing"
 msgstr "Umožňuje přidat jazyková metadata (v případě, že schází)"
 
 #: ../appdata/transmageddon.appdata.xml.in.h:8
-msgid "Can change orientation of video if necesarry"
+msgid "Can change orientation of video if necessary"
 msgstr "Můžete měnit otočení videa, když je potřeba"
 
 #: ../appdata/transmageddon.appdata.xml.in.h:9

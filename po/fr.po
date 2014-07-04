@@ -36,7 +36,7 @@ msgid ""
 "different formats. It allows you to either manually choose the formats you "
 "want to convert between or alternatively you can choose a predefined target "
 "and the selections will be made for you. Transmageddon supports a very wide "
-"range for formats and can also optionally function as a DVD ripping tool."
+"range of formats and can also optionally function as a DVD ripping tool."
 msgstr ""
 "Transmageddon est une application pour convertir les fichiers audio et vidéo entre différents formats. Elle permet de choisir manuellement les formats entre lesquels vous voulez faire la conversion, ou de choisir une cible prédéfinie et les réglages seront faits pour vous. Transmageddon prend en charge une grande gamme de formats et peut optionnellement fonctionner comme outil d'extraction de DVD."
 
@@ -65,7 +65,7 @@ msgid "Lets you add language metadata if missing"
 msgstr "Permet d'ajouter des méta-informations de langue si elles sont manquantes"
 
 #: ../appdata/transmageddon.appdata.xml.in.h:8
-msgid "Can change orientation of video if necesarry"
+msgid "Can change orientation of video if necessary"
 msgstr "Peut changer l'orientation de la vidéo si nécessaire"
 
 #: ../appdata/transmageddon.appdata.xml.in.h:9
