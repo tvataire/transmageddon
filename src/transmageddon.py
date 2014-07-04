@@ -99,7 +99,7 @@ supported_video_container_map = {
     'MXF':        [ 'H264', 'MPEG2', 'MPEG4' ],
     'Matroska':   [ 'On2 vp8', 'Theora', 'H264', 'Dirac', 'divx5',
                     'MPEG4', 'MPEG2', 'H263+' ],
-    'AVI':        [ 'H264', 'Dirac', 'MPEG2', 'MPEG4',
+    'AVI':        [ 'H264', 'Dirac', 'MPEG2', 'MPEG4', 'xvid',
                     'Windows Media Video 2', 'On2 vp8', 'divx5' ],
     'Quicktime':  [ 'H264', 'Dirac', 'MPEG2', 'MPEG4', 'On2 vp8' ],
     'MPEG4':      [ 'H264', 'MPEG2', 'MPEG4' ],
@@ -1130,7 +1130,10 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                        self.videocodecs.append(Gst.caps_from_string(codecfinder.codecmap[c]))
                    for c in self.videocodecs: # Use descriptions from GStreamer
                        if c != "pass" and c != False:
-                           self.videorows[0].append_text(GstPbutils.pb_utils_get_codec_description(c))
+                           if c.to_string() == "video/mpeg, mpegversion=(int)4, systemstream=(boolean)false, profile=(string)advanced-simple":
+                               self.videorows[0].append_text("xvid")
+                           else:
+                               self.videorows[0].append_text(GstPbutils.pb_utils_get_codec_description(c))
                    self.videorows[0].set_sensitive(True)
                    self.videorows[0].set_active(0)
 

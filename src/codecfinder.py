@@ -105,7 +105,8 @@ codecmap = { 'Vorbis' : "audio/x-vorbis", \
         'On2 vp9' : "video/x-vp9", \
         'mp2' : "audio/mpeg,mpegversion=(int)1, layer=(int)2", \
         'MPEG1' : "video/mpeg,mpegversion=(int)1,systemstream=false", \
-        'Opus'  :  "audio/x-opus" }
+        'Opus'  :  "audio/x-opus", \
+        'xvid'  :   "video/mpeg,mpegversion=4,systemstream=false,profile=advanced-simple" }
 
 #####
 #This code checks for available muxers and return a unique caps string
