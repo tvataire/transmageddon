@@ -1,3 +1,5 @@
+1.3 -
+  Fix embarassing bug where I had turned off Vaapi decoding by mistake
 1.2 -
   Fix bug with use of H264 encoder without multipass support, like the VAAPI one
   Make VAAPI usage reliable
