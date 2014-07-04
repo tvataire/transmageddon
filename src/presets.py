@@ -75,9 +75,9 @@ class Fraction(gstfraction.Fraction):
         elif len(parts) == 2:
             gstfraction.Fraction.__init__(self, int(parts[0]))
         else:
-            raise ValueError(("Not a valid integer or fraction: %(value)s!") % {
+            raise ValueError("Not a valid integer or fraction: %(value)s!") % {
                 "value": value,
-            })
+            }
 
 class Author(object):
     """
