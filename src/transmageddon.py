@@ -66,11 +66,11 @@ if vaapidecfactory:
 # if Vaapi encoder exists, use it
 vaapiencfactory=Gst.ElementFactory.find("vaapiencode_h264")
 if vaapiencfactory:
-   vaapiencfactory.set_rank(0)
+   vaapiencfactory.set_rank(300)
 
 vaapiencfactory=Gst.ElementFactory.find("vaapiencode_mpeg2")
 if vaapiencfactory:
-   vaapiencfactory.set_rank(0)
+   vaapiencfactory.set_rank(300)
 
 TARGET_TYPE_URI_LIST = 80
 dnd_list = [ ( 'text/uri-list', 0, TARGET_TYPE_URI_LIST ) ]
