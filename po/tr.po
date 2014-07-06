@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: transmageddon master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=transmageddon&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2014-07-02 09:23+0000\n"
-"PO-Revision-Date: 2014-07-02 14:33+0000\n"
+"POT-Creation-Date: 2014-07-05 22:39+0000\n"
+"PO-Revision-Date: 2014-07-06 15:10+0000\n"
 "Last-Translator: Muhammet Kara <muhammetk@gmail.com>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -25,6 +25,54 @@ msgstr "Transmageddon Video Kodlama Dönüştürücüsü"
 #: ../transmageddon.desktop.in.in.h:2
 msgid "Video format conversion tool"
 msgstr "Video biçim dönüştürme aracı"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:1
+msgid ""
+"Transmageddon is an application for converting audio and video files between"
+" different formats. It allows you to either manually choose the formats you "
+"want to convert between or alternatively you can choose a predefined target "
+"and the selections will be made for you. Transmageddon supports a very wide "
+"range of formats and can also optionally function as a DVD ripping tool."
+msgstr "Transmageddon, ses ve video dosyalarını farklı biçimlere dönüştürmeye yarayan bir uygulamadır. Birbiri arasında dönüşüm yapılacak biçimleri elle seçebileceğiniz gibi, önceden  tanımlanmış bir hedef belirleyerek bu seçimlerin sizin yerinize otomatik olarak yapılmasını da sağlayabilirsiniz. Transmageddon çok geniş bir yelpazedeki biçimleri destekler ve isteğe bağlı olarak bir DVD kopyalama aracı olarak da kullanılabilir."
+
+#: ../appdata/transmageddon.appdata.xml.in.h:2
+msgid "Feature list:"
+msgstr "Özellik listesi:"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:3
+msgid "Wide range of media codecs"
+msgstr "Geniş bir ortam kod çözücü yelpazesi"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:4
+msgid "Allows extracting audio or video streams separately"
+msgstr "Ses veya video akışlarının ayrı ayrı çıkarılmasına olanak tanır"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:5
+msgid "Alows ripping of DVD if needed software libraries are available"
+msgstr "İhtiyaç duyulan yazılım kütüphaneleri mevcutsa, DVD kopyalama olanağı sağlar."
+
+#: ../appdata/transmageddon.appdata.xml.in.h:6
+msgid "Supports named device presets"
+msgstr "Adlandırılmış cihaz önayarlarını destekler"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:7
+msgid "Lets you add language metadata if missing"
+msgstr "Eğer eksikse, dil üst verilerini eklemenize olanak tanır"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:8
+msgid "Can change orientation of video if necessary"
+msgstr "Eğer gerekirse, video yönelimini değiştirebilir"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:9
+msgid "Supports files with multiple audio streams"
+msgstr "Çoklu ses akışına sahip dosyaları destekler"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:10
+msgid ""
+"You might want to install this application if your need to convert media "
+"files between different formats due to for example having hardware that only"
+" supports a limited range of formats."
+msgstr "Eğer, örneğin sadece kısıtlı bir yelpazedeki biçimleri destekleyen donanıma sahip olduğunuz için, ortam dosyalarını farklı biçimler arasında dönüştürmeniz gerekiyorsa, bu uygulamayı kurmak isteyebilirsiniz. "
 
 #: ../src/about.py.in:44 ../src/about.py.in:45
 msgid "Transmageddon"
@@ -61,69 +109,6 @@ msgid "Minute"
 msgid_plural "Minutes"
 msgstr[0] "Dakika"
 
-#: ../src/presets.py:78
-#, python-format
-msgid "Not a valid integer or fraction: %(value)s!"
-msgstr "Geçerli bir tamsayı ya da kesir değil: %(value)s!"
-
-#: ../src/presets.py:413
-#, python-format
-msgid "Loaded device %(device)s (%(presets)d presets)"
-msgstr "%(device)s aygıtı yüklendi (%(presets)d önayar)"
-
-#: ../src/presets.py:480
-#, python-format
-msgid "Fetching %(location)s"
-msgstr "%(location)s alınıyor"
-
-#: ../src/presets.py:487
-#, python-format
-msgid "Writing to %(file)s"
-msgstr "%(file)s'e yazılıyor"
-
-#: ../src/presets.py:492
-#, python-format
-msgid "There was an error fetching and installing %(location)s: %(error)s"
-msgstr "%(location)s alınıp kurulurken bir hata oluştu: %(error)s"
-
-#: ../src/presets.py:509
-msgid "Checking for device preset updates..."
-msgstr "Aygıt önayar güncellemeleri denetleniyor..."
-
-#: ../src/presets.py:529
-#, python-format
-msgid "Device preset %(name)s is up to date"
-msgstr "Aygıt önayarı %(name)s güncel"
-
-#: ../src/presets.py:533
-#, python-format
-msgid "Found updated device preset %(name)s"
-msgstr "Güncellenmiş aygıt önayarı %(name)s bulundu"
-
-#: ../src/presets.py:539 ../src/presets.py:552
-#, python-format
-msgid "Error installing preset %(name)s from %(location)s: %(error)s"
-msgstr "%(name)s önayarı %(location)s konumundan kurulurken hata: %(error)s"
-
-#: ../src/presets.py:546
-#, python-format
-msgid "Found new device preset %(name)s"
-msgstr "Yeni aygıt önayarı %(name)s bulundu"
-
-#: ../src/presets.py:559
-#, python-format
-msgid "Malformed plugin version line %(line)s"
-msgstr "Hatalı eklenti sürümü satırı %(line)s"
-
-#: ../src/presets.py:563
-#, python-format
-msgid "There was a problem accessing %(location)spresets.txt!"
-msgstr "%(location)spresets.txt dosyasına erişilirken bir sorun oluştu!"
-
-#: ../src/presets.py:585
-msgid "All device presets are up to date!"
-msgstr "Tüm aygıt önayarları güncel!"
-
 #: ../src/transmageddon-dvdtrack-chooser.ui.h:1
 msgid "Select a DVD title"
 msgstr "DVD başlığını seçin"
@@ -143,152 +128,152 @@ msgid "Select a language"
 msgstr "Bir dil seçin"
 
 #. append to the menu the options
-#: ../src/transmageddon.py:158
+#: ../src/transmageddon.py:162
 msgid "About"
 msgstr "Hakkında"
 
-#: ../src/transmageddon.py:159
+#: ../src/transmageddon.py:163
 msgid "Quit"
 msgstr "Çıkış"
 
-#: ../src/transmageddon.py:160
+#: ../src/transmageddon.py:164
 msgid "Debug"
 msgstr "Hata Ayıklama"
 
 #. set default values for various variables
-#: ../src/transmageddon.py:373 ../src/transmageddon.py:817
-#: ../src/transmageddon.py:1021 ../src/transmageddon.py:1165
+#: ../src/transmageddon.py:377 ../src/transmageddon.py:821
+#: ../src/transmageddon.py:1025 ../src/transmageddon.py:1173
 msgid "Transcoding Progress"
 msgstr "Kodlama Dönüştürme Süreci"
 
 #. add i18n "No container"option
-#: ../src/transmageddon.py:419
+#: ../src/transmageddon.py:423
 msgid "No container (Audio-only)"
 msgstr "Taşıyıcı yok (Sadece ses)"
 
 #. Populate the rotatation box
 #. print("populating rotationbox")
-#: ../src/transmageddon.py:423
+#: ../src/transmageddon.py:427
 msgid "No rotation (default)"
 msgstr "Döndürme yok (öntanımlı)"
 
-#: ../src/transmageddon.py:424
+#: ../src/transmageddon.py:428
 msgid "Clockwise 90 degrees"
 msgstr "Saat yönünde 90 derece"
 
-#: ../src/transmageddon.py:425
+#: ../src/transmageddon.py:429
 msgid "Rotate 180 degrees"
 msgstr "180 derece döndür"
 
-#: ../src/transmageddon.py:426
+#: ../src/transmageddon.py:430
 msgid "Counterclockwise 90 degrees"
 msgstr "Saat yönünün tersine 90 derece"
 
-#: ../src/transmageddon.py:427
+#: ../src/transmageddon.py:431
 msgid "Horizontal flip"
 msgstr "Yatay çevir"
 
-#: ../src/transmageddon.py:428
+#: ../src/transmageddon.py:432
 msgid "Vertical flip"
 msgstr "Dikey çevir"
 
-#: ../src/transmageddon.py:429
+#: ../src/transmageddon.py:433
 msgid "Upper left diagonal flip"
 msgstr "Sol üst köşegen çevir"
 
-#: ../src/transmageddon.py:430
+#: ../src/transmageddon.py:434
 msgid "Upper right diagnonal flip"
 msgstr "Sağ üst köşegen çevir"
 
-#: ../src/transmageddon.py:453
+#: ../src/transmageddon.py:457
 msgid "No Presets"
 msgstr "Önayar Yok"
 
-#: ../src/transmageddon.py:576
+#: ../src/transmageddon.py:580
 #, python-format
 msgid "%(min)d:%(sec)02d"
 msgstr "%(min)d:%(sec)02d"
 
-#: ../src/transmageddon.py:606
+#: ../src/transmageddon.py:610
 #, python-format
 msgid "File saved to %(dir)s"
 msgstr "Dosya %(dir)s'a kaydedildi"
 
-#: ../src/transmageddon.py:609
+#: ../src/transmageddon.py:613
 #, python-format
 msgid "%(file)s saved to %(dir)s"
 msgstr "%(file)s dosyası %(dir)s dizinine kaydedildi"
 
-#: ../src/transmageddon.py:622
+#: ../src/transmageddon.py:626
 msgid "Done Transcoding"
 msgstr "Kodlama Dönüşümü Yapıldı"
 
-#: ../src/transmageddon.py:640 ../src/transmageddon.py:984
+#: ../src/transmageddon.py:644 ../src/transmageddon.py:988
 #, python-format
 msgid "Writing %(filename)s"
 msgstr "%(filename)s yazılıyor"
 
-#: ../src/transmageddon.py:644
+#: ../src/transmageddon.py:648
 #, python-format
 msgid "Pass %(count)d Complete. "
 msgstr "Geçiş %(count)d Tamamlandı. "
 
 #. We use None here so that we in transcoder engine can differentiate between,
 #. unknown language and known language, but no language code.
-#: ../src/transmageddon.py:686
+#: ../src/transmageddon.py:690
 msgid "Unknown"
 msgstr "Bilinmiyor"
 
 #. if there is no audio streams
-#: ../src/transmageddon.py:743
+#: ../src/transmageddon.py:747
 msgid "  No Audio"
 msgstr "  Ses Yok"
 
 #. add a 'No Video option'
-#: ../src/transmageddon.py:752 ../src/transmageddon.py:1134
+#: ../src/transmageddon.py:756 ../src/transmageddon.py:1142
 msgid "No Video"
 msgstr "Görüntü Yok"
 
-#: ../src/transmageddon.py:869
+#: ../src/transmageddon.py:873
 msgid ""
 "Got an invalid response from codec installer, can not install missing codec."
 msgstr "Kod çözücü (kodek) kurucu geçersiz bir yanıt verdi, eksik kod çözücü kurulamıyor."
 
-#: ../src/transmageddon.py:873
+#: ../src/transmageddon.py:877
 msgid "No Codec installer helper application available."
 msgstr "Kod Çözücü kurulumu için kullanılabilir yardımcı uygulama yok."
 
-#: ../src/transmageddon.py:877
+#: ../src/transmageddon.py:881
 msgid "Plugins not found, choose different codecs."
 msgstr "Eklentiler bulunamadı, farklı kod paketleri seçin."
 
-#: ../src/transmageddon.py:887
+#: ../src/transmageddon.py:891
 msgid "Codec installation aborted."
 msgstr "Kod paketi kurulumu iptal edildi."
 
-#: ../src/transmageddon.py:895
+#: ../src/transmageddon.py:899
 msgid "Missing plugin installation failed."
 msgstr "Eksik eklentilerin kurulumu başarısız oldu."
 
-#: ../src/transmageddon.py:994
+#: ../src/transmageddon.py:998
 #, python-format
 msgid "Pass %(count)d Progress"
 msgstr "Geçiş %(count)d Sürüyor"
 
 #. add a 'No Audio option'
-#: ../src/transmageddon.py:1079
+#: ../src/transmageddon.py:1083
 msgid "No Audio"
 msgstr "Ses Yok"
 
-#: ../src/transmageddon.py:1086
+#: ../src/transmageddon.py:1090
 msgid "Audio passthrough"
 msgstr "Ses geçidi"
 
-#: ../src/transmageddon.py:1140
+#: ../src/transmageddon.py:1148
 msgid "Video passthrough"
 msgstr "Video geçidi"
 
-#: ../src/transmageddon.py:1389
+#: ../src/transmageddon.py:1397
 msgid "Choose Source File..."
 msgstr "Kaynak Dosyayı Seçin..."
 
