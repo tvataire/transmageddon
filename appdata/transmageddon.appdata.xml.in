@@ -25,7 +25,7 @@ You might want to install this application if your need to convert media files b
   </_p>
  </description>
  <screenshots>
-  <screenshot type="default" width="800" height="575">http://www.linuxrising.org/screenshots/en_US/transmageddon-appdata.png</screenshot>
+  <screenshot type="default">https://git.gnome.org/browse/transmageddon/plain/appdata/transmageddon.png</screenshot>
  </screenshots>
  <url type="homepage">http://www.linuxrising.org/</url>
  <updatecontact>uraeus@linuxrising.org</updatecontact>
