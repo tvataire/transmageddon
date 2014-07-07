@@ -1,26 +1,26 @@
 # Brazilian Portuguese translation for transmageddon.
-# Copyright (C) 2013 transmageddon's COPYRIGHT HOLDER
+# Copyright (C) 2014 transmageddon's COPYRIGHT HOLDER
 # This file is distributed under the same license as the transmageddon package.
 # Gilfran Ribeiro <contato@gilfran.net>, 2010.
 # João Eduardo Strottmann <eduardo-strottmann@ig.com.br>, 2011.
 # Enrico Nicoletto <liverig@gmail.com>, 2013.
-# Rafael Ferreira <rafael.f.f1@gmail.com>, 2013.
+# Rafael Ferreira <rafael.f.f1@gmail.com>, 2013, 2014.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: transmageddon\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=transmageddon&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2013-08-14 12:14+0000\n"
-"PO-Revision-Date: 2013-08-14 10:42-0300\n"
-"Last-Translator: Antonio Fernandes C. Neto <fernandesn@gnome.org>\n"
+"POT-Creation-Date: 2014-07-07 12:12+0000\n"
+"PO-Revision-Date: 2014-07-07 13:13-0300\n"
+"Last-Translator: Rafael Ferreira <rafael.f.f1@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 1.5.7\n"
+"X-Generator: Poedit 1.6.5\n"
 
 #: ../transmageddon.desktop.in.in.h:1
 msgid "Transmageddon Video Transcoder"
@@ -30,11 +30,69 @@ msgstr "Transcodificador de vídeo Transmageddon"
 msgid "Video format conversion tool"
 msgstr "Ferramenta de conversão de formato de vídeo"
 
-#: ../src/about.py.in:46 ../src/about.py.in:47
+#: ../appdata/transmageddon.appdata.xml.in.h:1
+msgid "Transmageddon Media Transcoder"
+msgstr "Transcodificador de mídia Transmageddon"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:2
+msgid "Easy to use audio and video transcoding application"
+msgstr "Aplicativo de transcodificação de vídeo e áudio fácil de usar"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:3
+msgid ""
+"Transmageddon is an application for converting audio and video files between "
+"different formats. It allows you to either manually choose the formats you "
+"want to convert between or alternatively you can choose a predefined target "
+"and the selections will be made for you. Transmageddon supports a very wide "
+"range of formats and can also optionally function as a DVD ripping tool."
+msgstr ""
+"Transmageddon é um aplicativio para conversão de arquivos áudio e vídeo entre formatos de arquivos diferentes. Ele permite que você escolha manualmente os formatos para os quais você deseja converter ou alternativamente você pode escolher um alvo predefinido e as seleções serão feitas para você. Transmageddon oferece suporte a uma faixa bem ampla de formatos e também pode, opcionalmente, funcionar como uma ferramenta de extração de DVD."
+
+#: ../appdata/transmageddon.appdata.xml.in.h:4
+msgid "Feature list:"
+msgstr "Lista de ferramentas:"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:5
+msgid "Wide range of media codecs"
+msgstr "Faixa ampla de codecs de mídia"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:6
+msgid "Allows extracting audio or video streams separately"
+msgstr "Permite extração de fluxos de áudio e vídeo separadamente"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:7
+msgid "Alows ripping of DVD if needed software libraries are available"
+msgstr "Permite a extração de DVD caso as bibliotecas necessáriaos estiverem disponíveis"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:8
+msgid "Supports named device presets"
+msgstr "Oferece suporte a predefinições de dispositivos nomeados"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:9
+msgid "Lets you add language metadata if missing"
+msgstr "Permite que você adicionar metadados de idioma se estiver faltando"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:10
+msgid "Can change orientation of video if necessary"
+msgstr "Pode alterar a orientação de vídeo se necessário"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:11
+msgid "Supports files with multiple audio streams"
+msgstr "Oferece suporte a arquivos com múltiplos fluxos de áudio"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:12
+msgid ""
+"You might want to install this application if your need to convert media "
+"files between different formats due to for example having hardware that only "
+"supports a limited range of formats."
+msgstr ""
+"Você pode querer instalar esse aplicativo se sua necessidade por conversão de mídia de arquivos entre formatos diferentes for por causa de, por exemplo, ter hardware que possui suporte apenas a uma faixa limitada de formatos."
+
+#: ../src/about.py.in:44 ../src/about.py.in:45
 msgid "Transmageddon"
 msgstr "Transmageddon"
 
-#: ../src/about.py.in:49
+#: ../src/about.py.in:47
 msgid ""
 "Transmageddon is a simple video and audio conversion tool for GNOME created "
 "by Christian Fredrik Kalager Schaller."
@@ -42,97 +100,35 @@ msgstr ""
 "Transmageddon é uma ferramenta simples de conversão de áudio e vídeo para o "
 "GNOME criado por Christian Fredrik Kalager Schaller."
 
-#: ../src/about.py.in:50
+#: ../src/about.py.in:48
 msgid "Transmageddon homepage"
 msgstr "Página principal do Transmageddon"
 
-#: ../src/about.py.in:52
+#: ../src/about.py.in:50
 msgid "translator-credits"
 msgstr ""
 "Gilfran Ribeiro <contato@gilfran.net>\n"
 "João Eduardo Strottmann <eduardo-strottmann@ig.com.br>\n"
-"Enrico Nicoletto <liverig@gmail.com>"
+"Enrico Nicoletto <liverig@gmail.com>\n"
+"Rafael Ferreira <rafael.f.f1@gmail.com>"
 
-#. create a string to push into the listview
-#: ../src/dvdtrackchooser.py:56
+#: ../src/dvdtrackchooser.py:52
 msgid "Title:"
 msgstr "Título:"
 
-#: ../src/dvdtrackchooser.py:56
+#: ../src/dvdtrackchooser.py:53
 msgid "Languages:"
 msgstr "Idiomas:"
 
-#: ../src/dvdtrackchooser.py:56
+#: ../src/dvdtrackchooser.py:54
 msgid "Length:"
 msgstr "Duração:"
 
-#: ../src/dvdtrackchooser.py:56
-msgid "Minutes"
-msgstr "Minutos"
-
-#: ../src/presets.py:78
-#, python-format
-msgid "Not a valid integer or fraction: %(value)s!"
-msgstr "Não é um inteiro ou fracionário válido: %(value)s!"
-
-#: ../src/presets.py:413
-#, python-format
-msgid "Loaded device %(device)s (%(presets)d presets)"
-msgstr "Dispositivo carregado %(device)s (predefinição %(presets)d)"
-
-#: ../src/presets.py:480
-#, python-format
-msgid "Fetching %(location)s"
-msgstr "Buscando %(location)s"
-
-#: ../src/presets.py:487
-#, python-format
-msgid "Writing to %(file)s"
-msgstr "Gravando em %(file)s"
-
-#: ../src/presets.py:492
-#, python-format
-msgid "There was an error fetching and installing %(location)s: %(error)s"
-msgstr "Houve um erro ao buscar e instalar em %(location)s: %(error)s"
-
-#: ../src/presets.py:509
-msgid "Checking for device preset updates..."
-msgstr "Checando atualização de dispositivos de predefinido..."
-
-#: ../src/presets.py:529
-#, python-format
-msgid "Device preset %(name)s is up to date"
-msgstr "O dispositivo predefinido %(name)s está atualizado"
-
-#: ../src/presets.py:533
-#, python-format
-msgid "Found updated device preset %(name)s"
-msgstr "Encontrado dispositivo predefinido atualizado %(name)s"
-
-#: ../src/presets.py:539 ../src/presets.py:552
-#, python-format
-msgid "Error installing preset %(name)s from %(location)s: %(error)s"
-msgstr ""
-"Erro ao instalar predefinição %(name)s a partir de %(location)s: %(error)s"
-
-#: ../src/presets.py:546
-#, python-format
-msgid "Found new device preset %(name)s"
-msgstr "Encontrado novo dispositivo predefinido %(name)s"
-
-#: ../src/presets.py:559
-#, python-format
-msgid "Malformed plugin version line %(line)s"
-msgstr "Linha do plugin de versão inválida %(line)s"
-
-#: ../src/presets.py:563
-#, python-format
-msgid "There was a problem accessing %(location)spresets.txt!"
-msgstr "Houve um problema ao acessar %(location)spresets.txt!"
-
-#: ../src/presets.py:585
-msgid "All device presets are up to date!"
-msgstr "Todos os dispositivos predefinidos estão atualizados!"
+#: ../src/dvdtrackchooser.py:54
+msgid "Minute"
+msgid_plural "Minutes"
+msgstr[0] "Minuto"
+msgstr[1] "Minutos"
 
 #: ../src/transmageddon-dvdtrack-chooser.ui.h:1
 msgid "Select a DVD title"
@@ -166,86 +162,86 @@ msgid "Debug"
 msgstr "Depurar"
 
 #. set default values for various variables
-#: ../src/transmageddon.py:384 ../src/transmageddon.py:821
-#: ../src/transmageddon.py:1025 ../src/transmageddon.py:1169
+#: ../src/transmageddon.py:377 ../src/transmageddon.py:821
+#: ../src/transmageddon.py:1025 ../src/transmageddon.py:1173
 msgid "Transcoding Progress"
 msgstr "Progresso da conversão"
 
 #. add i18n "No container"option
-#: ../src/transmageddon.py:430
+#: ../src/transmageddon.py:423
 msgid "No container (Audio-only)"
 msgstr "Sem container (somente áudio)"
 
 #. Populate the rotatation box
 #. print("populating rotationbox")
-#: ../src/transmageddon.py:434
+#: ../src/transmageddon.py:427
 msgid "No rotation (default)"
 msgstr "Não girar (padrão)"
 
-#: ../src/transmageddon.py:435
+#: ../src/transmageddon.py:428
 msgid "Clockwise 90 degrees"
 msgstr "Sentido horário 90 graus"
 
-#: ../src/transmageddon.py:436
+#: ../src/transmageddon.py:429
 msgid "Rotate 180 degrees"
 msgstr "Girar 180 graus"
 
-#: ../src/transmageddon.py:437
+#: ../src/transmageddon.py:430
 msgid "Counterclockwise 90 degrees"
 msgstr "Sentido anti-horário 90 graus"
 
-#: ../src/transmageddon.py:438
+#: ../src/transmageddon.py:431
 msgid "Horizontal flip"
 msgstr "Inverter na horizontal"
 
-#: ../src/transmageddon.py:439
+#: ../src/transmageddon.py:432
 msgid "Vertical flip"
 msgstr "Inverter na vertical"
 
-#: ../src/transmageddon.py:440
+#: ../src/transmageddon.py:433
 msgid "Upper left diagonal flip"
 msgstr "Inverter na diagonal superior esquerda"
 
-#: ../src/transmageddon.py:441
+#: ../src/transmageddon.py:434
 msgid "Upper right diagnonal flip"
 msgstr "Inverter na diagonal superior direita"
 
-#: ../src/transmageddon.py:464
+#: ../src/transmageddon.py:457
 msgid "No Presets"
 msgstr "Sem predefinições"
 
-#: ../src/transmageddon.py:575
+#: ../src/transmageddon.py:580
 #, python-format
 msgid "%(min)d:%(sec)02d"
 msgstr "%(min)d:%(sec)02d"
 
-#: ../src/transmageddon.py:605
+#: ../src/transmageddon.py:610
 #, python-format
 msgid "File saved to %(dir)s"
 msgstr "Arquivo salvo em %(dir)s"
 
-#: ../src/transmageddon.py:608
+#: ../src/transmageddon.py:613
 #, python-format
 msgid "%(file)s saved to %(dir)s"
 msgstr "%(file)s salvo em %(dir)s"
 
-#: ../src/transmageddon.py:618
+#: ../src/transmageddon.py:626
 msgid "Done Transcoding"
 msgstr "Conversão concluída"
 
-#: ../src/transmageddon.py:636 ../src/transmageddon.py:994
+#: ../src/transmageddon.py:644 ../src/transmageddon.py:988
 #, python-format
 msgid "Writing %(filename)s"
 msgstr "Gravando %(filename)s"
 
-#: ../src/transmageddon.py:640
+#: ../src/transmageddon.py:648
 #, python-format
 msgid "Pass %(count)d Complete. "
 msgstr "Passo %(count)d completo. "
 
 #. We use None here so that we in transcoder engine can differentiate between,
 #. unknown language and known language, but no language code.
-#: ../src/transmageddon.py:684
+#: ../src/transmageddon.py:690
 msgid "Unknown"
 msgstr "Desconhecido"
 
@@ -259,40 +255,40 @@ msgstr "  Sem áudio"
 msgid "No Video"
 msgstr "Sem vídeo"
 
-#: ../src/transmageddon.py:880
+#: ../src/transmageddon.py:873
 msgid ""
 "Got an invalid response from codec installer, can not install missing codec."
 msgstr ""
 "Obteve-se uma resposta inválida do instalador do codec. Não foi possível "
 "instalar o codec que faltava."
 
-#: ../src/transmageddon.py:884
+#: ../src/transmageddon.py:877
 msgid "No Codec installer helper application available."
 msgstr "Não está disponível nenhum aplicativo de ajuda de instalação do codec."
 
-#: ../src/transmageddon.py:888
+#: ../src/transmageddon.py:881
 msgid "Plugins not found, choose different codecs."
 msgstr "Plugins não encontrados, escolha codecs diferentes."
 
-#: ../src/transmageddon.py:898
+#: ../src/transmageddon.py:891
 msgid "Codec installation aborted."
 msgstr "Instalação do codec cancelada."
 
-#: ../src/transmageddon.py:906
+#: ../src/transmageddon.py:899
 msgid "Missing plugin installation failed."
 msgstr "A instalação do plugin que faltava falhou."
 
-#: ../src/transmageddon.py:997
+#: ../src/transmageddon.py:998
 #, python-format
 msgid "Pass %(count)d Progress"
 msgstr "Progresso de passos %(count)d"
 
 #. add a 'No Audio option'
-#: ../src/transmageddon.py:1084
+#: ../src/transmageddon.py:1083
 msgid "No Audio"
 msgstr "Sem áudio"
 
-#: ../src/transmageddon.py:1091
+#: ../src/transmageddon.py:1090
 msgid "Audio passthrough"
 msgstr "Passagem de áudio"
 
@@ -300,11 +296,7 @@ msgstr "Passagem de áudio"
 msgid "Video passthrough"
 msgstr "Passagem de vídeo"
 
-#: ../src/transmageddon.py:1362
-msgid "(None)"
-msgstr "(Nenhum)"
-
-#: ../src/transmageddon.py:1386
+#: ../src/transmageddon.py:1397
 msgid "Choose Source File..."
 msgstr "Escolher um arquivo fonte..."
 
@@ -352,11 +344,51 @@ msgstr "<small>Girar a imagem de vídeo se necessário</small>"
 msgid "_Transcode"
 msgstr "_Converter"
 
-#: ../src/udevdisco.py:221
+#: ../src/udevdisco.py:222
 msgid "Not mounted."
 msgstr "Não montado."
 
-#: ../src/utils.py:76
+#: ../src/utils.py:75
 #, python-format
 msgid "Can't find %(path)s in any known prefix!"
 msgstr "Não foi possível encontrar %(path)s em qualquer prefixo conhecido!"
+
+#~ msgid "Not a valid integer or fraction: %(value)s!"
+#~ msgstr "Não é um inteiro ou fracionário válido: %(value)s!"
+
+#~ msgid "Loaded device %(device)s (%(presets)d presets)"
+#~ msgstr "Dispositivo carregado %(device)s (predefinição %(presets)d)"
+
+#~ msgid "Fetching %(location)s"
+#~ msgstr "Buscando %(location)s"
+
+#~ msgid "Writing to %(file)s"
+#~ msgstr "Gravando em %(file)s"
+
+#~ msgid "There was an error fetching and installing %(location)s: %(error)s"
+#~ msgstr "Houve um erro ao buscar e instalar em %(location)s: %(error)s"
+
+#~ msgid "Checking for device preset updates..."
+#~ msgstr "Checando atualização de dispositivos de predefinido..."
+
+#~ msgid "Device preset %(name)s is up to date"
+#~ msgstr "O dispositivo predefinido %(name)s está atualizado"
+
+#~ msgid "Found updated device preset %(name)s"
+#~ msgstr "Encontrado dispositivo predefinido atualizado %(name)s"
+
+#~ msgid "Error installing preset %(name)s from %(location)s: %(error)s"
+#~ msgstr ""
+#~ "Erro ao instalar predefinição %(name)s a partir de %(location)s: %(error)s"
+
+#~ msgid "Malformed plugin version line %(line)s"
+#~ msgstr "Linha do plugin de versão inválida %(line)s"
+
+#~ msgid "There was a problem accessing %(location)spresets.txt!"
+#~ msgstr "Houve um problema ao acessar %(location)spresets.txt!"
+
+#~ msgid "All device presets are up to date!"
+#~ msgstr "Todos os dispositivos predefinidos estão atualizados!"
+
+#~ msgid "(None)"
+#~ msgstr "(Nenhum)"
