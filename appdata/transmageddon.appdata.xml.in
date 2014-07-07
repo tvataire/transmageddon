@@ -2,9 +2,10 @@
 <!-- Copyright 2013 Christian F.K. Schaller <uraeus@linuxrising.org>  -->
 <application>
  <id type="desktop">transmageddon.desktop</id>
- <licence>CC-BY</licence>
- <name>Transmageddon Media Transcoder</name>
- <summary>Easy to use audio and video transcoding application</summary>
+ <metadata_license>CC-BY-3.0</metadata_license>
+ <project_license>LGPL-2.1+</project_license>
+ <_name>Transmageddon Media Transcoder</_name>
+ <_summary>Easy to use audio and video transcoding application</_summary>
  <description>
   <_p>
 Transmageddon is an application for converting audio and video files between different formats. It allows you to either manually choose the formats you want to convert between or alternatively you can choose a predefined target and the selections will be made for you. Transmageddon supports a very wide range of formats and can also optionally function as a DVD ripping tool.
