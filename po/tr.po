@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: transmageddon master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=transmageddon&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2014-07-05 22:39+0000\n"
-"PO-Revision-Date: 2014-07-06 15:10+0000\n"
+"POT-Creation-Date: 2014-07-07 22:35+0000\n"
+"PO-Revision-Date: 2014-07-08 12:09+0000\n"
 "Last-Translator: Muhammet Kara <muhammetk@gmail.com>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -27,6 +27,14 @@ msgid "Video format conversion tool"
 msgstr "Video biçim dönüştürme aracı"
 
 #: ../appdata/transmageddon.appdata.xml.in.h:1
+msgid "Transmageddon Media Transcoder"
+msgstr "Transmageddon Ortam Kodlama Dönüştürücü"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:2
+msgid "Easy to use audio and video transcoding application"
+msgstr "Kullanımı kolay ses ve video kodlama dönüştürücü uygulaması"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:3
 msgid ""
 "Transmageddon is an application for converting audio and video files between"
 " different formats. It allows you to either manually choose the formats you "
@@ -35,39 +43,39 @@ msgid ""
 "range of formats and can also optionally function as a DVD ripping tool."
 msgstr "Transmageddon, ses ve video dosyalarını farklı biçimlere dönüştürmeye yarayan bir uygulamadır. Birbiri arasında dönüşüm yapılacak biçimleri elle seçebileceğiniz gibi, önceden  tanımlanmış bir hedef belirleyerek bu seçimlerin sizin yerinize otomatik olarak yapılmasını da sağlayabilirsiniz. Transmageddon çok geniş bir yelpazedeki biçimleri destekler ve isteğe bağlı olarak bir DVD kopyalama aracı olarak da kullanılabilir."
 
-#: ../appdata/transmageddon.appdata.xml.in.h:2
+#: ../appdata/transmageddon.appdata.xml.in.h:4
 msgid "Feature list:"
 msgstr "Özellik listesi:"
 
-#: ../appdata/transmageddon.appdata.xml.in.h:3
+#: ../appdata/transmageddon.appdata.xml.in.h:5
 msgid "Wide range of media codecs"
 msgstr "Geniş bir ortam kod çözücü yelpazesi"
 
-#: ../appdata/transmageddon.appdata.xml.in.h:4
+#: ../appdata/transmageddon.appdata.xml.in.h:6
 msgid "Allows extracting audio or video streams separately"
 msgstr "Ses veya video akışlarının ayrı ayrı çıkarılmasına olanak tanır"
 
-#: ../appdata/transmageddon.appdata.xml.in.h:5
+#: ../appdata/transmageddon.appdata.xml.in.h:7
 msgid "Alows ripping of DVD if needed software libraries are available"
 msgstr "İhtiyaç duyulan yazılım kütüphaneleri mevcutsa, DVD kopyalama olanağı sağlar."
 
-#: ../appdata/transmageddon.appdata.xml.in.h:6
+#: ../appdata/transmageddon.appdata.xml.in.h:8
 msgid "Supports named device presets"
 msgstr "Adlandırılmış cihaz önayarlarını destekler"
 
-#: ../appdata/transmageddon.appdata.xml.in.h:7
+#: ../appdata/transmageddon.appdata.xml.in.h:9
 msgid "Lets you add language metadata if missing"
 msgstr "Eğer eksikse, dil üst verilerini eklemenize olanak tanır"
 
-#: ../appdata/transmageddon.appdata.xml.in.h:8
+#: ../appdata/transmageddon.appdata.xml.in.h:10
 msgid "Can change orientation of video if necessary"
 msgstr "Eğer gerekirse, video yönelimini değiştirebilir"
 
-#: ../appdata/transmageddon.appdata.xml.in.h:9
+#: ../appdata/transmageddon.appdata.xml.in.h:11
 msgid "Supports files with multiple audio streams"
 msgstr "Çoklu ses akışına sahip dosyaları destekler"
 
-#: ../appdata/transmageddon.appdata.xml.in.h:10
+#: ../appdata/transmageddon.appdata.xml.in.h:12
 msgid ""
 "You might want to install this application if your need to convert media "
 "files between different formats due to for example having hardware that only"
