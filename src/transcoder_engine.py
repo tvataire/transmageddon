@@ -269,10 +269,12 @@ class Transcoder(GObject.GObject):
 
    def noMorePads(self, dbin):
        if self.streamdata['passcounter'] == int(0):
+           print("no more pads")
            self.transcodefileoutput.set_state(Gst.State.PAUSED)
        GLib.idle_add(self.idlePlay)
 
    def idlePlay(self):
+        print("playing")
         self.Pipeline("playing")
         return False
 
