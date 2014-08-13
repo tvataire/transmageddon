@@ -1334,7 +1334,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
 
        theme = Gtk.IconTheme.get_default()
        size= Gtk.icon_size_lookup(Gtk.IconSize.MENU)[1]
-       fileopen=theme.load_icon(Gtk.STOCK_OPEN, size, 0)
+       fileopen=theme.load_icon("document-open", size, 0)
        liststore = Gtk.ListStore(GdkPixbuf.Pixbuf,
                                  GObject.TYPE_STRING,
                                  GObject.TYPE_STRING,
