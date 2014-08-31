@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: transmageddon master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-31 01:38+0300\n"
-"PO-Revision-Date: 2014-08-31 01:58+0200\n"
+"POT-Creation-Date: 2014-08-31 17:35+0300\n"
+"PO-Revision-Date: 2014-08-31 17:56+0200\n"
 "Last-Translator: fr33domlover <fr33domlover@riseup.net>\n"
 "Language-Team: עברית <>\n"
 "Language: he\n"
@@ -81,7 +81,7 @@ msgstr "Transmageddon"
 
 #: ../src/about.py.in:47
 msgid "Transmageddon is a simple video and audio conversion tool for GNOME created by Christian Fredrik Kalager Schaller."
-msgstr "‫Transmageddon הוא כלי פשוט להמרת קבצי שמע וקבצי וידאו עבור GNOME שנוצר על ידי Christian Fredrik Kalager Schaller."
+msgstr "‫Transmageddon הוא כלי פשוט להמרת קבצי שמע וקבצי וידאו עבור GNOME שנוצר על־ידי Christian Fredrik Kalager Schaller."
 
 #: ../src/about.py.in:48
 msgid "Transmageddon homepage"
@@ -189,7 +189,7 @@ msgstr "היפוך אלכסוני ימין למעלה"
 
 #: ../src/transmageddon.py:457
 msgid "No Presets"
-msgstr "ללא הגדרות שמורות"
+msgstr "ללא"
 
 #: ../src/transmageddon.py:580
 #, python-format
@@ -298,27 +298,27 @@ msgstr ""
 
 #: ../src/transmageddon.ui.h:5
 msgid "<b>Presets:</b>"
-msgstr "‏<b>הגדרות שמורות:</b>"
+msgstr "‏<b>יעד המרה:</b>"
 
 #: ../src/transmageddon.ui.h:6
 msgid "<b>Choose Input File:</b>"
-msgstr "‏<b>בחירת קובץ קלט:</b>"
+msgstr "‏<b>קובץ קלט:</b>"
 
 #: ../src/transmageddon.ui.h:7
 msgid "<b>Output Format:</b>"
-msgstr "‏<b>תסדיר (פורמט) פלט:</b>"
+msgstr "‏<b>תסדיר פלט:</b>"
 
 #: ../src/transmageddon.ui.h:8
 msgid "<b>Choose Audio Codec</b>:"
-msgstr "‏<b>בחירת קודק שמע:</b>"
+msgstr "‏<b>קידוד שמע:</b>"
 
 #: ../src/transmageddon.ui.h:9
 msgid "<b>Choose Video Codec</b>:"
-msgstr "‏<b>בחירת קודק וידאו:</b>"
+msgstr "‏<b>קידוד וידאו:</b>"
 
 #: ../src/transmageddon.ui.h:10
 msgid "<small>Rotate the video image if needed</small>"
-msgstr "‏<small>יש להטות את תמונת הוידאו במידת הצורך</small>"
+msgstr "‏<small>הטיית תמונת הווידאו, אם יש צורך</small>"
 
 #: ../src/transmageddon.ui.h:11
 msgid "_Transcode"
