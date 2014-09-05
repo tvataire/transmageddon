@@ -1,22 +1,23 @@
 # Indonesian translation for transmageddon.
 # Copyright (C) 2013 transmageddon's COPYRIGHT HOLDER
 # This file is distributed under the same license as the transmageddon package.
-# Andika Triwidada <andika@gmail.com>, 2013.
+# Andika Triwidada <andika@gmail.com>, 2013, 2014.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: transmageddon master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=transmageddon&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2013-09-21 20:37+0000\n"
-"PO-Revision-Date: 2013-10-13 19:43+0700\n"
+"POT-Creation-Date: 2014-07-07 12:12+0000\n"
+"PO-Revision-Date: 2014-09-05 18:46+0700\n"
 "Last-Translator: Andika Triwidada <andika@gmail.com>\n"
 "Language-Team: Indonesian <gnome@i15n.org>\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.7\n"
+"X-Generator: Poedit 1.6.9\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: ../transmageddon.desktop.in.in.h:1
 msgid "Transmageddon Video Transcoder"
@@ -26,11 +27,77 @@ msgstr "Transmageddon Transkoder Video"
 msgid "Video format conversion tool"
 msgstr "Alat konversi format video"
 
-#: ../src/about.py.in:46 ../src/about.py.in:47
+#: ../appdata/transmageddon.appdata.xml.in.h:1
+msgid "Transmageddon Media Transcoder"
+msgstr "Transmageddon Transkoder Media"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:2
+msgid "Easy to use audio and video transcoding application"
+msgstr "Aplikasi transkoding audio dan video yang mudah dipakai"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:3
+msgid ""
+"Transmageddon is an application for converting audio and video files between "
+"different formats. It allows you to either manually choose the formats you "
+"want to convert between or alternatively you can choose a predefined target "
+"and the selections will be made for you. Transmageddon supports a very wide "
+"range of formats and can also optionally function as a DVD ripping tool."
+msgstr ""
+"Transmageddon adalah suatu aplikasi untuk mengonversi berkas audio dan video "
+"antara format-format yang berbeda. Ini memungkinkan Anda memilih secara "
+"manual antara format apa yang ingin Anda konversikan atau sebagai alternatif "
+"Anda dapat memilih suatu target yang terpradefinisi dan pilihan akan "
+"dibuatkan untuk Anda. Transmageddon mendukung pilihan format yang sangat "
+"luas dan juga dapat digunakan sebagai alat rip DVD."
+
+#: ../appdata/transmageddon.appdata.xml.in.h:4
+msgid "Feature list:"
+msgstr "Daftar fitur:"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:5
+msgid "Wide range of media codecs"
+msgstr "Pilihan kodek media yang luas"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:6
+msgid "Allows extracting audio or video streams separately"
+msgstr "Memungkinkan ekstraksi stream audio atau video secara terpisah"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:7
+msgid "Alows ripping of DVD if needed software libraries are available"
+msgstr ""
+"Memungkinkan rip DVD bila pustaka perangkat lunak yang diperlukan tersedia"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:8
+msgid "Supports named device presets"
+msgstr "Mendukung pratata perangkat bernama"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:9
+msgid "Lets you add language metadata if missing"
+msgstr "Memungkinkan Anda menambah metadata bahasa bila kurang"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:10
+msgid "Can change orientation of video if necessary"
+msgstr "Dapat mengubah orientasi video bila perlu"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:11
+msgid "Supports files with multiple audio streams"
+msgstr "Mendukung berkas dengan beberapa stream audio"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:12
+msgid ""
+"You might want to install this application if your need to convert media "
+"files between different formats due to for example having hardware that only "
+"supports a limited range of formats."
+msgstr ""
+"Anda mungkin ingin memasang aplikasi ini bila Anda perlu mengonversi berkas "
+"media antara format-format yang berbeda karena misalnya memiliki perangkat "
+"keras yang hanya mendukung format terbatas."
+
+#: ../src/about.py.in:44 ../src/about.py.in:45
 msgid "Transmageddon"
 msgstr "Transmageddon"
 
-#: ../src/about.py.in:49
+#: ../src/about.py.in:47
 msgid ""
 "Transmageddon is a simple video and audio conversion tool for GNOME created "
 "by Christian Fredrik Kalager Schaller."
@@ -38,93 +105,30 @@ msgstr ""
 "Transmageddon adalah alat konversi video dan audio sederhana bagi GNOME, "
 "diciptakan oleh Christian Fredrik Kalager Schaller."
 
-#: ../src/about.py.in:50
+#: ../src/about.py.in:48
 msgid "Transmageddon homepage"
 msgstr "Beranda web Transmageddon"
 
-#: ../src/about.py.in:52
+#: ../src/about.py.in:50
 msgid "translator-credits"
-msgstr "Andika Triwidada <andika@gmail.com>, 2013"
+msgstr "Andika Triwidada <andika@gmail.com>, 2013, 2014"
 
-#. create a string to push into the listview
-#: ../src/dvdtrackchooser.py:56
+#: ../src/dvdtrackchooser.py:52
 msgid "Title:"
 msgstr "Judul:"
 
-#: ../src/dvdtrackchooser.py:56
+#: ../src/dvdtrackchooser.py:53
 msgid "Languages:"
 msgstr "Bahasa:"
 
-#: ../src/dvdtrackchooser.py:56
+#: ../src/dvdtrackchooser.py:54
 msgid "Length:"
 msgstr "Panjgan:"
 
-#: ../src/dvdtrackchooser.py:56
-msgid "Minutes"
-msgstr "Menit"
-
-#: ../src/presets.py:78
-#, python-format
-msgid "Not a valid integer or fraction: %(value)s!"
-msgstr "Bukan bilangan bulat atau pecahan yang valid: %(value)s!"
-
-#: ../src/presets.py:413
-#, python-format
-msgid "Loaded device %(device)s (%(presets)d presets)"
-msgstr "Perangkat yang dimuat %(device)s (%(presets)d pratata)"
-
-#: ../src/presets.py:480
-#, python-format
-msgid "Fetching %(location)s"
-msgstr "Mengambil %(location)s"
-
-#: ../src/presets.py:487
-#, python-format
-msgid "Writing to %(file)s"
-msgstr "Menulis ke %(file)s"
-
-#: ../src/presets.py:492
-#, python-format
-msgid "There was an error fetching and installing %(location)s: %(error)s"
-msgstr "Ada kesalahan saat mengambil dan memasang %(location)s: %(error)s"
-
-#: ../src/presets.py:509
-msgid "Checking for device preset updates..."
-msgstr "Memeriksa pemutakhiran pratata perangkat..."
-
-#: ../src/presets.py:529
-#, python-format
-msgid "Device preset %(name)s is up to date"
-msgstr "Pratata perangkat %(name)s mutakhir"
-
-#: ../src/presets.py:533
-#, python-format
-msgid "Found updated device preset %(name)s"
-msgstr "Ada pemutakhiran pratata perangkat %(name)s"
-
-#: ../src/presets.py:539 ../src/presets.py:552
-#, python-format
-msgid "Error installing preset %(name)s from %(location)s: %(error)s"
-msgstr "Kesalahan saat memasang pratata %(name)s dari %(location)s: %(error)s"
-
-#: ../src/presets.py:546
-#, python-format
-msgid "Found new device preset %(name)s"
-msgstr "Ada prata perangkat baru %(name)s"
-
-#: ../src/presets.py:559
-#, python-format
-msgid "Malformed plugin version line %(line)s"
-msgstr "Versi plugin salah bentuk baris %(line)s"
-
-#: ../src/presets.py:563
-#, python-format
-msgid "There was a problem accessing %(location)spresets.txt!"
-msgstr "Ada masalah saat mengakses %(location)spresets.txt!"
-
-#: ../src/presets.py:585
-msgid "All device presets are up to date!"
-msgstr "Semua pratata perangkat mutakhir!"
+#: ../src/dvdtrackchooser.py:54
+msgid "Minute"
+msgid_plural "Minutes"
+msgstr[0] "Menit"
 
 #: ../src/transmageddon-dvdtrack-chooser.ui.h:1
 msgid "Select a DVD title"
@@ -145,160 +149,156 @@ msgid "Select a language"
 msgstr "Pilih suatu bahasa"
 
 #. append to the menu the options
-#: ../src/transmageddon.py:165
+#: ../src/transmageddon.py:162
 msgid "About"
 msgstr "Tentang"
 
-#: ../src/transmageddon.py:166
+#: ../src/transmageddon.py:163
 msgid "Quit"
 msgstr "Keluar"
 
-#: ../src/transmageddon.py:167
+#: ../src/transmageddon.py:164
 msgid "Debug"
 msgstr "Awakutu"
 
 #. set default values for various variables
-#: ../src/transmageddon.py:379 ../src/transmageddon.py:809
-#: ../src/transmageddon.py:1015 ../src/transmageddon.py:1164
+#: ../src/transmageddon.py:377 ../src/transmageddon.py:821
+#: ../src/transmageddon.py:1025 ../src/transmageddon.py:1173
 msgid "Transcoding Progress"
 msgstr "Kemajuan Transkode"
 
 #. add i18n "No container"option
-#: ../src/transmageddon.py:425
+#: ../src/transmageddon.py:423
 msgid "No container (Audio-only)"
 msgstr "Tanpa kontainer (Hanya-audio)"
 
 #. Populate the rotatation box
 #. print("populating rotationbox")
-#: ../src/transmageddon.py:429
+#: ../src/transmageddon.py:427
 msgid "No rotation (default)"
 msgstr "Tanpa rotasi (baku)"
 
-#: ../src/transmageddon.py:430
+#: ../src/transmageddon.py:428
 msgid "Clockwise 90 degrees"
 msgstr "Searah jarum jam 90 derajat"
 
-#: ../src/transmageddon.py:431
+#: ../src/transmageddon.py:429
 msgid "Rotate 180 degrees"
 msgstr "Putar 180 derajat"
 
-#: ../src/transmageddon.py:432
+#: ../src/transmageddon.py:430
 msgid "Counterclockwise 90 degrees"
 msgstr "Berlawanan arah jarum jam 90 derajat"
 
-#: ../src/transmageddon.py:433
+#: ../src/transmageddon.py:431
 msgid "Horizontal flip"
 msgstr "Balik horisontal"
 
-#: ../src/transmageddon.py:434
+#: ../src/transmageddon.py:432
 msgid "Vertical flip"
 msgstr "Balik vertikal"
 
-#: ../src/transmageddon.py:435
+#: ../src/transmageddon.py:433
 msgid "Upper left diagonal flip"
 msgstr "Balik diagonal kiri atas"
 
 # typo on string source
 # diagnonal -> diagonal
-#: ../src/transmageddon.py:436
+#: ../src/transmageddon.py:434
 msgid "Upper right diagnonal flip"
 msgstr "Balik diagonal kanan atas"
 
-#: ../src/transmageddon.py:459
+#: ../src/transmageddon.py:457
 msgid "No Presets"
 msgstr "Tak Ada Pratata"
 
-#: ../src/transmageddon.py:570
+#: ../src/transmageddon.py:580
 #, python-format
 msgid "%(min)d:%(sec)02d"
 msgstr "%(min)d:%(sec)02d"
 
-#: ../src/transmageddon.py:600
+#: ../src/transmageddon.py:610
 #, python-format
 msgid "File saved to %(dir)s"
 msgstr "Berkas disimpan ke %(dir)s"
 
-#: ../src/transmageddon.py:603
+#: ../src/transmageddon.py:613
 #, python-format
 msgid "%(file)s saved to %(dir)s"
 msgstr "%(file)s disimpan ke %(dir)s"
 
-#: ../src/transmageddon.py:614
+#: ../src/transmageddon.py:626
 msgid "Done Transcoding"
 msgstr "Selesai Transkode"
 
-#: ../src/transmageddon.py:632 ../src/transmageddon.py:984
+#: ../src/transmageddon.py:644 ../src/transmageddon.py:988
 #, python-format
 msgid "Writing %(filename)s"
 msgstr "Menulis %(filename)s"
 
-#: ../src/transmageddon.py:636
+#: ../src/transmageddon.py:648
 #, python-format
 msgid "Pass %(count)d Complete. "
 msgstr "Pass %(count)d Komplit. "
 
 #. We use None here so that we in transcoder engine can differentiate between,
 #. unknown language and known language, but no language code.
-#: ../src/transmageddon.py:678
+#: ../src/transmageddon.py:690
 msgid "Unknown"
 msgstr "Tak dikenal"
 
 #. if there is no audio streams
-#: ../src/transmageddon.py:735
+#: ../src/transmageddon.py:747
 msgid "  No Audio"
 msgstr " Tak Ada Audio"
 
 #. add a 'No Video option'
-#: ../src/transmageddon.py:744 ../src/transmageddon.py:1137
+#: ../src/transmageddon.py:756 ../src/transmageddon.py:1142
 msgid "No Video"
 msgstr "Tak Ada Video"
 
-#: ../src/transmageddon.py:869
+#: ../src/transmageddon.py:873
 msgid ""
 "Got an invalid response from codec installer, can not install missing codec."
 msgstr ""
 "Mendapat suatu respon yang tak valid dari pemasang kodek, tak bisa memasang "
 "kodek yang kurang."
 
-#: ../src/transmageddon.py:873
+#: ../src/transmageddon.py:877
 msgid "No Codec installer helper application available."
 msgstr "Tak ada aplikasi bantu pemasang Kodek yang tersedia."
 
-#: ../src/transmageddon.py:877
+#: ../src/transmageddon.py:881
 msgid "Plugins not found, choose different codecs."
 msgstr "Plugin tak ditemukan, pilihlah kodek lain."
 
-#: ../src/transmageddon.py:887
+#: ../src/transmageddon.py:891
 msgid "Codec installation aborted."
 msgstr "Pemasangan kodek digugurkan."
 
-#: ../src/transmageddon.py:895
+#: ../src/transmageddon.py:899
 msgid "Missing plugin installation failed."
 msgstr "Pemasangan plugin yang kurang gagal."
 
-#: ../src/transmageddon.py:987
+#: ../src/transmageddon.py:998
 #, python-format
 msgid "Pass %(count)d Progress"
 msgstr "Kemajuan Pass %(count)d"
 
 #. add a 'No Audio option'
-#: ../src/transmageddon.py:1077
+#: ../src/transmageddon.py:1083
 msgid "No Audio"
 msgstr "Tak Ada Audio"
 
-#: ../src/transmageddon.py:1084
+#: ../src/transmageddon.py:1090
 msgid "Audio passthrough"
 msgstr "Passthrough audio"
 
-#: ../src/transmageddon.py:1143
+#: ../src/transmageddon.py:1148
 msgid "Video passthrough"
 msgstr "Passthrough video"
 
-#: ../src/transmageddon.py:1357
-msgid "(None)"
-msgstr "(Nihil)"
-
-#: ../src/transmageddon.py:1399
+#: ../src/transmageddon.py:1397
 msgid "Choose Source File..."
 msgstr "Pilih Berkas Sumber..."
 
@@ -346,11 +346,11 @@ msgstr "<small>Putar citra video bila diperlukan</small>"
 msgid "_Transcode"
 msgstr "_Transkode"
 
-#: ../src/udevdisco.py:221
+#: ../src/udevdisco.py:222
 msgid "Not mounted."
 msgstr "Tak dikaitkan."
 
-#: ../src/utils.py:76
+#: ../src/utils.py:75
 #, python-format
 msgid "Can't find %(path)s in any known prefix!"
 msgstr "Tak bisa temukan %(path)s dalam sebarang prefiks yang diketahui!"
