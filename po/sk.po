@@ -3,22 +3,23 @@
 # This file is distributed under the same license as the transmageddon package.
 # Stanislav Petrek <stanislav.petrek@gmail.com>, 2011.
 # Ján Kyselica <kyselica.jan@gmail.com>, 2012, 2013.
+# Dušan Kazik <prescott66@gmail.com>, 2014.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: transmageddon\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=transmageddon&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2013-07-10 21:43+0000\n"
-"PO-Revision-Date: 2013-07-13 08:59+0200\n"
-"Last-Translator: Ján Kyselica <kyselica.jan@gmail.com>\n"
-"Language-Team: Slovak <gnome-sk-list@gnome.org>\n"
+"POT-Creation-Date: 2014-07-07 12:12+0000\n"
+"PO-Revision-Date: 2014-09-11 19:16+0200\n"
+"Last-Translator: Dušan Kazik <prescott66@gmail.com>\n"
+"Language-Team: slovenčina <gnome-sk-list@gnome.org>\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0;\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Gtranslator 2.91.6\n"
 
 #: ../transmageddon.desktop.in.in.h:1
 msgid "Transmageddon Video Transcoder"
@@ -28,11 +29,78 @@ msgstr "Transmageddon – prekódovanie videa"
 msgid "Video format conversion tool"
 msgstr "Nástroj na prekódovanie formátu videa"
 
-#: ../src/about.py.in:46 ../src/about.py.in:47
+#: ../appdata/transmageddon.appdata.xml.in.h:1
+#| msgid "Transmageddon Video Transcoder"
+msgid "Transmageddon Media Transcoder"
+msgstr "Transmageddon – prekódovanie multimédií"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:2
+msgid "Easy to use audio and video transcoding application"
+msgstr "Jednoduchá aplikácia na prekódovanie zvuku a videa"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:3
+msgid ""
+"Transmageddon is an application for converting audio and video files between "
+"different formats. It allows you to either manually choose the formats you "
+"want to convert between or alternatively you can choose a predefined target "
+"and the selections will be made for you. Transmageddon supports a very wide "
+"range of formats and can also optionally function as a DVD ripping tool."
+msgstr ""
+"Transmageddon je aplikácia na prevedenie zvukových a video súborov do "
+"rôznych formátov. Umožňuje vám buď ručne zvoliť formáty, do ktorých sa má "
+"previesť, alebo môžete zvoliť prednastavený cieľ a výber formátu bude "
+"automatický. Transmageddon podporuje veľmi veľa formátov a môže tiež "
+"poslúžiť ako nástroj na ripovanie diskov DVD."
+
+#: ../appdata/transmageddon.appdata.xml.in.h:4
+msgid "Feature list:"
+msgstr "Zoznam funkcií:"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:5
+msgid "Wide range of media codecs"
+msgstr "Rozsiahla podpora multimediálnych kodekov"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:6
+msgid "Allows extracting audio or video streams separately"
+msgstr "Umožňuje oddelene extrahovaž zvuk alebo prúdy videa"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:7
+msgid "Alows ripping of DVD if needed software libraries are available"
+msgstr ""
+"Umožňuje ripovanie diskov DVD ak sú dostupné potrebné softvérové knižnice"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:8
+#| msgid "Found new device preset %(name)s"
+msgid "Supports named device presets"
+msgstr "Podpora predvolieb s názvami zariadení"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:9
+msgid "Lets you add language metadata if missing"
+msgstr "Umožní vám pridať metaúdaj o jazyku ak chýba"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:10
+msgid "Can change orientation of video if necessary"
+msgstr "Schopnosť zmeniť orientáciu videa podľa potreby"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:11
+msgid "Supports files with multiple audio streams"
+msgstr "Podporuje súbory s viacerými prúdmi zvuku"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:12
+msgid ""
+"You might want to install this application if your need to convert media "
+"files between different formats due to for example having hardware that only "
+"supports a limited range of formats."
+msgstr ""
+"Možno budete chcieť nainštalovať túto aplikáciu ak potrebujete previesť "
+"multimediálne súbory do iných formátov, napríklad kvôli limitovanej podpore "
+"formátov daného hardvéru."
+
+#: ../src/about.py.in:44 ../src/about.py.in:45
 msgid "Transmageddon"
 msgstr "Transmageddon"
 
-#: ../src/about.py.in:49
+#: ../src/about.py.in:47
 msgid ""
 "Transmageddon is a simple video and audio conversion tool for GNOME created "
 "by Christian Fredrik Kalager Schaller."
@@ -40,112 +108,37 @@ msgstr ""
 "Transmageddon je jednoduchý nástroj pre GNOME na konverziu video a audio "
 "súborov. Autor je Christian Fredrik Kalager Schaller."
 
-#: ../src/about.py.in:50
+#: ../src/about.py.in:48
 msgid "Transmageddon homepage"
 msgstr "Domovská stránka programu Transmageddon"
 
-#: ../src/about.py.in:52
+#: ../src/about.py.in:50
 msgid "translator-credits"
 msgstr ""
 "Stanislav Petrek <stanislav.petrek@gmail.com>\n"
 "Ján Kyselica <kyselica.jan@gmail.com>"
 
 # https://bugzilla.gnome.org/show_bug.cgi?id=697137
-#. create a string to push into the listview
-#: ../src/dvdtrackchooser.py:56
+#: ../src/dvdtrackchooser.py:52
 msgid "Title:"
 msgstr "Názov:"
 
-#: ../src/dvdtrackchooser.py:56
+#: ../src/dvdtrackchooser.py:53
 msgid "Languages:"
 msgstr "Jazyky:"
 
-#: ../src/dvdtrackchooser.py:56
+#: ../src/dvdtrackchooser.py:54
 msgid "Length:"
 msgstr "Dĺžka:"
 
 # MČ: keďže je predtým číselný údaj, tak by som tam dal „minút“
 # https://bugzilla.gnome.org/show_bug.cgi?id=697977
-#: ../src/dvdtrackchooser.py:56
-#, fuzzy
-msgid "Minutes"
-msgstr "Minúty"
-
-# https://bugzilla.gnome.org/show_bug.cgi?id=697137
-#: ../src/dvdtrackchooser.py:57
-msgid "Title: "
-msgstr "Názov: "
-
-#: ../src/dvdtrackchooser.py:57
-msgid "Languages: "
-msgstr "Jazyky: "
-
-#: ../src/dvdtrackchooser.py:57
-msgid " Length: "
-msgstr " Dĺžka: "
-
-#: ../src/presets.py:78
-#, python-format
-msgid "Not a valid integer or fraction: %(value)s!"
-msgstr "%(value)s nie je platné celé číslo ani zlomok!"
-
-#: ../src/presets.py:413
-#, python-format
-msgid "Loaded device %(device)s (%(presets)d presets)"
-msgstr "Načítané zariadenie %(device)s (Počet predvolieb: %(presets)d)"
-
-#: ../src/presets.py:480
-#, python-format
-msgid "Fetching %(location)s"
-msgstr "Získava sa %(location)s"
-
-#: ../src/presets.py:487
-#, python-format
-msgid "Writing to %(file)s"
-msgstr "Zapisuje sa do súboru %(file)s"
-
-#: ../src/presets.py:492
-#, python-format
-msgid "There was an error fetching and installing %(location)s: %(error)s"
-msgstr "Pri získavaní a inštalovaní %(location)s sa vyskytla chyba: %(error)s"
-
-#: ../src/presets.py:509
-msgid "Checking for device preset updates..."
-msgstr "Zisťujú sa aktualizácie predvolieb zariadenia…"
-
-#: ../src/presets.py:529
-#, python-format
-msgid "Device preset %(name)s is up to date"
-msgstr "Predvoľba zariadenia %(name)s je aktuálna"
-
-#: ../src/presets.py:533
-#, python-format
-msgid "Found updated device preset %(name)s"
-msgstr "Našla sa aktualizovaná predvoľba zariadenia %(name)s"
-
-#: ../src/presets.py:539 ../src/presets.py:552
-#, python-format
-msgid "Error installing preset %(name)s from %(location)s: %(error)s"
-msgstr "Chyba pri inštalovaní predvoľby %(name)s z %(location)s: %(error)s"
-
-#: ../src/presets.py:546
-#, python-format
-msgid "Found new device preset %(name)s"
-msgstr "Našla sa nová predvoľba zariadenia %(name)s"
-
-#: ../src/presets.py:559
-#, python-format
-msgid "Malformed plugin version line %(line)s"
-msgstr "Chybná verzia zásuvného modulu na riadku %(line)s"
-
-#: ../src/presets.py:563
-#, python-format
-msgid "There was a problem accessing %(location)spresets.txt!"
-msgstr "Nastal problém pri prístupe k %(location)spresets.txt!"
-
-#: ../src/presets.py:585
-msgid "All device presets are up to date!"
-msgstr "Všetky predvoľby zariadenia sú aktuálne!"
+#: ../src/dvdtrackchooser.py:54
+msgid "Minute"
+msgid_plural "Minutes"
+msgstr[0] "Minút"
+msgstr[1] "Minúta"
+msgstr[2] "Minúty"
 
 #: ../src/transmageddon-dvdtrack-chooser.ui.h:1
 msgid "Select a DVD title"
@@ -179,74 +172,74 @@ msgid "Debug"
 msgstr "Ladiť"
 
 #. set default values for various variables
-#: ../src/transmageddon.py:364 ../src/transmageddon.py:805
-#: ../src/transmageddon.py:1004 ../src/transmageddon.py:1113
+#: ../src/transmageddon.py:377 ../src/transmageddon.py:821
+#: ../src/transmageddon.py:1025 ../src/transmageddon.py:1173
 msgid "Transcoding Progress"
 msgstr "Priebeh prekódovania"
 
 #. add i18n "No container"option
-#: ../src/transmageddon.py:407
+#: ../src/transmageddon.py:423
 msgid "No container (Audio-only)"
 msgstr "Bez kontajnera (iba zvuk)"
 
 #. Populate the rotatation box
 #. print("populating rotationbox")
-#: ../src/transmageddon.py:411
+#: ../src/transmageddon.py:427
 msgid "No rotation (default)"
 msgstr "Bez otočenia (predvolené)"
 
-#: ../src/transmageddon.py:412
+#: ../src/transmageddon.py:428
 msgid "Clockwise 90 degrees"
 msgstr "Otočiť o 90 stupňov vpravo"
 
-#: ../src/transmageddon.py:413
+#: ../src/transmageddon.py:429
 msgid "Rotate 180 degrees"
 msgstr "Otočiť o 180 stupňov"
 
-#: ../src/transmageddon.py:414
+#: ../src/transmageddon.py:430
 msgid "Counterclockwise 90 degrees"
 msgstr "Otočiť o 90 stupňov vľavo"
 
-#: ../src/transmageddon.py:415
+#: ../src/transmageddon.py:431
 msgid "Horizontal flip"
 msgstr "Prevrátiť vodorovne"
 
-#: ../src/transmageddon.py:416
+#: ../src/transmageddon.py:432
 msgid "Vertical flip"
 msgstr "Prevrátiť zvisle"
 
-#: ../src/transmageddon.py:417
+#: ../src/transmageddon.py:433
 msgid "Upper left diagonal flip"
 msgstr "Preklopiť podľa uhlopriečky smerujúcej vľavo hore"
 
-#: ../src/transmageddon.py:418
+#: ../src/transmageddon.py:434
 msgid "Upper right diagnonal flip"
 msgstr "Preklopiť podľa uhlopriečky smerujúcej vpravo hore"
 
-#: ../src/transmageddon.py:442
+#: ../src/transmageddon.py:457
 msgid "No Presets"
 msgstr "Bez predvolieb"
 
-#: ../src/transmageddon.py:554
+#: ../src/transmageddon.py:580
 #, python-format
 msgid "%(min)d:%(sec)02d"
 msgstr "%(min)d:%(sec)02d"
 
-#: ../src/transmageddon.py:584
+#: ../src/transmageddon.py:610
 #, python-format
 msgid "File saved to %(dir)s"
 msgstr "Súbor uložený do %(dir)s"
 
-#: ../src/transmageddon.py:587
+#: ../src/transmageddon.py:613
 #, python-format
 msgid "%(file)s saved to %(dir)s"
 msgstr "%(file)s uložený do %(dir)s"
 
-#: ../src/transmageddon.py:597
+#: ../src/transmageddon.py:626
 msgid "Done Transcoding"
 msgstr "Prekódovanie je dokončené"
 
-#: ../src/transmageddon.py:615 ../src/transmageddon.py:966
+#: ../src/transmageddon.py:644 ../src/transmageddon.py:988
 #, python-format
 msgid "Writing %(filename)s"
 msgstr "Zapisuje sa súbor %(filename)s"
@@ -254,81 +247,91 @@ msgstr "Zapisuje sa súbor %(filename)s"
 # PK: ako to vyzera vo vyslednom programe?
 # JK: Toto by sa malo zobrazovat pri multistream a určovať počet dokončených streamov.
 # https://blogs.gnome.org/uraeus/category/transmageddon-2/
-#: ../src/transmageddon.py:619
+#: ../src/transmageddon.py:648
 #, python-format
 msgid "Pass %(count)d Complete. "
 msgstr "Konverzia %(count)d dokončená."
 
+# DK:jazyk
+#. We use None here so that we in transcoder engine can differentiate between,
+#. unknown language and known language, but no language code.
+#: ../src/transmageddon.py:690
+msgid "Unknown"
+msgstr "Neznámy"
+
 #. if there is no audio streams
-#. add a 'No Audio option'
-#: ../src/transmageddon.py:732 ../src/transmageddon.py:1062
-msgid "No Audio"
-msgstr "Bez zvuku"
+#: ../src/transmageddon.py:747
+#| msgid "No Audio"
+msgid "  No Audio"
+msgstr "  Žiadny zvuk"
 
 #. add a 'No Video option'
-#: ../src/transmageddon.py:741 ../src/transmageddon.py:1100
+#: ../src/transmageddon.py:756 ../src/transmageddon.py:1142
 msgid "No Video"
 msgstr "Bez videa"
 
-#: ../src/transmageddon.py:855
+#: ../src/transmageddon.py:873
 msgid ""
 "Got an invalid response from codec installer, can not install missing codec."
 msgstr ""
 "Bola získaná neplatná odpoveď od inštalátoru kodeku. Kodek sa nedá "
 "nainštalovať."
 
-#: ../src/transmageddon.py:859
+#: ../src/transmageddon.py:877
 msgid "No Codec installer helper application available."
 msgstr "Nie je dostupná žiadna aplikácia pre pomoc pri inštalácií kodeku."
 
-#: ../src/transmageddon.py:863
+#: ../src/transmageddon.py:881
 msgid "Plugins not found, choose different codecs."
 msgstr "Zásuvné moduly neboli nájdené, vyberte iné kodeky."
 
-#: ../src/transmageddon.py:873
+#: ../src/transmageddon.py:891
 msgid "Codec installation aborted."
 msgstr "Inštalácia kodeku bola prerušená."
 
-#: ../src/transmageddon.py:881
+#: ../src/transmageddon.py:899
 msgid "Missing plugin installation failed."
 msgstr "Zlyhala inštalácia chýbajúceho zásuvného modulu."
 
 # PK: ako to vyzera vo vyslednom programe?
 # JK: tiez pri multistream, statusbar tam kde sa zobrazuje "writing %filename". Ani jednu situaciu neviem navodit tak som si tym neni isty.
-#: ../src/transmageddon.py:969
+#: ../src/transmageddon.py:998
 #, python-format
 msgid "Pass %(count)d Progress"
 msgstr "Priebeh konverzie %(count)d"
 
-#: ../src/transmageddon.py:1068
+#. add a 'No Audio option'
+#: ../src/transmageddon.py:1083
+msgid "No Audio"
+msgstr "Bez zvuku"
+
+#: ../src/transmageddon.py:1090
 msgid "Audio passthrough"
 msgstr "Nemeniť zvuk"
 
 # SP: ak bude zaškrtnuté "video nemeniť", tak sa nedá už video otáčať.
 # PM: OK
-#: ../src/transmageddon.py:1106
+#: ../src/transmageddon.py:1148
 msgid "Video passthrough"
 msgstr "Nemeniť video"
 
-# JK: None DVD track
-#: ../src/transmageddon.py:1313
-msgid "(None)"
-msgstr "(Žiadna)"
-
-#: ../src/transmageddon.py:1336
+#: ../src/transmageddon.py:1397
 msgid "Choose Source File..."
 msgstr "Výber umiestnenia súboru…"
 
 #: ../src/transmageddon.ui.h:1
+#| msgid ""
+#| "<small>Audio Channels:</small>\n"
+#| "<small>Audio Codec:</small>\n"
+#| "<small>Language:</small>"
 msgid ""
 "<small>Audio Channels:</small>\n"
-"<small>Audio Codec:</small>\n"
-"<small>Language:</small>"
+"<small>Audio Codec:</small>"
 msgstr ""
 "<small>Počet audio kanálov:</small>\n"
-"<small>Audio kodek:</small><small>Jazyk:</small>"
+"<small>Audio kodek:</small>"
 
-#: ../src/transmageddon.ui.h:4
+#: ../src/transmageddon.ui.h:3
 msgid ""
 "<small>Video height&#47;width:</small>\n"
 "<small>Video Codec:</small>"
@@ -336,41 +339,97 @@ msgstr ""
 "<small>Výška&#47;šírka videa:</small>\n"
 "<small>Video kodek:</small>"
 
-#: ../src/transmageddon.ui.h:6
+#: ../src/transmageddon.ui.h:5
 msgid "<b>Presets:</b>"
 msgstr "<b>Prevoľby:</b>"
 
 #  label
-#: ../src/transmageddon.ui.h:7
+#: ../src/transmageddon.ui.h:6
 msgid "<b>Choose Input File:</b>"
 msgstr "<b>Vyberte vstupný súbor:</b>"
 
-#: ../src/transmageddon.ui.h:8
+#: ../src/transmageddon.ui.h:7
 msgid "<b>Output Format:</b>"
 msgstr "<b>Výstupný formát:</b>"
 
 # label
-#: ../src/transmageddon.ui.h:9
+#: ../src/transmageddon.ui.h:8
 msgid "<b>Choose Audio Codec</b>:"
 msgstr "<b>Vyberte audio kodek</b>:"
 
 # label
-#: ../src/transmageddon.ui.h:10
+#: ../src/transmageddon.ui.h:9
 msgid "<b>Choose Video Codec</b>:"
 msgstr "<b>Vyberte video kodek</b>:"
 
-#: ../src/transmageddon.ui.h:11
+#: ../src/transmageddon.ui.h:10
 msgid "<small>Rotate the video image if needed</small>"
 msgstr "<small>Ak je to potrebné, otočiť obraz</small>"
 
-#: ../src/transmageddon.ui.h:12
+#: ../src/transmageddon.ui.h:11
 msgid "_Transcode"
 msgstr "_Prekódovať"
 
-#: ../src/utils.py:76
+# DK:zariadenie
+#: ../src/udevdisco.py:222
+msgid "Not mounted."
+msgstr "Nepripojené."
+
+#: ../src/utils.py:75
 #, python-format
 msgid "Can't find %(path)s in any known prefix!"
 msgstr "Nedá sa nájsť cesta %(path)s v žiadnom známom prefixe!"
+
+# https://bugzilla.gnome.org/show_bug.cgi?id=697137
+#~ msgid "Title: "
+#~ msgstr "Názov: "
+
+#~ msgid "Languages: "
+#~ msgstr "Jazyky: "
+
+#~ msgid " Length: "
+#~ msgstr " Dĺžka: "
+
+#~ msgid "Not a valid integer or fraction: %(value)s!"
+#~ msgstr "%(value)s nie je platné celé číslo ani zlomok!"
+
+#~ msgid "Loaded device %(device)s (%(presets)d presets)"
+#~ msgstr "Načítané zariadenie %(device)s (Počet predvolieb: %(presets)d)"
+
+#~ msgid "Fetching %(location)s"
+#~ msgstr "Získava sa %(location)s"
+
+#~ msgid "Writing to %(file)s"
+#~ msgstr "Zapisuje sa do súboru %(file)s"
+
+#~ msgid "There was an error fetching and installing %(location)s: %(error)s"
+#~ msgstr ""
+#~ "Pri získavaní a inštalovaní %(location)s sa vyskytla chyba: %(error)s"
+
+#~ msgid "Checking for device preset updates..."
+#~ msgstr "Zisťujú sa aktualizácie predvolieb zariadenia…"
+
+#~ msgid "Device preset %(name)s is up to date"
+#~ msgstr "Predvoľba zariadenia %(name)s je aktuálna"
+
+#~ msgid "Found updated device preset %(name)s"
+#~ msgstr "Našla sa aktualizovaná predvoľba zariadenia %(name)s"
+
+#~ msgid "Error installing preset %(name)s from %(location)s: %(error)s"
+#~ msgstr "Chyba pri inštalovaní predvoľby %(name)s z %(location)s: %(error)s"
+
+#~ msgid "Malformed plugin version line %(line)s"
+#~ msgstr "Chybná verzia zásuvného modulu na riadku %(line)s"
+
+#~ msgid "There was a problem accessing %(location)spresets.txt!"
+#~ msgstr "Nastal problém pri prístupe k %(location)spresets.txt!"
+
+#~ msgid "All device presets are up to date!"
+#~ msgstr "Všetky predvoľby zariadenia sú aktuálne!"
+
+# JK: None DVD track
+#~ msgid "(None)"
+#~ msgstr "(Žiadna)"
 
 #~ msgid "Choose File..."
 #~ msgstr "Zvoliť súbor…"
