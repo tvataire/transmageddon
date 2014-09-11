@@ -1,14 +1,14 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# Jiri Grönroos <jiri.gronroos+l10n@iki.fi>, 2012, 2013.
+# Jiri Grönroos <jiri.gronroos+l10n@iki.fi>, 2012, 2013, 2014.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=transmageddon&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2013-08-03 14:42+0000\n"
-"PO-Revision-Date: 2013-09-04 22:23+0300\n"
+"POT-Creation-Date: 2014-07-07 12:12+0000\n"
+"PO-Revision-Date: 2014-09-10 17:50+0300\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
 "Language-Team: suomi <gnome-fi-laatu@lists.sourceforge.net>\n"
 "Language: fi\n"
@@ -26,11 +26,77 @@ msgstr "Transmageddon-videomuuntaja"
 msgid "Video format conversion tool"
 msgstr "Muuta videoiden tiedostomuotoja"
 
-#: ../src/about.py.in:46 ../src/about.py.in:47
+#: ../appdata/transmageddon.appdata.xml.in.h:1
+#| msgid "Transmageddon Video Transcoder"
+msgid "Transmageddon Media Transcoder"
+msgstr "Transmageddon-mediamuuntaja"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:2
+msgid "Easy to use audio and video transcoding application"
+msgstr "Helppokäyttöinen ääni- ja videomuuntajasovellus"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:3
+msgid ""
+"Transmageddon is an application for converting audio and video files between "
+"different formats. It allows you to either manually choose the formats you "
+"want to convert between or alternatively you can choose a predefined target "
+"and the selections will be made for you. Transmageddon supports a very wide "
+"range of formats and can also optionally function as a DVD ripping tool."
+msgstr ""
+"Transmageddon on sovellus ääni- ja videotiedostojen muuttamiseksi "
+"tiedostomuodosta toiseen. Voit määrittää muunnosasetukset itse tai valita "
+"esimääritellyistä laitekohtaisista profiileista. Transmageddon tukee "
+"lukuisia eri tiedostomuotoja, ja toimii myös DVD-rippaustyökaluna."
+
+#: ../appdata/transmageddon.appdata.xml.in.h:4
+msgid "Feature list:"
+msgstr "Ominaisuuslista:"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:5
+msgid "Wide range of media codecs"
+msgstr "Laaja valikoima mediakoodekkeja"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:6
+msgid "Allows extracting audio or video streams separately"
+msgstr "Mahdollistaa ääni- ja videovirtojen purkamisen toisistaan erillään"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:7
+msgid "Alows ripping of DVD if needed software libraries are available"
+msgstr ""
+"Mahdollistaa DVD-levyjen \"rippauksen\", jos käytettävissä on tarvittavat "
+"kirjastot"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:8
+#| msgid "Found new device preset %(name)s"
+msgid "Supports named device presets"
+msgstr "Tukee laitekohtaisia esiasetuksia"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:9
+msgid "Lets you add language metadata if missing"
+msgstr "Mahdollistaa puuttuvan kielimetadatan lisäämiseen"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:10
+msgid "Can change orientation of video if necessary"
+msgstr "Mahdollistaa videokuvan kääntämisen tarvittaessa"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:11
+msgid "Supports files with multiple audio streams"
+msgstr "Tukee useita äänivirtoja sisältäviä tiedostoja"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:12
+msgid ""
+"You might want to install this application if your need to convert media "
+"files between different formats due to for example having hardware that only "
+"supports a limited range of formats."
+msgstr ""
+"Saatat haluta valita Transmageddonin, jos tarpeesi on muuntaa tiedostojen "
+"muotoja esimerkiksi jonkin laitteen rajallisen tiedostomuototuen vuoksi."
+
+#: ../src/about.py.in:44 ../src/about.py.in:45
 msgid "Transmageddon"
 msgstr "Transmageddon"
 
-#: ../src/about.py.in:49
+#: ../src/about.py.in:47
 msgid ""
 "Transmageddon is a simple video and audio conversion tool for GNOME created "
 "by Christian Fredrik Kalager Schaller."
@@ -38,98 +104,34 @@ msgstr ""
 "Transmageddon on video- ja äänimuunnoksiin tarkoitettu työkalu, jonka on "
 "kehittänyt Christian Fredrik Kalager Schaller."
 
-#: ../src/about.py.in:50
+#: ../src/about.py.in:48
 msgid "Transmageddon homepage"
 msgstr "Transmageddonin verkkosivusto"
 
-#: ../src/about.py.in:52
+#: ../src/about.py.in:50
 msgid "translator-credits"
 msgstr "Jiri Grönroos"
 
-#. create a string to push into the listview
-#: ../src/dvdtrackchooser.py:56
+#: ../src/dvdtrackchooser.py:52
 msgid "Title:"
 msgstr "Nimi:"
 
-#: ../src/dvdtrackchooser.py:56
+#: ../src/dvdtrackchooser.py:53
 msgid "Languages:"
 msgstr "Kielet:"
 
-#: ../src/dvdtrackchooser.py:56
+#: ../src/dvdtrackchooser.py:54
 msgid "Length:"
 msgstr "Kesto"
 
-#: ../src/dvdtrackchooser.py:56
-msgid "Minutes"
-msgstr "minuuttia"
-
-#: ../src/presets.py:78
-#, python-format
-msgid "Not a valid integer or fraction: %(value)s!"
-msgstr "Ei kelvollinen kokonais- tai murtoluku: %(value)s!"
-
-#: ../src/presets.py:413
-#, python-format
-msgid "Loaded device %(device)s (%(presets)d presets)"
-msgstr "Ladattu laite %(device)s (%(presets)d esiasetusta)"
-
-#: ../src/presets.py:480
-#, python-format
-msgid "Fetching %(location)s"
-msgstr "Noudetaan %(location)s"
-
-#: ../src/presets.py:487
-#, python-format
-msgid "Writing to %(file)s"
-msgstr "Kirjoitetaan tiedostoon %(file)s"
-
-#: ../src/presets.py:492
-#, python-format
-msgid "There was an error fetching and installing %(location)s: %(error)s"
-msgstr ""
-"Tapahtui virhe noudettaessa ja asennettaessa kohdetta %(location)s: %(error)s"
-
-#: ../src/presets.py:509
-msgid "Checking for device preset updates..."
-msgstr "Tarkistetaan laitteiden esiasetusten päivityksiä..."
-
-#: ../src/presets.py:529
-#, python-format
-msgid "Device preset %(name)s is up to date"
-msgstr "Laiteasetus %(name)s on ajan tasalla"
-
-#: ../src/presets.py:533
-#, python-format
-msgid "Found updated device preset %(name)s"
-msgstr "Löytyi uusi versio laitteen esiasetuksesta %(name)s"
-
-#: ../src/presets.py:539 ../src/presets.py:552
-#, python-format
-msgid "Error installing preset %(name)s from %(location)s: %(error)s"
-msgstr ""
-"Virhe asennettaessa esiasetusta %(name)s sijainnista %(location)s: %(error)s"
-
-#: ../src/presets.py:546
-#, python-format
-msgid "Found new device preset %(name)s"
-msgstr "Löydettiin uusi laitteen esiasetus %(name)s"
-
-#: ../src/presets.py:559
-#, python-format
-msgid "Malformed plugin version line %(line)s"
-msgstr "Liitännäisen versiorivi %(line)s on väärin muodostettu"
-
-#: ../src/presets.py:563
-#, python-format
-msgid "There was a problem accessing %(location)spresets.txt!"
-msgstr ""
-
-#: ../src/presets.py:585
-msgid "All device presets are up to date!"
-msgstr "Kaikki esiasetukset ovat ajan tasalla!"
+#: ../src/dvdtrackchooser.py:54
+#| msgid "Minutes"
+msgid "Minute"
+msgid_plural "Minutes"
+msgstr[0] "minuutti"
+msgstr[1] "minuuttia"
 
 #: ../src/transmageddon-dvdtrack-chooser.ui.h:1
-#| msgid "Select a DVD track"
 msgid "Select a DVD title"
 msgstr "Valitse DVD-nimi"
 
@@ -161,146 +163,141 @@ msgid "Debug"
 msgstr "Vianjäljitys"
 
 #. set default values for various variables
-#: ../src/transmageddon.py:384 ../src/transmageddon.py:823
-#: ../src/transmageddon.py:1027 ../src/transmageddon.py:1154
+#: ../src/transmageddon.py:377 ../src/transmageddon.py:821
+#: ../src/transmageddon.py:1025 ../src/transmageddon.py:1173
 msgid "Transcoding Progress"
 msgstr "Muunnoksen edistyminen"
 
 #. add i18n "No container"option
-#: ../src/transmageddon.py:430
+#: ../src/transmageddon.py:423
 msgid "No container (Audio-only)"
 msgstr "Ei säilöä (pelkkä ääni)"
 
 #. Populate the rotatation box
 #. print("populating rotationbox")
-#: ../src/transmageddon.py:434
+#: ../src/transmageddon.py:427
 msgid "No rotation (default)"
 msgstr "Ei kiertoa (oletus)"
 
-#: ../src/transmageddon.py:435
+#: ../src/transmageddon.py:428
 msgid "Clockwise 90 degrees"
 msgstr "Myötäpäivään 90 astetta"
 
-#: ../src/transmageddon.py:436
+#: ../src/transmageddon.py:429
 msgid "Rotate 180 degrees"
 msgstr "Käännä 180 astetta"
 
-#: ../src/transmageddon.py:437
+#: ../src/transmageddon.py:430
 msgid "Counterclockwise 90 degrees"
 msgstr "Vastapäivään 90 astetta"
 
-#: ../src/transmageddon.py:438
+#: ../src/transmageddon.py:431
 msgid "Horizontal flip"
 msgstr "Vaakasuunnan käännös"
 
-#: ../src/transmageddon.py:439
+#: ../src/transmageddon.py:432
 msgid "Vertical flip"
 msgstr "Pystysuunnan käännös"
 
-#: ../src/transmageddon.py:440
+#: ../src/transmageddon.py:433
 msgid "Upper left diagonal flip"
 msgstr "Vinottainen kääntö vasemman yläreunan kautta"
 
-#: ../src/transmageddon.py:441
+#: ../src/transmageddon.py:434
 msgid "Upper right diagnonal flip"
 msgstr "Vinottainen kääntö oikean yläreunan kautta"
 
-#: ../src/transmageddon.py:464
+#: ../src/transmageddon.py:457
 msgid "No Presets"
 msgstr "Ei esiasetuksia"
 
-#: ../src/transmageddon.py:575
+#: ../src/transmageddon.py:580
 #, python-format
 msgid "%(min)d:%(sec)02d"
 msgstr "%(min)d:%(sec)02d"
 
-#: ../src/transmageddon.py:605
+#: ../src/transmageddon.py:610
 #, python-format
 msgid "File saved to %(dir)s"
 msgstr "Tiedosto tallennettiin kansioon %(dir)s"
 
-#: ../src/transmageddon.py:608
+#: ../src/transmageddon.py:613
 #, python-format
 msgid "%(file)s saved to %(dir)s"
 msgstr "%(file)s tallennettu sijaintiin %(dir)s"
 
-#: ../src/transmageddon.py:618
+#: ../src/transmageddon.py:626
 msgid "Done Transcoding"
 msgstr "Muunnos on valmis"
 
-#: ../src/transmageddon.py:636 ../src/transmageddon.py:996
+#: ../src/transmageddon.py:644 ../src/transmageddon.py:988
 #, python-format
 msgid "Writing %(filename)s"
 msgstr "Kirjoitetaan %(filename)s"
 
-#: ../src/transmageddon.py:640
+#: ../src/transmageddon.py:648
 #, python-format
 msgid "Pass %(count)d Complete. "
 msgstr "Läpivienti %(count)d valmistui. "
 
 #. We use None here so that we in transcoder engine can differentiate between,
 #. unknown language and known language, but no language code.
-#: ../src/transmageddon.py:686
+#: ../src/transmageddon.py:690
 msgid "Unknown"
 msgstr "Tuntematon"
 
 #. if there is no audio streams
-#: ../src/transmageddon.py:749
-#| msgid "No Audio"
+#: ../src/transmageddon.py:747
 msgid "  No Audio"
 msgstr "  Ei ääntä"
 
 #. add a 'No Video option'
-#: ../src/transmageddon.py:758 ../src/transmageddon.py:1141
+#: ../src/transmageddon.py:756 ../src/transmageddon.py:1142
 msgid "No Video"
 msgstr "Ei videota"
 
-#: ../src/transmageddon.py:882
+#: ../src/transmageddon.py:873
 msgid ""
 "Got an invalid response from codec installer, can not install missing codec."
 msgstr ""
 "Vastaanotettiin virheellinen vastaus koodekkiasentajalta, puuttuvan koodekin "
 "asennus ei onnistu."
 
-#: ../src/transmageddon.py:886
+#: ../src/transmageddon.py:877
 msgid "No Codec installer helper application available."
 msgstr "Koodekin asennusavustajasovellusta ei ole käytettävissä."
 
-#: ../src/transmageddon.py:890
+#: ../src/transmageddon.py:881
 msgid "Plugins not found, choose different codecs."
 msgstr "Liitännäisiä ei löytynyt, valitse eri koodekit."
 
-#: ../src/transmageddon.py:900
+#: ../src/transmageddon.py:891
 msgid "Codec installation aborted."
 msgstr "Koodekkiasennus peruttiin."
 
-#: ../src/transmageddon.py:908
+#: ../src/transmageddon.py:899
 msgid "Missing plugin installation failed."
 msgstr "Puuttuvan liitännäisen asennus epäonnistui."
 
-#: ../src/transmageddon.py:999
+#: ../src/transmageddon.py:998
 #, python-format
 msgid "Pass %(count)d Progress"
 msgstr "Läpiviennin %(count)d edistyminen"
 
 #. add a 'No Audio option'
-#: ../src/transmageddon.py:1088
+#: ../src/transmageddon.py:1083
 msgid "No Audio"
 msgstr "Ei ääntä"
 
-#: ../src/transmageddon.py:1095
+#: ../src/transmageddon.py:1090
 msgid "Audio passthrough"
 msgstr "Äänen läpivienti"
 
-#: ../src/transmageddon.py:1147
+#: ../src/transmageddon.py:1148
 msgid "Video passthrough"
 msgstr "Videon läpivienti"
 
-#: ../src/transmageddon.py:1346
-msgid "(None)"
-msgstr "(Ei mitään)"
-
-#: ../src/transmageddon.py:1370
+#: ../src/transmageddon.py:1397
 msgid "Choose Source File..."
 msgstr "Valitse lähdetiedosto..."
 
@@ -348,14 +345,54 @@ msgstr "<small>Käännä videon kuva tarvittaessa </small>"
 msgid "_Transcode"
 msgstr "_Muunna"
 
-#: ../src/udevdisco.py:221
+#: ../src/udevdisco.py:222
 msgid "Not mounted."
 msgstr "Ei liitetty."
 
-#: ../src/utils.py:76
+#: ../src/utils.py:75
 #, python-format
 msgid "Can't find %(path)s in any known prefix!"
 msgstr ""
+
+#~ msgid "Not a valid integer or fraction: %(value)s!"
+#~ msgstr "Ei kelvollinen kokonais- tai murtoluku: %(value)s!"
+
+#~ msgid "Loaded device %(device)s (%(presets)d presets)"
+#~ msgstr "Ladattu laite %(device)s (%(presets)d esiasetusta)"
+
+#~ msgid "Fetching %(location)s"
+#~ msgstr "Noudetaan %(location)s"
+
+#~ msgid "Writing to %(file)s"
+#~ msgstr "Kirjoitetaan tiedostoon %(file)s"
+
+#~ msgid "There was an error fetching and installing %(location)s: %(error)s"
+#~ msgstr ""
+#~ "Tapahtui virhe noudettaessa ja asennettaessa kohdetta %(location)s: "
+#~ "%(error)s"
+
+#~ msgid "Checking for device preset updates..."
+#~ msgstr "Tarkistetaan laitteiden esiasetusten päivityksiä..."
+
+#~ msgid "Device preset %(name)s is up to date"
+#~ msgstr "Laiteasetus %(name)s on ajan tasalla"
+
+#~ msgid "Found updated device preset %(name)s"
+#~ msgstr "Löytyi uusi versio laitteen esiasetuksesta %(name)s"
+
+#~ msgid "Error installing preset %(name)s from %(location)s: %(error)s"
+#~ msgstr ""
+#~ "Virhe asennettaessa esiasetusta %(name)s sijainnista %(location)s: "
+#~ "%(error)s"
+
+#~ msgid "Malformed plugin version line %(line)s"
+#~ msgstr "Liitännäisen versiorivi %(line)s on väärin muodostettu"
+
+#~ msgid "All device presets are up to date!"
+#~ msgstr "Kaikki esiasetukset ovat ajan tasalla!"
+
+#~ msgid "(None)"
+#~ msgstr "(Ei mitään)"
 
 #~ msgid "Choose File..."
 #~ msgstr "Valitse tiedosto..."
