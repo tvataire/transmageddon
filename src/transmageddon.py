@@ -255,7 +255,8 @@ class TransmageddonUI(Gtk.ApplicationWindow):
 
        def dynamic_comboboxes_video(streams,extra = []):
            vbox = Gtk.VBox()
-           combo = Gtk.ComboBoxText.new() # 2
+           combo = Gtk.ComboBoxText.new()
+           combo.set_popup_fixed_width(False) # 2
            self.videorows.append(combo)
            vbox.add(self.videorows[0])
            return vbox
@@ -270,16 +271,16 @@ class TransmageddonUI(Gtk.ApplicationWindow):
 
        ui_elements = [
            "videoinformation", "audioinformation",
-           "videocodec",   "audiocodec",      "langbutton",     "CodecBox",
+           "videocodec",   "audiocodec",      "langbutton",     "CodecGrid",
            "presetchoice", "containerchoice", "rotationchoice", "transcodebutton",
-           "ProgressBar",  "cancelbutton",    "StatusBar",      "table1"]
+           "ProgressBar",  "cancelbutton",    "StatusBar",      "grid1"]
 
        for element in ui_elements:
          setattr(self, element, self.builder.get_object(element))
 
        self.videobox = dynamic_comboboxes_video(GObject.TYPE_PYOBJECT)
-       self.CodecBox.attach(self.videobox, 2, 3, 1, 2, yoptions = Gtk.AttachOptions.SHRINK)
-       self.CodecBox.show_all()
+       self.CodecGrid.attach(self.videobox, 1, 1, 1, 1) # yoptions = Gtk.AttachOptions.SHRINK)
+       self.CodecGrid.show_all()
        self.transcodebutton.get_style_context().add_class('suggested-action')
        self.containerchoice.connect("changed", self.on_containerchoice_changed)
        self.presetchoice.connect("changed", self.on_presetchoice_changed)
@@ -310,7 +311,6 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                timestamp):
            if target_type == TARGET_TYPE_URI_LIST:
                uri = selection.data.strip('\r\n\x00')
-               # self.builder.get_object ("FileChooser").set_uri(uri)
        self.combo=False    # this value will hold the filechooser combo box
        self.audiobox=False
        self.path=False
@@ -366,7 +366,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
 
        # default all but top box to insensitive by default
        # self.containerchoice.set_sensitive(False)
-       self.CodecBox.set_sensitive(False)
+       self.CodecGrid.set_sensitive(False)
        self.transcodebutton.set_sensitive(False)
        self.cancelbutton.set_sensitive(False)
        self.presetchoice.set_sensitive(False)
@@ -613,7 +613,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            notification = Notify.Notification.new("Transmageddon", (_("%(file)s saved to %(dir)s") % {'dir': self.streamdata['outputdirectory'], 'file': self.streamdata['outputfilename']}), uri)
            notification.show()
            self.containerchoice.set_sensitive(True)
-           self.CodecBox.set_sensitive(True)
+           self.CodecGrid.set_sensitive(True)
            self.videorows[0].set_sensitive(True)
            self.audiorows[0].set_sensitive(True)
            self.presetchoice.set_sensitive(True)
@@ -881,7 +881,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                    _("Plugins not found, choose different codecs."))
            self.combo.set_sensitive(True)
            self.containerchoice.set_sensitive(True)
-           self.CodecBox.set_sensitive(True)
+           self.CodecGrid.set_sensitive(True)
            self.cancelbutton.set_sensitive(False)
            self.transcodebutton.set_sensitive(True)
        elif donemessage == GstPbutils.InstallPluginsReturn.USER_ABORT:
@@ -891,7 +891,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            self.StatusBar.push(context_id, _("Codec installation aborted."))
            self.combo.set_sensitive(True)
            self.containerchoice.set_sensitive(True)
-           self.CodecBox.set_sensitive(True)
+           self.CodecGrid.set_sensitive(True)
            self.cancelbutton.set_sensitive(False)
            self.transcodebutton.set_sensitive(True)
        else:
@@ -978,7 +978,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        self.combo.set_sensitive(False)
        self.containerchoice.set_sensitive(False)
        self.presetchoice.set_sensitive(False)
-       self.CodecBox.set_sensitive(False)
+       self.CodecGrid.set_sensitive(False)
        self.transcodebutton.set_sensitive(False)
        self.rotationchoice.set_sensitive(False)
        self.cancelbutton.set_sensitive(True)
@@ -1014,7 +1014,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
    def on_cancelbutton_clicked(self, widget):
        self.combo.set_sensitive(True)
        self.containerchoice.set_sensitive(True)
-       self.CodecBox.set_sensitive(True)
+       self.CodecGrid.set_sensitive(True)
        self.presetchoice.set_sensitive(True)
        self.rotationchoice.set_sensitive(True)
        self.cancelbutton.set_sensitive(False)
@@ -1168,7 +1168,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            self.houseclean=False
 
    def on_containerchoice_changed(self, widget):
-       self.CodecBox.set_sensitive(True)
+       self.CodecGrid.set_sensitive(True)
        self.ProgressBar.set_fraction(0.0)
        self.ProgressBar.set_text(_("Transcoding Progress"))
        if self.builder.get_object("containerchoice").get_active() == self.nocontainernumber:
@@ -1200,7 +1200,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            self.rotationchoice.set_sensitive(True)
            if self.builder.get_object("containerchoice").get_active():
                self.populate_menu_choices()
-               self.CodecBox.set_sensitive(True)
+               self.CodecGrid.set_sensitive(True)
                self.transcodebutton.set_sensitive(True)
        else:
            self.usingpreset=True
@@ -1209,7 +1209,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                self.streamdata['devicename']= self.presetchoices[presetchoice-1]
                self.provide_presets(self.streamdata['devicename'])
                self.containerchoice.set_sensitive(False)
-               self.CodecBox.set_sensitive(True) # Testing123
+               self.CodecGrid.set_sensitive(True) # Testing123
                self.rotationchoice.set_sensitive(False)
            else:
                if self.builder.get_object("containerchoice").get_active_text():
@@ -1307,12 +1307,9 @@ class TransmageddonUI(Gtk.ApplicationWindow):
 
        # Already exists? Remove it!
        if self.combo:	
-           #self.table1.remove(self.combo)
-           # self.combo.disconnect(self.handler_id)
            self.dvdname=[]
            self.dvddevice=[]
-           #self.combo.remove()
-           #self.combo = None
+
        else:
            if not self.finder:
                #print("self.finder is "+str(self.finder))
@@ -1362,7 +1359,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            self.combo.set_model (liststore)
            self.combo.connect("changed", self.on_source_changed)
            self.combo.show_all()
-           self.table1.attach(self.combo, 2, 3, 0, 1)
+           self.grid1.attach(self.combo, 1, 0, 1, 1)
 
    def setup_audiovbox(self, streamcounter): # creates the list of audiostreams ui
        """
@@ -1373,14 +1370,15 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                output=self.audiobox.destroy()
            self.audiorows=[] # set up the lists for holding the codec combobuttons
            self.audiobox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-           self.CodecBox.attach(self.audiobox, 0, 1, 1, 2)
-       combo = Gtk.ComboBoxText()
+           self.CodecGrid.attach(self.audiobox, 0, 1, 1, 2)
+       combo = Gtk.ComboBoxText(popup_fixed_width=False)
+       combo.set_popup_fixed_width(False)
        self.audiorows.append(combo)
        self.audiobox.add(self.audiorows[streamcounter])
        self.audiorows[streamcounter].connect("changed", self.on_audiocodec_changed)
        self.audiorows[streamcounter].set_name("audiorow"+str(streamcounter))
        self.audiorows[streamcounter].show()
-       self.CodecBox.show_all()
+       self.CodecGrid.show_all()
 
    def on_source_changed(self, widget):
        """
@@ -1396,10 +1394,12 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            self.isdvd=False
            dialog = Gtk.FileChooserDialog(title=_("Choose Source File..."),
                         buttons=(Gtk.STOCK_CANCEL, Gtk.ResponseType.REJECT,
-                                 Gtk.STOCK_OPEN, Gtk.ResponseType.ACCEPT))
+                                 Gtk.STOCK_OPEN, Gtk.ResponseType.ACCEPT),
+                         transient_for=widget.get_toplevel())
            dialog.set_default_response(Gtk.ResponseType.ACCEPT)
            dialog.set_property("local-only", False)
            dialog.set_current_folder(self.videodirectory)
+   
            response = dialog.run()
            dialog.hide()
            filename = None
