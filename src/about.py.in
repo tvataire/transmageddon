@@ -15,7 +15,12 @@ Authors = ["Christian Schaller <uraeus@gnome.org>",
            "Tom Parker <palfrey@tevp.neta>",
            "Arun Raghavan <arunsr@gnome.org>",
            "Laszlo Pandy <laszlok2@gmail.com>",
-           "Claude Paroz <claude@2xlibre.net>"
+           "Claude Paroz <claude@2xlibre.net>",
+           "Javier Jardón <jjardon@gnome.org>",
+           "Frederik Elwert <frederik.elwert@web.de>",
+           "Marek Černocký <marek@manet.cz>",
+           "Szilveszter Ördög <slipszi@gmail.com>",
+           "Richard Hughes <richard@hughsie.com>"
            ]
 
 Artists = ["Jakub Steiner <jimmac@gnome.org>"]

@@ -163,6 +163,13 @@ class Transcoder(GObject.GObject):
            self.encodebin.set_property("avoid-reencoding", True)
            self.pipeline.add(self.encodebin)
            self.encodebin.set_state(Gst.State.PAUSED)
+           self.audiopads = {}
+           x=0
+           while x < len(self.audiodata):
+               if self.audiodata[x]['outputaudiocaps'] != (False or "noaud"):
+                   if self.streamdata['container']!=False:
+                       self.audiopads[x] = self.encodebin.emit("request-profile-pad", "audioprofilename"+str(x))
+               x=x+1
        
        self.uridecoder = Gst.ElementFactory.make("uridecodebin", "uridecoder")
        self.uridecoder.set_property("uri", self.streamdata['filechoice'])
@@ -295,8 +302,7 @@ class Transcoder(GObject.GObject):
                    if self.probestreamid not in self.usedstreamids:
                        self.usedstreamids.append(self.probestreamid)
                        if self.audiodata[x]['outputaudiocaps'] != 'noaud':
-                           sinkpad = self.encodebin.emit("request-profile-pad", "audioprofilename"+str(x))
-                           pad.link(sinkpad)
+                           pad.link(self.audiopads[x])
                x=x+1
        return Gst.PadProbeReturn.OK
 
