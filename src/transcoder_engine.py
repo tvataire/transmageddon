@@ -91,7 +91,7 @@ class Transcoder(GObject.GObject):
        if self.streamdata['container'] == False:
           x=0
           while x < len(self.audiodata):
-               if self.audiodata[x]['outputaudiocaps'] != 'noaud':
+               if self.audiodata[x]['outputaudiocaps'] != False:
                    if not (self.audiodata[x]['outputaudiocaps'].intersect(Gst.caps_from_string("audio/mpeg, mpegversion=1, layer=3"))).is_empty():   
                        self.streamdata['container']=Gst.caps_from_string("application/x-id3")
                x=x+1
@@ -126,8 +126,9 @@ class Transcoder(GObject.GObject):
        # We do not need to do anything special for passthrough for audio, since we are not
        # including any extra elements between uridecodebin and encodebin
        x=0
-       while x < len(self.audiodata): 
-           if self.audiodata[x]['outputaudiocaps'] != (False or "noaud"):
+       while x < len(self.audiodata):
+           # print(self.audiodata[x]['outputaudiocaps'])
+           if self.audiodata[x]['outputaudiocaps'] != False:
                audiopreset=None
                if self.streamdata['container']==False:
                    self.encodebinprofile = GstPbutils.EncodingAudioProfile.new (self.audiodata[x]['outputaudiocaps'], audiopreset, Gst.Caps.new_any(), 0)
@@ -166,7 +167,7 @@ class Transcoder(GObject.GObject):
            self.audiopads = {}
            x=0
            while x < len(self.audiodata):
-               if self.audiodata[x]['outputaudiocaps'] != (False or "noaud"):
+               if self.audiodata[x]['outputaudiocaps'] != False:
                    if self.streamdata['container']!=False:
                        self.audiopads[x] = self.encodebin.emit("request-profile-pad", "audioprofilename"+str(x))
                x=x+1
@@ -299,7 +300,7 @@ class Transcoder(GObject.GObject):
                if self.probestreamid==self.audiodata[x]['streamid']:
                    if self.probestreamid not in self.usedstreamids:
                        self.usedstreamids.append(self.probestreamid)
-                       if self.audiodata[x]['outputaudiocaps'] != 'noaud':
+                       if self.audiodata[x]['outputaudiocaps'] != False:
                            pad.link(self.audiopads[x])
                x=x+1
        return Gst.PadProbeReturn.OK
@@ -383,7 +384,7 @@ class Transcoder(GObject.GObject):
                if streamid==self.audiodata[x]['streamid']:
                    if self.audiodata[x]['dopassthrough'] == True:
                        autoplugreturnvalue = False
-                   elif self.audiodata[x]['outputaudiocaps']== 'noaud':
+                   elif self.audiodata[x]['outputaudiocaps']== False:
                        autoplugreturnvalue = False
                x=x+1
            if streamid ==self.videodata[0]['streamid']:

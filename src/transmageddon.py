@@ -256,7 +256,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        def dynamic_comboboxes_video(streams,extra = []):
            vbox = Gtk.VBox()
            combo = Gtk.ComboBoxText.new()
-           combo.set_popup_fixed_width(False) # 2
+           # combo.set_popup_fixed_width(False) # Feature needs to be added to GTK+ first
            self.videorows.append(combo)
            vbox.add(self.videorows[0])
            return vbox
@@ -416,11 +416,11 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        self.streamdata = {'filechoice' : False, 'filename' : False, 'outputdirectory' : False, 'container' : False, 'devicename' : "nopreset", 'multipass': 0, 'passcounter': 0, 'outputfilename' : False, 'timestamp': False, 'dvdtitle': False, 'singlestreamno': False}
 
        # Populate the Container format combobox
-       # print("do we try to populate container choice")
        for i in supported_containers:
            self.containerchoice.append_text(i)
        # add i18n "No container"option
-       self.containerchoice.append_text(_("No container (Audio-only)"))
+       if self.haveaudio==True:
+           self.containerchoice.append_text(_("No container (Audio-only)"))
 
        # Populate the rotatation box
        # print("populating rotationbox")
@@ -528,7 +528,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            if x == 0:
                self.audiodata[0]['outputaudiocaps']=Gst.caps_from_string(preset.acodec.name)
            else:
-               self.audiodata[x]['outputaudiocaps']='noaud'
+               self.audiodata[x]['outputaudiocaps']= False
            x=x+1
        
        self.videodata[0]['outputvideocaps']=Gst.caps_from_string(preset.vcodec.name)
@@ -692,10 +692,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                        self.haveaudio=True
                        self.audiodata.append(self.add_audiodata_row(i.get_channels(), i.get_sample_rate(), i.get_caps(), False, streamid, False, False, languagename, languagecode))
 
-                       self.setup_audiovbox(self.audiostreamcounter)
-
-                       self.containerchoice.set_active(-1) # set this here to ensure it happens even with quick audio-only
-                       self.containerchoice.set_active(0)   
+                       self.setup_audiovbox(self.audiostreamcounter)   
 
                if isinstance(i, GstPbutils.DiscovererVideoInfo):
                    streamid=i.get_stream_id()
@@ -724,6 +721,9 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                            self._start_transcoding()
                if self.streamdata['container'] != False:
                    self.check_for_passthrough(self.streamdata['container'])
+
+           self.containerchoice.set_active(-1) # set this here to ensure it happens even with quick audio-only
+           self.containerchoice.set_active(0)
        
            # set UI markup, will wary in size depending on number of streams         
 
@@ -746,7 +746,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            else: # if there is no audio streams
                self.audioinformation.set_markup(''.join(('<small>', _("  No Audio"), '</small>',"\n", '<small>', "",'</small>')))
                if not self.audiodata: # creates empty data set
-                   self.audiodata.append(self.add_audiodata_row(None, None, None, False, None, False, False, None))
+                   self.audiodata.append(self.add_audiodata_row(None, None, None, False, None, False, False, None, None))
 
            if self.havevideo==True:
                self.videoinformation.set_markup(''.join(('<small>', 'Video width&#47;height: ', str(self.videodata[0]['videowidth']), "x", str(self.videodata[0]['videoheight']), '</small>',"\n", '<small>', 'Video codec: ',  str(GstPbutils.pb_utils_get_codec_description   (self.videodata[0]['inputvideocaps'])), '</small>' )))
@@ -803,6 +803,8 @@ class TransmageddonUI(Gtk.ApplicationWindow):
 
    # define the behaviour of the other buttons
    def on_filechooser_file_set(self, widget, filename):
+       #print("file set") 
+       #print(self.audiodata)
        self.streamdata['filename'] = filename
        # These two list objects will hold all crucial media data in the form of python dictionaries.
        self.audiodata =[]
@@ -1027,6 +1029,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
        self.StatusBar.pop(context_id)
 
    def populate_menu_choices(self):
+       # print("populating menu")
        # self.audiocodecs - contains list of whats in self.audiorows
        # self.videocodecs - contains listof whats in self.videorows
        # audio_codecs, video_codecs - temporary lists
@@ -1041,13 +1044,14 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                    for c in self.videocodecs:
                        self.videorows[x].remove(0)
                    self.videocodecs=[]
-       while x < len(self.audiocodecs): 
-           if self.audiocodecs:
-               for c in self.audiocodecs[x]: #
-                   self.audiorows[x].remove(0)
-               if x==self.audiostreamcounter:
-                   self.audiocodecs=[]
-           x=x+1
+       if self.haveaudio==True:
+           while x < len(self.audiocodecs): 
+               if self.audiocodecs:
+                   for c in self.audiocodecs[x]: #
+                       self.audiorows[x].remove(0)
+                   if x==self.audiostreamcounter:
+                       self.audiocodecs=[]
+               x=x+1
 
        # start filling audio
        if self.haveaudio==True:
@@ -1076,12 +1080,12 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                            self.audiocodecs[x].append(Gst.caps_from_string(codecfinder.codecmap[c]))
 
                        for c in self.audiocodecs[x]: # Use codec descriptions from GStreamer
-                           if c != "pass" and c != "noaud":
+                           if c != "pass" and c != False:
                                self.audiorows[x].append_text(GstPbutils.pb_utils_get_codec_description(c))
 
                #add a 'No Audio option'
                self.audiorows[x].append_text(_("No Audio"))
-               self.audiocodecs[x].append("noaud")
+               self.audiocodecs[x].append(False)
                self.noaudiomenuno.append((len(self.audiocodecs[x]))-1)
                #print(self.noaudiomenuno)
 
@@ -1095,9 +1099,9 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                    self.audiorows[0].set_active(0)
                    if x != 0:
                        self.audiorows[x].set_active(self.noaudiomenuno[x])
-                       self.audiodata[x]['outputaudiocaps'] = 'noaud'
+                       self.audiodata[x]['outputaudiocaps'] = False
                    else:
-                       self.audiorows[0].set_sensitive(False)
+                       self.audiorows[x].set_sensitive(False)
                    self.videorows[0].set_sensitive(False)
                else:
                    self.audiorows[x].set_sensitive(True)
@@ -1110,8 +1114,10 @@ class TransmageddonUI(Gtk.ApplicationWindow):
 
 
        else: # No audio track(s) found
-           if self.houseclean==False:
-               self.audiorows[x].set_sensitive(False)
+           print("hitting the else")
+           #if self.houseclean==False:
+           #    print("setting sensitive false")
+           self.audiorows[0].set_sensitive(False)
 
        # fill in with video
        if self.havevideo==True:
@@ -1160,7 +1166,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            while y <= self.audiostreamcounter:
                if y != streamno:
                    self.audiorows[y].set_active(self.noaudiomenuno[y])
-                   self.audiodata[y]["outputaudiocaps"]="noaud"
+                   self.audiodata[y]["outputaudiocaps"]=False
                else: # make sure we always have 1 active choice 
                    if self.audiorows[streamno].get_active() == self.noaudiomenuno[y]:
                        self.audiorows[0].set_active(0)
@@ -1371,8 +1377,8 @@ class TransmageddonUI(Gtk.ApplicationWindow):
            self.audiorows=[] # set up the lists for holding the codec combobuttons
            self.audiobox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
            self.CodecGrid.attach(self.audiobox, 0, 1, 1, 2)
-       combo = Gtk.ComboBoxText(popup_fixed_width=False)
-       combo.set_popup_fixed_width(False)
+       combo = Gtk.ComboBoxText()
+       # combo.set_popup_fixed_width(False) waiting on GTK+ feature
        self.audiorows.append(combo)
        self.audiobox.add(self.audiorows[streamcounter])
        self.audiorows[streamcounter].connect("changed", self.on_audiocodec_changed)
