@@ -95,7 +95,7 @@ class Transcoder(GObject.GObject):
                    if not (self.audiodata[x]['outputaudiocaps'].intersect(Gst.caps_from_string("audio/mpeg, mpegversion=1, layer=3"))).is_empty():   
                        self.streamdata['container']=Gst.caps_from_string("application/x-id3")
                x=x+1
-       else: 
+       else:
            self.encodebinprofile = GstPbutils.EncodingContainerProfile.new("containerformat", None , self.streamdata['container'], None)
 
            # What to do if we are not doing video passthrough (we only support video inside a 
@@ -420,7 +420,7 @@ class Transcoder(GObject.GObject):
            if tagyes ==True:
                taglistbob=Gst.TagList.new_empty()
                taglistbob.add_value(Gst.TagMergeMode.APPEND, Gst.TAG_APPLICATION_NAME, "Transmageddon transcoder")
-               if self.audiodata[0]['languagecode'] != False:
+               if self.audiodata[0]['languagecode'] != False and self.audiodata[0]['outputaudiocaps'] != False:
                    if self.audiodata[0]['languagecode'] != None:
                        taglistbob.add_value(Gst.TagMergeMode.APPEND, Gst.TAG_LANGUAGE_CODE, self.audiodata[0]['languagecode'])  # FIXME: Currently only doing 1 stream
                if self.audiodata[0]['language'] != False:

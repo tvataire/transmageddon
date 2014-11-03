@@ -1114,9 +1114,6 @@ class TransmageddonUI(Gtk.ApplicationWindow):
 
 
        else: # No audio track(s) found
-           print("hitting the else")
-           #if self.houseclean==False:
-           #    print("setting sensitive false")
            self.audiorows[0].set_sensitive(False)
 
        # fill in with video
@@ -1141,6 +1138,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                                self.videorows[0].append_text("xvid")
                            else:
                                self.videorows[0].append_text(GstPbutils.pb_utils_get_codec_description(c))
+                   self.houseclean=False
                    self.videorows[0].set_sensitive(True)
                    self.videorows[0].set_active(0)
 
