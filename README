@@ -17,6 +17,12 @@ GStreamer Plugins Ugly 1.x
 GStreamer Plugins Bad 1.x
 GStreamer libav 1.x
 
+Recommended for DVD support:
+lsdvd
+libdvdread
+libdvdcss
+
+
 Transmageddon should work with any properly implemented codec plugins out
 there, be that hardware plugins or proprietary ones, but I can make no promises
 as I am not able to test them. But if you have problems please get in touch.
