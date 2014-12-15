@@ -431,7 +431,7 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                             _("Horizontal flip"),
                             _("Vertical flip"), \
                             _("Upper left diagonal flip"),
-                            _("Upper right diagnonal flip") ]
+                            _("Upper right diagonal flip") ]
 
        for y in self.rotationlist: 
            self.rotationchoice.append_text(y)

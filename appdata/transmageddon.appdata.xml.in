@@ -14,7 +14,7 @@ Transmageddon is an application for converting audio and video files between dif
   <ul>
    <_li>Wide range of media codecs</_li>
    <_li>Allows extracting audio or video streams separately</_li>
-   <_li>Alows ripping of DVD if needed software libraries are available</_li>
+   <_li>Allows ripping of DVD if needed software libraries are available</_li>
    <_li>Supports named device presets</_li>
    <_li>Lets you add language metadata if missing</_li>
    <_li>Can change orientation of video if necessary</_li>
