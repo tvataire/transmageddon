@@ -1,387 +1,362 @@
 # Swedish translation for Transmageddon.
-# Copyright (C) 2009, 2010, 2011 Free Software Foundation, Inc.
+# Copyright © 2009, 2010, 2011 Free Software Foundation, Inc.
 # This file is distributed under the same license as the transmageddon package.
 # Daniel Nylander <po@danielnylander.se>, 2009, 2010, 2011.
+# Josef Andersson <josef.andersson@fripost.org>, 2014.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: transmageddon\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-05 11:49+0100\n"
-"PO-Revision-Date: 2011-11-05 11:50+0100\n"
-"Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
-"Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=transmageddon&keywords=I18N+L10N&component=General\n"
+"POT-Creation-Date: 2014-07-07 12:12+0000\n"
+"PO-Revision-Date: 2014-12-29 18:40+0100\n"
+"Last-Translator: Josef Andersson <josef.andersson@fripost.org>\n"
+"Language-Team: Svenska <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Gtranslator 2.91.6\n"
+
+#: ../transmageddon.desktop.in.in.h:1
+msgid "Transmageddon Video Transcoder"
+msgstr "Transmageddon videoomkodare"
+
+#: ../transmageddon.desktop.in.in.h:2
+msgid "Video format conversion tool"
+msgstr "Verktyg för konvertering av videoformat"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:1
+msgid "Transmageddon Media Transcoder"
+msgstr "Transmageddon mediaomkodare"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:2
+msgid "Easy to use audio and video transcoding application"
+msgstr "Ett lättanvänt omkodarprogram för ljud och video"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:3
+msgid ""
+"Transmageddon is an application for converting audio and video files between "
+"different formats. It allows you to either manually choose the formats you "
+"want to convert between or alternatively you can choose a predefined target "
+"and the selections will be made for you. Transmageddon supports a very wide "
+"range of formats and can also optionally function as a DVD ripping tool."
+msgstr ""
+"Transmageddon är ett program för att konvertera ljud- och videofiler till "
+"olika format. Det låter dig manuellt välja de format du vill konvertera "
+"mellan, men du kan också låta valen göras åt dig genom att välja en "
+"förinställning. Transmageddon har ett omfattande formatstöd och kan även "
+"fungera som ett dvd-ripperverktyg."
+
+#: ../appdata/transmageddon.appdata.xml.in.h:4
+msgid "Feature list:"
+msgstr "Funktionslista:"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:5
+msgid "Wide range of media codecs"
+msgstr "Omfattande antal av mediakodekar"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:6
+msgid "Allows extracting audio or video streams separately"
+msgstr "Kan extrahera ljud- och videoströmmar separat"
+
+# report this spelling error
+#: ../appdata/transmageddon.appdata.xml.in.h:7
+msgid "Alows ripping of DVD if needed software libraries are available"
+msgstr ""
+"Möjliggör rippning av dvd-skiva om nödvändiga programbibliotek är "
+"tillgängliga"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:8
+msgid "Supports named device presets"
+msgstr "Stödjer namngivna enhetsförval"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:9
+msgid "Lets you add language metadata if missing"
+msgstr "Låter dig lägga till metadata om det saknas"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:10
+msgid "Can change orientation of video if necessary"
+msgstr "Kan ändra videons riktning om det behövs"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:11
+msgid "Supports files with multiple audio streams"
+msgstr "Stöder filer med flera ljudströmmar"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:12
+msgid ""
+"You might want to install this application if your need to convert media "
+"files between different formats due to for example having hardware that only "
+"supports a limited range of formats."
+msgstr ""
+"Du kanske vill installera detta program om du behöver konvertera media filer "
+"mellan olika format, exempelvis om du har maskinvara som bara stödjer ett "
+"begränsat antal format."
+
+#: ../src/about.py.in:44 ../src/about.py.in:45
+msgid "Transmageddon"
+msgstr "Transmageddon"
+
+#: ../src/about.py.in:47
+msgid ""
+"Transmageddon is a simple video and audio conversion tool for GNOME created "
+"by Christian Fredrik Kalager Schaller."
+msgstr ""
+"Transmageddon är ett enkelt video- och ljudkonverteringsverktyg för GNOME "
+"skapat av Christian Fredrik Kalager Schaller."
 
 #: ../src/about.py.in:48
+msgid "Transmageddon homepage"
+msgstr "Transmageddons webbplats"
+
+#: ../src/about.py.in:50
 msgid "translator-credits"
 msgstr ""
 "Daniel Nylander <po@danielnylander.se>\n"
+"Josef Andersson <josef.andersson@fripost.org>\n"
 "\n"
 "Skicka synpunkter på översättningen till\n"
 "<tp-sv@listor.tp-sv.se>."
 
-#: ../src/presets.py:77
+#: ../src/dvdtrackchooser.py:52
+msgid "Title:"
+msgstr "Titel:"
+
+#: ../src/dvdtrackchooser.py:53
+msgid "Languages:"
+msgstr "Språk:"
+
+#: ../src/dvdtrackchooser.py:54
+msgid "Length:"
+msgstr "Längd:"
+
+#: ../src/dvdtrackchooser.py:54
+msgid "Minute"
+msgid_plural "Minutes"
+msgstr[0] "minut"
+msgstr[1] "minuter"
+
+#: ../src/transmageddon-dvdtrack-chooser.ui.h:1
+msgid "Select a DVD title"
+msgstr "Välj en dvd-titel"
+
+#: ../src/transmageddon-dvdtrack-chooser.ui.h:2
+#: ../src/transmageddon-language-chooser.ui.h:2
+msgid "Cancel"
+msgstr "Avbryt"
+
+#: ../src/transmageddon-dvdtrack-chooser.ui.h:3
+#: ../src/transmageddon-language-chooser.ui.h:3
+msgid "Select"
+msgstr "Välj"
+
+#: ../src/transmageddon-language-chooser.ui.h:1
+msgid "Select a language"
+msgstr "Välj ett språk"
+
+#. append to the menu the options
+#: ../src/transmageddon.py:162
+msgid "About"
+msgstr "Om"
+
+#: ../src/transmageddon.py:163
+msgid "Quit"
+msgstr "Avbryt"
+
+#: ../src/transmageddon.py:164
+msgid "Debug"
+msgstr "Felsök"
+
+#. set default values for various variables
+#: ../src/transmageddon.py:377 ../src/transmageddon.py:821
+#: ../src/transmageddon.py:1025 ../src/transmageddon.py:1173
+msgid "Transcoding Progress"
+msgstr "Förlopp för omkodning"
+
+#. add i18n "No container"option
+#: ../src/transmageddon.py:423
+msgid "No container (Audio-only)"
+msgstr "Ingen behållare (endast ljud)"
+
+#. Populate the rotatation box
+#. print("populating rotationbox")
+#: ../src/transmageddon.py:427
+msgid "No rotation (default)"
+msgstr "Ingen rotation (standard)"
+
+#: ../src/transmageddon.py:428
+msgid "Clockwise 90 degrees"
+msgstr "Medsols 90 grader"
+
+#: ../src/transmageddon.py:429
+msgid "Rotate 180 degrees"
+msgstr "Rotera 180 grader"
+
+#: ../src/transmageddon.py:430
+msgid "Counterclockwise 90 degrees"
+msgstr "Motsols 90 grader"
+
+#: ../src/transmageddon.py:431
+msgid "Horizontal flip"
+msgstr "Vänd horisontellt"
+
+#: ../src/transmageddon.py:432
+msgid "Vertical flip"
+msgstr "Vänd vertikalt"
+
+#: ../src/transmageddon.py:433
+msgid "Upper left diagonal flip"
+msgstr "Diagonal vändning i övre vänster"
+
+#: ../src/transmageddon.py:434
+msgid "Upper right diagnonal flip"
+msgstr "Diagonal vändning i övre höger"
+
+#: ../src/transmageddon.py:457
+msgid "No Presets"
+msgstr "Inga förval"
+
+#: ../src/transmageddon.py:580
 #, python-format
-msgid "Not a valid integer or fraction: %(value)s!"
-msgstr "Inte ett giltigt heltal eller del: %(value)s!"
+msgid "%(min)d:%(sec)02d"
+msgstr "%(min)d:%(sec)02d"
 
-#: ../src/presets.py:410
+#: ../src/transmageddon.py:610
 #, python-format
-msgid "Loaded device %(device)s (%(presets)d presets)"
-msgstr "Läste in enheten %(device)s (%(presets)d förval)"
+msgid "File saved to %(dir)s"
+msgstr "Filen sparades till %(dir)s"
 
-#: ../src/presets.py:477
+#: ../src/transmageddon.py:613
+msgid "%(file)s saved to %(dir)s"
+msgstr "%(file)s sparades till %(dir)s"
+
+#: ../src/transmageddon.py:626
+msgid "Done Transcoding"
+msgstr "Omkodningen är färdig"
+
+#: ../src/transmageddon.py:644 ../src/transmageddon.py:988
 #, python-format
-msgid "Fetching %(location)s"
-msgstr "Hämtar %(location)s"
+msgid "Writing %(filename)s"
+msgstr "Skriver %(filename)s"
 
-#: ../src/presets.py:484
+#: ../src/transmageddon.py:648
+msgid "Pass %(count)d Complete. "
+msgstr "Pass %(count)d är färdigt. "
+
+#. We use None here so that we in transcoder engine can differentiate between,
+#. unknown language and known language, but no language code.
+#: ../src/transmageddon.py:690
+msgid "Unknown"
+msgstr "Okänt"
+
+#. if there is no audio streams
+#: ../src/transmageddon.py:747
+msgid "  No Audio"
+msgstr "  Inget ljud"
+
+#. add a 'No Video option'
+#: ../src/transmageddon.py:756 ../src/transmageddon.py:1142
+msgid "No Video"
+msgstr "Ingen video"
+
+#: ../src/transmageddon.py:873
+msgid ""
+"Got an invalid response from codec installer, can not install missing codec."
+msgstr ""
+"Erhöll ett ogiltigt svar från kodekinstalleraren, kan inte installera saknad "
+"kodek."
+
+#: ../src/transmageddon.py:877
+msgid "No Codec installer helper application available."
+msgstr "Inget hjälpprogram för kodekinstallation tillgängligt."
+
+#: ../src/transmageddon.py:881
+msgid "Plugins not found, choose different codecs."
+msgstr "Insticksmoduler hittades inte, välj andra kodekar."
+
+#: ../src/transmageddon.py:891
+msgid "Codec installation aborted."
+msgstr "Kodekinstallationen avbröts."
+
+#: ../src/transmageddon.py:899
+msgid "Missing plugin installation failed."
+msgstr "Misslyckades med installation av saknad insticksmodul."
+
+#: ../src/transmageddon.py:998
 #, python-format
-msgid "Writing to %(file)s"
-msgstr "Skriver till %(file)s"
+msgid "Pass %(count)d Progress"
+msgstr "Förlopp för pass %(count)d"
 
-#: ../src/presets.py:489
-#, python-format
-msgid "There was an error fetching and installing %(location)s: %(error)s"
-msgstr "Det uppstod ett fel vid hämtning och installation från %(location)s: %(error)s"
+#. add a 'No Audio option'
+#: ../src/transmageddon.py:1083
+msgid "No Audio"
+msgstr "Inget ljud"
 
-#: ../src/presets.py:506
-msgid "Checking for device preset updates..."
-msgstr "Letar efter uppdateringar av enhetsförval..."
+#: ../src/transmageddon.py:1090
+msgid "Audio passthrough"
+msgstr "Ljudgenomströmning"
 
-#: ../src/presets.py:526
-#, python-format
-msgid "Device preset %(name)s is up to date"
-msgstr "Enhetsförvalet %(name)s är uppdaterat"
+#: ../src/transmageddon.py:1148
+msgid "Video passthrough"
+msgstr "Videogenomströmning"
 
-#: ../src/presets.py:530
-#, python-format
-msgid "Found updated device preset %(name)s"
-msgstr "Hittade uppdaterade enhetsförvalet %(name)s"
-
-#: ../src/presets.py:536
-#: ../src/presets.py:549
-#, python-format
-msgid "Error installing preset %(name)s from %(location)s: %(error)s"
-msgstr "Fel vid installation av förvalet %(name)s från %(location)s: %(error)s"
-
-#: ../src/presets.py:543
-#, python-format
-msgid "Found new device preset %(name)s"
-msgstr "Hittade nya enhetsförvalet %(name)s"
-
-#: ../src/presets.py:556
-#, python-format
-msgid "Malformed plugin version line %(line)s"
-msgstr "Felformaterad versionsrad i insticksmodul %(line)s"
-
-#: ../src/presets.py:560
-#, python-format
-msgid "There was a problem accessing %(location)spresets.txt!"
-msgstr "Det uppstod ett problem med åtkomst till %(location)spresets.txt!"
-
-#: ../src/presets.py:582
-msgid "All device presets are up to date!"
-msgstr "Alla enhetsförval är uppdaterade!"
+#: ../src/transmageddon.py:1397
+msgid "Choose Source File..."
+msgstr "Välj källfil…"
 
 #: ../src/transmageddon.ui.h:1
-msgid "<b>Choose Audio Codec</b>:"
-msgstr "<b>Välj ljudkodek</b>:"
-
-#: ../src/transmageddon.ui.h:2
-msgid "<b>Choose Input File:</b>"
-msgstr "<b>Välj inmatningsfil:</b>"
+msgid ""
+"<small>Audio Channels:</small>\n"
+"<small>Audio Codec:</small>"
+msgstr ""
+"<small>Ljudkanaler:</small>\n"
+"<small>Ljudkodek:</small>"
 
 #: ../src/transmageddon.ui.h:3
-msgid "<b>Choose Video Codec</b>:"
-msgstr "<b>Välj videokodek</b>:"
-
-#: ../src/transmageddon.ui.h:4
-msgid "<b>Output Format:</b>"
-msgstr "<b>Utmatningsformat:</b>"
+#| msgid "<small>Video height&#47;width:</small>"
+msgid ""
+"<small>Video height&#47;width:</small>\n"
+"<small>Video Codec:</small>"
+msgstr ""
+"<small>Höjd&#47;bredd för video:</small>\n"
+"<small>Videokodek:</small>"
 
 #: ../src/transmageddon.ui.h:5
 msgid "<b>Presets:</b>"
 msgstr "<b>Förval:</b>"
 
 #: ../src/transmageddon.ui.h:6
-msgid "<small>Audio Channels:</small>"
-msgstr "<small>Ljudkanaler:</small>"
+msgid "<b>Choose Input File:</b>"
+msgstr "<b>Välj inmatningsfil:</b>"
 
 #: ../src/transmageddon.ui.h:7
-msgid "<small>Audio codec:</small>"
-msgstr "<small>Ljudkodek:</small>"
+msgid "<b>Output Format:</b>"
+msgstr "<b>Utmatningsformat:</b>"
 
 #: ../src/transmageddon.ui.h:8
+msgid "<b>Choose Audio Codec</b>:"
+msgstr "<b>Välj ljudkodek</b>:"
+
+#: ../src/transmageddon.ui.h:9
+msgid "<b>Choose Video Codec</b>:"
+msgstr "<b>Välj videokodek</b>:"
+
+#: ../src/transmageddon.ui.h:10
 msgid "<small>Rotate the video image if needed</small>"
 msgstr "<small>Rotera videobilden om det behövs</small>"
 
-#: ../src/transmageddon.ui.h:9
-msgid "<small>Video codec:</small>"
-msgstr "<small>Videokodek:</small>"
-
-#: ../src/transmageddon.ui.h:10
-msgid "<small>Video height&#47;width:</small>"
-msgstr "<small>Höjd och bredd för video:</small>"
-
 #: ../src/transmageddon.ui.h:11
-msgid "Transmageddon"
-msgstr "Transmageddon"
-
-#: ../src/transmageddon.ui.h:12
-msgid "_Debug"
-msgstr "_Felsök"
-
-#: ../src/transmageddon.ui.h:13
-msgid "_Help"
-msgstr "_Hjälp"
-
-#: ../src/transmageddon.ui.h:14
 msgid "_Transcode"
 msgstr "Koda _om"
 
-#: ../src/transmageddon.py:309
-#: ../src/transmageddon.py:681
-#: ../src/transmageddon.py:855
-#: ../src/transmageddon.py:886
-#: ../src/transmageddon.py:974
-#: ../src/transmageddon.py:1055
-msgid "Transcoding Progress"
-msgstr "Förlopp för omkodning"
+#: ../src/udevdisco.py:222
+msgid "Not mounted."
+msgstr "Ej monterad."
 
-#. add i18n "No container"option
-#: ../src/transmageddon.py:344
-msgid "No container (Audio-only)"
-msgstr "Ingen container (endast ljud)"
-
-#. Populate the rotatation box
-#: ../src/transmageddon.py:347
-msgid "No rotation (default)"
-msgstr "Ingen rotering (standard)"
-
-#: ../src/transmageddon.py:348
-msgid "Clockwise 90 degrees"
-msgstr "Medsols 90 grader"
-
-#: ../src/transmageddon.py:349
-msgid "Rotate 180 degrees"
-msgstr "Rotera 180 grader"
-
-#: ../src/transmageddon.py:350
-msgid "Counterclockwise 90 degrees"
-msgstr "Motsols 90 grader"
-
-#: ../src/transmageddon.py:351
-msgid "Horizontal flip"
-msgstr "Vänd horisontellt"
-
-#: ../src/transmageddon.py:352
-msgid "Vertical flip"
-msgstr "Vänd vertikalt"
-
-#: ../src/transmageddon.py:353
-msgid "Upper left diagonal flip"
-msgstr "Diagonal vändning i övre vänster"
-
-#: ../src/transmageddon.py:354
-msgid "Upper right diagnonal flip"
-msgstr "Diagonal vändning i övre höger"
-
-#: ../src/transmageddon.py:375
-#: ../src/transmageddon.py:990
-msgid "No Presets"
-msgstr "Inga förval"
-
-#: ../src/transmageddon.py:468
-#, python-format
-msgid "%(min)d:%(sec)02d"
-msgstr "%(min)d:%(sec)02d"
-
-#: ../src/transmageddon.py:499
-#, python-format
-msgid "File saved to %(dir)s"
-msgstr "Filen sparades till %(dir)s"
-
-#: ../src/transmageddon.py:509
-msgid "Done Transcoding"
-msgstr "Omkodningen är färdig"
-
-#: ../src/transmageddon.py:520
-#, python-format
-msgid "Pass %(count)d Complete"
-msgstr "Pass %(count)d är färdigt"
-
-#: ../src/transmageddon.py:523
-msgid "Start next pass"
-msgstr "Starta nästa pass"
-
-#: ../src/transmageddon.py:572
-msgid "No Audio"
-msgstr "Inget ljud"
-
-#. add a 'No Video option'
-#: ../src/transmageddon.py:593
-#: ../src/transmageddon.py:956
-msgid "No Video"
-msgstr "Ingen video"
-
-#: ../src/transmageddon.py:762
-msgid "Plugins not found, choose different codecs."
-msgstr "Insticksmoduler hittades inte. Välj andra kodekar."
-
-#: ../src/transmageddon.py:770
-msgid "Codec installation aborted."
-msgstr "Kodekinstallationen avbröts."
-
-#: ../src/transmageddon.py:778
-msgid "Missing plugin installation failed: "
-msgstr "Installation av saknad insticksmodul misslyckades: "
-
-#: ../src/transmageddon.py:853
-#, python-format
-msgid "Writing %(filename)s"
-msgstr "Skriver %(filename)s"
-
-#: ../src/transmageddon.py:858
-#, python-format
-msgid "Pass %(count)d Progress"
-msgstr "Förlopp för pass %(count)d"
-
-#: ../src/transmageddon.py:962
-msgid "Video passthrough"
-msgstr "Video passthrough"
-
-#: ../src/transmageddon.py:967
-msgid "Audio passthrough"
-msgstr "Ljud passthrough"
-
-#: ../src/transmageddon.py:1057
-msgid "No audio parser, passthrough not available"
-msgstr "Ingen ljudtolkare, passthrough inte tillgängligt"
-
-#: ../src/transmageddon.py:1062
-msgid "No video parser, passthrough not available"
-msgstr "Ingen videotolkare, passthrough inte tillgängligt"
-
-#: ../src/transmageddon.py:1067
-msgid "Uknown error"
-msgstr "Okänt fel"
-
-#: ../src/utils.py:73
+#: ../src/utils.py:75
 #, python-format
 msgid "Can't find %(path)s in any known prefix!"
 msgstr "Kan inte hitta %(path)s i något känt prefix!"
 
-#: ../transmageddon.desktop.in.in.h:1
-msgid "Transmageddon Video Transcoder"
-msgstr "Videoomkodaren Transmageddon"
-
-#: ../transmageddon.desktop.in.in.h:2
-msgid "Video format conversion tool"
-msgstr "Verktyg för konvertering av videoformat"
-
-#~ msgid "Estimated time remaining: %(time)s"
-#~ msgstr "Beräknad återstående tid: %(time)s"
-
-#~ msgid "Pass %(count)d time remaining: %(time)s"
-#~ msgstr "Pass %(count)d återstående tid: %(time)s"
-
-#~ msgid "AA_C"
-#~ msgstr "AA_C"
-
-#~ msgid "AC_3"
-#~ msgstr "AC_3"
-
-#~ msgid "AMR-N_B"
-#~ msgstr "AMR-N_B"
-
-#~ msgid "Celt _Ultra"
-#~ msgstr "Celt _Ultra"
-
-#~ msgid "F_LAC"
-#~ msgstr "F_LAC"
-
-#~ msgid "H263_plus"
-#~ msgstr "H263_plus"
-
-#~ msgid "H2_64"
-#~ msgstr "H2_64"
-
-#~ msgid "MPEG_2"
-#~ msgstr "MPEG_2"
-
-#~ msgid "MPEG_4/DivX5"
-#~ msgstr "MPEG_4/DivX5"
-
-#~ msgid "Theo_ra"
-#~ msgstr "Theo_ra"
-
-#~ msgid "V_orbis"
-#~ msgstr "V_orbis"
-
-#~ msgid "W_indowsMediaAudio 2"
-#~ msgstr "W_indowsMediaAudio 2"
-
-#~ msgid "_Dirac"
-#~ msgstr "_Dirac"
-
-#~ msgid "_On2 VP8"
-#~ msgstr "_On2 VP8"
-
-#~ msgid "_Speex"
-#~ msgstr "_Speex"
-
-#~ msgid "_WindowsMediaVideo2"
-#~ msgstr "_WindowsMediaVideo2"
-
-#~ msgid "_mp3"
-#~ msgstr "_mp3"
-
-#~ msgid "_xvid"
-#~ msgstr "_xvid"
-
-#~ msgid "Video width&#47;height: "
-#~ msgstr "Bredd och höjd för video: "
-
-#~ msgid "Video codec: %(codec)s"
-#~ msgstr "Videokodek: %(codec)s"
-
-#~ msgid "Audio channels: %(chans)s"
-#~ msgstr "Ljudkanaler: %(chans)s"
-
-#~ msgid "Audio codec: %(codec)s"
-#~ msgstr "Ljudkodek: %(codec)s"
-
-#~ msgid "Pass "
-#~ msgstr "Pass "
-
-#~ msgid "Writing "
-#~ msgstr "Skriver "
-
-#~ msgid "_Edit"
-#~ msgstr "R_edigera"
-
-#~ msgid "_File"
-#~ msgstr "_Arkiv"
-
-#~ msgid "_View"
-#~ msgstr "_Visa"
-
-#~ msgid "Celt"
-#~ msgstr "Celt"
-
-#~ msgid "H263+"
-#~ msgstr "H263+"
-
-#~ msgid "WMA2"
-#~ msgstr "WMA2"
-
-#~ msgid "WMV2"
-#~ msgstr "WMV2"
-
-#~ msgid "Value may only contain one comma; got %(value)s"
-#~ msgstr "Värdet får endast innehålla ett kommatecken; fick %(value)s"
