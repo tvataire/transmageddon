@@ -3,15 +3,15 @@
 # This file is distributed under the same license as the transmageddon package.
 #
 # Gabor Kelemen <kelemeng at gnome dot hu>, 2010, 2014, 2015.
-# Balázs Úr <urbalazs at gmail dot com>, 2013.
+# Balázs Úr <urbalazs at gmail dot com>, 2013, 2015.
 msgid ""
 msgstr ""
 "Project-Id-Version: transmageddon master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=transmageddon&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2014-07-07 12:12+0000\n"
-"PO-Revision-Date: 2015-01-05 16:36+0100\n"
-"Last-Translator: Gabor Kelemen <kelemeng at gnome dot hu>\n"
+"POT-Creation-Date: 2015-02-24 08:54+0000\n"
+"PO-Revision-Date: 2015-02-28 00:54+0100\n"
+"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
 "Language-Team: Hungarian <openscope at gmail dot com>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,7 @@ msgstr ""
 "X-Poedit-Language: Hungarian\n"
 "X-Poedit-Country: HUNGARY\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Lokalize 1.5\n"
+"X-Generator: Lokalize 1.2\n"
 
 #: ../transmageddon.desktop.in.in.h:1
 msgid "Transmageddon Video Transcoder"
@@ -32,7 +32,6 @@ msgid "Video format conversion tool"
 msgstr "Videoformátum-átalakító eszköz"
 
 #: ../appdata/transmageddon.appdata.xml.in.h:1
-#| msgid "Transmageddon Video Transcoder"
 msgid "Transmageddon Media Transcoder"
 msgstr "Transmageddon médiaátkódoló"
 
@@ -67,12 +66,12 @@ msgid "Allows extracting audio or video streams separately"
 msgstr "Lehetővé teszi a hang- és videosávok kinyerését külön-külön"
 
 #: ../appdata/transmageddon.appdata.xml.in.h:7
-msgid "Alows ripping of DVD if needed software libraries are available"
+#| msgid "Alows ripping of DVD if needed software libraries are available"
+msgid "Allows ripping of DVD if needed software libraries are available"
 msgstr ""
-"Lehetővé teszi DVD beolvasását, ha a szükséges programkönyvtárak elérhetők"
+"Lehetővé teszi DVD beolvasását, ha a szükséges szoftverkönyvtárak érhetők el"
 
 #: ../appdata/transmageddon.appdata.xml.in.h:8
-#| msgid "Found new device preset %(name)s"
 msgid "Supports named device presets"
 msgstr "Támogatja a nevesített eszköz-előbeállításokat"
 
@@ -98,11 +97,11 @@ msgstr ""
 "formátumot támogató hardvereszközöket használ, amelyek miatt különböző "
 "formátumú médiafájlokat kell átalakítania."
 
-#: ../src/about.py.in:44 ../src/about.py.in:45
+#: ../src/about.py.in:49 ../src/about.py.in:50
 msgid "Transmageddon"
 msgstr "Transmageddon"
 
-#: ../src/about.py.in:47
+#: ../src/about.py.in:52
 msgid ""
 "Transmageddon is a simple video and audio conversion tool for GNOME created "
 "by Christian Fredrik Kalager Schaller."
@@ -110,11 +109,11 @@ msgstr ""
 "A Transmageddon egy egyszerű videó és hang átalakító eszköz a GNOME-hoz, "
 "amelyet Christian Fredrik Kalager Schaller készített."
 
-#: ../src/about.py.in:48
+#: ../src/about.py.in:53
 msgid "Transmageddon homepage"
 msgstr "Transmageddon honlap"
 
-#: ../src/about.py.in:50
+#: ../src/about.py.in:55
 msgid "translator-credits"
 msgstr ""
 "Csordás László <csola48 at gmail dot com>\n"
@@ -134,25 +133,24 @@ msgid "Length:"
 msgstr "Hossz:"
 
 #: ../src/dvdtrackchooser.py:54
-#| msgid "Minutes"
 msgid "Minute"
 msgid_plural "Minutes"
 msgstr[0] "Perc"
 msgstr[1] "Perc"
 
 #: ../src/transmageddon-dvdtrack-chooser.ui.h:1
-msgid "Select a DVD title"
-msgstr "Válasszon ki egy DVD címet"
-
-#: ../src/transmageddon-dvdtrack-chooser.ui.h:2
 #: ../src/transmageddon-language-chooser.ui.h:2
 msgid "Cancel"
 msgstr "Mégse"
 
-#: ../src/transmageddon-dvdtrack-chooser.ui.h:3
+#: ../src/transmageddon-dvdtrack-chooser.ui.h:2
 #: ../src/transmageddon-language-chooser.ui.h:3
 msgid "Select"
 msgstr "Kiválasztás"
+
+#: ../src/transmageddon-dvdtrack-chooser.ui.h:3
+msgid "Select a DVD title"
+msgstr "Válasszon ki egy DVD címet"
 
 #: ../src/transmageddon-language-chooser.ui.h:1
 msgid "Select a language"
@@ -172,12 +170,11 @@ msgid "Debug"
 msgstr "Hibakeresés"
 
 #. set default values for various variables
-#: ../src/transmageddon.py:377 ../src/transmageddon.py:821
-#: ../src/transmageddon.py:1025 ../src/transmageddon.py:1173
+#: ../src/transmageddon.py:377 ../src/transmageddon.py:823
+#: ../src/transmageddon.py:1027 ../src/transmageddon.py:1177
 msgid "Transcoding Progress"
 msgstr "Átkódolás előrehaladása"
 
-#. add i18n "No container"option
 #: ../src/transmageddon.py:423
 msgid "No container (Audio-only)"
 msgstr "Nincs konténer (csak hang)"
@@ -213,7 +210,8 @@ msgid "Upper left diagonal flip"
 msgstr "Bal felső átlós tükrözés"
 
 #: ../src/transmageddon.py:434
-msgid "Upper right diagnonal flip"
+#| msgid "Upper right diagnonal flip"
+msgid "Upper right diagonal flip"
 msgstr "Jobb felső átlós tükrözés"
 
 #: ../src/transmageddon.py:457
@@ -239,7 +237,7 @@ msgstr "%(file)s mentve a következőbe: %(dir)s"
 msgid "Done Transcoding"
 msgstr "Átkódolás kész"
 
-#: ../src/transmageddon.py:644 ../src/transmageddon.py:988
+#: ../src/transmageddon.py:644 ../src/transmageddon.py:990
 #, python-format
 msgid "Writing %(filename)s"
 msgstr "%(filename)s írása"
@@ -261,64 +259,56 @@ msgid "  No Audio"
 msgstr "  Nincs hang"
 
 #. add a 'No Video option'
-#: ../src/transmageddon.py:756 ../src/transmageddon.py:1142
+#: ../src/transmageddon.py:756 ../src/transmageddon.py:1146
 msgid "No Video"
 msgstr "Nincs videó"
 
-#: ../src/transmageddon.py:873
+#: ../src/transmageddon.py:875
 msgid ""
 "Got an invalid response from codec installer, can not install missing codec."
 msgstr ""
 "Érvénytelen válasz érkezett a kodek-telepítőtől, nem telepíthető a hiányzó "
 "kodek."
 
-#: ../src/transmageddon.py:877
+#: ../src/transmageddon.py:879
 msgid "No Codec installer helper application available."
 msgstr "Nem érhető el kodek-telepítő segédalkalmazás."
 
-#: ../src/transmageddon.py:881
+#: ../src/transmageddon.py:883
 msgid "Plugins not found, choose different codecs."
 msgstr "Nem találhatók bővítmények, válasszon másik kodeket."
 
-#: ../src/transmageddon.py:891
+#: ../src/transmageddon.py:893
 msgid "Codec installation aborted."
 msgstr "A kodek telepítése megszakítva."
 
-#: ../src/transmageddon.py:899
+#: ../src/transmageddon.py:901
 msgid "Missing plugin installation failed."
 msgstr "A hiányzó bővítmény telepítése meghiúsult."
 
-#: ../src/transmageddon.py:998
+#: ../src/transmageddon.py:1000
 #, python-format
 msgid "Pass %(count)d Progress"
 msgstr "%(count)d. lépés előrehaladása"
 
 #. add a 'No Audio option'
-#: ../src/transmageddon.py:1083
+#: ../src/transmageddon.py:1087
 msgid "No Audio"
 msgstr "Nincs hang"
 
-#: ../src/transmageddon.py:1090
+#: ../src/transmageddon.py:1094
 msgid "Audio passthrough"
 msgstr "Hangáthaladás"
 
-#: ../src/transmageddon.py:1148
+#: ../src/transmageddon.py:1152
 msgid "Video passthrough"
 msgstr "Videoáthaladás"
 
-#: ../src/transmageddon.py:1397
+#: ../src/transmageddon.py:1399
 msgid "Choose Source File..."
 msgstr "Forrásfájl kiválasztása…"
 
 #: ../src/transmageddon.ui.h:1
-msgid ""
-"<small>Audio Channels:</small>\n"
-"<small>Audio Codec:</small>"
-msgstr ""
-"<small>Hangcsatornák:</small>\n"
-"<small>Hang kodek:</small>"
-
-#: ../src/transmageddon.ui.h:3
 msgid ""
 "<small>Video height&#47;width:</small>\n"
 "<small>Video Codec:</small>"
@@ -326,17 +316,25 @@ msgstr ""
 "<small>Videó magassága és szélessége:</small>\n"
 "<small>Videó kodek:</small>"
 
-#: ../src/transmageddon.ui.h:5
-msgid "<b>Presets:</b>"
-msgstr "<b>Előbeállítások:</b>"
-
-#: ../src/transmageddon.ui.h:6
+#: ../src/transmageddon.ui.h:3
 msgid "<b>Choose Input File:</b>"
 msgstr "<b>Válasszon bemeneti fájlt:</b>"
 
-#: ../src/transmageddon.ui.h:7
+#: ../src/transmageddon.ui.h:4
+msgid "<b>Presets:</b>"
+msgstr "<b>Előbeállítások:</b>"
+
+#: ../src/transmageddon.ui.h:5
 msgid "<b>Output Format:</b>"
 msgstr "<b>Kimeneti formátum:</b>"
+
+#: ../src/transmageddon.ui.h:6
+msgid ""
+"<small>Audio Channels:</small>\n"
+"<small>Audio Codec:</small>"
+msgstr ""
+"<small>Hangcsatornák:</small>\n"
+"<small>Hang kodek:</small>"
 
 #: ../src/transmageddon.ui.h:8
 msgid "<b>Choose Audio Codec</b>:"
