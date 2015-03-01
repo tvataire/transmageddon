@@ -203,8 +203,6 @@ msgid "Upper left diagonal flip"
 msgstr "Překlopit diagonálně zleva nahoře"
 
 #: ../src/transmageddon.py:434
-#, fuzzy
-#| msgid "Upper right diagnonal flip"
 msgid "Upper right diagonal flip"
 msgstr "Překlopit diagonálně zprava nahoře"
 
