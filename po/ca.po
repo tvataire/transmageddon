@@ -1,13 +1,13 @@
 #
-# Copyright (C) 2009-2010 Jordi Mas i Hernàndez, jmas@softcatala.org
+# Copyright (C) 2009-2015 Jordi Mas i Hernàndez, jmas@softcatala.org
 #
 # Traducció del Transmageddon al català
 #
-# Correccions: David Planella 
+# Correccions: David Planella
 #
 # N.T.
 #
-# 1) Traduïm "preset" per "predefinició" 
+# 1) Traduïm "preset" per "predefinició"
 # 2) Traduïm "Transcoding" per "Transcodificació"
 #
 #
@@ -15,355 +15,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-21 12:56+0100\n"
-"PO-Revision-Date: 2009-10-11 09:50+0200\n"
-"Last-Translator: Jordi Mas <jmas@softcatala.org>\n"
+"POT-Creation-Date: 2015-03-14 07:56-0400\n"
+"PO-Revision-Date: 2015-03-14 07:56-0500\n"
+"Last-Translator: Jordi Mas i Hernàndez <jmas@softcatala.org>\n"
 "Language-Team: tradgnome@softcatala.net\n"
+"Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-
-#: ../src/about.py.in:48
-msgid "translator-credits"
-msgstr "Jordi Mas i Hernàndez <jmas@softcatala.org>"
-
-#: ../src/presets.py:77
-#, python-format
-msgid "Not a valid integer or fraction: %(value)s!"
-msgstr "%(value)s no és un enter o fracció vàlida"
-
-#: ../src/presets.py:410
-#, python-format
-msgid "Loaded device %(device)s (%(presets)d presets)"
-msgstr "S'ha carregat el dispositiu %(device)s (%(presets)d predefinicions)"
-
-#: ../src/presets.py:477
-#, python-format
-msgid "Fetching %(location)s"
-msgstr "S'està obtenint %(location)s"
-
-#: ../src/presets.py:484
-#, python-format
-msgid "Writing to %(file)s"
-msgstr "S'està escrivint a %(file)s"
-
-#: ../src/presets.py:489
-#, python-format
-msgid "There was an error fetching and installing %(location)s: %(error)s"
-msgstr "S'ha produït un error en obtenir i instal·lar %(location)s: %(error)s"
-
-#: ../src/presets.py:506
-msgid "Checking for device preset updates..."
-msgstr ""
-"S'està comprovant si hi ha actualitzacions de les predefinicions del "
-"dispositiu..."
-
-#: ../src/presets.py:526
-#, python-format
-msgid "Device preset %(name)s is up to date"
-msgstr "La predefinició del dispositiu %(name)s està actualitzada"
-
-#: ../src/presets.py:530
-#, python-format
-msgid "Found updated device preset %(name)s"
-msgstr "S'ha trobat una predefinició actualitzada del dispositiu %(name)s"
-
-#: ../src/presets.py:536 ../src/presets.py:549
-#, python-format
-msgid "Error installing preset %(name)s from %(location)s: %(error)s"
-msgstr ""
-"S'ha produït un error en instal·lar la predefinició %(name)s des de %"
-"(location)s: %(error)s"
-
-#: ../src/presets.py:543
-#, python-format
-msgid "Found new device preset %(name)s"
-msgstr "S'ha trobat una predefinició nova del dispositiu %(name)s"
-
-#: ../src/presets.py:556
-#, python-format
-msgid "Malformed plugin version line %(line)s"
-msgstr "Línia de la versió del connector mal formada: %(line)s"
-
-#: ../src/presets.py:560
-#, python-format
-msgid "There was a problem accessing %(location)spresets.txt!"
-msgstr "S'ha produït un error en accedir a %(location)spresets.txt"
-
-#: ../src/presets.py:582
-msgid "All device presets are up to date!"
-msgstr "Totes les predefinicions del dispositiu estan actualitzades"
-
-#: ../src/transmageddon.ui.h:1
-msgid "<b>Choose Audio Codec</b>:"
-msgstr "<b>Trieu el còdec d'àudio</b>:"
-
-#: ../src/transmageddon.ui.h:2
-msgid "<b>Choose Input File:</b>"
-msgstr "<b>Trieu el fitxer d'entrada:</b>"
-
-#: ../src/transmageddon.ui.h:3
-msgid "<b>Choose Video Codec</b>:"
-msgstr "<b>Trieu el còdec de vídeo</b>:"
-
-#: ../src/transmageddon.ui.h:4
-msgid "<b>Output Format:</b>"
-msgstr "<b>Format de sortida:</b>"
-
-#: ../src/transmageddon.ui.h:5
-msgid "<b>Presets:</b>"
-msgstr "<b>Predefinicions:</b>"
-
-#: ../src/transmageddon.ui.h:6
-msgid "<small>Audio Channels:</small>"
-msgstr "<small>Canals d'àudio:</small>"
-
-#: ../src/transmageddon.ui.h:7
-msgid "<small>Audio codec:</small>"
-msgstr "<small>Còdec d'àudio:</small>"
-
-#: ../src/transmageddon.ui.h:8
-msgid "<small>Rotate the video image if needed</small>"
-msgstr "<small>Gira la imatge del vídeo si és necessari</small>"
-
-#: ../src/transmageddon.ui.h:9
-msgid "<small>Video codec:</small>"
-msgstr "<small>Còdec de vídeo:</small>"
-
-#: ../src/transmageddon.ui.h:10
-msgid "<small>Video height&#47;width:</small>"
-msgstr "<small>Alçada i amplada del vídeo:</small>"
-
-#: ../src/transmageddon.ui.h:11
-msgid "AA_C"
-msgstr "AA_C"
-
-#: ../src/transmageddon.ui.h:12
-msgid "AC_3"
-msgstr "AC_3"
-
-#: ../src/transmageddon.ui.h:13
-msgid "AMR-N_B"
-msgstr "AMR-N_B"
-
-#: ../src/transmageddon.ui.h:14
-msgid "Celt _Ultra"
-msgstr "Celt _Ultra"
-
-#: ../src/transmageddon.ui.h:15
-msgid "F_LAC"
-msgstr "F_LAC"
-
-#: ../src/transmageddon.ui.h:16
-msgid "H263_plus"
-msgstr "H263_plus"
-
-#: ../src/transmageddon.ui.h:17
-msgid "H2_64"
-msgstr "H2_64"
-
-#: ../src/transmageddon.ui.h:18
-msgid "MPEG_2"
-msgstr "MPEG_2"
-
-#: ../src/transmageddon.ui.h:19
-msgid "MPEG_4/DivX5"
-msgstr "MPEG_4/DivX5"
-
-#: ../src/transmageddon.ui.h:20
-msgid "Theo_ra"
-msgstr "Theo_ra"
-
-#: ../src/transmageddon.ui.h:21
-msgid "Transmageddon"
-msgstr "Transmageddon"
-
-#: ../src/transmageddon.ui.h:22
-msgid "V_orbis"
-msgstr "V_orbis"
-
-#: ../src/transmageddon.ui.h:23
-msgid "W_indowsMediaAudio 2"
-msgstr "W_indowsMediaAudio 2"
-
-#: ../src/transmageddon.ui.h:24
-msgid "_Audio passthrough"
-msgstr "_Passada d'àudio"
-
-#: ../src/transmageddon.ui.h:25
-msgid "_Debug"
-msgstr "_Depuració"
-
-#: ../src/transmageddon.ui.h:26
-msgid "_Dirac"
-msgstr "_Dirac"
-
-#: ../src/transmageddon.ui.h:27
-msgid "_Help"
-msgstr "Aj_uda"
-
-#: ../src/transmageddon.ui.h:28
-msgid "_On2 VP8"
-msgstr "_On2 VP8"
-
-#: ../src/transmageddon.ui.h:29
-msgid "_Speex"
-msgstr "_Speex"
-
-#: ../src/transmageddon.ui.h:30
-msgid "_Transcode"
-msgstr "_Transcodifica"
-
-#: ../src/transmageddon.ui.h:31
-msgid "_Video passthrough"
-msgstr "_Passada de vídeo"
-
-#: ../src/transmageddon.ui.h:32
-msgid "_WindowsMediaVideo2"
-msgstr "_WindowsMediaVideo2"
-
-#: ../src/transmageddon.ui.h:33
-msgid "_mp3"
-msgstr "_mp3"
-
-#: ../src/transmageddon.ui.h:34
-msgid "_xvid"
-msgstr "_xvid"
-
-#: ../src/transmageddon.py:232 ../src/transmageddon.py:499
-#: ../src/transmageddon.py:620 ../src/transmageddon.py:641
-#: ../src/transmageddon.py:649 ../src/transmageddon.py:723
-msgid "Transcoding Progress"
-msgstr "Progrés de la transcodificació"
-
-#. Populate the rotatation box
-#: ../src/transmageddon.py:251
-msgid "No rotation (default)"
-msgstr "Sense rotació (predeterminat)"
-
-#: ../src/transmageddon.py:251
-msgid "Clockwise 90 degrees"
-msgstr "En sentit horari 90 graus"
-
-#: ../src/transmageddon.py:251
-msgid "Rotate 180 degrees"
-msgstr "Gira 180 graus"
-
-#: ../src/transmageddon.py:252
-msgid "Counterclockwise 90 degrees"
-msgstr "En sentit antihorari 90 graus"
-
-#: ../src/transmageddon.py:252
-msgid "Horizontal flip"
-msgstr "Inverteix horitzontalment"
-
-#: ../src/transmageddon.py:253
-msgid "Vertical flip"
-msgstr "Inverteix verticalment"
-
-#: ../src/transmageddon.py:253
-msgid "Upper left diagonal flip"
-msgstr "Inverteix per la diagonal superior esquerra"
-
-#: ../src/transmageddon.py:254
-msgid "Upper right diagnonal flip"
-msgstr "Inverteix per la diagonal superior dreta"
-
-#: ../src/transmageddon.py:275
-msgid "No Presets"
-msgstr ""
-#msgstr "Sense predefinició"
-
-#: ../src/transmageddon.py:359
-#, python-format
-msgid "%(min)d:%(sec)02d"
-msgstr "%(min)d:%(sec)02d"
-
-#: ../src/transmageddon.py:365
-#, python-format
-msgid "Estimated time remaining: %(time)s"
-msgstr "Temps restant estimat:  %(time)s"
-
-#: ../src/transmageddon.py:367
-#, python-format
-msgid "Pass %(count)d time remaining: %(time)s"
-msgstr "Temps restant estimat de %(time)s pel pas %(count)d"
-
-#: ../src/transmageddon.py:387
-#, python-format
-msgid "File saved to %(dir)s"
-msgstr "S'ha desat el fitxer a %(dir)s"
-
-#: ../src/transmageddon.py:396
-msgid "Done Transcoding"
-msgstr "S'ha finalitzat la transcodificació"
-
-#: ../src/transmageddon.py:402
-#, python-format
-msgid "Pass %(count)d Complete"
-msgstr "Pas %(count)d completat"
-
-#: ../src/transmageddon.py:404
-msgid "Start next pass"
-msgstr "Inicia el pas següent"
-
-#: ../src/transmageddon.py:420
-msgid "Video width&#47;height: "
-msgstr "Amplada&#47;alçada del vídeo:"
-
-#: ../src/transmageddon.py:422
-#, python-format
-msgid "Video codec: %(codec)s"
-msgstr "Còdec de vídeo: %(codec)s"
-
-#: ../src/transmageddon.py:427
-#, python-format
-msgid "Audio channels: %(chans)s"
-msgstr "Canals d'àudio:  %(chans)s"
-
-#: ../src/transmageddon.py:428
-#, python-format
-msgid "Audio codec: %(codec)s"
-msgstr "Còdec d'àudio: %(codec)s"
-
-#: ../src/transmageddon.py:546
-msgid "Plugins not found, choose different codecs."
-msgstr "No s'han trobat els connectors, trieu uns còdecs diferents."
-
-#: ../src/transmageddon.py:554
-msgid "Codec installation aborted."
-msgstr "S'ha cancel·lat la instal·lació del còdec."
-
-#: ../src/transmageddon.py:562
-msgid "Missing plugin installation failed: "
-msgstr "Ha fallat la instal·lació del connector que mancava: "
-
-#: ../src/transmageddon.py:618
-#, python-format
-msgid "Writing %(filename)s"
-msgstr "S'està escrivint a %(filename)s"
-
-#: ../src/transmageddon.py:623
-#, python-format
-msgid "Pass %(count)d Progress"
-msgstr "Progrés de la passada %(count)d"
-
-#: ../src/transmageddon.py:725
-msgid "No audio parser, passthrough not available"
-msgstr "No hi ha un analitzador d'àudio, passada no disponible"
-
-#: ../src/transmageddon.py:732
-msgid "No video parser, passthrough not available"
-msgstr "No hi ha un analitzador de vídeo, passada no disponible"
-
-#: ../src/transmageddon.py:739
-msgid "Uknown error"
-msgstr "Error desconegut"
-
-#: ../src/utils.py:73
-#, python-format
-msgid "Can't find %(path)s in any known prefix!"
-msgstr "No es pot trobar %(path)s a cap prefix conegut"
+"X-Generator: Poedit 1.5.4\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #: ../transmageddon.desktop.in.in.h:1
 msgid "Transmageddon Video Transcoder"
@@ -372,6 +33,451 @@ msgstr "Transcodificador de vídeo Transmageddon"
 #: ../transmageddon.desktop.in.in.h:2
 msgid "Video format conversion tool"
 msgstr "Eina de conversió de formats de vídeo"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:1
+msgid "Transmageddon Media Transcoder"
+msgstr "Transcodificador de vídeo Transmageddon"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:2
+msgid "Easy to use audio and video transcoding application"
+msgstr "Una aplicació senzilla per transcodificar àudio i vídeo"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:3
+msgid ""
+"Transmageddon is an application for converting audio and video files between "
+"different formats. It allows you to either manually choose the formats you "
+"want to convert between or alternatively you can choose a predefined target "
+"and the selections will be made for you. Transmageddon supports a very wide "
+"range of formats and can also optionally function as a DVD ripping tool."
+msgstr ""
+
+#: ../appdata/transmageddon.appdata.xml.in.h:4
+msgid "Feature list:"
+msgstr "Llista de característiques:"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:5
+msgid "Wide range of media codecs"
+msgstr "Un ampli ventall de còdecs multimèdia"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:6
+msgid "Allows extracting audio or video streams separately"
+msgstr "Permet extreure fluxos d'àudio o vídeo separadament"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:7
+msgid "Allows ripping of DVD if needed software libraries are available"
+msgstr "Permet fer extraccions de DVD si les biblioteques de programari necessàries estan disponibles"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:8
+msgid "Supports named device presets"
+msgstr "Suporta predefinicions de dispositius amb nom"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:9
+msgid "Lets you add language metadata if missing"
+msgstr "Si manquen, podeu afegir les metadades de la llengua"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:10
+msgid "Can change orientation of video if necessary"
+msgstr "Si cal, podeu canviar l'orientació del vídeo"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:11
+msgid "Supports files with multiple audio streams"
+msgstr "Suporta fitxers amb múltiples fluxos de dades d'àudio"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:12
+msgid ""
+"You might want to install this application if your need to convert media "
+"files between different formats due to for example having hardware that only "
+"supports a limited range of formats."
+msgstr ""
+
+#: ../src/about.py.in:49 ../src/about.py.in:50
+msgid "Transmageddon"
+msgstr "Transmageddon"
+
+#: ../src/about.py.in:52
+msgid ""
+"Transmageddon is a simple video and audio conversion tool for GNOME created "
+"by Christian Fredrik Kalager Schaller."
+msgstr ""
+"Transmageddon és una eina de conversió d'àudio i vídeo per al GNOME creada "
+"per Christian Fredrik Kalager Schaller."
+
+#: ../src/about.py.in:53
+msgid "Transmageddon homepage"
+msgstr "Lloc web del Transmageddon"
+
+#: ../src/about.py.in:55
+msgid "translator-credits"
+msgstr "Jordi Mas i Hernàndez <jmas@softcatala.org>"
+
+#: ../src/dvdtrackchooser.py:52
+msgid "Title:"
+msgstr "Títol:"
+
+#: ../src/dvdtrackchooser.py:53
+msgid "Languages:"
+msgstr "Llenguatges:"
+
+#: ../src/dvdtrackchooser.py:54
+msgid "Length:"
+msgstr "Longitud:"
+
+#: ../src/dvdtrackchooser.py:54
+msgid "Minute"
+msgid_plural "Minutes"
+msgstr[0] "Minut"
+msgstr[1] "Minuts"
+
+#: ../src/transmageddon-dvdtrack-chooser.ui.h:1
+#: ../src/transmageddon-language-chooser.ui.h:2
+msgid "Cancel"
+msgstr "Cancel·la"
+
+#: ../src/transmageddon-dvdtrack-chooser.ui.h:2
+#: ../src/transmageddon-language-chooser.ui.h:3
+msgid "Select"
+msgstr "Seleccioneu"
+
+#: ../src/transmageddon-dvdtrack-chooser.ui.h:3
+msgid "Select a DVD title"
+msgstr "Seleccioneu un títol DVD"
+
+#: ../src/transmageddon-language-chooser.ui.h:1
+msgid "Select a language"
+msgstr "Seleccioneu una llengua"
+
+#. append to the menu the options
+#: ../src/transmageddon.py:162
+msgid "About"
+msgstr "Quant a"
+
+#: ../src/transmageddon.py:163
+msgid "Quit"
+msgstr "Surt"
+
+#: ../src/transmageddon.py:164
+msgid "Debug"
+msgstr "Depuració"
+
+#. set default values for various variables
+#: ../src/transmageddon.py:377 ../src/transmageddon.py:823
+#: ../src/transmageddon.py:1027 ../src/transmageddon.py:1177
+msgid "Transcoding Progress"
+msgstr "Progrés de la transcodificació"
+
+#: ../src/transmageddon.py:423
+msgid "No container (Audio-only)"
+msgstr "Sense contenidor (només àudio)"
+
+#. Populate the rotatation box
+#. print("populating rotationbox")
+#: ../src/transmageddon.py:427
+msgid "No rotation (default)"
+msgstr "Sense rotació (predeterminat)"
+
+#: ../src/transmageddon.py:428
+msgid "Clockwise 90 degrees"
+msgstr "En sentit horari 90 graus"
+
+#: ../src/transmageddon.py:429
+msgid "Rotate 180 degrees"
+msgstr "Gira 180 graus"
+
+#: ../src/transmageddon.py:430
+msgid "Counterclockwise 90 degrees"
+msgstr "En sentit antihorari 90 graus"
+
+#: ../src/transmageddon.py:431
+msgid "Horizontal flip"
+msgstr "Inverteix horitzontalment"
+
+#: ../src/transmageddon.py:432
+msgid "Vertical flip"
+msgstr "Inverteix verticalment"
+
+#: ../src/transmageddon.py:433
+msgid "Upper left diagonal flip"
+msgstr "Inverteix per la diagonal superior esquerra"
+
+#: ../src/transmageddon.py:434
+msgid "Upper right diagonal flip"
+msgstr "Inverteix per la diagonal superior dreta"
+
+#: ../src/transmageddon.py:457
+msgid "No Presets"
+msgstr "Cap predefinició"
+
+# msgstr "Sense predefinició"
+#: ../src/transmageddon.py:580
+#, python-format
+msgid "%(min)d:%(sec)02d"
+msgstr "%(min)d:%(sec)02d"
+
+#: ../src/transmageddon.py:610
+#, python-format
+msgid "File saved to %(dir)s"
+msgstr "S'ha desat el fitxer a %(dir)s"
+
+#: ../src/transmageddon.py:613
+#, python-format
+msgid "%(file)s saved to %(dir)s"
+msgstr "%(file)s s'ha desat a %(dir)s"
+
+#: ../src/transmageddon.py:626
+msgid "Done Transcoding"
+msgstr "S'ha finalitzat la transcodificació"
+
+#: ../src/transmageddon.py:644 ../src/transmageddon.py:990
+#, python-format
+msgid "Writing %(filename)s"
+msgstr "S'està escrivint a %(filename)s"
+
+#: ../src/transmageddon.py:648
+#, python-format
+msgid "Pass %(count)d Complete. "
+msgstr "Pas %(count)d completat. "
+
+#. We use None here so that we in transcoder engine can differentiate between,
+#. unknown language and known language, but no language code.
+#: ../src/transmageddon.py:690
+msgid "Unknown"
+msgstr "Desconegut"
+
+#. if there is no audio streams
+#: ../src/transmageddon.py:747
+msgid "  No Audio"
+msgstr "  Sense àudio"
+
+#. add a 'No Video option'
+#: ../src/transmageddon.py:756 ../src/transmageddon.py:1146
+msgid "No Video"
+msgstr "Sense vídeo"
+
+#: ../src/transmageddon.py:875
+msgid ""
+"Got an invalid response from codec installer, can not install missing codec."
+msgstr ""
+
+#: ../src/transmageddon.py:879
+#, fuzzy
+msgid "No Codec installer helper application available."
+msgstr "S'ha cancel·lat la instal·lació del còdec."
+
+#: ../src/transmageddon.py:883
+msgid "Plugins not found, choose different codecs."
+msgstr "No s'han trobat els connectors, trieu uns còdecs diferents."
+
+#: ../src/transmageddon.py:893
+msgid "Codec installation aborted."
+msgstr "S'ha cancel·lat la instal·lació del còdec."
+
+#: ../src/transmageddon.py:901
+msgid "Missing plugin installation failed."
+msgstr "Ha fallat la instal·lació del connector que mancava."
+
+#: ../src/transmageddon.py:1000
+#, python-format
+msgid "Pass %(count)d Progress"
+msgstr "Progrés de la passada %(count)d"
+
+#. add a 'No Audio option'
+#: ../src/transmageddon.py:1087
+msgid "No Audio"
+msgstr "Sense àudio"
+
+#: ../src/transmageddon.py:1094
+msgid "Audio passthrough"
+msgstr "Passada d'àudio"
+
+#: ../src/transmageddon.py:1152
+msgid "Video passthrough"
+msgstr "Passada de vídeo"
+
+#: ../src/transmageddon.py:1399
+msgid "Choose Source File..."
+msgstr "Escolliu el fitxer font..."
+
+#: ../src/transmageddon.ui.h:1
+msgid ""
+"<small>Video height&#47;width:</small>\n"
+"<small>Video Codec:</small>"
+msgstr "<small>Alçada i amplada del vídeo:</small>\n"
+"<small>Còdec de vídeo:</small>"
+
+#: ../src/transmageddon.ui.h:3
+msgid "<b>Choose Input File:</b>"
+msgstr "<b>Trieu el fitxer d'entrada:</b>"
+
+#: ../src/transmageddon.ui.h:4
+msgid "<b>Presets:</b>"
+msgstr "<b>Predefinicions:</b>"
+
+#: ../src/transmageddon.ui.h:5
+msgid "<b>Output Format:</b>"
+msgstr "<b>Format de sortida:</b>"
+
+#: ../src/transmageddon.ui.h:6
+msgid ""
+"<small>Audio Channels:</small>\n"
+"<small>Audio Codec:</small>"
+msgstr "<small>Canals d'àudio:</small>\n"
+"<small>Còdec d'àudio:</small>"
+
+#: ../src/transmageddon.ui.h:8
+msgid "<b>Choose Audio Codec</b>:"
+msgstr "<b>Trieu el còdec d'àudio</b>:"
+
+#: ../src/transmageddon.ui.h:9
+msgid "<b>Choose Video Codec</b>:"
+msgstr "<b>Trieu el còdec de vídeo</b>:"
+
+#: ../src/transmageddon.ui.h:10
+msgid "<small>Rotate the video image if needed</small>"
+msgstr "<small>Gira la imatge del vídeo si és necessari</small>"
+
+#: ../src/transmageddon.ui.h:11
+msgid "_Transcode"
+msgstr "_Transcodifica"
+
+#: ../src/udevdisco.py:222
+msgid "Not mounted."
+msgstr "Sense muntar."
+
+#: ../src/utils.py:75
+#, python-format
+msgid "Can't find %(path)s in any known prefix!"
+msgstr "No es pot trobar %(path)s a cap prefix conegut"
+
+#~ msgid "Not a valid integer or fraction: %(value)s!"
+#~ msgstr "%(value)s no és un enter o fracció vàlida"
+
+#~ msgid "Loaded device %(device)s (%(presets)d presets)"
+#~ msgstr "S'ha carregat el dispositiu %(device)s (%(presets)d predefinicions)"
+
+#~ msgid "Fetching %(location)s"
+#~ msgstr "S'està obtenint %(location)s"
+
+#~ msgid "Writing to %(file)s"
+#~ msgstr "S'està escrivint a %(file)s"
+
+#~ msgid "There was an error fetching and installing %(location)s: %(error)s"
+#~ msgstr ""
+#~ "S'ha produït un error en obtenir i instal·lar %(location)s: %(error)s"
+
+#~ msgid "Checking for device preset updates..."
+#~ msgstr ""
+#~ "S'està comprovant si hi ha actualitzacions de les predefinicions del "
+#~ "dispositiu..."
+
+#~ msgid "Device preset %(name)s is up to date"
+#~ msgstr "La predefinició del dispositiu %(name)s està actualitzada"
+
+#~ msgid "Found updated device preset %(name)s"
+#~ msgstr "S'ha trobat una predefinició actualitzada del dispositiu %(name)s"
+
+#~ msgid "Error installing preset %(name)s from %(location)s: %(error)s"
+#~ msgstr ""
+#~ "S'ha produït un error en instal·lar la predefinició %(name)s des de "
+#~ "%(location)s: %(error)s"
+
+#~ msgid "Malformed plugin version line %(line)s"
+#~ msgstr "Línia de la versió del connector mal formada: %(line)s"
+
+#~ msgid "There was a problem accessing %(location)spresets.txt!"
+#~ msgstr "S'ha produït un error en accedir a %(location)spresets.txt"
+
+#~ msgid "All device presets are up to date!"
+#~ msgstr "Totes les predefinicions del dispositiu estan actualitzades"
+
+#~ msgid "<small>Audio codec:</small>"
+#~ msgstr "<small>Còdec d'àudio:</small>"
+
+#~ msgid "<small>Video codec:</small>"
+#~ msgstr "<small>Còdec de vídeo:</small>"
+
+#~ msgid "AA_C"
+#~ msgstr "AA_C"
+
+#~ msgid "AC_3"
+#~ msgstr "AC_3"
+
+#~ msgid "AMR-N_B"
+#~ msgstr "AMR-N_B"
+
+#~ msgid "Celt _Ultra"
+#~ msgstr "Celt _Ultra"
+
+#~ msgid "F_LAC"
+#~ msgstr "F_LAC"
+
+#~ msgid "H263_plus"
+#~ msgstr "H263_plus"
+
+#~ msgid "H2_64"
+#~ msgstr "H2_64"
+
+#~ msgid "MPEG_2"
+#~ msgstr "MPEG_2"
+
+#~ msgid "MPEG_4/DivX5"
+#~ msgstr "MPEG_4/DivX5"
+
+#~ msgid "Theo_ra"
+#~ msgstr "Theo_ra"
+
+#~ msgid "V_orbis"
+#~ msgstr "V_orbis"
+
+#~ msgid "W_indowsMediaAudio 2"
+#~ msgstr "W_indowsMediaAudio 2"
+
+#~ msgid "_Dirac"
+#~ msgstr "_Dirac"
+
+#~ msgid "_Help"
+#~ msgstr "Aj_uda"
+
+#~ msgid "_On2 VP8"
+#~ msgstr "_On2 VP8"
+
+#~ msgid "_Speex"
+#~ msgstr "_Speex"
+
+#~ msgid "_WindowsMediaVideo2"
+#~ msgstr "_WindowsMediaVideo2"
+
+#~ msgid "_mp3"
+#~ msgstr "_mp3"
+
+#~ msgid "_xvid"
+#~ msgstr "_xvid"
+
+#~ msgid "Estimated time remaining: %(time)s"
+#~ msgstr "Temps restant estimat:  %(time)s"
+
+#~ msgid "Pass %(count)d time remaining: %(time)s"
+#~ msgstr "Temps restant estimat de %(time)s pel pas %(count)d"
+
+#~ msgid "Start next pass"
+#~ msgstr "Inicia el pas següent"
+
+#~ msgid "Video width&#47;height: "
+#~ msgstr "Amplada&#47;alçada del vídeo:"
+
+#~ msgid "Video codec: %(codec)s"
+#~ msgstr "Còdec de vídeo: %(codec)s"
+
+#~ msgid "Audio channels: %(chans)s"
+#~ msgstr "Canals d'àudio:  %(chans)s"
+
+#~ msgid "Audio codec: %(codec)s"
+#~ msgstr "Còdec d'àudio: %(codec)s"
+
+#~ msgid "No audio parser, passthrough not available"
+#~ msgstr "No hi ha un analitzador d'àudio, passada no disponible"
+
+#~ msgid "No video parser, passthrough not available"
+#~ msgstr "No hi ha un analitzador de vídeo, passada no disponible"
 
 #~ msgid "_Edit"
 #~ msgstr "_Edita"
