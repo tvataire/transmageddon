@@ -2,23 +2,23 @@
 # Mario Blättermann <mariobl@freenet.de>, 2009-2011.
 # Daniel Winzen <d@winzen4.de>, 2012.
 # Christian Kirbach <christian.kirbach@gmail.com>, 2009, 2012, 2013.
-# Wolfgang Stöggl <c72578@yahoo.de>, 2014.
+# Wolfgang Stöggl <c72578@yahoo.de>, 2014-2015.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: transmageddon\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=transmageddon&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2014-07-08 12:14+0000\n"
-"PO-Revision-Date: 2014-07-08 19:09+0100\n"
-"Last-Translator: Benjamin Steinwender <b@stbe.at>\n"
+"POT-Creation-Date: 2015-02-24 08:54+0000\n"
+"PO-Revision-Date: 2015-07-27 19:39+0200\n"
+"Last-Translator: Wolfgang Stoeggl <c72578@yahoo.de>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.6.6\n"
+"X-Generator: Poedit 1.8.3\n"
 "X-Project-Style: gnome\n"
 
 #: ../transmageddon.desktop.in.in.h:1
@@ -64,7 +64,7 @@ msgid "Allows extracting audio or video streams separately"
 msgstr "Ermöglicht die separate Extraktion von Audio- und Videospuren"
 
 #: ../appdata/transmageddon.appdata.xml.in.h:7
-msgid "Alows ripping of DVD if needed software libraries are available"
+msgid "Allows ripping of DVD if needed software libraries are available"
 msgstr ""
 "DVDs können extrahiert werden, falls die erforderlichen Bibliotheken zur "
 "Verfügung stehen"
@@ -95,11 +95,11 @@ msgstr ""
 "konvertieren, könnte dieses Programm für Sie nützlich sein. Zum Beispiel, "
 "wenn ein Gerät nur eine begrenzte Anzahl an Formaten unterstützt."
 
-#: ../src/about.py.in:44 ../src/about.py.in:45
+#: ../src/about.py.in:49 ../src/about.py.in:50
 msgid "Transmageddon"
 msgstr "Transmageddon"
 
-#: ../src/about.py.in:47
+#: ../src/about.py.in:52
 msgid ""
 "Transmageddon is a simple video and audio conversion tool for GNOME created "
 "by Christian Fredrik Kalager Schaller."
@@ -107,11 +107,11 @@ msgstr ""
 "Transmageddon ist ein einfaches Video- und Audio-Umwandlungswerkzeug für "
 "GNOME, erstellt von Christian Fredrik Kalager Schaller."
 
-#: ../src/about.py.in:48
+#: ../src/about.py.in:53
 msgid "Transmageddon homepage"
 msgstr "Transmageddon-Webseite"
 
-#: ../src/about.py.in:50
+#: ../src/about.py.in:55
 msgid "translator-credits"
 msgstr ""
 "Mario Blättermann <mariobl@freenet.de>\n"
@@ -137,18 +137,18 @@ msgstr[0] "Minute"
 msgstr[1] "Minuten"
 
 #: ../src/transmageddon-dvdtrack-chooser.ui.h:1
-msgid "Select a DVD title"
-msgstr "Wählen Sie einen DVD-Titel"
-
-#: ../src/transmageddon-dvdtrack-chooser.ui.h:2
 #: ../src/transmageddon-language-chooser.ui.h:2
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: ../src/transmageddon-dvdtrack-chooser.ui.h:3
+#: ../src/transmageddon-dvdtrack-chooser.ui.h:2
 #: ../src/transmageddon-language-chooser.ui.h:3
 msgid "Select"
 msgstr "Auswählen"
+
+#: ../src/transmageddon-dvdtrack-chooser.ui.h:3
+msgid "Select a DVD title"
+msgstr "Wählen Sie einen DVD-Titel"
 
 #: ../src/transmageddon-language-chooser.ui.h:1
 msgid "Select a language"
@@ -168,12 +168,11 @@ msgid "Debug"
 msgstr "Fehlerdiagnose"
 
 #. set default values for various variables
-#: ../src/transmageddon.py:377 ../src/transmageddon.py:821
-#: ../src/transmageddon.py:1025 ../src/transmageddon.py:1173
+#: ../src/transmageddon.py:377 ../src/transmageddon.py:823
+#: ../src/transmageddon.py:1027 ../src/transmageddon.py:1177
 msgid "Transcoding Progress"
 msgstr "Umwandlungsfortschritt"
 
-#. add i18n "No container"option
 #: ../src/transmageddon.py:423
 msgid "No container (Audio-only)"
 msgstr "Kein Container (nur Audio)"
@@ -209,7 +208,7 @@ msgid "Upper left diagonal flip"
 msgstr "Links oben diagonal spiegeln"
 
 #: ../src/transmageddon.py:434
-msgid "Upper right diagnonal flip"
+msgid "Upper right diagonal flip"
 msgstr "Rechts oben diagonal spiegeln"
 
 #: ../src/transmageddon.py:457
@@ -235,7 +234,7 @@ msgstr "%(file)s gespeichert in %(dir)s"
 msgid "Done Transcoding"
 msgstr "Umwandlung beendet"
 
-#: ../src/transmageddon.py:644 ../src/transmageddon.py:988
+#: ../src/transmageddon.py:644 ../src/transmageddon.py:990
 #, python-format
 msgid "Writing %(filename)s"
 msgstr "In %(filename)s wird geschrieben"
@@ -257,64 +256,56 @@ msgid "  No Audio"
 msgstr "  Kein Audio"
 
 #. add a 'No Video option'
-#: ../src/transmageddon.py:756 ../src/transmageddon.py:1142
+#: ../src/transmageddon.py:756 ../src/transmageddon.py:1146
 msgid "No Video"
 msgstr "Kein Video"
 
-#: ../src/transmageddon.py:873
+#: ../src/transmageddon.py:875
 msgid ""
 "Got an invalid response from codec installer, can not install missing codec."
 msgstr ""
 "Es wurde eine ungültige Antwort von der Codec-Installation erhalten. Der "
 "fehlende Codec kann nicht installiert werden."
 
-#: ../src/transmageddon.py:877
+#: ../src/transmageddon.py:879
 msgid "No Codec installer helper application available."
 msgstr "Es ist keine Hilfsanwendung zur Codec-Installation vorhanden."
 
-#: ../src/transmageddon.py:881
+#: ../src/transmageddon.py:883
 msgid "Plugins not found, choose different codecs."
 msgstr "Erweiterungen wurden nicht gefunden, bitte andere Codecs wählen."
 
-#: ../src/transmageddon.py:891
+#: ../src/transmageddon.py:893
 msgid "Codec installation aborted."
 msgstr "Codec-Installation wurde abgebrochen."
 
-#: ../src/transmageddon.py:899
+#: ../src/transmageddon.py:901
 msgid "Missing plugin installation failed."
 msgstr "Installation der fehlenden Erweiterung ist fehlgeschlagen."
 
-#: ../src/transmageddon.py:998
+#: ../src/transmageddon.py:1000
 #, python-format
 msgid "Pass %(count)d Progress"
 msgstr "Fortschritt im %(count)d. Durchlauf"
 
 #. add a 'No Audio option'
-#: ../src/transmageddon.py:1083
+#: ../src/transmageddon.py:1087
 msgid "No Audio"
 msgstr "Kein Audio"
 
-#: ../src/transmageddon.py:1090
+#: ../src/transmageddon.py:1094
 msgid "Audio passthrough"
 msgstr "Audio durchschleifen"
 
-#: ../src/transmageddon.py:1148
+#: ../src/transmageddon.py:1152
 msgid "Video passthrough"
 msgstr "Video durchschleifen"
 
-#: ../src/transmageddon.py:1397
+#: ../src/transmageddon.py:1399
 msgid "Choose Source File..."
 msgstr "Quelldatei wählen …"
 
 #: ../src/transmageddon.ui.h:1
-msgid ""
-"<small>Audio Channels:</small>\n"
-"<small>Audio Codec:</small>"
-msgstr ""
-"<small>Audio-Kanäle</small>\n"
-"<small>Audio-Codec:</small>"
-
-#: ../src/transmageddon.ui.h:3
 msgid ""
 "<small>Video height&#47;width:</small>\n"
 "<small>Video Codec:</small>"
@@ -322,17 +313,25 @@ msgstr ""
 "<small>Videohöhe und -breite:</small>\n"
 "<small>Video-Codec:</small>"
 
-#: ../src/transmageddon.ui.h:5
-msgid "<b>Presets:</b>"
-msgstr "<b>Voreinstellungen:</b>"
-
-#: ../src/transmageddon.ui.h:6
+#: ../src/transmageddon.ui.h:3
 msgid "<b>Choose Input File:</b>"
 msgstr "<b>Eingabedatei wählen:</b>"
 
-#: ../src/transmageddon.ui.h:7
+#: ../src/transmageddon.ui.h:4
+msgid "<b>Presets:</b>"
+msgstr "<b>Voreinstellungen:</b>"
+
+#: ../src/transmageddon.ui.h:5
 msgid "<b>Output Format:</b>"
 msgstr "<b>Ausgabeformat:</b>"
+
+#: ../src/transmageddon.ui.h:6
+msgid ""
+"<small>Audio Channels:</small>\n"
+"<small>Audio Codec:</small>"
+msgstr ""
+"<small>Audio-Kanäle</small>\n"
+"<small>Audio-Codec:</small>"
 
 #: ../src/transmageddon.ui.h:8
 msgid "<b>Choose Audio Codec</b>:"
