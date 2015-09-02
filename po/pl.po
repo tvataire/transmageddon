@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: transmageddon\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-01 16:49+0100\n"
-"PO-Revision-Date: 2015-03-01 16:50+0100\n"
+"POT-Creation-Date: 2015-09-02 03:05+0200\n"
+"PO-Revision-Date: 2015-09-02 03:07+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -306,7 +306,7 @@ msgstr "Wideo bez zmian"
 
 #: ../src/transmageddon.py:1399
 msgid "Choose Source File..."
-msgstr "Wybierz plik źródłowy..."
+msgstr "Wybierz plik źródłowy…"
 
 #: ../src/transmageddon.ui.h:1
 msgid ""
