@@ -26,6 +26,9 @@ import os
 
 os.environ["GST_DEBUG_DUMP_DOT_DIR"] = "/tmp"
 
+if sys.version_info[0] < 3:
+   raise Exception("Transmageddon only works with Python 3")
+
 import which
 import time
 from gi.repository import Notify
@@ -36,7 +39,7 @@ from gi.repository import GObject, GdkPixbuf
 
 import transcoder_engine
 from urllib.parse import urlparse
-import codecfinder
+import codecfinder, batchhandler
 import about
 import presets, udevdisco
 import utils
@@ -134,7 +137,8 @@ supported_audio_container_map = {
 class Transmageddon(Gtk.Application):
    def __init__(self):
        Gtk.Application.__init__(self)
-       self.set_flags(Gio.ApplicationFlags.NON_UNIQUE | Gio.ApplicationFlags.HANDLES_OPEN)
+       Gtk.Application.__init__(self, application_id="apps.gnome.transmageddon",
+                                 flags=Gio.ApplicationFlags.NON_UNIQUE | Gio.ApplicationFlags.HANDLES_OPEN)
        self.source = None
 
    def do_activate(self):
@@ -1000,18 +1004,22 @@ class TransmageddonUI(Gtk.ApplicationWindow):
                self.StatusBar.push(context_id, (_("Pass %(count)d Progress") % {'count': self.streamdata['passcounter']}))
        if self.haveaudio:
            if "samplerate" in self.audiodata[0]:
-               # self.check_for_elements()
                if self.missingtoggle==False:
                    self._start_transcoding()
            else:
                self.waiting_for_signal="True"
        elif self.havevideo:
            if "videoheight" in self.videodata[0]:
-               # self.check_for_elements()
                if self.missingtoggle==False:
                    self._start_transcoding()
            else:
                self.waiting_for_signal="True"
+
+   def on_batch_clicked(self, widget):
+       print("writing keyfile")
+       self.gather_streamdata()
+       batchhandler.add_batch_job(self.streamdata, self.videodata, self.audiodata)
+       batchhandler.load_batch_job()
 
    def on_cancelbutton_clicked(self, widget):
        self.combo.set_sensitive(True)
