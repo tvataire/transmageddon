@@ -1,14 +1,14 @@
 # Serbian translation of transmageddon.
-# Courtesy of Prevod.org team (http://prevod.org/) -- 2012—2014.
+# Courtesy of Prevod.org team (http://prevod.org/) -- 2012—2016.
 # This file is distributed under the same license as the transmageddon package.
-# Miroslav Nikolić <miroslavnikolic@rocketmail.com>, 2012—2014.
+# Miroslav Nikolić <miroslavnikolic@rocketmail.com>, 2012—2016.
 msgid ""
 msgstr ""
 "Project-Id-Version: transmageddon\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=transma"
 "geddon&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2014-07-07 12:12+0000\n"
-"PO-Revision-Date: 2014-10-28 20:42+0200\n"
+"POT-Creation-Date: 2015-02-24 08:54+0000\n"
+"PO-Revision-Date: 2016-01-03 22:42+0200\n"
 "Last-Translator: Miroslav Nikolić <miroslavnikolic@rocketmail.com>\n"
 "Language-Team: Serbian <gnom@prevod.org>\n"
 "Language: sr\n"
@@ -28,7 +28,6 @@ msgid "Video format conversion tool"
 msgstr "Alat za pretvaranje zapisa snimka"
 
 #: ../appdata/transmageddon.appdata.xml.in.h:1
-#| msgid "Transmageddon Video Transcoder"
 msgid "Transmageddon Media Transcoder"
 msgstr "Transmagedon prekoder medija"
 
@@ -46,8 +45,8 @@ msgid ""
 msgstr ""
 "Transmagedon je program za pretvaranje datoteka zvuka i snimaka između "
 "različitih zapisa. Omogućava vam da ručno izaberete zapise između kojih "
-"želite izvršite pretvaranje ili da izaberete unapred određene ciljeve a izbori će "
-"biti učinjeni umesto vas. Transmagedon podržava veoma širok opseg zapisa i "
+"želite izvršite pretvaranje ili da izaberete unapred određene ciljeve a izbori "
+"će biti učinjeni umesto vas. Transmagedon podržava veoma širok opseg zapisa i "
 "može uzgred da radi kao alat za čupanje DVD-a."
 
 #: ../appdata/transmageddon.appdata.xml.in.h:4
@@ -63,11 +62,11 @@ msgid "Allows extracting audio or video streams separately"
 msgstr "Omogućava odvojeno izdvajanje tokova zvuka ili snimka"
 
 #: ../appdata/transmageddon.appdata.xml.in.h:7
-msgid "Alows ripping of DVD if needed software libraries are available"
-msgstr "Omogućava čupanje DVD-a ako su dostupne neophodne softverske bibioteke"
+#| msgid "Alows ripping of DVD if needed software libraries are available"
+msgid "Allows ripping of DVD if needed software libraries are available"
+msgstr "Omogućava čupanje DVD-a ako su dostupne neophodne softverske biblioteke"
 
 #: ../appdata/transmageddon.appdata.xml.in.h:8
-#| msgid "Found new device preset %(name)s"
 msgid "Supports named device presets"
 msgstr "Podržava pretpodešavanja imenovanih uređaja"
 
@@ -93,11 +92,11 @@ msgstr ""
 "medijske datoteke između različitih zapisa zato što, na primer, imate uređaj "
 "koji podržava samo ograničeni opseg zapisa."
 
-#: ../src/about.py.in:44 ../src/about.py.in:45
+#: ../src/about.py.in:49 ../src/about.py.in:50
 msgid "Transmageddon"
 msgstr "Transmagedon"
 
-#: ../src/about.py.in:47
+#: ../src/about.py.in:52
 msgid ""
 "Transmageddon is a simple video and audio conversion tool for GNOME created "
 "by Christian Fredrik Kalager Schaller."
@@ -105,11 +104,11 @@ msgstr ""
 "Transmagedon je jednostavan Gnomov alat za pretvaranje snimaka i zvuka koji "
 "je napravio Kristijan Frederik Kalager Šaler."
 
-#: ../src/about.py.in:48
+#: ../src/about.py.in:53
 msgid "Transmageddon homepage"
 msgstr "Matična stranica Transmagedona"
 
-#: ../src/about.py.in:50
+#: ../src/about.py.in:55
 msgid "translator-credits"
 msgstr ""
 "  Miroslav Nikolić <miroslavnikolic@rocketmail.com>\n"
@@ -129,7 +128,6 @@ msgid "Length:"
 msgstr "Trajanje:"
 
 #: ../src/dvdtrackchooser.py:54
-#| msgid "Minutes"
 msgid "Minute"
 msgid_plural "Minutes"
 msgstr[0] "minut"
@@ -138,18 +136,18 @@ msgstr[2] "minuta"
 msgstr[3] "minut"
 
 #: ../src/transmageddon-dvdtrack-chooser.ui.h:1
-msgid "Select a DVD title"
-msgstr "Izaberite naslov DVD-a"
-
-#: ../src/transmageddon-dvdtrack-chooser.ui.h:2
 #: ../src/transmageddon-language-chooser.ui.h:2
 msgid "Cancel"
 msgstr "Otkaži"
 
-#: ../src/transmageddon-dvdtrack-chooser.ui.h:3
+#: ../src/transmageddon-dvdtrack-chooser.ui.h:2
 #: ../src/transmageddon-language-chooser.ui.h:3
 msgid "Select"
 msgstr "Izaberi"
+
+#: ../src/transmageddon-dvdtrack-chooser.ui.h:3
+msgid "Select a DVD title"
+msgstr "Izaberite naslov DVD-a"
 
 #: ../src/transmageddon-language-chooser.ui.h:1
 msgid "Select a language"
@@ -169,12 +167,11 @@ msgid "Debug"
 msgstr "Pročisti"
 
 #. set default values for various variables
-#: ../src/transmageddon.py:377 ../src/transmageddon.py:821
-#: ../src/transmageddon.py:1025 ../src/transmageddon.py:1173
+#: ../src/transmageddon.py:377 ../src/transmageddon.py:823
+#: ../src/transmageddon.py:1027 ../src/transmageddon.py:1177
 msgid "Transcoding Progress"
 msgstr "Napredovanje prekodiranja"
 
-#. add i18n "No container"option
 #: ../src/transmageddon.py:423
 msgid "No container (Audio-only)"
 msgstr "Bez nosača (samo zvuk)"
@@ -210,7 +207,8 @@ msgid "Upper left diagonal flip"
 msgstr "Prevrtanje po gornjoj levoj dijagonali"
 
 #: ../src/transmageddon.py:434
-msgid "Upper right diagnonal flip"
+#| msgid "Upper right diagnonal flip"
+msgid "Upper right diagonal flip"
 msgstr "Prevrtanje po gornjoj desnoj dijagonali"
 
 #: ../src/transmageddon.py:457
@@ -236,7 +234,7 @@ msgstr "„%(file)s“ je sačuvana u %(dir)s"
 msgid "Done Transcoding"
 msgstr "Prekodiranje je obavljeno"
 
-#: ../src/transmageddon.py:644 ../src/transmageddon.py:988
+#: ../src/transmageddon.py:644 ../src/transmageddon.py:990
 #, python-format
 msgid "Writing %(filename)s"
 msgstr "Zapisujem %(filename)s"
@@ -258,64 +256,56 @@ msgid "  No Audio"
 msgstr "  Bez zvuka"
 
 #. add a 'No Video option'
-#: ../src/transmageddon.py:756 ../src/transmageddon.py:1142
+#: ../src/transmageddon.py:756 ../src/transmageddon.py:1146
 msgid "No Video"
 msgstr "Bez snimka"
 
-#: ../src/transmageddon.py:873
+#: ../src/transmageddon.py:875
 msgid ""
 "Got an invalid response from codec installer, can not install missing codec."
 msgstr ""
 "Dobih neispravan odgovor od instalatera kodeka, ne mogu da instaliram "
 "nedostajući kodek."
 
-#: ../src/transmageddon.py:877
+#: ../src/transmageddon.py:879
 msgid "No Codec installer helper application available."
 msgstr "Nije dostupan program pomoćnika instalatera kodeka."
 
-#: ../src/transmageddon.py:881
+#: ../src/transmageddon.py:883
 msgid "Plugins not found, choose different codecs."
 msgstr "Priključci nisu pronađeni, izaberite druge kodeke."
 
-#: ../src/transmageddon.py:891
+#: ../src/transmageddon.py:893
 msgid "Codec installation aborted."
 msgstr "Instalacija kodeka je prekinuta."
 
-#: ../src/transmageddon.py:899
+#: ../src/transmageddon.py:901
 msgid "Missing plugin installation failed."
 msgstr "Instalacija nedostajućeg priključka nije uspela."
 
-#: ../src/transmageddon.py:998
+#: ../src/transmageddon.py:1000
 #, python-format
 msgid "Pass %(count)d Progress"
 msgstr "Napredovanje %(count)d. koraka"
 
 #. add a 'No Audio option'
-#: ../src/transmageddon.py:1083
+#: ../src/transmageddon.py:1087
 msgid "No Audio"
 msgstr "Bez zvuka"
 
-#: ../src/transmageddon.py:1090
+#: ../src/transmageddon.py:1094
 msgid "Audio passthrough"
 msgstr "Prolaz zvuka"
 
-#: ../src/transmageddon.py:1148
+#: ../src/transmageddon.py:1152
 msgid "Video passthrough"
 msgstr "Prolaz snimka"
 
-#: ../src/transmageddon.py:1397
+#: ../src/transmageddon.py:1399
 msgid "Choose Source File..."
 msgstr "Izaberi datoteku izvora..."
 
 #: ../src/transmageddon.ui.h:1
-msgid ""
-"<small>Audio Channels:</small>\n"
-"<small>Audio Codec:</small>"
-msgstr ""
-"<small>Kanali zvuka:</small>\n"
-"<small>Kodek zvuka:</small>"
-
-#: ../src/transmageddon.ui.h:3
 msgid ""
 "<small>Video height&#47;width:</small>\n"
 "<small>Video Codec:</small>"
@@ -323,17 +313,25 @@ msgstr ""
 "<small>Visina&#47;širina snimka:</small>\n"
 "<small>Kodek snimka:</small>"
 
-#: ../src/transmageddon.ui.h:5
-msgid "<b>Presets:</b>"
-msgstr "<b>Pretpodešavanja:</b>"
-
-#: ../src/transmageddon.ui.h:6
+#: ../src/transmageddon.ui.h:3
 msgid "<b>Choose Input File:</b>"
 msgstr "<b>Izaberi ulaznu datoteku:</b>"
 
-#: ../src/transmageddon.ui.h:7
+#: ../src/transmageddon.ui.h:4
+msgid "<b>Presets:</b>"
+msgstr "<b>Pretpodešavanja:</b>"
+
+#: ../src/transmageddon.ui.h:5
 msgid "<b>Output Format:</b>"
 msgstr "<b>Izlazni zapis:</b>"
+
+#: ../src/transmageddon.ui.h:6
+msgid ""
+"<small>Audio Channels:</small>\n"
+"<small>Audio Codec:</small>"
+msgstr ""
+"<small>Kanali zvuka:</small>\n"
+"<small>Kodek zvuka:</small>"
 
 #: ../src/transmageddon.ui.h:8
 msgid "<b>Choose Audio Codec</b>:"
