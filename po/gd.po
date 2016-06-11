@@ -1,16 +1,16 @@
 # Scottish Gaelic translation for transmageddon.
 # Copyright (C) 2014 transmageddon's COPYRIGHT HOLDER
 # This file is distributed under the same license as the transmageddon package.
-# GunChleoc <fios@foramnagaidhlig.net>, 2014.
+# GunChleoc <fios@foramnagaidhlig.net>, 2014, 2016.
 msgid ""
 msgstr ""
 "Project-Id-Version: transmageddon master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=transm"
 "ageddon&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2014-07-07 12:12+0000\n"
-"PO-Revision-Date: 2014-07-11 10:12+0100\n"
+"POT-Creation-Date: 2015-02-24 08:54+0000\n"
+"PO-Revision-Date: 2016-06-11 10:03+0100\n"
 "Last-Translator: GunChleoc <fios@foramnagaidhlig.net>\n"
-"Language-Team: Fòram na Gàidhlig http://www.foramnagaidhlig.net\n"
+"Language-Team: Fòram na Gàidhlig\n"
 "Language: gd\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -29,7 +29,6 @@ msgid "Video format conversion tool"
 msgstr "Inneal airson fòrmatan video iompachadh"
 
 #: ../appdata/transmageddon.appdata.xml.in.h:1
-#| msgid "Transmageddon Video Transcoder"
 msgid "Transmageddon Media Transcoder"
 msgstr "Inneal tar-chòdachaidh mheadhanan Transmageddon"
 
@@ -49,12 +48,11 @@ msgstr ""
 "iompachadh on dàrna fòrmat gun fhòrmat eile. Faodaidh tu na fòrmatan a "
 "thaghadh a làimh no amas a thaghadh ach an dèid taghadh fèin-obrachail a "
 "dhèanamh dhut. Cuiridh Transmageddon taic dha roghainn fharsaing de "
-"fhòrmatan agus 's urrainn dhur a chleachdadh gus DVDan a ripigeadh "
-"cuideachd."
+"fhòrmatan agus 's urrainn dhur a chleachdadh gus DVDan a ripigeadh cuideachd."
 
 #: ../appdata/transmageddon.appdata.xml.in.h:4
 msgid "Feature list:"
-msgstr "Liosta nam feartan:"
+msgstr "Liosta nan gleusan:"
 
 #: ../appdata/transmageddon.appdata.xml.in.h:5
 msgid "Wide range of media codecs"
@@ -65,13 +63,13 @@ msgid "Allows extracting audio or video streams separately"
 msgstr "'S urrainn dhut sruthan fuaime no video fa leth às-tharraing"
 
 #: ../appdata/transmageddon.appdata.xml.in.h:7
-msgid "Alows ripping of DVD if needed software libraries are available"
+#| msgid "Alows ripping of DVD if needed software libraries are available"
+msgid "Allows ripping of DVD if needed software libraries are available"
 msgstr ""
 "'S urrainn dhut DVDan a ripigeadh ma tha na leabharlannan bathair-bhuig "
 "riatanach ri làimh"
 
 #: ../appdata/transmageddon.appdata.xml.in.h:8
-#| msgid "Found new device preset %(name)s"
 msgid "Supports named device presets"
 msgstr "Taic ri ro-shocrachadh airson uidheaman ainmichte"
 
@@ -98,11 +96,11 @@ msgstr ""
 "bathar-cruaidh agad nach cuir taic ach dha roghainn chuingichte a "
 "dh'fhòrmatan, mar eisimpleir."
 
-#: ../src/about.py.in:44 ../src/about.py.in:45
+#: ../src/about.py.in:49 ../src/about.py.in:50
 msgid "Transmageddon"
 msgstr "Transmageddon"
 
-#: ../src/about.py.in:47
+#: ../src/about.py.in:52
 msgid ""
 "Transmageddon is a simple video and audio conversion tool for GNOME created "
 "by Christian Fredrik Kalager Schaller."
@@ -111,11 +109,11 @@ msgstr ""
 "a tha sa Transmageddon 's a chaidh a chruthachadh le Christian Fredrik "
 "Kalager Schaller."
 
-#: ../src/about.py.in:48
+#: ../src/about.py.in:53
 msgid "Transmageddon homepage"
 msgstr "Duilleag dachaigh Transmageddon"
 
-#: ../src/about.py.in:50
+#: ../src/about.py.in:55
 msgid "translator-credits"
 msgstr "GunChleoc http://www.foramnagaidhlig.net"
 
@@ -140,18 +138,18 @@ msgstr[2] "Mionaidean"
 msgstr[3] "Mionaidean"
 
 #: ../src/transmageddon-dvdtrack-chooser.ui.h:1
-msgid "Select a DVD title"
-msgstr "Tagh tiotal an DVD"
-
-#: ../src/transmageddon-dvdtrack-chooser.ui.h:2
 #: ../src/transmageddon-language-chooser.ui.h:2
 msgid "Cancel"
 msgstr "Sguir dheth"
 
-#: ../src/transmageddon-dvdtrack-chooser.ui.h:3
+#: ../src/transmageddon-dvdtrack-chooser.ui.h:2
 #: ../src/transmageddon-language-chooser.ui.h:3
 msgid "Select"
 msgstr "Tagh"
+
+#: ../src/transmageddon-dvdtrack-chooser.ui.h:3
+msgid "Select a DVD title"
+msgstr "Tagh tiotal an DVD"
 
 #: ../src/transmageddon-language-chooser.ui.h:1
 msgid "Select a language"
@@ -171,12 +169,11 @@ msgid "Debug"
 msgstr "Dì-bhugaich"
 
 #. set default values for various variables
-#: ../src/transmageddon.py:377 ../src/transmageddon.py:821
-#: ../src/transmageddon.py:1025 ../src/transmageddon.py:1173
+#: ../src/transmageddon.py:377 ../src/transmageddon.py:823
+#: ../src/transmageddon.py:1027 ../src/transmageddon.py:1177
 msgid "Transcoding Progress"
 msgstr "Adhartas an tar-chòdachaidh"
 
-#. add i18n "No container"option
 #: ../src/transmageddon.py:423
 msgid "No container (Audio-only)"
 msgstr "Gun shoitheach (fuaim a-mhàin)"
@@ -212,7 +209,8 @@ msgid "Upper left diagonal flip"
 msgstr "Flip trastanach on oisean chlì aig a' bharr"
 
 #: ../src/transmageddon.py:434
-msgid "Upper right diagnonal flip"
+#| msgid "Upper right diagnonal flip"
+msgid "Upper right diagonal flip"
 msgstr "Flip trastanach on oisean dheas aig a' bharr"
 
 #: ../src/transmageddon.py:457
@@ -238,7 +236,7 @@ msgstr "%(file)s air a shàbhaladh gu %(dir)s"
 msgid "Done Transcoding"
 msgstr "Tha an tar-chòdachadh coileanta"
 
-#: ../src/transmageddon.py:644 ../src/transmageddon.py:988
+#: ../src/transmageddon.py:644 ../src/transmageddon.py:990
 #, python-format
 msgid "Writing %(filename)s"
 msgstr "A' sgrìobhadh %(filename)s"
@@ -260,64 +258,56 @@ msgid "  No Audio"
 msgstr "  Gun fhuaim"
 
 #. add a 'No Video option'
-#: ../src/transmageddon.py:756 ../src/transmageddon.py:1142
+#: ../src/transmageddon.py:756 ../src/transmageddon.py:1146
 msgid "No Video"
 msgstr "Gun video"
 
-#: ../src/transmageddon.py:873
+#: ../src/transmageddon.py:875
 msgid ""
 "Got an invalid response from codec installer, can not install missing codec."
 msgstr ""
 "Fhuair sinn freagairt mì-dhligheach o stàlaichear a' codec 's cha ghabh an "
 "codec a tha a dhìth a stàladh."
 
-#: ../src/transmageddon.py:877
+#: ../src/transmageddon.py:879
 msgid "No Codec installer helper application available."
 msgstr "Chan eil prògram taice gus codec a stàladh ri làimh."
 
-#: ../src/transmageddon.py:881
+#: ../src/transmageddon.py:883
 msgid "Plugins not found, choose different codecs."
 msgstr "Cha deach plugan a lorg, tagh codec eile."
 
-#: ../src/transmageddon.py:891
+#: ../src/transmageddon.py:893
 msgid "Codec installation aborted."
 msgstr "Chaidh sgur dhe stàladh a' codec."
 
-#: ../src/transmageddon.py:899
+#: ../src/transmageddon.py:901
 msgid "Missing plugin installation failed."
 msgstr "Dh'fhàillig le stàladh a' phlugain a tha a dhìth."
 
-#: ../src/transmageddon.py:998
+#: ../src/transmageddon.py:1000
 #, python-format
 msgid "Pass %(count)d Progress"
 msgstr "Adhartas an dol troimhe %(count)d"
 
 #. add a 'No Audio option'
-#: ../src/transmageddon.py:1083
+#: ../src/transmageddon.py:1087
 msgid "No Audio"
 msgstr "Gun fhuaim"
 
-#: ../src/transmageddon.py:1090
+#: ../src/transmageddon.py:1094
 msgid "Audio passthrough"
 msgstr "Dol thairis air an fuaim"
 
-#: ../src/transmageddon.py:1148
+#: ../src/transmageddon.py:1152
 msgid "Video passthrough"
 msgstr "Dol thairis air a' video"
 
-#: ../src/transmageddon.py:1397
+#: ../src/transmageddon.py:1399
 msgid "Choose Source File..."
 msgstr "Tagh faidhle an tùis..."
 
 #: ../src/transmageddon.ui.h:1
-msgid ""
-"<small>Audio Channels:</small>\n"
-"<small>Audio Codec:</small>"
-msgstr ""
-"<small>Seanailean fuaime:</small>\n"
-"<small>Codec fuaime:</small>"
-
-#: ../src/transmageddon.ui.h:3
 msgid ""
 "<small>Video height&#47;width:</small>\n"
 "<small>Video Codec:</small>"
@@ -325,17 +315,25 @@ msgstr ""
 "<small>Àirde&#47;leud video:</small>\n"
 "<small>Codec video:</small>"
 
-#: ../src/transmageddon.ui.h:5
-msgid "<b>Presets:</b>"
-msgstr "<b>Ro-shocrachaidhean:</b>"
-
-#: ../src/transmageddon.ui.h:6
+#: ../src/transmageddon.ui.h:3
 msgid "<b>Choose Input File:</b>"
 msgstr "<b>Tagh faidhle an ion-chuir:</b>"
 
-#: ../src/transmageddon.ui.h:7
+#: ../src/transmageddon.ui.h:4
+msgid "<b>Presets:</b>"
+msgstr "<b>Ro-shocrachaidhean:</b>"
+
+#: ../src/transmageddon.ui.h:5
 msgid "<b>Output Format:</b>"
 msgstr "<b>Fòrmat an às-chuir:</b>"
+
+#: ../src/transmageddon.ui.h:6
+msgid ""
+"<small>Audio Channels:</small>\n"
+"<small>Audio Codec:</small>"
+msgstr ""
+"<small>Seanailean fuaime:</small>\n"
+"<small>Codec fuaime:</small>"
 
 #: ../src/transmageddon.ui.h:8
 msgid "<b>Choose Audio Codec</b>:"
