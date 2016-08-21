@@ -1,28 +1,24 @@
-# -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-# Aviary.pl
-# Jeśli masz jakiekolwiek uwagi odnoszące się do tłumaczenia lub chcesz
-# pomóc w jego rozwijaniu i pielęgnowaniu, napisz do nas:
-# gnomepl@aviary.pl
-# -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+# Polish translation for transmageddon.
+# Copyright © 2009-2016 the transmageddon authors.
+# This file is distributed under the same license as the transmageddon package.
 # Łukasz Jernaś <deejay1@srem.org>, 2009.
 # Piotr Drąg <piotrdrag@gmail.com>, 2011-2016.
-# Aviary.pl <gnomepl@aviary.pl>, 2009-2016.
+# Aviary.pl <community-poland@mozilla.org>, 2009-2016.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: transmageddon\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-14 04:47+0100\n"
-"PO-Revision-Date: 2016-03-14 04:48+0100\n"
+"POT-Creation-Date: 2016-08-21 17:23+0200\n"
+"PO-Revision-Date: 2016-08-21 17:24+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
-"Language-Team: Polish <gnomepl@aviary.pl>\n"
+"Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
-"X-Poedit-Language: Polish\n"
-"X-Poedit-Country: Poland\n"
 
 #: ../transmageddon.desktop.in.in.h:1
 msgid "Transmageddon Video Transcoder"
@@ -38,7 +34,7 @@ msgstr "Przekodowywanie multimediów Transmageddon"
 
 #: ../appdata/transmageddon.appdata.xml.in.h:2
 msgid "Easy to use audio and video transcoding application"
-msgstr "Łatwy w użyciu program do przekodowywania dźwięku i obrazu"
+msgstr "Łatwy w użyciu program do przekodowywania dźwięku i obrazu"
 
 #: ../appdata/transmageddon.appdata.xml.in.h:3
 msgid ""
@@ -48,7 +44,7 @@ msgid ""
 "and the selections will be made for you. Transmageddon supports a very wide "
 "range of formats and can also optionally function as a DVD ripping tool."
 msgstr ""
-"Transmageddon jest programem do konwertowania plików dźwiękowych i wideo "
+"Transmageddon jest programem do konwertowania plików dźwiękowych i wideo "
 "między różnymi formatami. Umożliwia ręczne wybranie formatów, między którymi "
 "konwertować, albo wybranie wcześniej określonych ustawień. Program "
 "Transmageddon obsługuje szeroki zakres formatów, oraz może służyć za "
@@ -64,7 +60,7 @@ msgstr "Szeroki zakres kodeków multimedialnych"
 
 #: ../appdata/transmageddon.appdata.xml.in.h:6
 msgid "Allows extracting audio or video streams separately"
-msgstr "Umożliwia oddzielne zgrywanie strumieni dźwięku i obrazu"
+msgstr "Umożliwia oddzielne zgrywanie strumieni dźwięku i obrazu"
 
 #: ../appdata/transmageddon.appdata.xml.in.h:7
 msgid "Allows ripping of DVD if needed software libraries are available"
@@ -84,7 +80,7 @@ msgstr "Można zmieniać orientację obrazu, jeśli to potrzebne"
 
 #: ../appdata/transmageddon.appdata.xml.in.h:11
 msgid "Supports files with multiple audio streams"
-msgstr "Obsługuje pliki z wieloma strumieniami dźwięku"
+msgstr "Obsługuje pliki z wieloma strumieniami dźwięku"
 
 #: ../appdata/transmageddon.appdata.xml.in.h:12
 msgid ""
@@ -105,9 +101,9 @@ msgid ""
 "Transmageddon is a simple video and audio conversion tool for GNOME created "
 "by Christian Fredrik Kalager Schaller."
 msgstr ""
-"Transmageddon to proste narzędzie do przekodowywania nagrań wideo i "
-"dźwiękowych dla środowiska GNOME, napisane przez Christiana Fredrika Kalager "
-"Schallera."
+"Transmageddon to proste narzędzie do przekodowywania nagrań wideo "
+"i dźwiękowych dla środowiska GNOME, napisane przez Christiana Fredrika "
+"Kalager Schallera."
 
 #: ../src/about.py.in:53
 msgid "Transmageddon homepage"
@@ -118,7 +114,7 @@ msgid "translator-credits"
 msgstr ""
 "Łukasz Jernaś <deejay1@srem.org>, 2009\n"
 "Piotr Drąg <piotrdrag@gmail.com>, 2011-2016\n"
-"Aviary.pl <gnomepl@aviary.pl>, 2009-2016"
+"Aviary.pl <community-poland@mozilla.org>, 2009-2016"
 
 #: ../src/dvdtrackchooser.py:52
 msgid "Title:"
@@ -160,7 +156,7 @@ msgstr "Wybór języka"
 #. append to the menu the options
 #: ../src/transmageddon.py:166
 msgid "About"
-msgstr "O programie"
+msgstr "O programie"
 
 #: ../src/transmageddon.py:167
 msgid "Quit"
@@ -188,15 +184,15 @@ msgstr "Bez obracania obrazu (domyślnie)"
 
 #: ../src/transmageddon.py:432
 msgid "Clockwise 90 degrees"
-msgstr "Obrót o 90 stopni zgodnie z ruchem wskazówek zegara"
+msgstr "Obrót o 90 stopni zgodnie z ruchem wskazówek zegara"
 
 #: ../src/transmageddon.py:433
 msgid "Rotate 180 degrees"
-msgstr "Obrót o 180 stopni"
+msgstr "Obrót o 180 stopni"
 
 #: ../src/transmageddon.py:434
 msgid "Counterclockwise 90 degrees"
-msgstr "Obrót o 90 stopni przeciwnie do ruchu wskazówek zegara"
+msgstr "Obrót o 90 stopni przeciwnie do ruchu wskazówek zegara"
 
 #: ../src/transmageddon.py:435
 msgid "Horizontal flip"
@@ -226,12 +222,12 @@ msgstr "%(min)d∶%(sec)02d"
 #: ../src/transmageddon.py:614
 #, python-format
 msgid "File saved to %(dir)s"
-msgstr "Zapisano plik w %(dir)s"
+msgstr "Zapisano plik w %(dir)s"
 
 #: ../src/transmageddon.py:617
 #, python-format
 msgid "%(file)s saved to %(dir)s"
-msgstr "Zapisano plik %(file)s w %(dir)s"
+msgstr "Zapisano plik %(file)s w %(dir)s"
 
 #: ../src/transmageddon.py:630
 msgid "Done Transcoding"
@@ -359,4 +355,4 @@ msgstr "Niezamontowane."
 #: ../src/utils.py:75
 #, python-format
 msgid "Can't find %(path)s in any known prefix!"
-msgstr "Nie można odnaleźć %(path)s w żadnym znanym położeniu."
+msgstr "Nie można odnaleźć %(path)s w żadnym znanym położeniu."
