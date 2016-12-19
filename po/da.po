@@ -1,16 +1,17 @@
 # Danish translation for transmageddon.
-# Copyright (C) 2013 transmageddons & Joe Hansen.
+# Copyright (C) 2016 transmageddons & Joe Hansen.
 # This file is distributed under the same license as the transmageddon package.
-# Joe Hansen <joedalton2@yahoo.dk>, 2009, 2010, 2011, 2012, 2013.
+# Joe Hansen <joedalton2@yahoo.dk>, 2009, 2010, 2011, 2012, 2013, 2016.
 #
 # container -> beholder
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: transmageddon master\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-13 22:14+0200\n"
-"PO-Revision-Date: 2013-09-11 23:50+0100\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=transmageddon&keywords=I18N+L10N&component=General\n"
+"POT-Creation-Date: 2015-02-24 08:54+0000\n"
+"PO-Revision-Date: 2016-12-18 23:50+0100\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -21,17 +22,82 @@ msgstr ""
 
 #: ../transmageddon.desktop.in.in.h:1
 msgid "Transmageddon Video Transcoder"
-msgstr "Transmagddon - videotranskoder"
+msgstr "Transmagddon – videotranskoder"
 
 #: ../transmageddon.desktop.in.in.h:2
 msgid "Video format conversion tool"
 msgstr "Konverteringsværktøj til videoformater"
 
-#: ../src/about.py.in:46 ../src/about.py.in:47
+#: ../appdata/transmageddon.appdata.xml.in.h:1
+msgid "Transmageddon Media Transcoder"
+msgstr "Transmagddon - medietranskoder"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:2
+msgid "Easy to use audio and video transcoding application"
+msgstr "Et simpelt lyd- og videotranskodningsprogram"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:3
+msgid ""
+"Transmageddon is an application for converting audio and video files between "
+"different formats. It allows you to either manually choose the formats you "
+"want to convert between or alternatively you can choose a predefined target "
+"and the selections will be made for you. Transmageddon supports a very wide "
+"range of formats and can also optionally function as a DVD ripping tool."
+msgstr ""
+"Transmageddon er et program til at konvertere lyd- og videofiler mellem "
+"forskellige formater. Programmet giver mulighed for enten manuelt at vælge "
+"formaterne, du ønsker at konvertere mellem, eller alternativt kan du vælge "
+"et prædefineret mål, og valgene vil blive foretaget for dig. Transmageddon "
+"understøtter en bred vifte af formater, og Transmageddon kan også valgfrit "
+"fungere som et dvd-udtrækningsværktøj."
+
+#: ../appdata/transmageddon.appdata.xml.in.h:4
+msgid "Feature list:"
+msgstr "Funktionsliste:"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:5
+msgid "Wide range of media codecs"
+msgstr "Bred vifte af mediekodninger"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:6
+msgid "Allows extracting audio or video streams separately"
+msgstr "Giver mulighed for at udtrække lyd- eller videokanaler separat"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:7
+msgid "Allows ripping of DVD if needed software libraries are available"
+msgstr "Giver mulighed for at udtrække dvd hvis krævede programbiblioteker er nødvendige"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:8
+msgid "Supports named device presets"
+msgstr "Understøtter navngivne enhedsforudindstillinger"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:9
+msgid "Lets you add language metadata if missing"
+msgstr "Lader dig tilføje sprogmetadata, hvis de mangler"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:10
+msgid "Can change orientation of video if necessary"
+msgstr "Kan ændre orientering for video om nødvendig"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:11
+msgid "Supports files with multiple audio streams"
+msgstr "Understøtter filer med flere lydkanaler"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:12
+msgid ""
+"You might want to install this application if your need to convert media "
+"files between different formats due to for example having hardware that only "
+"supports a limited range of formats."
+msgstr ""
+"Du kan installere dette program, hvis du har behov for at konvertere "
+"mediefiler mellem forskellige formater f.eks. på grund af udstyr som "
+"kun understøtter et begrænset antal formater."
+
+#: ../src/about.py.in:49 ../src/about.py.in:50
 msgid "Transmageddon"
 msgstr "Transmageddon"
 
-#: ../src/about.py.in:49
+#: ../src/about.py.in:52
 msgid ""
 "Transmageddon is a simple video and audio conversion tool for GNOME created "
 "by Christian Fredrik Kalager Schaller."
@@ -39,302 +105,231 @@ msgstr ""
 "Transmageddon er et meget simpelt video- og konverteringsværktøj til GNOME "
 "skrevet af Christian Fredrik Kalager Schaller."
 
-#: ../src/about.py.in:50
+#: ../src/about.py.in:53
 msgid "Transmageddon homepage"
 msgstr "Transmageddons hjemmeside"
 
-#: ../src/about.py.in:52
+#: ../src/about.py.in:55
 msgid "translator-credits"
 msgstr ""
-"Joe Hansen <joedalton2@yahoo.dk>, 2009, 2010, 2011, 2012, 2013.\n"
+"Joe Hansen <joedalton2@yahoo.dk>, 2009, 2010, 2011, 2012, 2013, 2016.\n"
 "\n"
 "Dansk-gruppen <dansk@dansk-gruppen.dk>\n"
 "Mere info: http://www.dansk-gruppen.dk"
 
-#. create a string to push into the listview
-#: ../src/dvdtrackchooser.py:56
+#: ../src/dvdtrackchooser.py:52
 msgid "Title:"
 msgstr "Titel:"
 
-#: ../src/dvdtrackchooser.py:56
+#: ../src/dvdtrackchooser.py:53
 msgid "Languages:"
 msgstr "Sprog:"
 
-#: ../src/dvdtrackchooser.py:56
+#: ../src/dvdtrackchooser.py:54
 msgid "Length:"
 msgstr "Længde:"
 
-#: ../src/dvdtrackchooser.py:56
-msgid "Minutes"
-msgstr "Minutter"
-
-#: ../src/presets.py:78
-#, python-format
-msgid "Not a valid integer or fraction: %(value)s!"
-msgstr "Ikke et gyldigt heltal eller brøk: %(value)s!"
-
-#: ../src/presets.py:413
-#, python-format
-msgid "Loaded device %(device)s (%(presets)d presets)"
-msgstr "Indlæst enhed %(device)s (%(presets)d forudindstillinger)"
-
-#: ../src/presets.py:480
-#, python-format
-msgid "Fetching %(location)s"
-msgstr "Henter %(location)s"
-
-#: ../src/presets.py:487
-#, python-format
-msgid "Writing to %(file)s"
-msgstr "Skriver til %(file)s"
-
-#: ../src/presets.py:492
-#, python-format
-msgid "There was an error fetching and installing %(location)s: %(error)s"
-msgstr ""
-"Der opstod en fejl under hentning og installation af %(location)s: %(error)s"
-
-#: ../src/presets.py:509
-msgid "Checking for device preset updates..."
-msgstr "Tjekker for opdateringer til enhedsforudindstillinger ..."
-
-#: ../src/presets.py:529
-#, python-format
-msgid "Device preset %(name)s is up to date"
-msgstr "Enhedsforudindstilling %(name)s er opdateret"
-
-#: ../src/presets.py:533
-#, python-format
-msgid "Found updated device preset %(name)s"
-msgstr "Fandt opdatereret enhedsforudindstilling %(name)s"
-
-#: ../src/presets.py:539 ../src/presets.py:552
-#, python-format
-msgid "Error installing preset %(name)s from %(location)s: %(error)s"
-msgstr ""
-"Fejl ved installering af forudindstilling %(name)s fra %(location)s: "
-"%(error)s"
-
-#: ../src/presets.py:546
-#, python-format
-msgid "Found new device preset %(name)s"
-msgstr "Fandt ny enhedsforudindstilling %(name)s"
-
-#: ../src/presets.py:559
-#, python-format
-msgid "Malformed plugin version line %(line)s"
-msgstr "Fejlformateret linje %(line)s i udvidelsesmodul"
-
-# Evt. 'Der opstod... ved tilgang til...'
-#: ../src/presets.py:563
-#, python-format
-msgid "There was a problem accessing %(location)spresets.txt!"
-msgstr "Der var et problem med at tilgå %(location)spresets.txt!"
-
-#: ../src/presets.py:585
-msgid "All device presets are up to date!"
-msgstr "Alle enhedsforudindstillinger er opdateret!"
+#: ../src/dvdtrackchooser.py:54
+msgid "Minute"
+msgid_plural "Minutes"
+msgstr[0] "Minut"
+msgstr[1] "Minutter"
 
 #: ../src/transmageddon-dvdtrack-chooser.ui.h:1
-msgid "Select a DVD title"
-msgstr "Vælg en dvd-titel"
-
-#: ../src/transmageddon-dvdtrack-chooser.ui.h:2
 #: ../src/transmageddon-language-chooser.ui.h:2
 msgid "Cancel"
 msgstr "Afbryd"
 
-#: ../src/transmageddon-dvdtrack-chooser.ui.h:3
+#: ../src/transmageddon-dvdtrack-chooser.ui.h:2
 #: ../src/transmageddon-language-chooser.ui.h:3
 msgid "Select"
 msgstr "Vælg"
+
+#: ../src/transmageddon-dvdtrack-chooser.ui.h:3
+msgid "Select a DVD title"
+msgstr "Vælg en dvd-titel"
 
 #: ../src/transmageddon-language-chooser.ui.h:1
 msgid "Select a language"
 msgstr "Vælg et sprog"
 
 #. append to the menu the options
-#: ../src/transmageddon.py:165
+#: ../src/transmageddon.py:162
 msgid "About"
 msgstr "Om"
 
-#: ../src/transmageddon.py:166
+#: ../src/transmageddon.py:163
 msgid "Quit"
 msgstr "Afslut"
 
-#: ../src/transmageddon.py:167
+#: ../src/transmageddon.py:164
 msgid "Debug"
 msgstr "Fejlsøg"
 
 #. set default values for various variables
-#: ../src/transmageddon.py:379 ../src/transmageddon.py:809
-#: ../src/transmageddon.py:1015 ../src/transmageddon.py:1164
+#: ../src/transmageddon.py:377 ../src/transmageddon.py:823
+#: ../src/transmageddon.py:1027 ../src/transmageddon.py:1177
 msgid "Transcoding Progress"
 msgstr "Transkodning i gang"
 
-#. add i18n "No container"option
-#: ../src/transmageddon.py:425
+#: ../src/transmageddon.py:423
 msgid "No container (Audio-only)"
 msgstr "Ingen beholder (kun lyd)"
 
 #. Populate the rotatation box
 #. print("populating rotationbox")
-#: ../src/transmageddon.py:429
+#: ../src/transmageddon.py:427
 msgid "No rotation (default)"
 msgstr "Ingen rotation (standard)"
 
-#: ../src/transmageddon.py:430
+#: ../src/transmageddon.py:428
 msgid "Clockwise 90 degrees"
 msgstr "Med uret 90 grader"
 
-#: ../src/transmageddon.py:431
+#: ../src/transmageddon.py:429
 msgid "Rotate 180 degrees"
 msgstr "Roter 180 grader"
 
-#: ../src/transmageddon.py:432
+#: ../src/transmageddon.py:430
 msgid "Counterclockwise 90 degrees"
 msgstr "Mod uret 90 grader"
 
-#: ../src/transmageddon.py:433
+#: ../src/transmageddon.py:431
 msgid "Horizontal flip"
 msgstr "Horisontal vending"
 
-#: ../src/transmageddon.py:434
+#: ../src/transmageddon.py:432
 msgid "Vertical flip"
 msgstr "Vertikal vending"
 
-#: ../src/transmageddon.py:435
+#: ../src/transmageddon.py:433
 msgid "Upper left diagonal flip"
 msgstr "Vending via øverste venstre diagonal"
 
-#: ../src/transmageddon.py:436
-msgid "Upper right diagnonal flip"
+#: ../src/transmageddon.py:434
+msgid "Upper right diagonal flip"
 msgstr "Vending via øverste højre diagonal"
 
-#: ../src/transmageddon.py:459
+#: ../src/transmageddon.py:457
 msgid "No Presets"
 msgstr "Ingen forhåndsindstillinger"
 
-#: ../src/transmageddon.py:570
+#: ../src/transmageddon.py:580
 #, python-format
 msgid "%(min)d:%(sec)02d"
 msgstr "%(min)d:%(sec)02d"
 
-#: ../src/transmageddon.py:600
+#: ../src/transmageddon.py:610
 #, python-format
 msgid "File saved to %(dir)s"
 msgstr "Fil gemt til %(dir)s"
 
-#: ../src/transmageddon.py:603
+#: ../src/transmageddon.py:613
 #, python-format
 msgid "%(file)s saved to %(dir)s"
 msgstr "%(file)s gemt til %(dir)s"
 
-#: ../src/transmageddon.py:614
+#: ../src/transmageddon.py:626
 msgid "Done Transcoding"
 msgstr "Transkodning færdig"
 
-#: ../src/transmageddon.py:632 ../src/transmageddon.py:984
+#: ../src/transmageddon.py:644 ../src/transmageddon.py:990
 #, python-format
 msgid "Writing %(filename)s"
 msgstr "Skriver %(filename)s"
 
-#: ../src/transmageddon.py:636
+#: ../src/transmageddon.py:648
 #, python-format
 msgid "Pass %(count)d Complete. "
 msgstr "Gennemløb %(count)d færdig. "
 
 #. We use None here so that we in transcoder engine can differentiate between,
 #. unknown language and known language, but no language code.
-#: ../src/transmageddon.py:678
+#: ../src/transmageddon.py:690
 msgid "Unknown"
 msgstr "Ukendt"
 
 #. if there is no audio streams
-#: ../src/transmageddon.py:735
+#: ../src/transmageddon.py:747
 msgid "  No Audio"
 msgstr "  Ingen lyd"
 
 #. add a 'No Video option'
-#: ../src/transmageddon.py:744 ../src/transmageddon.py:1137
+#: ../src/transmageddon.py:756 ../src/transmageddon.py:1146
 msgid "No Video"
 msgstr "Ingen video"
 
-#: ../src/transmageddon.py:869
+#: ../src/transmageddon.py:875
 msgid ""
 "Got an invalid response from codec installer, can not install missing codec."
 msgstr ""
 "Modtog et ugyldigt svar fra codecinstallation, kan ikke installere manglende "
 "codec."
 
-#: ../src/transmageddon.py:873
+#: ../src/transmageddon.py:879
 msgid "No Codec installer helper application available."
 msgstr "Intet hjælpeprogram tilgængelig for Codecinstallation."
 
-#: ../src/transmageddon.py:877
+#: ../src/transmageddon.py:883
 msgid "Plugins not found, choose different codecs."
 msgstr "Udvidelsesmoduler blev ikke fundet, vælg andre codec."
 
-#: ../src/transmageddon.py:887
+#: ../src/transmageddon.py:893
 msgid "Codec installation aborted."
 msgstr "Codecinstallation afbrudt."
 
-#: ../src/transmageddon.py:895
+#: ../src/transmageddon.py:901
 msgid "Missing plugin installation failed."
 msgstr "Manglende udvidelsesmodul - installation mislykkedes."
 
-#: ../src/transmageddon.py:987
+#: ../src/transmageddon.py:1000
 #, python-format
 msgid "Pass %(count)d Progress"
 msgstr "Gennemløb %(count)d fremgang"
 
 #. add a 'No Audio option'
-#: ../src/transmageddon.py:1077
+#: ../src/transmageddon.py:1087
 msgid "No Audio"
 msgstr "Ingen lyd"
 
-#: ../src/transmageddon.py:1084
+#: ../src/transmageddon.py:1094
 msgid "Audio passthrough"
 msgstr "Lydgennemløb"
 
-#: ../src/transmageddon.py:1143
+#: ../src/transmageddon.py:1152
 msgid "Video passthrough"
 msgstr "Videogennemløb"
-
-#: ../src/transmageddon.py:1357
-msgid "(None)"
-msgstr "(Ingen)"
 
 #: ../src/transmageddon.py:1399
 msgid "Choose Source File..."
 msgstr "Vælg kildefil ..."
 
+# lidt i tvivl her, skal det være ;-bredde  (- for video).
 #: ../src/transmageddon.ui.h:1
+msgid ""
+"<small>Video height&#47;width:</small>\n"
+"<small>Video Codec:</small>"
+msgstr "<small>Videohøjde&#47;-bredde:</small><small>Videocodec:</small>"
+
+#: ../src/transmageddon.ui.h:3
+msgid "<b>Choose Input File:</b>"
+msgstr "<b>Vælg inddatafil:</b>"
+
+#: ../src/transmageddon.ui.h:4
+msgid "<b>Presets:</b>"
+msgstr "<b>Forudindstillinger:</b>"
+
+#: ../src/transmageddon.ui.h:5
+msgid "<b>Output Format:</b>"
+msgstr "<b>Uddataformat:</b>"
+
+#: ../src/transmageddon.ui.h:6
 msgid ""
 "<small>Audio Channels:</small>\n"
 "<small>Audio Codec:</small>"
 msgstr ""
 "<small>Lydkanaler:</small>\n"
 "<small>Lydcodec:</small>"
-
-# lidt i tvivl her, skal det være ;-bredde  (- for video).
-#: ../src/transmageddon.ui.h:3
-msgid ""
-"<small>Video height&#47;width:</small>\n"
-"<small>Video Codec:</small>"
-msgstr "<small>Videohøjde&#47;-bredde:</small><small>Videocodec:</small>"
-
-#: ../src/transmageddon.ui.h:5
-msgid "<b>Presets:</b>"
-msgstr "<b>Forudindstillinger:</b>"
-
-#: ../src/transmageddon.ui.h:6
-msgid "<b>Choose Input File:</b>"
-msgstr "<b>Vælg inddatafil:</b>"
-
-#: ../src/transmageddon.ui.h:7
-msgid "<b>Output Format:</b>"
-msgstr "<b>Uddataformat:</b>"
 
 #: ../src/transmageddon.ui.h:8
 msgid "<b>Choose Audio Codec</b>:"
@@ -352,11 +347,12 @@ msgstr "<small>Rotér videobilledet hvis nødvendigt</small>"
 msgid "_Transcode"
 msgstr "_Transkod"
 
-#: ../src/udevdisco.py:221
+#: ../src/udevdisco.py:222
 msgid "Not mounted."
 msgstr "Ikke monteret."
 
-#: ../src/utils.py:76
+#: ../src/utils.py:75
 #, python-format
 msgid "Can't find %(path)s in any known prefix!"
 msgstr "Kan ikke finde %(path)s i nogen kendte præfiks!"
+
