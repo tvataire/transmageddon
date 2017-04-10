@@ -1,0 +1,353 @@
+# Friulian translation for transmageddon.
+# Copyright (C) 2017 transmageddon's COPYRIGHT HOLDER
+# This file is distributed under the same license as the transmageddon package.
+# Fabio Tomat <f.t.public@gmail.com>, 2017.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: transmageddon master\n"
+"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
+"product=transmageddon&keywords=I18N+L10N&component=General\n"
+"POT-Creation-Date: 2017-03-20 04:30+0000\n"
+"PO-Revision-Date: 2017-04-10 14:47+0200\n"
+"Language-Team: Friulian <fur@li.org>\n"
+"Language: fur\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Last-Translator: Fabio Tomat <f.t.public@gmail.com>\n"
+"X-Generator: Poedit 1.8.12\n"
+
+#: ../transmageddon.desktop.in.in.h:1
+msgid "Transmageddon Video Transcoder"
+msgstr "Transcodificadôr Video Transmageddon"
+
+#: ../transmageddon.desktop.in.in.h:2
+msgid "Video format conversion tool"
+msgstr "Strument di conversion di formâts video"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:1
+msgid "Transmageddon Media Transcoder"
+msgstr "Transcodificadôr multimedia Transmageddon"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:2
+msgid "Easy to use audio and video transcoding application"
+msgstr "Aplicazion di transcodifiche video e audio facile di doprâ"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:3
+msgid ""
+"Transmageddon is an application for converting audio and video files between "
+"different formats. It allows you to either manually choose the formats you "
+"want to convert between or alternatively you can choose a predefined target "
+"and the selections will be made for you. Transmageddon supports a very wide "
+"range of formats and can also optionally function as a DVD ripping tool."
+msgstr ""
+"Transmageddon e je une aplicazion par convertî file audio e video a "
+"diferents formâts. Ti permet di sielzi a man i formâts che si vûl convertî o "
+"in alternative si pues sielzi un obietîf predefinît e lis selezions a "
+"vignaran fatis al to puest. Transmageddon al supuarte une grande schirie di "
+"formâts e al pues jessi doprât ancje come strument di estrazion dai DVD."
+
+#: ../appdata/transmageddon.appdata.xml.in.h:4
+msgid "Feature list:"
+msgstr "Liste funzionalitâts:"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:5
+msgid "Wide range of media codecs"
+msgstr "Grande varietât di codifichis multimediâls"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:6
+msgid "Allows extracting audio or video streams separately"
+msgstr "Al permet la estrazion dai flus audio o video in maniere separade"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:7
+msgid "Allows ripping of DVD if needed software libraries are available"
+msgstr ""
+"Al permet la estrazion dai DVD se lis librariis software a son disponibilis"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:8
+msgid "Supports named device presets"
+msgstr "Al supuarte configurazions dispositîf cun non"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:9
+msgid "Lets you add language metadata if missing"
+msgstr "Ti permet di zontâ il metadât de lenghe se al mancje"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:10
+msgid "Can change orientation of video if necessary"
+msgstr "Al pues cambiâ l'orientament dal video se al covente"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:11
+msgid "Supports files with multiple audio streams"
+msgstr "Al supuarte file cun multiplis flus audio"
+
+#: ../appdata/transmageddon.appdata.xml.in.h:12
+msgid ""
+"You might want to install this application if your need to convert media "
+"files between different formats due to for example having hardware that only "
+"supports a limited range of formats."
+msgstr ""
+"Si podarès volê instalâ cheste aplicazion se al covente convertî file "
+"multimediâi in formâts diferents, par esempli se si à hardware che al "
+"supuarte dome un numar limitât di formâts."
+
+#: ../src/about.py.in:49 ../src/about.py.in:50
+msgid "Transmageddon"
+msgstr "Transmageddon"
+
+#: ../src/about.py.in:52
+msgid ""
+"Transmageddon is a simple video and audio conversion tool for GNOME created "
+"by Christian Fredrik Kalager Schaller."
+msgstr ""
+"Transmageddon al è un sempliç strument di conversion di audio e video par "
+"GNOME, creât di Christian Fredrik Kalager Schaller."
+
+#: ../src/about.py.in:53
+msgid "Transmageddon homepage"
+msgstr "Pagjine principâl di Transmageddon"
+
+#: ../src/about.py.in:55
+msgid "translator-credits"
+msgstr "Fabio Tomat, <f.t.public@gmail.com>"
+
+#: ../src/dvdtrackchooser.py:52
+msgid "Title:"
+msgstr "Titul:"
+
+#: ../src/dvdtrackchooser.py:53
+msgid "Languages:"
+msgstr "Lenghis:"
+
+#: ../src/dvdtrackchooser.py:54
+msgid "Length:"
+msgstr "Lungjece:"
+
+#: ../src/dvdtrackchooser.py:54
+msgid "Minute"
+msgid_plural "Minutes"
+msgstr[0] "Minût"
+msgstr[1] "Minûts"
+
+#: ../src/transmageddon-dvdtrack-chooser.ui.h:1
+#: ../src/transmageddon-language-chooser.ui.h:2
+msgid "Cancel"
+msgstr "Anule"
+
+#: ../src/transmageddon-dvdtrack-chooser.ui.h:2
+#: ../src/transmageddon-language-chooser.ui.h:3
+msgid "Select"
+msgstr "Selezione"
+
+#: ../src/transmageddon-dvdtrack-chooser.ui.h:3
+msgid "Select a DVD title"
+msgstr "Selezione un titul DVD"
+
+#: ../src/transmageddon-language-chooser.ui.h:1
+msgid "Select a language"
+msgstr "Selezione une lenghe"
+
+#. append to the menu the options
+#: ../src/transmageddon.py:166
+msgid "About"
+msgstr "Informazions"
+
+#: ../src/transmageddon.py:167
+msgid "Quit"
+msgstr "Jes"
+
+#: ../src/transmageddon.py:168
+msgid "Debug"
+msgstr "Debug"
+
+#. set default values for various variables
+#: ../src/transmageddon.py:381 ../src/transmageddon.py:827
+#: ../src/transmageddon.py:1035 ../src/transmageddon.py:1185
+msgid "Transcoding Progress"
+msgstr "Progrès de transcodifiche"
+
+#: ../src/transmageddon.py:427
+msgid "No container (Audio-only)"
+msgstr "Nissun contignidôr (dome sun)"
+
+#. Populate the rotatation box
+#. print("populating rotationbox")
+#: ../src/transmageddon.py:431
+msgid "No rotation (default)"
+msgstr "Nissune rotazion (predefinît)"
+
+#: ../src/transmageddon.py:432
+msgid "Clockwise 90 degrees"
+msgstr "90 grâts in sens orari"
+
+#: ../src/transmageddon.py:433
+msgid "Rotate 180 degrees"
+msgstr "Ribalte di 180 grâts"
+
+#: ../src/transmageddon.py:434
+msgid "Counterclockwise 90 degrees"
+msgstr "90 grâts in sens antiorari"
+
+#: ../src/transmageddon.py:435
+msgid "Horizontal flip"
+msgstr "Ribalte in orizontâl"
+
+#: ../src/transmageddon.py:436
+msgid "Vertical flip"
+msgstr "Ribalte in verticâl"
+
+#: ../src/transmageddon.py:437
+msgid "Upper left diagonal flip"
+msgstr "Ribalte in diagonâl de bande superiôr a çampe"
+
+#: ../src/transmageddon.py:438
+msgid "Upper right diagonal flip"
+msgstr "Ribalte in diagonâl de bande superiôr a drete"
+
+#: ../src/transmageddon.py:461
+msgid "No Presets"
+msgstr "Cence valôrs predefinîts"
+
+#: ../src/transmageddon.py:584
+#, python-format
+msgid "%(min)d:%(sec)02d"
+msgstr "%(min)d:%(sec)02d"
+
+#: ../src/transmageddon.py:614
+#, python-format
+msgid "File saved to %(dir)s"
+msgstr "File salvât su %(dir)s"
+
+#: ../src/transmageddon.py:617
+#, python-format
+msgid "%(file)s saved to %(dir)s"
+msgstr "%(file)s salvât su %(dir)s"
+
+#: ../src/transmageddon.py:630
+msgid "Done Transcoding"
+msgstr "Transcodifiche completade"
+
+#: ../src/transmageddon.py:648 ../src/transmageddon.py:994
+#, python-format
+msgid "Writing %(filename)s"
+msgstr "Daûr a scrivi %(filename)s"
+
+#: ../src/transmageddon.py:652
+#, python-format
+msgid "Pass %(count)d Complete. "
+msgstr "Passade %(count)d completade. "
+
+#. We use None here so that we in transcoder engine can differentiate between,
+#. unknown language and known language, but no language code.
+#: ../src/transmageddon.py:694
+msgid "Unknown"
+msgstr "No cognossût"
+
+#. if there is no audio streams
+#: ../src/transmageddon.py:751
+msgid "  No Audio"
+msgstr "  Cence sun"
+
+#. add a 'No Video option'
+#: ../src/transmageddon.py:760 ../src/transmageddon.py:1154
+msgid "No Video"
+msgstr "Cence video"
+
+#: ../src/transmageddon.py:879
+msgid ""
+"Got an invalid response from codec installer, can not install missing codec."
+msgstr ""
+"Si à vût une rispueste no valide dal instaladôr di codecs, impussibil "
+"instalâ il codec che al mancje."
+
+#: ../src/transmageddon.py:883
+msgid "No Codec installer helper application available."
+msgstr "No je disponibile nissune aplicazion ausiliâr par instalâ i codec."
+
+#: ../src/transmageddon.py:887
+msgid "Plugins not found, choose different codecs."
+msgstr "Plugin no cjatâts, sielç dai codec diferents."
+
+#: ../src/transmageddon.py:897
+msgid "Codec installation aborted."
+msgstr "Instalazion dal codec interote."
+
+#: ../src/transmageddon.py:905
+msgid "Missing plugin installation failed."
+msgstr "Instalazion dai plugin che a mancjin falide."
+
+#: ../src/transmageddon.py:1004
+#, python-format
+msgid "Pass %(count)d Progress"
+msgstr "Progrès de passade %(count)d"
+
+#. add a 'No Audio option'
+#: ../src/transmageddon.py:1095
+msgid "No Audio"
+msgstr "Cence sun"
+
+#: ../src/transmageddon.py:1102
+msgid "Audio passthrough"
+msgstr ""
+
+#: ../src/transmageddon.py:1160
+msgid "Video passthrough"
+msgstr ""
+
+#: ../src/transmageddon.py:1407
+msgid "Choose Source File..."
+msgstr "Sielç file sorzint..."
+
+#: ../src/transmageddon.ui.h:1
+msgid ""
+"<small>Video height&#47;width:</small>\n"
+"<small>Video Codec:</small>"
+msgstr ""
+"<small>Altece&#47;largjece dal video:</small>\n"
+"<small>Codec video:</small>"
+
+#: ../src/transmageddon.ui.h:3
+msgid "<b>Choose Input File:</b>"
+msgstr "<b>Sielç file di jentrade:</b>"
+
+#: ../src/transmageddon.ui.h:4
+msgid "<b>Presets:</b>"
+msgstr "<b>Preconfigurazions:</b>"
+
+#: ../src/transmageddon.ui.h:5
+msgid "<b>Output Format:</b>"
+msgstr "<b>Formât di jessude:</b>"
+
+#: ../src/transmageddon.ui.h:6
+msgid ""
+"<small>Audio Channels:</small>\n"
+"<small>Audio Codec:</small>"
+msgstr ""
+"<small>Canâi audio:</small>\n"
+"<small>Codec audio:</small>"
+
+#: ../src/transmageddon.ui.h:8
+msgid "<b>Choose Audio Codec</b>:"
+msgstr "<b>Sielç codec audio</b>:"
+
+#: ../src/transmageddon.ui.h:9
+msgid "<b>Choose Video Codec</b>:"
+msgstr "<b>Sielç codec video</b>:"
+
+#: ../src/transmageddon.ui.h:10
+msgid "<small>Rotate the video image if needed</small>"
+msgstr "<small>Volte la imagjin video se al covente</small>"
+
+#: ../src/transmageddon.ui.h:11
+msgid "_Transcode"
+msgstr "_Transcodificâ"
+
+#: ../src/udevdisco.py:222
+msgid "Not mounted."
+msgstr "No montât."
+
+#: ../src/utils.py:75
+#, python-format
+msgid "Can't find %(path)s in any known prefix!"
+msgstr "Impussibil cjatâ %(path)s in nissun prefìs cognossût!"
