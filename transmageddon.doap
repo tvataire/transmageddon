@@ -7,7 +7,7 @@
   <name xml:lang="en">Transmageddon</name>
   <shortdesc xml:lang="en">Transmageddon Video Transcoder</shortdesc>
   <homepage rdf:resource="http://www.linuxrising.org/transmageddon" />
-  <mailing-list rdf:resource="http://example.com/projectname/mail" />
+  <!-- <mailing-list rdf:resource="http://example.com/projectname/mail" /> -->
   <!-- <category rdf:resource="http://api.gnome.org/doap-extensions#desktop" /> -->
 
   <maintainer>
