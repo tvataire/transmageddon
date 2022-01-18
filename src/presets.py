@@ -271,7 +271,7 @@ def _load_author(root):
     """
     author = Author()
     
-    for child in root.getchildren():
+    for child in root:
         if child.tag == "name":
             author.name = child.text.strip()
         elif child.tag == "email":
@@ -290,7 +290,7 @@ def _load_audio_codec(root):
     """
     codec = AudioCodec()
     
-    for child in root.getchildren():
+    for child in root:
         if child.tag == "name":
             codec.name = child.text.strip()
         elif child.tag == "container":
@@ -304,7 +304,7 @@ def _load_audio_codec(root):
         elif child.tag == "samplerate":
             codec.samplerate = child.text.strip()
         elif child.tag == "presets":
-            for command in child.getchildren():
+            for command in child:
                 codec.presets.append(command.text.strip())
     
     return codec
@@ -320,7 +320,7 @@ def _load_video_codec(root):
     """
     codec = VideoCodec()
     
-    for child in root.getchildren():
+    for child in root:
         if child.tag == "name":
             codec.name = child.text.strip()
         elif child.tag == "container":
@@ -340,7 +340,7 @@ def _load_video_codec(root):
         elif child.tag == "passes":
             codec.passes = child.text.strip()
         elif child.tag == "presets":
-            for command in child.getchildren():
+            for command in child:
                 codec.presets.append(command.text.strip())
     
     return codec
@@ -356,7 +356,7 @@ def _load_preset(root):
     """
     preset = Preset()
     
-    for child in root.getchildren():
+    for child in root:
         if child.tag == "name":
             preset.name = child.text.strip()
         elif child.tag == "container":
@@ -391,7 +391,7 @@ def load(filename):
     
     device.filename = filename
     
-    for child in tree.getroot().getchildren():
+    for child in tree.getroot():
         if child.tag == "make":
             device.make = child.text.strip()
         elif child.tag == "model":
