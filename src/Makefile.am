@@ -16,7 +16,8 @@ transmageddon_PYTHON = \
         gstfraction.py \
         udevdisco.py \
         dvdtrackchooser.py \
-        langchooser.py
+        langchooser.py \
+        batchhandler.py
 
 BUILT_SOURCES=
 
